@@ -2,59 +2,80 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Sổ Tay Cá Nhân & Lịch Ca Trực</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sổ Tay & Lịch Ca Trực - Tuấn Tuấn</title>
   <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <style>
     :root {
       --primary: #0284c7;
       --primary-dark: #0369a1;
-      --bg: #f8fafc;
+      --accent: #f59e0b;
+      --bg: #f0f4f8;
       --card: #ffffff;
       --text: #0f172a;
       --muted: #64748b;
-      --border: #cbd5e1;
-      --success: #16a34a;
-      --danger: #dc2626;
-      --warning: #f59e0b;
-      --purple: #7c3aed;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
     
     header {
-      background: var(--primary);
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
       color: white;
-      padding: 12px 14px;
+      padding: 10px 14px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 6px;
-      flex-wrap: wrap;
     }
-    header h1 { font-size: 1rem; font-weight: 700; white-space: nowrap; }
-    .header-btns { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+    header h1 { font-size: 0.95rem; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 4px; }
+    .header-btns { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
     .header-btns button {
-      background: rgba(255,255,255,0.2);
-      border: none;
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.3);
       color: white;
       padding: 5px 8px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.72rem;
       cursor: pointer;
       font-weight: 600;
+      backdrop-filter: blur(4px);
     }
+    .header-btns button:active { background: rgba(255,255,255,0.4); }
 
     .container { max-width: 650px; margin: auto; padding: 10px; }
 
+    /* Lời chào đầu ngày */
+    .greeting-banner {
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      border: 1.5px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .greeting-icon { font-size: 1.6rem; animation: wave 2s infinite ease-in-out; }
+    @keyframes wave { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
+    .greeting-text-main { font-size: 0.86rem; font-weight: 800; color: #166534; }
+    .greeting-text-sub { font-size: 0.74rem; font-weight: 600; color: #047857; margin-top: 2px; }
+
     /* Thống kê */
-    .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
-    .stat-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
-    .stat-label { color: var(--muted); font-size: .75rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+    .stat-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .stat-label { color: var(--muted); font-size: .74rem; }
     .stat-value { font-size: 1.15rem; font-weight: 800; margin-top: 2px; }
 
     /* Banner chuông */
@@ -63,38 +84,34 @@
       position: sticky;
       top: 50px;
       z-index: 99;
-      background: var(--danger);
+      background: linear-gradient(135deg, #ef4444, #dc2626);
       color: white;
       padding: 12px 14px;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-bottom: 10px;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
       animation: pulse 1s infinite alternate;
     }
-    @keyframes pulse { from { opacity: 0.9; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
+    @keyframes pulse { from { opacity: 0.92; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
     .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .alarm-title { font-weight: 700; font-size: 0.92rem; }
+    .alarm-title { font-weight: 800; font-size: 0.92rem; }
     .btn-stop-alarm {
       background: white;
       color: var(--danger);
       border: none;
       padding: 8px 12px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 800;
       cursor: pointer;
       white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     }
 
     /* Tabs */
-    .nav-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
+    .nav-tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 10px; }
     .nav-tab-btn {
       padding: 9px 2px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid var(--border);
       background: white;
       font-size: 0.78rem;
@@ -102,32 +119,65 @@
       color: var(--muted);
       cursor: pointer;
       text-align: center;
+      transition: all 0.2s ease;
     }
     .nav-tab-btn.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
     }
 
-    /* Lịch tuần */
+    /* Khung Lịch */
     .week-table-card {
       background: white;
-      border-radius: 12px;
+      border-radius: 14px;
       border: 1px solid var(--border);
       padding: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .week-header { font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    
+    .week-control-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .week-dropdown-wrap { flex: 1; position: relative; }
+    .week-select-menu {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 7px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn-copy-month {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #166534;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 7px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
     .week-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 3px;
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .day-col {
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 5px 1px;
       background: #fafafa;
       transition: all 0.2s ease;
@@ -138,12 +188,8 @@
       background: #fee2e2 !important;
       border-color: #ef4444 !important;
     }
-    .day-col.is-off .day-name {
-      color: #b91c1c !important;
-    }
-    .day-col.is-off .calendar-date {
-      color: #dc2626 !important;
-    }
+    .day-col.is-off .day-name { color: #b91c1c !important; }
+    .day-col.is-off .calendar-date { color: #dc2626 !important; }
     .day-col.is-off .day-shift-select {
       border-color: #f87171 !important;
       color: #b91c1c !important;
@@ -157,38 +203,107 @@
     .day-shift-select {
       width: 100%;
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 0.72rem;
       padding: 3px 0;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
       background: #fff;
     }
 
-    /* Nút xuất lịch sang Google Calendar */
-    .btn-sync-cal {
+    /* Thanh Đồng bộ Lịch tuần dạng Dropdown Checkbox */
+    .sync-calendar-panel {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 8px;
+      margin-top: 8px;
+    }
+    .sync-row { display: flex; gap: 6px; position: relative; }
+    
+    .custom-multiselect { flex: 1.3; position: relative; }
+    .multiselect-toggle-btn {
       width: 100%;
-      background: #0284c7;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 8px;
+      color: #334155;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .multiselect-dropdown {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1.5px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 200;
+      padding: 4px 0;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .multiselect-dropdown.show { display: block; }
+    .multiselect-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      user-select: none;
+    }
+    .multiselect-item:active { background: #f1f5f9; }
+    .multiselect-item.selected {
+      background: #eff6ff;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .multiselect-check {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 800;
+      display: none;
+    }
+    .multiselect-item.selected .multiselect-check { display: inline-block; }
+
+    .btn-sync-submit {
+      flex: 1;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
       color: white;
       border: none;
-      padding: 10px;
+      padding: 8px 10px;
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
+      white-space: nowrap;
     }
-    .btn-sync-cal:active { background: #0369a1; }
+    .btn-sync-submit:active { opacity: 0.85; }
 
     /* Cài đặt giờ ca trực */
     .shift-settings-box {
       background: #f8fafc;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 10px;
       margin-top: 10px;
     }
@@ -200,30 +315,21 @@
       display: flex;
       justify-content: space-between;
     }
-    .shift-config-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .shift-config-card {
-      background: white;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-    }
+    .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .shift-config-card { background: white; padding: 8px; border-radius: 8px; border: 1px solid var(--border); }
     .shift-config-card h4 { font-size: 0.78rem; margin-bottom: 6px; color: #334155; }
     .time-input-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 0.72rem; color: var(--muted); }
     .time-input-row span { width: 50px; font-weight: 600; }
-    .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 4px; }
+    .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
     /* Form & Thẻ */
     .card-box {
       background: var(--card);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
     .form-group { margin-bottom: 10px; }
     label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; color: var(--muted); }
@@ -252,12 +358,7 @@
     }
     .btn-submit-purple { background: var(--purple); }
 
-    .quick-actions {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 12px;
-    }
+    .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
     .quick-btn {
       background: var(--card);
       border: 1px solid var(--border);
@@ -272,38 +373,24 @@
     .meal-panel {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 10px;
       margin-bottom: 10px;
     }
-    .meal-panel-title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #166534;
-      margin-bottom: 8px;
-    }
+    .meal-panel-title { font-size: 0.82rem; font-weight: 700; color: #166534; margin-bottom: 8px; }
 
     .filter-date-box {
       background: white;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 8px 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .filter-date-box label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--muted);
-      margin-bottom: 0;
-      white-space: nowrap;
-    }
-    .filter-date-box input {
-      padding: 5px 8px;
-      font-size: 0.82rem;
-    }
+    .filter-date-box label { font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 0; white-space: nowrap; }
+    .filter-date-box input { padding: 5px 8px; font-size: 0.82rem; }
     .btn-clear-date {
       background: #e2e8f0;
       border: none;
@@ -317,7 +404,7 @@
 
     .item-card {
       background: var(--card);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 10px;
       margin-bottom: 8px;
       border: 1px solid var(--border);
@@ -389,6 +476,15 @@
   </header>
 
   <div class="container">
+    <!-- Banner chào đón -->
+    <div class="greeting-banner">
+      <div class="greeting-icon">☀️</div>
+      <div>
+        <div class="greeting-text-main">Xin chào Tuấn Tuấn, chúc một ngày tốt lành! ✨</div>
+        <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
+      </div>
+    </div>
+
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-label">📑 Báo cáo ca</div>
@@ -415,25 +511,41 @@
 
     <!-- Thanh chuyển tab -->
     <div class="nav-tabs">
-      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca Tuần</button>
+      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-reports" onclick="switchView('reports')">📑 Báo Cáo Ca</button>
       <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Xử Lý</button>
     </div>
 
-    <!-- VIEW 1: LỊCH TRỰC TUẦN & CẤU HÌNH GIỜ -->
+    <!-- VIEW 1: LỊCH TRỰC THEO TUẦN (T2 ĐẾN CN CHUẨN XÁC) -->
     <div id="view-shifts">
       <div class="week-table-card">
-        <div class="week-header">
-          <span>Lịch làm việc tuần này</span>
-          <span style="font-size: 0.75rem; color: var(--muted); font-weight: normal;">* Tự lưu lịch</span>
+        <!-- Dropdown chọn tuần: Tuần hiện tại = Tuần đang chọn -->
+        <div class="week-control-bar">
+          <div class="week-dropdown-wrap">
+            <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)">
+              <!-- Render tự động các tuần chuẩn T2 -> CN -->
+            </select>
+          </div>
+          <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng lịch tuần này cho tất cả các tuần trong tháng">⚡ Úp Cả Tháng</button>
         </div>
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- NÚT ĐỒNG BỘ VÀO GOOGLE CALENDAR -->
-        <button class="btn-sync-cal" onclick="exportToICSCalendar()">
-          🔔 Đồng bộ lịch tuần vào Lịch Google (Báo chuông khi tắt màn hình)
-        </button>
+        <!-- Đồng bộ lịch tuần có dấu tick -->
+        <div class="sync-calendar-panel">
+          <div class="sync-row">
+            <div class="custom-multiselect">
+              <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
+                <span id="syncDropdownLabel">Đồng bộ lịch tuần...</span>
+                <span style="font-size:0.65rem; color:var(--muted);">▲</span>
+              </button>
+              <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
+            </div>
+            <button class="btn-sync-submit" onclick="executeSelectedSync()">
+              🔔 Đồng bộ lịch tuần
+            </button>
+          </div>
+        </div>
 
         <!-- Cài đặt giờ Báo In & Out -->
         <div class="shift-settings-box">
@@ -466,9 +578,6 @@
                 <input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()">
               </div>
             </div>
-          </div>
-          <div style="font-size:0.72rem; color:var(--muted); line-height:1.3;">
-            * Bấm nút màu xanh phía trên sau khi chỉnh giờ để nạp vào Lịch điện thoại báo chuông chuẩn 100%.
           </div>
         </div>
       </div>
@@ -607,10 +716,6 @@
   <script>
     let reports = JSON.parse(localStorage.getItem('camp_reports_v2') || '[]');
     let issues = JSON.parse(localStorage.getItem('camp_issues_v2') || '[]');
-    let weeklyShifts = JSON.parse(localStorage.getItem('camp_weekly_shifts') || JSON.stringify({
-      2: "ca1", 3: "ca1", 4: "ca1", 5: "ca2", 6: "ca2", 7: "off", 8: "off"
-    }));
-
     let shiftTimes = JSON.parse(localStorage.getItem('camp_shift_times') || JSON.stringify({
       c1_in: '05:15',
       c1_out: '14:00',
@@ -618,13 +723,31 @@
       c2_out: '22:00'
     }));
 
+    let monthWeeksList = [];
+    let currentWeekIndex = 0; // Tuần hiện tại = tuần đang chọn
+    let selectedSyncWeeks = new Set();
     let selectedFilterDate = '';
 
     let audioCtx = null;
     let alarmInterval = null;
     let isAlarmPlaying = false;
-    let triggeredToday = {};
 
+    // --- BANNER LỜI CHÀO HÀNG NGÀY CHUẨN XÁC ---
+    function updateGreetingHeader() {
+      const now = new Date();
+      const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      const dayName = days[now.getDay()];
+      const d = String(now.getDate()).padStart(2, '0');
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const y = now.getFullYear();
+      
+      const labelEl = document.getElementById('greetingDateLabel');
+      if (labelEl) {
+        labelEl.innerText = `Hôm nay ${dayName}, ngày ${d}/${m}/${y}`;
+      }
+    }
+
+    // --- QUẢN LÝ CHUÔNG & ÂM THANH ---
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -700,6 +823,7 @@
       });
     }
 
+    // --- CẤU HÌNH GIỜ CA TRỰC ---
     function loadShiftTimeConfigUI() {
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
@@ -717,6 +841,188 @@
       showToast('Đã lưu cấu hình giờ ca trực!');
     }
 
+    // --- TÍNH TOÁN CÁC TUẦN CHUẨN T2 ĐẾN CN TRONG THÁNG HIỆN TẠI ---
+    function buildMonthWeeksList() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      
+      // Tìm ngày Thứ 2 đầu tiên của chuỗi tuần bao phủ tháng
+      const firstOfMonth = new Date(year, month, 1);
+      const dayOfWeekFirst = firstOfMonth.getDay(); // 0: CN, 1: T2...
+      const mondayOffset = (dayOfWeekFirst === 0) ? -6 : (1 - dayOfWeekFirst);
+      let curMonday = new Date(year, month, 1 + mondayOffset);
+
+      monthWeeksList = [];
+      let weekNum = 1;
+
+      while (true) {
+        let curSunday = new Date(curMonday);
+        curSunday.setDate(curMonday.getDate() + 6);
+
+        monthWeeksList.push({
+          index: weekNum - 1,
+          labelNumber: weekNum,
+          monday: new Date(curMonday),
+          sunday: new Date(curSunday)
+        });
+
+        // Nếu ngày Chủ Nhật đã bước sang tháng sau thì dừng
+        if (curSunday.getMonth() !== month && curSunday > firstOfMonth) {
+          break;
+        }
+
+        curMonday.setDate(curMonday.getDate() + 7);
+        weekNum++;
+      }
+
+      // Xác định tuần chứa ngày hôm nay làm mặc định ban đầu
+      const todayTime = new Date(year, month, now.getDate()).getTime();
+      let defaultIdx = 0;
+      monthWeeksList.forEach((w, idx) => {
+        if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) {
+          defaultIdx = idx;
+        }
+      });
+      currentWeekIndex = defaultIdx;
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+    }
+
+    function getWeekStorageKey(wIdx) {
+      const w = monthWeeksList[wIdx];
+      if (!w) return `shifts_w_${wIdx}`;
+      const dStr = `${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
+      return `camp_shifts_${dStr}`;
+    }
+
+    function getShiftsForWeekIndex(wIdx) {
+      const key = getWeekStorageKey(wIdx);
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      return JSON.parse(localStorage.getItem('camp_weekly_shifts') || JSON.stringify({
+        2: "ca1", 3: "ca1", 4: "ca1", 5: "ca2", 6: "ca2", 7: "off", 8: "off"
+      }));
+    }
+
+    function initMonthWeeksDropdown() {
+      buildMonthWeeksList();
+      const select = document.getElementById('weekDropdownSelect');
+      select.innerHTML = '';
+
+      monthWeeksList.forEach((w) => {
+        const monLabel = `${w.monday.getDate()}/${w.monday.getMonth()+1}`;
+        const sunLabel = `${w.sunday.getDate()}/${w.sunday.getMonth()+1}`;
+        const opt = document.createElement('option');
+        opt.value = w.index;
+        opt.text = `📅 Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
+        if (w.index === currentWeekIndex) opt.selected = true;
+        select.appendChild(opt);
+      });
+
+      renderSyncDropdownMenu();
+    }
+
+    // Khi người dùng chọn tuần trên Dropdown: Tuần hiện tại = tuần đang chọn
+    function onWeekDropdownChange(val) {
+      currentWeekIndex = parseInt(val, 10);
+      renderWeekGrid();
+      // Đồng thời cập nhật tuần đang chọn vào bộ đồng bộ
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+      renderSyncDropdownMenu();
+    }
+
+    // --- QUẢN LÝ DROPDOWN ĐỒNG BỘ CÓ DẤU TICK ---
+    function toggleSyncDropdown(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('syncDropdownMenu');
+      menu.classList.toggle('show');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('syncDropdownMenu');
+      if (menu && menu.classList.contains('show')) {
+        if (!e.target.closest('.custom-multiselect')) {
+          menu.classList.remove('show');
+        }
+      }
+    });
+
+    function renderSyncDropdownMenu() {
+      const menu = document.getElementById('syncDropdownMenu');
+      menu.innerHTML = '';
+
+      // Tùy chọn "Cả tháng"
+      const isFullMonth = (selectedSyncWeeks.size === monthWeeksList.length);
+      const monthItem = document.createElement('div');
+      monthItem.className = `multiselect-item ${isFullMonth ? 'selected' : ''}`;
+      monthItem.innerHTML = `
+        <span>📅 Cả tháng</span>
+        <span class="multiselect-check">✔</span>
+      `;
+      monthItem.onclick = (e) => {
+        e.stopPropagation();
+        if (isFullMonth) {
+          selectedSyncWeeks.clear();
+        } else {
+          selectedSyncWeeks.clear();
+          monthWeeksList.forEach(w => selectedSyncWeeks.add(w.index));
+        }
+        renderSyncDropdownMenu();
+      };
+      menu.appendChild(monthItem);
+
+      // Từng Tuần 1, 2, 3...
+      monthWeeksList.forEach((w) => {
+        const isSelected = selectedSyncWeeks.has(w.index);
+        const item = document.createElement('div');
+        item.className = `multiselect-item ${isSelected ? 'selected' : ''}`;
+        item.innerHTML = `
+          <span>Tuần ${w.labelNumber}</span>
+          <span class="multiselect-check">✔</span>
+        `;
+        item.onclick = (e) => {
+          e.stopPropagation();
+          if (selectedSyncWeeks.has(w.index)) {
+            selectedSyncWeeks.delete(w.index);
+          } else {
+            selectedSyncWeeks.add(w.index);
+          }
+          renderSyncDropdownMenu();
+        };
+        menu.appendChild(item);
+      });
+
+      updateSyncToggleLabel();
+    }
+
+    function updateSyncToggleLabel() {
+      const label = document.getElementById('syncDropdownLabel');
+      if (selectedSyncWeeks.size === 0) {
+        label.innerText = 'Chọn tuần...';
+      } else if (selectedSyncWeeks.size === monthWeeksList.length) {
+        label.innerText = 'Đồng bộ: Cả tháng';
+      } else {
+        const sorted = Array.from(selectedSyncWeeks).map(idx => monthWeeksList[idx].labelNumber).sort((a,b) => a - b);
+        label.innerText = `Đồng bộ: Tuần ${sorted.join(', ')}`;
+      }
+    }
+
+    function copyCurrentWeekToAll() {
+      const curData = getShiftsForWeekIndex(currentWeekIndex);
+      const curLabel = monthWeeksList[currentWeekIndex] ? monthWeeksList[currentWeekIndex].labelNumber : (currentWeekIndex + 1);
+      if (confirm(`Áp dụng lịch của Tuần ${curLabel} cho tất cả các tuần trong tháng này?`)) {
+        monthWeeksList.forEach(w => {
+          localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData));
+        });
+        localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
+        renderWeekGrid();
+        showToast('Đã áp dụng lịch cho toàn bộ các tuần!');
+      }
+    }
+
+    // Render tuần: T2 luôn là ngày đầu tiên, CN là ngày cuối cùng
     function renderWeekGrid() {
       const container = document.getElementById('weekGridContainer');
       container.innerHTML = '';
@@ -726,21 +1032,22 @@
         { key: 5, label: 'T5' }, { key: 6, label: 'T6' }, { key: 7, label: 'T7' }, { key: 8, label: 'CN' }
       ];
 
-      const jsDay = new Date().getDay();
-      const currentDayKey = jsDay === 0 ? 8 : jsDay + 1;
+      const now = new Date();
+      const currentWeekObj = monthWeeksList[currentWeekIndex];
+      if (!currentWeekObj) return;
 
-      const nowDate = new Date();
-      const monday = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
-      const mondayOffset = (monday.getDay() + 6) % 7;
-      monday.setDate(monday.getDate() - mondayOffset);
+      const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
 
       dayLabels.forEach((d, idx) => {
-        const isToday = (d.key === currentDayKey);
-        const savedShift = weeklyShifts[d.key] || 'off';
-        const isOff = (savedShift === 'off');
+        const dayDate = new Date(currentWeekObj.monday);
+        dayDate.setDate(currentWeekObj.monday.getDate() + idx);
 
-        const dayDate = new Date(monday); 
-        dayDate.setDate(monday.getDate() + idx);
+        const isToday = (dayDate.getDate() === now.getDate() && 
+                         dayDate.getMonth() === now.getMonth() && 
+                         dayDate.getFullYear() === now.getFullYear());
+
+        const savedShift = shiftsData[d.key] || 'off';
+        const isOff = (savedShift === 'off');
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
         const col = document.createElement('div');
@@ -760,134 +1067,124 @@
     }
 
     function updateShift(dayKey, val) {
-      weeklyShifts[dayKey] = val;
-      localStorage.setItem('camp_weekly_shifts', JSON.stringify(weeklyShifts));
+      const key = getWeekStorageKey(currentWeekIndex);
+      const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
+      shiftsData[dayKey] = val;
+      localStorage.setItem(key, JSON.stringify(shiftsData));
+      localStorage.setItem('camp_weekly_shifts', JSON.stringify(shiftsData));
       
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
-        if (val === 'off') {
-          col.classList.add('is-off');
-        } else {
-          col.classList.remove('is-off');
-        }
+        if (val === 'off') col.classList.add('is-off');
+        else col.classList.remove('is-off');
       }
-      showToast('Đã cập nhật ca làm việc!');
+      showToast('Đã lưu ca làm!');
     }
 
-    // ĐỒNG BỘ LỊCH CA VÀO GOOGLE CALENDAR (CHUẨN HÓA BÁO ÂM THANH NGAY GIỜ CA)
-    function exportToICSCalendar() {
-      const nowDate = new Date();
-      const monday = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
-      const mondayOffset = (monday.getDay() + 6) % 7;
-      monday.setDate(monday.getDate() - mondayOffset);
+    // --- ĐỒNG BỘ LỊCH VÀO ĐIỆN THOẠI THEO CÁC TUẦN ĐÃ CHỌN ---
+    function executeSelectedSync() {
+      if (selectedSyncWeeks.size === 0) {
+        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
+        return;
+      }
+      const weekIndices = Array.from(selectedSyncWeeks).sort((a,b) => a - b);
+      exportToICSCalendarList(weekIndices);
+    }
 
+    function exportToICSCalendarList(weekIndices) {
       let events = [];
 
-      for (let i = 0; i < 7; i++) {
-        const dayKey = i === 6 ? 8 : i + 2;
-        const shift = weeklyShifts[dayKey] || 'off';
-        if (shift === 'off') continue;
-
-        const dayDate = new Date(monday);
-        dayDate.setDate(monday.getDate() + i);
-        const y = dayDate.getFullYear();
-        const m = String(dayDate.getMonth() + 1).padStart(2, '0');
-        const d = String(dayDate.getDate()).padStart(2, '0');
-        const dateStr = `${y}${m}${d}`;
-
-        const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
-        const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
-        const shiftName = shift === 'ca1' ? 'Ca 1 (Lán Trại)' : 'Ca 2 (Lán Trại)';
-
-        function addMinutesToICS(datePrefix, timeStr, minsToAdd) {
-          const parts = timeStr.split(':');
-          let hour = parseInt(parts[0], 10);
-          let minute = parseInt(parts[1], 10) + minsToAdd;
-          if (minute >= 60) {
-            hour = (hour + Math.floor(minute / 60)) % 24;
-            minute = minute % 60;
-          }
-          return `${datePrefix}T${String(hour).padStart(2, '0')}${String(minute).padStart(2, '0')}00`;
+      function addMinutesToICS(datePrefix, timeStr, minsToAdd) {
+        const parts = timeStr.split(':');
+        let hour = parseInt(parts[0], 10);
+        let minute = parseInt(parts[1], 10) + minsToAdd;
+        if (minute >= 60) {
+          hour = (hour + Math.floor(minute / 60)) % 24;
+          minute = minute % 60;
         }
-
-        const inStart = `${dateStr}T${rawIn.replace(':', '')}00`;
-        const inEnd = addMinutesToICS(dateStr, rawIn, 15);
-        const outStart = `${dateStr}T${rawOut.replace(':', '')}00`;
-        const outEnd = addMinutesToICS(dateStr, rawOut, 15);
-
-        // Sự kiện Check-In (Ép kích hoạt chuông âm thanh và hiển thị ngay thời điểm 0 giây)
-        events.push([
-          'BEGIN:VEVENT',
-          `UID:checkin-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
-          `DTSTAMP:${dateStr}T000000Z`,
-          `DTSTART:${inStart}`,
-          `DTEND:${inEnd}`,
-          `SUMMARY:⏰ CHECK-IN: ${shiftName}`,
-          'DESCRIPTION:Nhắc giờ nhận ca và điểm danh lán trại.',
-          'BEGIN:VALARM',
-          'ACTION:AUDIO',
-          'TRIGGER:PT0S',
-          'DESCRIPTION:Đến giờ Check-in!',
-          'END:VALARM',
-          'BEGIN:VALARM',
-          'ACTION:DISPLAY',
-          'DESCRIPTION:Đến giờ Check-in!',
-          'TRIGGER:PT0S',
-          'END:VALARM',
-          'END:VEVENT'
-        ].join('\r\n'));
-
-        // Sự kiện Check-Out (Ép kích hoạt chuông âm thanh và hiển thị ngay thời điểm 0 giây)
-        events.push([
-          'BEGIN:VEVENT',
-          `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
-          `DTSTAMP:${dateStr}T000000Z`,
-          `DTSTART:${outStart}`,
-          `DTEND:${outEnd}`,
-          `SUMMARY:⏰ CHECK-OUT: ${shiftName}`,
-          'DESCRIPTION:Nhắc giờ bàn giao ca và check-out.',
-          'BEGIN:VALARM',
-          'ACTION:AUDIO',
-          'TRIGGER:PT0S',
-          'DESCRIPTION:Đến giờ Check-out!',
-          'END:VALARM',
-          'BEGIN:VALARM',
-          'ACTION:DISPLAY',
-          'DESCRIPTION:Đến giờ Check-out!',
-          'TRIGGER:PT0S',
-          'END:VALARM',
-          'END:VEVENT'
-        ].join('\r\n'));
+        return `${datePrefix}T${String(hour).padStart(2, '0')}${String(minute).padStart(2, '0')}00`;
       }
 
+      weekIndices.forEach(wIdx => {
+        const wObj = monthWeeksList[wIdx];
+        if (!wObj) return;
+        const shiftsData = getShiftsForWeekIndex(wIdx);
+
+        for (let i = 0; i < 7; i++) {
+          const dayKey = i === 6 ? 8 : i + 2;
+          const shift = shiftsData[dayKey] || 'off';
+          if (shift === 'off') continue;
+
+          const dayDate = new Date(wObj.monday);
+          dayDate.setDate(wObj.monday.getDate() + i);
+          const y = dayDate.getFullYear();
+          const m = String(dayDate.getMonth() + 1).padStart(2, '0');
+          const d = String(dayDate.getDate()).padStart(2, '0');
+          const dateStr = `${y}${m}${d}`;
+
+          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
+          const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
+          const shiftName = shift === 'ca1' ? 'Ca 1 (Lán Trại)' : 'Ca 2 (Lán Trại)';
+
+          const inStart = `${dateStr}T${rawIn.replace(':', '')}00`;
+          const inEnd = addMinutesToICS(dateStr, rawIn, 15);
+          const outStart = `${dateStr}T${rawOut.replace(':', '')}00`;
+          const outEnd = addMinutesToICS(dateStr, rawOut, 15);
+
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:checkin-${dateStr}-${dayKey}@lantrai`,
+            `DTSTAMP:${dateStr}T000000Z`,
+            `DTSTART:${inStart}`,
+            `DTEND:${inEnd}`,
+            `SUMMARY:⏰ CHECK-IN: ${shiftName}`,
+            'DESCRIPTION:Nhắc giờ nhận ca và điểm danh lán trại.',
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ Check-in!',
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:checkout-${dateStr}-${dayKey}@lantrai`,
+            `DTSTAMP:${dateStr}T000000Z`,
+            `DTSTART:${outStart}`,
+            `DTEND:${outEnd}`,
+            `SUMMARY:⏰ CHECK-OUT: ${shiftName}`,
+            'DESCRIPTION:Nhắc giờ bàn giao ca và check-out.',
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ Check-out!',
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+        }
+      });
+
       if (events.length === 0) {
-        alert('Tuần này chưa chọn ca làm việc nào!');
+        alert('Phạm vi tuần được chọn không có ca làm việc nào!');
         return;
       }
 
-      const icsHeader = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//LanTrai//ShiftCalendar//VI',
-        'CALSCALE:GREGORIAN',
-        'METHOD:PUBLISH'
-      ].join('\r\n');
-
-      const icsFooter = 'END:VCALENDAR';
-      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\n${icsFooter}`;
+      const icsHeader = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//LanTrai//Shift//VI', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'].join('\r\n');
+      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
 
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `lich_ca_truc_${nowDate.toISOString().slice(0, 10)}.ics`);
+      link.setAttribute('download', `lich_ca_tuan.ics`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(link.href);
-
-      showToast('Đang tải file Lịch... Hãy bấm vào tệp để mở bằng Lịch!');
+      showToast('Đang tải tệp lịch... Bấm mở tệp để nạp vào Lịch điện thoại!');
     }
 
+    // --- FORM BÁO CÁO & SUẤT ĂN ---
     function getTodayStringVN() {
       const d = new Date();
       return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
@@ -1215,49 +1512,70 @@
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
 
+    // --- CƠ CHẾ LƯU CỜ CHUÔNG TRÁNH BÁO LẶP LẠI (LOCALSTORAGE) ---
+    function getTriggeredCache() {
+      return JSON.parse(localStorage.getItem('camp_alarm_triggered') || '{}');
+    }
+    function setTriggeredCache(key) {
+      const cache = getTriggeredCache();
+      cache[key] = true;
+      localStorage.setItem('camp_alarm_triggered', JSON.stringify(cache));
+    }
+
+    // Quét giờ nhắc: Tuần hiện tại = tuần đang chọn (currentWeekIndex)
     function checkScheduler() {
       const now = new Date();
       const dateKey = localDateKey(now);
       const currentTime = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
       const currentFullMinute = `${dateKey}T${currentTime}`;
 
+      const thisWeekShifts = getShiftsForWeekIndex(currentWeekIndex);
+
       const jsDay = now.getDay();
       const currentDayKey = jsDay === 0 ? 8 : jsDay + 1;
-      const todayShift = weeklyShifts[currentDayKey] || 'off';
+      const todayShift = thisWeekShifts[currentDayKey] || 'off';
+      const triggered = getTriggeredCache();
 
+      // Kiểm tra ca trực
       if (todayShift === 'ca1') {
-        if (shiftTimes.c1_in && currentTime === shiftTimes.c1_in && !triggeredToday[`${dateKey}_c1_in`]) {
-          triggeredToday[`${dateKey}_c1_in`] = true;
+        const inKey = `${dateKey}_c1_in`;
+        if (shiftTimes.c1_in && currentTime === shiftTimes.c1_in && !triggered[inKey]) {
+          setTriggeredCache(inKey);
           startContinuousAlarm(`⏰ CHECK-IN CA 1 (${shiftTimes.c1_in})`, `Đã đến ${shiftTimes.c1_in}, chuẩn bị nhận ca!`);
         }
-        if (shiftTimes.c1_out && currentTime === shiftTimes.c1_out && !triggeredToday[`${dateKey}_c1_out`]) {
-          triggeredToday[`${dateKey}_c1_out`] = true;
+        const outKey = `${dateKey}_c1_out`;
+        if (shiftTimes.c1_out && currentTime === shiftTimes.c1_out && !triggered[outKey]) {
+          setTriggeredCache(outKey);
           startContinuousAlarm(`⏰ CHECK-OUT CA 1 (${shiftTimes.c1_out})`, `Đã đến ${shiftTimes.c1_out}, kiểm tra bàn giao và check-out!`);
         }
       } else if (todayShift === 'ca2') {
-        if (shiftTimes.c2_in && currentTime === shiftTimes.c2_in && !triggeredToday[`${dateKey}_c2_in`]) {
-          triggeredToday[`${dateKey}_c2_in`] = true;
+        const inKey = `${dateKey}_c2_in`;
+        if (shiftTimes.c2_in && currentTime === shiftTimes.c2_in && !triggered[inKey]) {
+          setTriggeredCache(inKey);
           startContinuousAlarm(`⏰ CHECK-IN CA 2 (${shiftTimes.c2_in})`, `Đã đến ${shiftTimes.c2_in}, chuẩn bị nhận ca!`);
         }
-        if (shiftTimes.c2_out && currentTime === shiftTimes.c2_out && !triggeredToday[`${dateKey}_c2_out`]) {
-          triggeredToday[`${dateKey}_c2_out`] = true;
-          startContinuousAlarm(`⏰ CHECK-OUT CA 2 (${shiftTimes.c2_out})`, `Đã đến ${shiftTimes.c2_out}, kiểm tra khóa cửa và check-out!`);
+        const outKey = `${dateKey}_c2_out`;
+        if (shiftTimes.c2_out && currentTime === shiftTimes.c2_out && !triggered[outKey]) {
+          setTriggeredCache(outKey);
+          startContinuousAlarm(`⏰ CHECK-OUT CA 2 (${shiftTimes.c2_out})`, `Đã đến ${shiftTimes.c2_out}, kiểm tra bàn giao và check-out!`);
         }
       }
 
+      // Quét nhắc hẹn báo cáo
       reports.forEach(r => {
-        if (!r.done && r.reminderTime === currentTime && !r.alarmed) {
-          r.alarmed = true;
+        const repKey = `${dateKey}_rep_${r.id}`;
+        if (!r.done && r.reminderTime === currentTime && !triggered[repKey]) {
+          setTriggeredCache(repKey);
           startContinuousAlarm(`⏰ NHẮC HẸN: ${(r.title || '').toUpperCase()}`, r.content || 'Đến giờ thực hiện!');
-          localStorage.setItem('camp_reports_v2', JSON.stringify(reports));
         }
       });
 
+      // Quét nhắc việc phát sinh
       issues.forEach(i => {
-        if (!i.done && i.reminderDateTime === currentFullMinute && !i.alarmed) {
-          i.alarmed = true;
+        const issKey = `issue_${i.id}`;
+        if (!i.done && i.reminderDateTime === currentFullMinute && !triggered[issKey]) {
+          setTriggeredCache(issKey);
           startContinuousAlarm(`⚡ ĐẾN HẸN XỬ LÝ: ${(i.title || '').toUpperCase()}`, i.content || 'Đến giờ thực hiện việc đã hẹn!');
-          localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
         }
       });
     }
@@ -1282,7 +1600,17 @@
     }
 
     function exportData() {
-      const data = { weeklyShifts, shiftTimes, reports, issues, backupDate: new Date().toISOString() };
+      let allWeeksData = {};
+      monthWeeksList.forEach(w => {
+        allWeeksData[getWeekStorageKey(w.index)] = getShiftsForWeekIndex(w.index);
+      });
+      const data = { 
+        allWeeksData,
+        shiftTimes, 
+        reports, 
+        issues, 
+        backupDate: new Date().toISOString() 
+      };
       const a = document.createElement('a');
       a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
       a.download = `so_tay_backup_${new Date().toISOString().slice(0,10)}.json`;
@@ -1298,15 +1626,18 @@
       r.onload = (evt) => {
         try {
           const d = JSON.parse(evt.target.result);
-          if (d.weeklyShifts) weeklyShifts = d.weeklyShifts;
+          if (d.allWeeksData) {
+            Object.keys(d.allWeeksData).forEach(k => {
+              localStorage.setItem(k, JSON.stringify(d.allWeeksData[k]));
+            });
+          }
           if (d.shiftTimes) shiftTimes = d.shiftTimes;
           if (d.reports) reports = d.reports;
           if (d.issues) issues = d.issues;
-          localStorage.setItem('camp_weekly_shifts', JSON.stringify(weeklyShifts));
           localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
           localStorage.setItem('camp_reports_v2', JSON.stringify(reports));
           localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
-          renderWeekGrid(); loadShiftTimeConfigUI(); renderReports(); renderIssues(); updateDashboard();
+          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); renderReports(); renderIssues(); updateDashboard();
           alert('Khôi phục dữ liệu thành công!');
         } catch(_) {
           alert('Tệp dữ liệu không hợp lệ!');
@@ -1317,6 +1648,9 @@
 
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
 
+    // Khởi tạo toàn bộ
+    updateGreetingHeader();
+    initMonthWeeksDropdown();
     renderWeekGrid();
     loadShiftTimeConfigUI();
     initMealDate();
