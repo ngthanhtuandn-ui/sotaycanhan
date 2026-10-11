@@ -774,7 +774,7 @@
       showToast('Đã cập nhật ca làm việc!');
     }
 
-    // ĐỒNG BỘ LỊCH CA VÀO GOOGLE CALENDAR / LỊCH ĐIỆN THOẠI (CHUẨN RFC 5545 CHO ANDROID)
+    // ĐỒNG BỘ LỊCH CA VÀO GOOGLE CALENDAR (CHUẨN HÓA BÁO ÂM THANH NGAY GIỜ CA)
     function exportToICSCalendar() {
       const nowDate = new Date();
       const monday = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
@@ -799,7 +799,6 @@
         const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
         const shiftName = shift === 'ca1' ? 'Ca 1 (Lán Trại)' : 'Ca 2 (Lán Trại)';
 
-        // Hàm tính thời gian kết thúc sự kiện (cộng thêm 15 phút để sự kiện hợp lệ)
         function addMinutesToICS(datePrefix, timeStr, minsToAdd) {
           const parts = timeStr.split(':');
           let hour = parseInt(parts[0], 10);
@@ -816,7 +815,7 @@
         const outStart = `${dateStr}T${rawOut.replace(':', '')}00`;
         const outEnd = addMinutesToICS(dateStr, rawOut, 15);
 
-        // Sự kiện Check-In
+        // Sự kiện Check-In (Ép kích hoạt chuông âm thanh và hiển thị ngay thời điểm 0 giây)
         events.push([
           'BEGIN:VEVENT',
           `UID:checkin-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
@@ -826,14 +825,19 @@
           `SUMMARY:⏰ CHECK-IN: ${shiftName}`,
           'DESCRIPTION:Nhắc giờ nhận ca và điểm danh lán trại.',
           'BEGIN:VALARM',
-          'TRIGGER:-PT0M',
+          'ACTION:AUDIO',
+          'TRIGGER:PT0S',
+          'DESCRIPTION:Đến giờ Check-in!',
+          'END:VALARM',
+          'BEGIN:VALARM',
           'ACTION:DISPLAY',
           'DESCRIPTION:Đến giờ Check-in!',
+          'TRIGGER:PT0S',
           'END:VALARM',
           'END:VEVENT'
         ].join('\r\n'));
 
-        // Sự kiện Check-Out
+        // Sự kiện Check-Out (Ép kích hoạt chuông âm thanh và hiển thị ngay thời điểm 0 giây)
         events.push([
           'BEGIN:VEVENT',
           `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
@@ -843,9 +847,14 @@
           `SUMMARY:⏰ CHECK-OUT: ${shiftName}`,
           'DESCRIPTION:Nhắc giờ bàn giao ca và check-out.',
           'BEGIN:VALARM',
-          'TRIGGER:-PT0M',
+          'ACTION:AUDIO',
+          'TRIGGER:PT0S',
+          'DESCRIPTION:Đến giờ Check-out!',
+          'END:VALARM',
+          'BEGIN:VALARM',
           'ACTION:DISPLAY',
           'DESCRIPTION:Đến giờ Check-out!',
+          'TRIGGER:PT0S',
           'END:VALARM',
           'END:VEVENT'
         ].join('\r\n'));
@@ -867,7 +876,6 @@
       const icsFooter = 'END:VCALENDAR';
       const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\n${icsFooter}`;
 
-      // Chuẩn hóa Blob để Android mở trực tiếp vào Lịch
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
