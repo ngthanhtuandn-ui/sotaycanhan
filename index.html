@@ -371,13 +371,28 @@
     }
     .upload-zone-input {
       position: absolute;
-      top: 0;
-      left: 0;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .upload-zone:focus-within {
+      outline: 3px solid rgba(2,132,199,.25);
+      outline-offset: 2px;
+    }
+    .upload-zone-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       width: 100%;
-      height: 100%;
-      opacity: 0;
+      min-height: 44px;
       cursor: pointer;
-      z-index: 5;
+      touch-action: manipulation;
     }
     .upload-zone-text {
       font-size: 0.82rem;
@@ -701,16 +716,19 @@
         <div class="form-group">
           <label>Ảnh đính kèm (Nén tự động)</label>
           <div class="upload-zone">
-            <input 
-              type="file" 
-              id="reportImages" 
+            <input
+              type="file"
+              id="reportImages"
               class="upload-zone-input"
-              accept="image/*" 
-              multiple 
+              accept="image/*,.jpg,.jpeg,.png,.webp,.heic,.heif"
+              multiple
               onchange="handleFilesSelected(this)"
+              aria-label="Chọn ảnh đính kèm báo cáo"
             >
-            <span class="upload-zone-text">📷 Chạm để chọn từ Thư Viện / Máy Ảnh</span>
-            <span id="fileCountBadge" class="upload-zone-badge">Chưa có ảnh</span>
+            <label class="upload-zone-label" for="reportImages">
+              <span class="upload-zone-text">📷 Chạm để chọn ảnh từ Thư viện</span>
+              <span id="fileCountBadge" class="upload-zone-badge">Chưa có ảnh</span>
+            </label>
           </div>
           <div id="tempPreviewBox" class="img-preview-box"></div>
         </div>
@@ -788,30 +806,42 @@
     async function handleFilesSelected(input) {
       const badge = document.getElementById('fileCountBadge');
       const preview = document.getElementById('tempPreviewBox');
-      preview.innerHTML = '';
-      selectedImagesBase64 = [];
+      const files = Array.from(input.files || []).filter(file =>
+        !file.type || file.type.startsWith('image/')
+      );
 
-      if (!input.files || input.files.length === 0) {
-        badge.innerText = 'Chưa có ảnh';
+      // Người dùng có thể đóng trình chọn tệp mà không chọn ảnh.
+      if (!files.length) {
+        if (!selectedImagesBase64.length) badge.innerText = 'Chưa có ảnh';
         return;
       }
 
-      badge.innerText = `Đang xử lý ${input.files.length} ảnh...`;
+      preview.innerHTML = '';
+      selectedImagesBase64 = [];
+      badge.innerText = `Đang xử lý ${files.length} ảnh...`;
+      badge.style.color = 'var(--primary)';
+      badge.style.fontWeight = '700';
 
-      for (let f of input.files) {
-        const b64 = await compressImage(f);
-        if (b64) {
+      let failed = 0;
+      for (const file of files) {
+        try {
+          const b64 = await compressImage(file);
+          if (!b64) { failed++; continue; }
           selectedImagesBase64.push(b64);
           const img = document.createElement('img');
           img.src = b64;
           img.className = 'img-thumb';
+          img.alt = 'Ảnh đính kèm';
           preview.appendChild(img);
+        } catch (_) {
+          failed++;
         }
       }
 
-      badge.innerText = `Đã chọn ${selectedImagesBase64.length} ảnh`;
-      badge.style.color = 'var(--primary)';
-      badge.style.fontWeight = '700';
+      badge.innerText = `Đã chọn ${selectedImagesBase64.length} ảnh${failed ? ` • lỗi ${failed}` : ''}`;
+      if (!selectedImagesBase64.length) {
+        showToast('Không đọc được ảnh. Hãy thử chọn ảnh JPG hoặc PNG.');
+      }
     }
 
     // --- BANNER LỜI CHÀO HÀNG NGÀY ---
@@ -1316,24 +1346,34 @@
     function compressImage(file) {
       return new Promise((resolve) => {
         try {
+          if (!file || (file.size && file.size > 30 * 1024 * 1024)) {
+            resolve(null);
+            return;
+          }
           const reader = new FileReader();
-          reader.readAsDataURL(file);
+          reader.onerror = () => resolve(null);
           reader.onload = (e) => {
             const img = new Image();
-            img.src = e.target.result;
-            img.onload = () => {
-              const canvas = document.createElement('canvas');
-              let w = img.width, h = img.height;
-              const maxW = 900;
-              if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
-              canvas.width = w; canvas.height = h;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0, w, h);
-              resolve(canvas.toDataURL('image/jpeg', 0.65));
-            };
             img.onerror = () => resolve(null);
+            img.onload = () => {
+              try {
+                let w = img.naturalWidth || img.width;
+                let h = img.naturalHeight || img.height;
+                if (!w || !h) { resolve(null); return; }
+                const maxW = 900;
+                if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) { resolve(null); return; }
+                ctx.drawImage(img, 0, 0, w, h);
+                resolve(canvas.toDataURL('image/jpeg', 0.65));
+              } catch (_) { resolve(null); }
+            };
+            img.src = e.target.result;
           };
-          reader.onerror = () => resolve(null);
+          reader.readAsDataURL(file);
         } catch (_) {
           resolve(null);
         }
@@ -1372,7 +1412,15 @@
       };
 
       reports.unshift(item);
-      localStorage.setItem('camp_reports_v2', JSON.stringify(reports));
+      try {
+        localStorage.setItem('camp_reports_v2', JSON.stringify(reports));
+      } catch (err) {
+        reports.shift();
+        btn.disabled = false;
+        btn.innerText = '+ Lưu Báo Cáo';
+        alert('Bộ nhớ trình duyệt có thể đã đầy do ảnh đính kèm. Hãy chọn ít ảnh hơn, sao lưu dữ liệu rồi xóa bớt báo cáo cũ.');
+        return;
+      }
 
       document.getElementById('reportTitle').value = '';
       document.getElementById('reportContent').value = '';
