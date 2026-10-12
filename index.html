@@ -8,6 +8,11 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <!-- Cấu hình PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
+
   <style>
     :root {
       --primary: #0284c7;
@@ -211,7 +216,7 @@
       background: #fff;
     }
 
-    /* Thanh Đồng bộ Lịch tuần dạng Dropdown Checkbox */
+    /* Thanh Đồng bộ Lịch tuần */
     .sync-calendar-panel {
       background: #f8fafc;
       border: 1px solid var(--border);
@@ -476,7 +481,6 @@
   </header>
 
   <div class="container">
-    <!-- Banner chào đón -->
     <div class="greeting-banner">
       <div class="greeting-icon">☀️</div>
       <div>
@@ -498,7 +502,6 @@
       </div>
     </div>
 
-    <!-- Cảnh báo chuông reo -->
     <div id="alarmBanner">
       <div class="alarm-content">
         <div>
@@ -509,7 +512,6 @@
       </div>
     </div>
 
-    <!-- Thanh chuyển tab -->
     <div class="nav-tabs">
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-reports" onclick="switchView('reports')">📑 Báo Cáo Ca</button>
@@ -522,7 +524,6 @@
         <div class="week-control-bar">
           <div class="week-dropdown-wrap">
             <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)">
-              <!-- Render tự động các tuần -->
             </select>
           </div>
           <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng lịch tuần này cho tất cả các tuần trong tháng">⚡ Úp Cả Tháng</button>
@@ -530,7 +531,6 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- Đồng bộ lịch tuần -->
         <div class="sync-calendar-panel">
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -546,7 +546,6 @@
           </div>
         </div>
 
-        <!-- Cài đặt giờ Báo In & Out -->
         <div class="shift-settings-box">
           <div class="shift-settings-title">
             <span>⚙️ Cài Đặt Giờ Nhắc Báo In & Out</span>
@@ -659,14 +658,13 @@
 
         <div class="form-group">
           <label>Ảnh đính kèm (Nén tự động)</label>
-          <!-- Đã bỏ capture="environment" để cho phép chọn từ thư viện hoặc chụp camera -->
+          <!-- Cho phép chọn từ Thư viện ảnh hoặc Camera linh hoạt -->
           <input type="file" id="reportImages" accept="image/*" multiple>
         </div>
 
         <button class="btn-submit" id="btnSaveReport" onclick="saveReport()">+ Lưu Báo Cáo</button>
       </div>
 
-      <!-- THANH LỌC TRA CỨU THEO NGÀY BẤT KỲ -->
       <div class="filter-date-box">
         <label>🔍 Tra cứu ngày:</label>
         <input type="date" id="filterDateInput" onchange="applyDateFilter()">
@@ -1400,7 +1398,7 @@
           <div class="card-actions">
             <button class="btn-action btn-zalo" onclick="copyReportZalo(${item.id})">📲 Copy Zalo</button>
             <button class="btn-action" onclick="toggleDoneReport(${item.id})">${item.done ? '↩ Mở lại' : '✔ Xong'}</button>
-            <button class="btn-action btn-delete" onclick="deleteReport(${item.id})">🗑 Xóa</button>
+            <button class="btn-delete btn-action" onclick="deleteReport(${item.id})">🗑 Xóa</button>
           </div>
         `;
         el.appendChild(div);
@@ -1441,7 +1439,7 @@
           <div class="card-actions">
             <button class="btn-action btn-zalo" onclick="copyIssueZalo(${item.id})">📲 Gửi Báo Việc</button>
             <button class="btn-action" onclick="toggleDoneIssue(${item.id})">${item.done ? '↩ Mở lại' : '✔ Đã Xong'}</button>
-            <button class="btn-action btn-delete" onclick="deleteIssue(${item.id})">🗑 Xóa</button>
+            <button class="btn-delete btn-action" onclick="deleteIssue(${item.id})">🗑 Xóa</button>
           </div>
         `;
         el.appendChild(div);
@@ -1526,7 +1524,6 @@
       const todayShift = thisWeekShifts[currentDayKey] || 'off';
       const triggered = getTriggeredCache();
 
-      // Kiểm tra ca trực
       if (todayShift === 'ca1') {
         const inKey = `${dateKey}_c1_in`;
         if (shiftTimes.c1_in && currentTime === shiftTimes.c1_in && !triggered[inKey]) {
@@ -1551,7 +1548,6 @@
         }
       }
 
-      // Quét nhắc hẹn báo cáo
       reports.forEach(r => {
         const repKey = `${dateKey}_rep_${r.id}`;
         if (!r.done && r.reminderTime === currentTime && !triggered[repKey]) {
@@ -1560,7 +1556,6 @@
         }
       });
 
-      // Quét nhắc việc phát sinh
       issues.forEach(i => {
         const issKey = `issue_${i.id}`;
         if (!i.done && i.reminderDateTime === currentFullMinute && !triggered[issKey]) {
@@ -1637,6 +1632,15 @@
     }
 
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
+
+    // Đăng ký Service Worker cho PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('PWA Service Worker đã sẵn sàng'))
+          .catch((err) => console.log('Lỗi đăng ký Service Worker:', err));
+      });
+    }
 
     updateGreetingHeader();
     initMonthWeeksDropdown();
