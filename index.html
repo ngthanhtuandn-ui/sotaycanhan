@@ -516,14 +516,13 @@
       <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Xử Lý</button>
     </div>
 
-    <!-- VIEW 1: LỊCH TRỰC THEO TUẦN (T2 ĐẾN CN CHUẨN XÁC) -->
+    <!-- VIEW 1: LỊCH TRỰC THEO TUẦN -->
     <div id="view-shifts">
       <div class="week-table-card">
-        <!-- Dropdown chọn tuần: Tuần hiện tại = Tuần đang chọn -->
         <div class="week-control-bar">
           <div class="week-dropdown-wrap">
             <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)">
-              <!-- Render tự động các tuần chuẩn T2 -> CN -->
+              <!-- Render tự động các tuần -->
             </select>
           </div>
           <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng lịch tuần này cho tất cả các tuần trong tháng">⚡ Úp Cả Tháng</button>
@@ -531,7 +530,7 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- Đồng bộ lịch tuần có dấu tick -->
+        <!-- Đồng bộ lịch tuần -->
         <div class="sync-calendar-panel">
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -660,7 +659,8 @@
 
         <div class="form-group">
           <label>Ảnh đính kèm (Nén tự động)</label>
-          <input type="file" id="reportImages" accept="image/*" multiple capture="environment">
+          <!-- Đã bỏ capture="environment" để cho phép chọn từ thư viện hoặc chụp camera -->
+          <input type="file" id="reportImages" accept="image/*" multiple>
         </div>
 
         <button class="btn-submit" id="btnSaveReport" onclick="saveReport()">+ Lưu Báo Cáo</button>
@@ -724,7 +724,7 @@
     }));
 
     let monthWeeksList = [];
-    let currentWeekIndex = 0; // Tuần hiện tại = tuần đang chọn
+    let currentWeekIndex = 0;
     let selectedSyncWeeks = new Set();
     let selectedFilterDate = '';
 
@@ -732,7 +732,7 @@
     let alarmInterval = null;
     let isAlarmPlaying = false;
 
-    // --- BANNER LỜI CHÀO HÀNG NGÀY CHUẨN XÁC ---
+    // --- BANNER LỜI CHÀO HÀNG NGÀY ---
     function updateGreetingHeader() {
       const now = new Date();
       const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
@@ -847,9 +847,8 @@
       const year = now.getFullYear();
       const month = now.getMonth();
       
-      // Tìm ngày Thứ 2 đầu tiên của chuỗi tuần bao phủ tháng
       const firstOfMonth = new Date(year, month, 1);
-      const dayOfWeekFirst = firstOfMonth.getDay(); // 0: CN, 1: T2...
+      const dayOfWeekFirst = firstOfMonth.getDay();
       const mondayOffset = (dayOfWeekFirst === 0) ? -6 : (1 - dayOfWeekFirst);
       let curMonday = new Date(year, month, 1 + mondayOffset);
 
@@ -867,7 +866,6 @@
           sunday: new Date(curSunday)
         });
 
-        // Nếu ngày Chủ Nhật đã bước sang tháng sau thì dừng
         if (curSunday.getMonth() !== month && curSunday > firstOfMonth) {
           break;
         }
@@ -876,7 +874,6 @@
         weekNum++;
       }
 
-      // Xác định tuần chứa ngày hôm nay làm mặc định ban đầu
       const todayTime = new Date(year, month, now.getDate()).getTime();
       let defaultIdx = 0;
       monthWeeksList.forEach((w, idx) => {
@@ -923,11 +920,9 @@
       renderSyncDropdownMenu();
     }
 
-    // Khi người dùng chọn tuần trên Dropdown: Tuần hiện tại = tuần đang chọn
     function onWeekDropdownChange(val) {
       currentWeekIndex = parseInt(val, 10);
       renderWeekGrid();
-      // Đồng thời cập nhật tuần đang chọn vào bộ đồng bộ
       selectedSyncWeeks.clear();
       selectedSyncWeeks.add(currentWeekIndex);
       renderSyncDropdownMenu();
@@ -953,7 +948,6 @@
       const menu = document.getElementById('syncDropdownMenu');
       menu.innerHTML = '';
 
-      // Tùy chọn "Cả tháng"
       const isFullMonth = (selectedSyncWeeks.size === monthWeeksList.length);
       const monthItem = document.createElement('div');
       monthItem.className = `multiselect-item ${isFullMonth ? 'selected' : ''}`;
@@ -973,7 +967,6 @@
       };
       menu.appendChild(monthItem);
 
-      // Từng Tuần 1, 2, 3...
       monthWeeksList.forEach((w) => {
         const isSelected = selectedSyncWeeks.has(w.index);
         const item = document.createElement('div');
@@ -1022,7 +1015,6 @@
       }
     }
 
-    // Render tuần: T2 luôn là ngày đầu tiên, CN là ngày cuối cùng
     function renderWeekGrid() {
       const container = document.getElementById('weekGridContainer');
       container.innerHTML = '';
@@ -1081,7 +1073,7 @@
       showToast('Đã lưu ca làm!');
     }
 
-    // --- ĐỒNG BỘ LỊCH VÀO ĐIỆN THOẠI THEO CÁC TUẦN ĐÃ CHỌN ---
+    // --- ĐỒNG BỘ LỊCH VÀO ĐIỆN THOẠI ---
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
         alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
@@ -1512,7 +1504,6 @@
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
 
-    // --- CƠ CHẾ LƯU CỜ CHUÔNG TRÁNH BÁO LẶP LẠI (LOCALSTORAGE) ---
     function getTriggeredCache() {
       return JSON.parse(localStorage.getItem('camp_alarm_triggered') || '{}');
     }
@@ -1522,7 +1513,6 @@
       localStorage.setItem('camp_alarm_triggered', JSON.stringify(cache));
     }
 
-    // Quét giờ nhắc: Tuần hiện tại = tuần đang chọn (currentWeekIndex)
     function checkScheduler() {
       const now = new Date();
       const dateKey = localDateKey(now);
@@ -1648,7 +1638,6 @@
 
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
 
-    // Khởi tạo toàn bộ
     updateGreetingHeader();
     initMonthWeeksDropdown();
     renderWeekGrid();
