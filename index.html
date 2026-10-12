@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-  <!-- Khai báo Manifest tương thích cả hai tên tệp -->
+  <!-- Khai báo Manifest tương thích PWA -->
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
@@ -351,28 +351,44 @@
     .row { display: flex; gap: 8px; }
     .row > div { flex: 1; }
 
-    /* Nút chọn ảnh tùy chỉnh cho PWA */
-    .custom-file-upload {
+    /* KHUNG CHỌN ẢNH SIÊU NHẠY CHO ANDROID & PWA */
+    .upload-zone {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 10px 12px;
+      min-height: 48px;
+      padding: 8px 12px;
       border: 1.5px dashed var(--primary);
       border-radius: 8px;
       background: #f8fafc;
-      color: var(--primary-dark);
-      font-size: 0.85rem;
-      font-weight: 600;
+      overflow: hidden;
       cursor: pointer;
     }
-    .custom-file-upload:active {
+    .upload-zone:active {
       background: #eff6ff;
     }
-    .file-status-text {
-      font-size: 0.76rem;
+    .upload-zone-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 5;
+    }
+    .upload-zone-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      pointer-events: none;
+    }
+    .upload-zone-badge {
+      font-size: 0.74rem;
       color: var(--muted);
-      font-weight: normal;
+      pointer-events: none;
     }
 
     .btn-submit {
@@ -474,7 +490,7 @@
     .btn-zalo { background: #0068ff; color: white; border: none; }
     .btn-delete { color: var(--danger); }
 
-    .img-preview-box { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+    .img-preview-box { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; margin-top: 6px; }
     .img-thumb { width: 56px; height: 56px; border-radius: 6px; object-fit: cover; border: 1px solid #cbd5e1; }
 
     #toast {
@@ -681,21 +697,22 @@
           <textarea id="reportContent" placeholder="Ghi chú chi tiết..."></textarea>
         </div>
 
-        <!-- Ô CHỌN ẢNH TỐI ƯU CHO PWA VÀ ANDROID -->
+        <!-- KHUNG CHỌN ẢNH VÔ HÌNH PHỦ KÍN VÙNG BẤM -->
         <div class="form-group">
           <label>Ảnh đính kèm (Nén tự động)</label>
-          <label for="reportImages" class="custom-file-upload">
-            <span>📷 Chọn ảnh từ Thư viện / Chụp ảnh</span>
-            <span id="fileCountBadge" class="file-status-text">Chưa chọn ảnh</span>
-          </label>
-          <input 
-            type="file" 
-            id="reportImages" 
-            accept="image/png, image/jpeg, image/jpg, image/webp" 
-            multiple 
-            style="display:none"
-            onchange="updateFileLabel(this)"
-          >
+          <div class="upload-zone">
+            <input 
+              type="file" 
+              id="reportImages" 
+              class="upload-zone-input"
+              accept="image/*" 
+              multiple 
+              onchange="handleFilesSelected(this)"
+            >
+            <span class="upload-zone-text">📷 Chạm để chọn từ Thư Viện / Máy Ảnh</span>
+            <span id="fileCountBadge" class="upload-zone-badge">Chưa có ảnh</span>
+          </div>
+          <div id="tempPreviewBox" class="img-preview-box"></div>
         </div>
 
         <button class="btn-submit" id="btnSaveReport" onclick="saveReport()">+ Lưu Báo Cáo</button>
@@ -761,23 +778,40 @@
     let currentWeekIndex = 0;
     let selectedSyncWeeks = new Set();
     let selectedFilterDate = '';
+    let selectedImagesBase64 = [];
 
     let audioCtx = null;
     let alarmInterval = null;
     let isAlarmPlaying = false;
 
-    // Cập nhật nhãn đếm số lượng ảnh đã chọn
-    function updateFileLabel(input) {
+    // Xem trước ảnh ngay khi chọn
+    async function handleFilesSelected(input) {
       const badge = document.getElementById('fileCountBadge');
-      if (input.files && input.files.length > 0) {
-        badge.innerText = `Đã chọn ${input.files.length} ảnh`;
-        badge.style.color = '#0284c7';
-        badge.style.fontWeight = '700';
-      } else {
-        badge.innerText = 'Chưa chọn ảnh';
-        badge.style.color = 'var(--muted)';
-        badge.style.fontWeight = 'normal';
+      const preview = document.getElementById('tempPreviewBox');
+      preview.innerHTML = '';
+      selectedImagesBase64 = [];
+
+      if (!input.files || input.files.length === 0) {
+        badge.innerText = 'Chưa có ảnh';
+        return;
       }
+
+      badge.innerText = `Đang xử lý ${input.files.length} ảnh...`;
+
+      for (let f of input.files) {
+        const b64 = await compressImage(f);
+        if (b64) {
+          selectedImagesBase64.push(b64);
+          const img = document.createElement('img');
+          img.src = b64;
+          img.className = 'img-thumb';
+          preview.appendChild(img);
+        }
+      }
+
+      badge.innerText = `Đã chọn ${selectedImagesBase64.length} ảnh`;
+      badge.style.color = 'var(--primary)';
+      badge.style.fontWeight = '700';
     }
 
     // --- BANNER LỜI CHÀO HÀNG NGÀY ---
@@ -1281,24 +1315,28 @@
 
     function compressImage(file) {
       return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-          const img = new Image();
-          img.src = e.target.result;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let w = img.width, h = img.height;
-            const maxW = 900;
-            if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
-            canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
-            resolve(canvas.toDataURL('image/jpeg', 0.65));
+        try {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              let w = img.width, h = img.height;
+              const maxW = 900;
+              if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, w, h);
+              resolve(canvas.toDataURL('image/jpeg', 0.65));
+            };
+            img.onerror = () => resolve(null);
           };
-          img.onerror = () => resolve(null);
-        };
-        reader.onerror = () => resolve(null);
+          reader.onerror = () => resolve(null);
+        } catch (_) {
+          resolve(null);
+        }
       });
     }
 
@@ -1308,6 +1346,8 @@
       const category = document.getElementById('reportCategory').value;
       const reminderTime = document.getElementById('reportTime').value;
       const fileInput = document.getElementById('reportImages');
+      const badge = document.getElementById('fileCountBadge');
+      const preview = document.getElementById('tempPreviewBox');
       const btn = document.getElementById('btnSaveReport');
 
       if (!title) { alert('Vui lòng nhập tiêu đề!'); return; }
@@ -1316,13 +1356,7 @@
       btn.disabled = true;
       btn.innerText = 'Đang lưu...';
 
-      let images = [];
-      if (fileInput.files.length > 0) {
-        for (let f of fileInput.files) {
-          const b64 = await compressImage(f);
-          if (b64) images.push(b64);
-        }
-      }
+      let images = [...selectedImagesBase64];
 
       const now = new Date();
       const item = {
@@ -1346,7 +1380,12 @@
       document.getElementById('mealQuantity').value = '';
       document.getElementById('mealMenu').value = '';
       fileInput.value = '';
-      updateFileLabel(fileInput);
+      selectedImagesBase64 = [];
+      preview.innerHTML = '';
+      badge.innerText = 'Chưa có ảnh';
+      badge.style.color = 'var(--muted)';
+      badge.style.fontWeight = 'normal';
+
       btn.disabled = false;
       btn.innerText = '+ Lưu Báo Cáo';
 
