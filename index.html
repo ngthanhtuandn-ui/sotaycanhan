@@ -9,7 +9,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-  <!-- Cấu hình PWA -->
+  <!-- Khai báo Manifest tương thích cả hai tên tệp -->
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
 
@@ -658,7 +659,6 @@
 
         <div class="form-group">
           <label>Ảnh đính kèm (Nén tự động)</label>
-          <!-- Cho phép chọn từ Thư viện ảnh hoặc Camera linh hoạt -->
           <input type="file" id="reportImages" accept="image/*" multiple>
         </div>
 
