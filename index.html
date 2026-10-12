@@ -351,6 +351,30 @@
     .row { display: flex; gap: 8px; }
     .row > div { flex: 1; }
 
+    /* Nút chọn ảnh tùy chỉnh cho PWA */
+    .custom-file-upload {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px dashed var(--primary);
+      border-radius: 8px;
+      background: #f8fafc;
+      color: var(--primary-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .custom-file-upload:active {
+      background: #eff6ff;
+    }
+    .file-status-text {
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-weight: normal;
+    }
+
     .btn-submit {
       width: 100%;
       background: var(--primary);
@@ -657,9 +681,21 @@
           <textarea id="reportContent" placeholder="Ghi chú chi tiết..."></textarea>
         </div>
 
+        <!-- Ô CHỌN ẢNH TỐI ƯU CHO PWA VÀ ANDROID -->
         <div class="form-group">
           <label>Ảnh đính kèm (Nén tự động)</label>
-          <input type="file" id="reportImages" accept="image/*" multiple>
+          <label for="reportImages" class="custom-file-upload">
+            <span>📷 Chọn ảnh từ Thư viện / Chụp ảnh</span>
+            <span id="fileCountBadge" class="file-status-text">Chưa chọn ảnh</span>
+          </label>
+          <input 
+            type="file" 
+            id="reportImages" 
+            accept="image/png, image/jpeg, image/jpg, image/webp" 
+            multiple 
+            style="display:none"
+            onchange="updateFileLabel(this)"
+          >
         </div>
 
         <button class="btn-submit" id="btnSaveReport" onclick="saveReport()">+ Lưu Báo Cáo</button>
@@ -729,6 +765,20 @@
     let audioCtx = null;
     let alarmInterval = null;
     let isAlarmPlaying = false;
+
+    // Cập nhật nhãn đếm số lượng ảnh đã chọn
+    function updateFileLabel(input) {
+      const badge = document.getElementById('fileCountBadge');
+      if (input.files && input.files.length > 0) {
+        badge.innerText = `Đã chọn ${input.files.length} ảnh`;
+        badge.style.color = '#0284c7';
+        badge.style.fontWeight = '700';
+      } else {
+        badge.innerText = 'Chưa chọn ảnh';
+        badge.style.color = 'var(--muted)';
+        badge.style.fontWeight = 'normal';
+      }
+    }
 
     // --- BANNER LỜI CHÀO HÀNG NGÀY ---
     function updateGreetingHeader() {
@@ -1296,6 +1346,7 @@
       document.getElementById('mealQuantity').value = '';
       document.getElementById('mealMenu').value = '';
       fileInput.value = '';
+      updateFileLabel(fileInput);
       btn.disabled = false;
       btn.innerText = '+ Lưu Báo Cáo';
 
