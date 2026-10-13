@@ -279,13 +279,7 @@
       box-shadow: 0 3px 8px rgba(202, 138, 4, 0.25);
     }
 
-    /* NÚT CHỌN ẢNH CHUẨN DI ĐỘNG (PHỦ LỚP TRONG SUỐT BẢO ĐẢM ĂN CHẠM 100%) */
-    .photo-btn-wrapper {
-      position: relative;
-      width: 100%;
-      margin-top: 4px;
-      margin-bottom: 8px;
-    }
+    /* Nút chọn ảnh đơn gọn gàng, siêu nhạy */
     .btn-media-single {
       display: flex;
       align-items: center;
@@ -293,31 +287,19 @@
       gap: 6px;
       background: #ffffff;
       border: 1.5px solid #facc15;
-      padding: 11px 16px;
+      padding: 10px 16px;
       border-radius: 10px;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #854d0e;
+      cursor: pointer;
+      margin-top: 4px;
+      margin-bottom: 8px;
       width: 100%;
       user-select: none;
       box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-      pointer-events: none; /* Sự kiện chạm được thẻ input bên trên đón nhận */
     }
-    .invisible-file-input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
-      z-index: 10;
-      -webkit-appearance: none;
-    }
-    .photo-btn-wrapper:active .btn-media-single {
-      background: #fef9c3;
-      transform: scale(0.99);
-    }
+    .btn-media-single:active { background: #fef9c3; transform: scale(0.99); }
 
     .preview-thumb-wrap { position: relative; display: inline-block; }
     .img-thumb {
@@ -344,7 +326,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 20;
     }
 
     .search-filter-box {
@@ -634,4 +615,1022 @@
     <!-- VIEW 1: LỊCH CA -->
     <div id="view-shifts">
       <div class="week-table-card">
-        <div class="week-control
+        <div class="week-control-bar">
+          <div class="week-dropdown-wrap">
+            <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)"></select>
+          </div>
+          <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng tuần này cho cả tháng">⚡ Úp Cả Tháng</button>
+        </div>
+        
+        <div class="week-grid" id="weekGridContainer"></div>
+
+        <div class="sync-calendar-panel">
+          <div class="sync-row">
+            <div class="custom-multiselect">
+              <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
+                <span id="syncDropdownLabel">Đồng bộ lịch tuần...</span>
+                <span style="font-size:0.65rem; color:var(--muted);">▲</span>
+              </button>
+              <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
+            </div>
+            <button class="btn-sync-submit" onclick="executeSelectedSync()">
+              🔔 Nạp Vào Lịch ĐT
+            </button>
+          </div>
+        </div>
+
+        <div class="shift-settings-box">
+          <div class="shift-settings-title">
+            <span>⚙️ Cài Đặt Giờ Báo Ca</span>
+            <span style="font-size:0.7rem; font-weight:normal; color:var(--muted);">Tự lưu</span>
+          </div>
+          <div class="shift-config-grid">
+            <div class="shift-config-card">
+              <h4>Ca 1 (Sáng)</h4>
+              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+            <div class="shift-config-card">
+              <h4>Ca 2 (Chiều)</h4>
+              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: NHẬT KÝ HÀNG NGÀY -->
+    <div id="view-journal" style="display:none;">
+      <div class="card-box card-journal">
+        <div class="journal-heading">
+          <span>✍️ Ghi Nhật Ký Công Việc Trong Ngày</span>
+        </div>
+
+        <div class="row form-group">
+          <div>
+            <label>Phân loại nhật ký</label>
+            <select id="journalCategory">
+              <option value="viec-ngay">📝 Công việc thường nhật</option>
+              <option value="ban-giao">🤝 Bàn giao ca trực</option>
+              <option value="su-co">⚠️ Sự việc / Lưu ý</option>
+              <option value="ghi-chu">💡 Ý tưởng / Ghi nhớ</option>
+            </select>
+          </div>
+          <div>
+            <label>Ngày ghi nhận</label>
+            <input type="date" id="journalDate">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div>
+            <label>Tiêu đề việc / nội dung chính</label>
+            <input type="text" id="journalTitle" placeholder="Ví dụ: Kiểm tra an ninh cổng, bàn giao tài sản...">
+          </div>
+          <div style="flex: 0.6;">
+            <label>Hẹn giờ nhắc (nếu có)</label>
+            <input type="time" id="journalReminderTime">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nội dung chi tiết nhật ký</label>
+          <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
+        </div>
+
+        <!-- KHU VỰC CHỌN ẢNH ĐÃ ĐƯỢC FIX LỖI HOẠT ĐỘNG TRÊN DI ĐỘNG -->
+        <div class="form-group">
+          <label>Hình ảnh minh chứng:</label>
+          <button type="button" class="btn-media-single" onclick="triggerImagePicker()">
+            📷 Chọn ảnh
+          </button>
+          <input 
+            type="file" 
+            id="hiddenJournalInput" 
+            accept="image/*,image/jpeg,image/png,image/webp" 
+            multiple 
+            style="display:none;" 
+            onchange="handleNewImages(this)"
+          >
+          <div id="journalImgPreview" class="img-preview-box"></div>
+        </div>
+
+        <button class="btn-submit btn-journal-submit" id="btnSaveJournal" onclick="saveJournalEntry()">+ Lưu Vào Nhật Ký</button>
+      </div>
+
+      <!-- TRA CỨU & TÌM KIẾM NHẬT KÝ -->
+      <div class="search-filter-box">
+        <div style="font-size:0.78rem; font-weight:700; color:#475569;">🔍 Tìm kiếm & Tra cứu nhật ký:</div>
+        <div class="search-row">
+          <input type="text" id="searchKeyword" placeholder="Nhập từ khóa cần tìm..." oninput="filterJournals()" style="flex:1;">
+          <input type="date" id="filterJournalDate" onchange="filterJournals()" style="flex:1;">
+          <button onclick="clearJournalFilter()" style="padding:0 10px; border-radius:10px; border:1px solid #cbd5e1; background:#f1f5f9; font-size:0.75rem; font-weight:700; cursor:pointer;">Hủy</button>
+        </div>
+      </div>
+
+      <div id="journalListContainer"></div>
+    </div>
+
+    <!-- VIEW 3: VIỆC CẦN XỬ LÝ -->
+    <div id="view-issues" style="display:none;">
+      <div class="card-box" style="border-left: 4px solid var(--purple);">
+        <div class="form-group">
+          <label>Tên công việc / Sự cố</label>
+          <input type="text" id="issueTitle" placeholder="Ví dụ: Sửa bóng đèn lán 3, kiểm tra bơm nước...">
+        </div>
+
+        <div class="row form-group">
+          <div>
+            <label>Mức độ</label>
+            <select id="issuePriority">
+              <option value="Gấp">🔴 Gấp</option>
+              <option value="Bình thường" selected>🟡 Bình thường</option>
+              <option value="Theo dõi">🟢 Theo dõi</option>
+            </select>
+          </div>
+          <div>
+            <label>Hẹn ngày & giờ xử lý</label>
+            <input type="datetime-local" id="issueDateTime">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nội dung chi tiết / Hướng xử lý</label>
+          <textarea id="issueContent" placeholder="Mô tả cụ thể việc cần làm..."></textarea>
+        </div>
+
+        <button class="btn-submit btn-submit-purple" onclick="saveIssue()">+ Lưu Việc Cần Xử Lý</button>
+      </div>
+
+      <div id="issuesList"></div>
+    </div>
+  </div>
+
+  <div id="toast">Thông báo</div>
+
+  <script>
+    let journals = JSON.parse(localStorage.getItem('camp_journals_v1') || localStorage.getItem('camp_reports_v2') || '[]');
+    let issues = JSON.parse(localStorage.getItem('camp_issues_v2') || '[]');
+    let shiftTimes = JSON.parse(localStorage.getItem('camp_shift_times') || JSON.stringify({
+      c1_in: '05:15', c1_out: '14:00', c2_in: '13:15', c2_out: '22:00'
+    }));
+
+    let monthWeeksList = [];
+    let currentWeekIndex = 0;
+    let selectedSyncWeeks = new Set();
+    let currentJournalImages = [];
+
+    let audioCtx = null;
+    let alarmInterval = null;
+    let isAlarmPlaying = false;
+
+    // --- 1. ICON THỜI TIẾT ĐỘNG ---
+    const weatherStates = [
+      { type: 'sunny', label: 'Trời nắng đẹp, quang đãng' },
+      { type: 'partly-cloudy', label: 'Trời dịu, có nắng và mây' },
+      { type: 'rainy', label: 'Trời có mưa, chú ý mang ô' },
+      { type: 'night', label: 'Trời đêm trong lành' }
+    ];
+    let currentWeatherIndex = 0;
+
+    function renderWeatherIcon(type) {
+      const widget = document.getElementById('weatherWidget');
+      const label = document.getElementById('weatherStatusLabel');
+      if (!widget) return;
+
+      if (type === 'sunny') {
+        widget.innerHTML = `<div class="sun-icon"></div>`;
+        if (label) label.innerText = '☀️ Trời nắng rực rỡ';
+      } else if (type === 'partly-cloudy') {
+        widget.innerHTML = `
+          <div class="partly-cloudy">
+            <div class="sun-small"></div>
+            <div class="cloud-front"></div>
+          </div>`;
+        if (label) label.innerText = '⛅ Trời dịu mát, nắng và mây';
+      } else if (type === 'rainy') {
+        widget.innerHTML = `
+          <div class="rainy-icon">
+            <div class="rain-cloud"></div>
+            <div class="rain-drop d1"></div>
+            <div class="rain-drop d2"></div>
+            <div class="rain-drop d3"></div>
+          </div>`;
+        if (label) label.innerText = '🌧️ Trời đang có mưa';
+      } else {
+        widget.innerHTML = `<div class="moon-icon"></div>`;
+        if (label) label.innerText = '🌙 Trời đêm quang đãng';
+      }
+    }
+
+    async function initWeatherDetection() {
+      const hour = new Date().getHours();
+      if (hour >= 18 || hour < 5) currentWeatherIndex = 3;
+      else if (hour >= 6 && hour <= 10) currentWeatherIndex = 1;
+      else if (hour > 10 && hour <= 15) currentWeatherIndex = 0;
+      else currentWeatherIndex = 1;
+
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          try {
+            const { latitude, longitude } = pos.coords;
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=weather_code,is_day`);
+            const data = await res.json();
+            if (data && data.current) {
+              const code = data.current.weather_code;
+              const isDay = data.current.is_day;
+              if (!isDay) currentWeatherIndex = 3;
+              else if ([0, 1].includes(code)) currentWeatherIndex = 0;
+              else if ([2, 3].includes(code)) currentWeatherIndex = 1;
+              else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) currentWeatherIndex = 2;
+              renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+            }
+          } catch (_) {}
+        }, () => {});
+      }
+    }
+
+    function cycleWeatherDemo() {
+      currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+      showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
+    }
+
+    // --- 2. XỬ LÝ ẢNH NHẬT KÝ ĐẢM BẢO CHẠY TỐT TRÊN MỌI DI ĐỘNG ---
+    function triggerImagePicker() {
+      const input = document.getElementById('hiddenJournalInput');
+      if (input) {
+        input.click();
+      }
+    }
+
+    async function handleNewImages(input) {
+      if (!input.files || input.files.length === 0) return;
+      showToast('Đang xử lý ảnh...');
+
+      for (let f of Array.from(input.files)) {
+        const b64 = await compressImage(f);
+        if (b64) currentJournalImages.push(b64);
+      }
+      renderJournalThumbnails();
+      input.value = '';
+    }
+
+    function removeJournalImage(index) {
+      currentJournalImages.splice(index, 1);
+      renderJournalThumbnails();
+    }
+
+    function renderJournalThumbnails() {
+      const container = document.getElementById('journalImgPreview');
+      container.innerHTML = '';
+      currentJournalImages.forEach((imgSrc, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'preview-thumb-wrap';
+        wrap.innerHTML = `
+          <img src="${imgSrc}" class="img-thumb" onclick="openFullImg('${imgSrc}')">
+          <button type="button" class="btn-remove-thumb" onclick="removeJournalImage(${idx})">×</button>
+        `;
+        container.appendChild(wrap);
+      });
+    }
+
+    function compressImage(file) {
+      return new Promise((resolve) => {
+        try {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              let w = img.width, h = img.height;
+              const maxW = 900;
+              if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, w, h);
+              resolve(canvas.toDataURL('image/jpeg', 0.65));
+            };
+            img.onerror = () => resolve(null);
+          };
+          reader.onerror = () => resolve(null);
+        } catch (_) {
+          resolve(null);
+        }
+      });
+    }
+
+    // --- 3. QUẢN LÝ NHẬT KÝ ---
+    function saveJournalEntry() {
+      const title = document.getElementById('journalTitle').value.trim();
+      const content = document.getElementById('journalContent').value.trim();
+      const category = document.getElementById('journalCategory').value;
+      const reminderTime = document.getElementById('journalReminderTime').value;
+      const journalDate = document.getElementById('journalDate').value || new Date().toISOString().split('T')[0];
+
+      if (!title && !content) {
+        alert('Vui lòng nhập tiêu đề hoặc nội dung nhật ký!');
+        return;
+      }
+      initAudio();
+
+      const now = new Date();
+      const newEntry = {
+        id: Date.now(),
+        title: title || 'Ghi chép trong ngày',
+        content: content,
+        category: category,
+        journalDate: journalDate,
+        reminderTime: reminderTime,
+        images: [...currentJournalImages],
+        done: false,
+        createdAt: now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN')
+      };
+
+      journals.unshift(newEntry);
+      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+
+      document.getElementById('journalTitle').value = '';
+      document.getElementById('journalContent').value = '';
+      document.getElementById('journalReminderTime').value = '';
+      currentJournalImages = [];
+      renderJournalThumbnails();
+
+      filterJournals();
+      updateDashboard();
+      showToast('Đã lưu nhật ký thành công! ✨');
+    }
+
+    function filterJournals() {
+      const keyword = (document.getElementById('searchKeyword').value || '').toLowerCase().trim();
+      const dateVal = document.getElementById('filterJournalDate').value;
+
+      let filtered = journals.filter(j => {
+        let matchWord = true;
+        let matchDate = true;
+        if (keyword) {
+          const t = (j.title || '').toLowerCase();
+          const c = (j.content || '').toLowerCase();
+          matchWord = t.includes(keyword) || c.includes(keyword);
+        }
+        if (dateVal) {
+          matchDate = j.journalDate === dateVal;
+        }
+        return matchWord && matchDate;
+      });
+
+      renderJournalList(filtered);
+    }
+
+    function clearJournalFilter() {
+      document.getElementById('searchKeyword').value = '';
+      document.getElementById('filterJournalDate').value = '';
+      renderJournalList(journals);
+    }
+
+    function renderJournalList(listToRender) {
+      const container = document.getElementById('journalListContainer');
+      container.innerHTML = '';
+
+      if (!listToRender || listToRender.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.85rem;">Không tìm thấy trang nhật ký nào.</div>`;
+        return;
+      }
+
+      const catMap = {
+        'viec-ngay': '📝 Thường nhật',
+        'ban-giao': '🤝 Bàn giao',
+        'su-co': '⚠️ Lưu ý',
+        'ghi-chu': '💡 Ghi nhớ'
+      };
+
+      listToRender.forEach(item => {
+        let imgHtml = '';
+        if (item.images && item.images.length > 0) {
+          imgHtml = `<div class="img-preview-box">` +
+            item.images.map(img => `<img src="${img}" class="img-thumb" onclick="openFullImg('${img}')">`).join('') +
+            `</div>`;
+        }
+
+        const dateParts = item.journalDate ? item.journalDate.split('-') : [];
+        const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : item.createdAt;
+
+        const div = document.createElement('div');
+        div.className = `journal-card-item ${item.done ? 'done' : ''}`;
+        div.innerHTML = `
+          <div class="card-top">
+            <span class="badge badge-journal">${catMap[item.category] || 'Nhật ký'}</span>
+            <span class="card-time">📅 ${formattedDate} (${escapeHtml(item.createdAt)})</span>
+          </div>
+          <div class="card-title">${escapeHtml(item.title)}</div>
+          ${item.reminderTime ? `<div class="card-alarm-tag">⏰ Hẹn nhắc: ${escapeHtml(item.reminderTime)}</div>` : ''}
+          <div class="card-desc">${escapeHtml(item.content) || 'Không có mô tả chi tiết'}</div>
+          ${imgHtml}
+          <div class="card-actions">
+            <button class="btn-action btn-zalo" onclick="copyJournalZalo(${item.id})">📲 Gửi Zalo</button>
+            <button class="btn-action" onclick="toggleDoneJournal(${item.id})">${item.done ? '↩ Mở lại' : '✔ Hoàn thành'}</button>
+            <button class="btn-delete btn-action" onclick="deleteJournal(${item.id})">🗑 Xóa</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleDoneJournal(id) {
+      journals = journals.map(j => j.id === id ? { ...j, done: !j.done } : j);
+      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      filterJournals();
+      updateDashboard();
+    }
+
+    function deleteJournal(id) {
+      if (confirm('Xóa mục nhật ký này?')) {
+        journals = journals.filter(j => j.id !== id);
+        localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+        filterJournals();
+        updateDashboard();
+      }
+    }
+
+    function copyJournalZalo(id) {
+      const j = journals.find(x => x.id === id);
+      if (!j) return;
+      const text = `📔 [NHẬT KÝ CA TRỰC - ${j.journalDate || ''}]\n📌 ${j.title}\n------------------\n${j.content}`;
+      navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép nhật ký để gửi Zalo!'));
+    }
+
+    // --- 4. VIEW & ĐIỀU HƯỚNG ---
+    function switchView(tab) {
+      ['shifts', 'journal', 'issues'].forEach(t => {
+        const viewEl = document.getElementById(`view-${t}`);
+        const btnEl = document.getElementById(`tabBtn-${t}`);
+        if (viewEl) viewEl.style.display = (t === tab) ? 'block' : 'none';
+        if (btnEl) {
+          btnEl.classList.remove('active', 'active-journal');
+          if (t === tab) {
+            if (t === 'journal') btnEl.classList.add('active-journal');
+            else btnEl.classList.add('active');
+          }
+        }
+      });
+    }
+
+    function updateGreetingHeader() {
+      const now = new Date();
+      const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      const dayName = days[now.getDay()];
+      const d = String(now.getDate()).padStart(2, '0');
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const y = now.getFullYear();
+      
+      const labelEl = document.getElementById('greetingDateLabel');
+      if (labelEl) labelEl.innerText = `Hôm nay ${dayName}, ngày ${d}/${m}/${y}`;
+
+      const journalDateInput = document.getElementById('journalDate');
+      if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
+    }
+
+    // --- 5. LỊCH CA & ĐỒNG BỘ CHUẨN XÁC MÚI GIỜ ---
+    function loadShiftTimeConfigUI() {
+      document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
+      document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
+      document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '13:15';
+      document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
+    }
+
+    function updateShiftTimeConfig() {
+      shiftTimes.c1_in = document.getElementById('cfg_c1_in').value;
+      shiftTimes.c1_out = document.getElementById('cfg_c1_out').value;
+      shiftTimes.c2_in = document.getElementById('cfg_c2_in').value;
+      shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
+      localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
+      showToast('Đã lưu giờ ca trực!');
+    }
+
+    function buildMonthWeeksList() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const firstOfMonth = new Date(year, month, 1);
+      const dayOfWeekFirst = firstOfMonth.getDay();
+      const mondayOffset = (dayOfWeekFirst === 0) ? -6 : (1 - dayOfWeekFirst);
+      let curMonday = new Date(year, month, 1 + mondayOffset);
+
+      monthWeeksList = [];
+      let weekNum = 1;
+      while (true) {
+        let curSunday = new Date(curMonday);
+        curSunday.setDate(curMonday.getDate() + 6);
+        monthWeeksList.push({
+          index: weekNum - 1,
+          labelNumber: weekNum,
+          monday: new Date(curMonday),
+          sunday: new Date(curSunday)
+        });
+        if (curSunday.getMonth() !== month && curSunday > firstOfMonth) break;
+        curMonday.setDate(curMonday.getDate() + 7);
+        weekNum++;
+      }
+
+      const todayTime = new Date(year, month, now.getDate()).getTime();
+      let defaultIdx = 0;
+      monthWeeksList.forEach((w, idx) => {
+        if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) defaultIdx = idx;
+      });
+      currentWeekIndex = defaultIdx;
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+    }
+
+    function getWeekStorageKey(wIdx) {
+      const w = monthWeeksList[wIdx];
+      if (!w) return `shifts_w_${wIdx}`;
+      return `camp_shifts_${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
+    }
+
+    function getShiftsForWeekIndex(wIdx) {
+      const key = getWeekStorageKey(wIdx);
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      return JSON.parse(localStorage.getItem('camp_weekly_shifts') || JSON.stringify({
+        2: "ca1", 3: "ca1", 4: "ca1", 5: "ca2", 6: "ca2", 7: "off", 8: "off"
+      }));
+    }
+
+    function initMonthWeeksDropdown() {
+      buildMonthWeeksList();
+      const select = document.getElementById('weekDropdownSelect');
+      select.innerHTML = '';
+      monthWeeksList.forEach((w) => {
+        const monLabel = `${w.monday.getDate()}/${w.monday.getMonth()+1}`;
+        const sunLabel = `${w.sunday.getDate()}/${w.sunday.getMonth()+1}`;
+        const opt = document.createElement('option');
+        opt.value = w.index;
+        opt.text = `📅 Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
+        if (w.index === currentWeekIndex) opt.selected = true;
+        select.appendChild(opt);
+      });
+      renderSyncDropdownMenu();
+    }
+
+    function onWeekDropdownChange(val) {
+      currentWeekIndex = parseInt(val, 10);
+      renderWeekGrid();
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+      renderSyncDropdownMenu();
+    }
+
+    function renderWeekGrid() {
+      const container = document.getElementById('weekGridContainer');
+      container.innerHTML = '';
+      const dayLabels = [
+        { key: 2, label: 'T2' }, { key: 3, label: 'T3' }, { key: 4, label: 'T4' },
+        { key: 5, label: 'T5' }, { key: 6, label: 'T6' }, { key: 7, label: 'T7' }, { key: 8, label: 'CN' }
+      ];
+
+      const now = new Date();
+      const currentWeekObj = monthWeeksList[currentWeekIndex];
+      if (!currentWeekObj) return;
+
+      const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
+
+      dayLabels.forEach((d, idx) => {
+        const dayDate = new Date(currentWeekObj.monday);
+        dayDate.setDate(currentWeekObj.monday.getDate() + idx);
+
+        const isToday = (dayDate.getDate() === now.getDate() && 
+                         dayDate.getMonth() === now.getMonth() && 
+                         dayDate.getFullYear() === now.getFullYear());
+
+        const savedShift = shiftsData[d.key] || 'off';
+        const isOff = (savedShift === 'off');
+        const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
+
+        const col = document.createElement('div');
+        col.className = `day-col ${isToday ? 'today' : ''} ${isOff ? 'is-off' : ''}`;
+        col.id = `col-day-${d.key}`;
+        col.innerHTML = `
+          <div class="day-name">${d.label} ${isToday ? '●' : ''}</div>
+          <span class="calendar-date">${dateLabel}</span>
+          <select class="day-shift-select" onchange="updateShift(${d.key}, this.value)">
+            <option value="off" ${savedShift === 'off' ? 'selected' : ''}>Nghỉ</option>
+            <option value="ca1" ${savedShift === 'ca1' ? 'selected' : ''}>Ca 1</option>
+            <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
+          </select>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    function updateShift(dayKey, val) {
+      const key = getWeekStorageKey(currentWeekIndex);
+      const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
+      shiftsData[dayKey] = val;
+      localStorage.setItem(key, JSON.stringify(shiftsData));
+      localStorage.setItem('camp_weekly_shifts', JSON.stringify(shiftsData));
+      const col = document.getElementById(`col-day-${dayKey}`);
+      if (col) {
+        if (val === 'off') col.classList.add('is-off');
+        else col.classList.remove('is-off');
+      }
+      showToast('Đã lưu ca làm!');
+    }
+
+    function copyCurrentWeekToAll() {
+      const curData = getShiftsForWeekIndex(currentWeekIndex);
+      if (confirm(`Áp dụng lịch này cho tất cả các tuần trong tháng?`)) {
+        monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
+        localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
+        renderWeekGrid();
+        showToast('Đã nhân rộng lịch thành công!');
+      }
+    }
+
+    function toggleSyncDropdown(e) {
+      e.stopPropagation();
+      document.getElementById('syncDropdownMenu').classList.toggle('show');
+    }
+    document.addEventListener('click', (e) => {
+      const m = document.getElementById('syncDropdownMenu');
+      if (m && m.classList.contains('show') && !e.target.closest('.custom-multiselect')) m.classList.remove('show');
+    });
+
+    function renderSyncDropdownMenu() {
+      const menu = document.getElementById('syncDropdownMenu');
+      menu.innerHTML = '';
+      const isFullMonth = (selectedSyncWeeks.size === monthWeeksList.length);
+      const mItem = document.createElement('div');
+      mItem.className = `multiselect-item ${isFullMonth ? 'selected' : ''}`;
+      mItem.innerHTML = `<span>📅 Cả tháng</span><span class="multiselect-check">✔</span>`;
+      mItem.onclick = (e) => {
+        e.stopPropagation();
+        selectedSyncWeeks.clear();
+        if (!isFullMonth) monthWeeksList.forEach(w => selectedSyncWeeks.add(w.index));
+        renderSyncDropdownMenu();
+      };
+      menu.appendChild(mItem);
+
+      monthWeeksList.forEach((w) => {
+        const isSel = selectedSyncWeeks.has(w.index);
+        const item = document.createElement('div');
+        item.className = `multiselect-item ${isSel ? 'selected' : ''}`;
+        item.innerHTML = `<span>Tuần ${w.labelNumber}</span><span class="multiselect-check">✔</span>`;
+        item.onclick = (e) => {
+          e.stopPropagation();
+          if (selectedSyncWeeks.has(w.index)) selectedSyncWeeks.delete(w.index);
+          else selectedSyncWeeks.add(w.index);
+          renderSyncDropdownMenu();
+        };
+        menu.appendChild(item);
+      });
+      const lbl = document.getElementById('syncDropdownLabel');
+      lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
+    }
+
+    // --- XUẤT LỊCH ĐIỆN THOẠI (QUY ĐỔI UTC ZULU CHUẨN XÁC, CHỐNG NHẢY 23H30) ---
+    function executeSelectedSync() {
+      if (selectedSyncWeeks.size === 0) {
+        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
+        return;
+      }
+      const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
+      exportToICSCalendarList(weekIndices);
+    }
+
+    function exportToICSCalendarList(weekIndices) {
+      let events = [];
+
+      function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
+        const [h, m] = timeStr.split(':').map(Number);
+        const dateObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
+        return dateObj.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      }
+
+      weekIndices.forEach(wIdx => {
+        const wObj = monthWeeksList[wIdx];
+        if (!wObj) return;
+        const shiftsData = getShiftsForWeekIndex(wIdx);
+
+        for (let i = 0; i < 7; i++) {
+          const dayKey = i === 6 ? 8 : i + 2;
+          const shift = shiftsData[dayKey] || 'off';
+          if (shift === 'off') continue;
+
+          const dayDate = new Date(wObj.monday);
+          dayDate.setDate(wObj.monday.getDate() + i);
+          const y = dayDate.getFullYear();
+          const m = dayDate.getMonth() + 1;
+          const d = dayDate.getDate();
+          const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+
+          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
+          const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
+          const shiftName = shift === 'ca1' ? 'Ca 1' : 'Ca 2';
+
+          const inStartUTC = toUTCICSString(y, m, d, rawIn, 0);
+          const inEndUTC = toUTCICSString(y, m, d, rawIn, 15);
+
+          const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
+          const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
+
+          // CHECK-IN
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:checkin-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
+            `DTSTAMP:${inStartUTC}`,
+            `DTSTART:${inStartUTC}`,
+            `DTEND:${inEndUTC}`,
+            `SUMMARY:⏰ CHECK-IN: ${shiftName} (${rawIn})`,
+            `DESCRIPTION:Đến giờ vào nhận ca làm việc: ${rawIn}`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ Check-in!',
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          // CHECK-OUT (Chuẩn mốc thời gian cài đặt)
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
+            `DTSTAMP:${outStartUTC}`,
+            `DTSTART:${outStartUTC}`,
+            `DTEND:${outEndUTC}`,
+            `SUMMARY:⏰ CHECK-OUT: ${shiftName} (${rawOut})`,
+            `DESCRIPTION:Đến giờ kiểm tra bàn giao và Check-out: ${rawOut}`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ Check-out!',
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+        }
+      });
+
+      if (events.length === 0) {
+        alert('Không có ca làm việc nào trong tuần đã chọn!');
+        return;
+      }
+
+      const icsHeader = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//LanTrai//Shift//VI',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH'
+      ].join('\r\n');
+
+      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
+
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `lich_ca_truc.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
+      showToast('Đang tải tệp lịch chuẩn giờ! Hãy mở tệp để thêm vào máy.');
+    }
+
+    // --- 6. VIỆC CẦN XỬ LÝ & BÁO ĐỘNG HỆ THỐNG ---
+    function saveIssue() {
+      const title = document.getElementById('issueTitle').value.trim();
+      const content = document.getElementById('issueContent').value.trim();
+      const priority = document.getElementById('issuePriority').value;
+      const reminderDateTime = document.getElementById('issueDateTime').value;
+
+      if (!title) { alert('Vui lòng nhập tên công việc!'); return; }
+      initAudio();
+
+      issues.unshift({
+        id: Date.now(),
+        title, content, priority, reminderDateTime, done: false,
+        createdAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN')
+      });
+      localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+
+      document.getElementById('issueTitle').value = '';
+      document.getElementById('issueContent').value = '';
+      document.getElementById('issueDateTime').value = '';
+
+      renderIssues();
+      updateDashboard();
+      showToast('Đã thêm việc cần làm!');
+    }
+
+    function renderIssues() {
+      const el = document.getElementById('issuesList');
+      el.innerHTML = '';
+      if (issues.length === 0) {
+        el.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:16px; font-size:0.85rem;">Không có việc cần làm.</div>`;
+        return;
+      }
+      issues.forEach(item => {
+        let reminderText = '';
+        if (item.reminderDateTime) {
+          const d = new Date(item.reminderDateTime);
+          if (!isNaN(d.getTime())) {
+            reminderText = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} - ${d.getDate()}/${d.getMonth()+1}`;
+          }
+        }
+        const div = document.createElement('div');
+        div.className = `item-card ${item.done ? 'done' : ''}`;
+        div.innerHTML = `
+          <div class="card-top">
+            <span class="badge badge-phat-sinh">${escapeHtml(item.priority)}</span>
+            <span class="card-time">${escapeHtml(item.createdAt)}</span>
+          </div>
+          <div class="card-title">${escapeHtml(item.title)}</div>
+          ${reminderText ? `<div class="card-alarm-tag">⏰ Hẹn xử lý: ${reminderText}</div>` : ''}
+          <div class="card-desc">${escapeHtml(item.content) || 'Không có mô tả chi tiết'}</div>
+          <div class="card-actions">
+            <button class="btn-action btn-zalo" onclick="copyIssueZalo(${item.id})">📲 Báo Việc</button>
+            <button class="btn-action" onclick="toggleDoneIssue(${item.id})">${item.done ? '↩ Mở lại' : '✔ Đã Xong'}</button>
+            <button class="btn-delete btn-action" onclick="deleteIssue(${item.id})">🗑 Xóa</button>
+          </div>
+        `;
+        el.appendChild(div);
+      });
+    }
+
+    function toggleDoneIssue(id) {
+      issues = issues.map(i => i.id === id ? { ...i, done: !i.done } : i);
+      localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+      renderIssues(); updateDashboard();
+    }
+
+    function deleteIssue(id) {
+      if (confirm('Xóa công việc này?')) {
+        issues = issues.filter(i => i.id !== id);
+        localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+        renderIssues(); updateDashboard();
+      }
+    }
+
+    function copyIssueZalo(id) {
+      const i = issues.find(x => x.id === id);
+      if (!i) return;
+      const text = `⚡ [CÔNG VIỆC CẦN XỬ LÝ - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
+      navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung việc!'));
+    }
+
+    function updateDashboard() {
+      const jDone = journals.filter(x => x.done).length;
+      const iDone = issues.filter(x => x.done).length;
+      document.getElementById('statJournals').textContent = journals.length;
+      document.getElementById('statJournalsSub').textContent = `${jDone} hoàn thành`;
+      document.getElementById('statIssues').textContent = issues.length;
+      document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
+    }
+
+    function initAudio() {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!audioCtx && Ctx) audioCtx = new Ctx();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      } catch (_) {}
+    }
+
+    function playBeep() {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(1200, audioCtx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.35);
+    }
+
+    function startContinuousAlarm(title, desc) {
+      initAudio();
+      document.getElementById('alarmTitle').innerText = title;
+      document.getElementById('alarmDesc').innerText = desc;
+      document.getElementById('alarmBanner').style.display = 'block';
+      if (isAlarmPlaying) return;
+      isAlarmPlaying = true;
+      playBeep();
+      alarmInterval = setInterval(playBeep, 700);
+      if ("vibrate" in navigator) navigator.vibrate([400, 200, 400, 200]);
+    }
+
+    function stopAlarm() {
+      if (alarmInterval) clearInterval(alarmInterval);
+      alarmInterval = null;
+      isAlarmPlaying = false;
+      document.getElementById('alarmBanner').style.display = 'none';
+      showToast('Đã tắt chuông báo!');
+    }
+
+    function enableSoundTest() {
+      initAudio();
+      startContinuousAlarm('🔔 THỬ NGHIỆM CHUÔNG BÁO', 'Chuông báo đang reo thử...');
+    }
+
+    function openFullImg(src) {
+      const w = window.open("");
+      if (!w) return;
+      const img = w.document.createElement('img');
+      img.src = src;
+      img.style.cssText = 'max-width:100%;height:auto;display:block;margin:auto';
+      w.document.body.appendChild(img);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2200);
+    }
+
+    function escapeHtml(t) {
+      if (!t) return '';
+      return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    async function requestNotificationPermission() {
+      if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ thông báo.'); return; }
+      try {
+        const res = await Notification.requestPermission();
+        showToast(res === 'granted' ? 'Đã bật thông báo!' : 'Chưa cấp quyền thông báo.');
+      } catch (_) {}
+    }
+
+    function exportData() {
+      let allWeeksData = {};
+      monthWeeksList.forEach(w => allWeeksData[getWeekStorageKey(w.index)] = getShiftsForWeekIndex(w.index));
+      const data = { allWeeksData, shiftTimes, journals, issues, backupDate: new Date().toISOString() };
+      const a = document.createElement('a');
+      a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+      a.download = `so_tay_nhat_ky_${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function importData(e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = (evt) => {
+        try {
+          const d = JSON.parse(evt.target.result);
+          if (d.allWeeksData) Object.keys(d.allWeeksData).forEach(k => localStorage.setItem(k, JSON.stringify(d.allWeeksData[k])));
+          if (d.shiftTimes) shiftTimes = d.shiftTimes;
+          if (d.journals || d.reports) journals = d.journals || d.reports;
+          if (d.issues) issues = d.issues;
+          localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
+          localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+          localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard();
+          alert('Khôi phục dữ liệu thành công!');
+        } catch(_) { alert('Tệp không hợp lệ!'); }
+      };
+      r.readAsText(f);
+    }
+
+    function checkScheduler() {
+      const now = new Date();
+      const currentTime = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      journals.forEach(j => {
+        if (!j.done && j.reminderTime === currentTime) {
+          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ hẹn nhật ký!');
+        }
+      });
+    }
+    setInterval(checkScheduler, 15000);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateGreetingHeader();
+      initWeatherDetection();
+      initMonthWeeksDropdown();
+      renderWeekGrid();
+      loadShiftTimeConfigUI();
+      filterJournals();
+      renderIssues();
+      updateDashboard();
+    });
+
+    document.body.addEventListener('click', () => { initAudio(); }, { once: true });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
