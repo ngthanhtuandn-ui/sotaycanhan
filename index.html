@@ -279,23 +279,24 @@
       box-shadow: 0 3px 8px rgba(202, 138, 4, 0.25);
     }
 
-    /* Nút chọn ảnh đơn gọn gàng */
+    /* Nút chọn ảnh đơn gọn gàng, siêu nhạy */
     .btn-media-single {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       background: #ffffff;
       border: 1.5px solid #facc15;
-      padding: 9px 16px;
+      padding: 10px 16px;
       border-radius: 10px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: #854d0e;
       cursor: pointer;
       margin-top: 4px;
       margin-bottom: 8px;
       width: 100%;
+      user-select: none;
       box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .btn-media-single:active { background: #fef9c3; transform: scale(0.99); }
@@ -559,7 +560,7 @@
 <body>
 
   <header>
-    <h1>📋 Sổ Tay & Lịch Ca Trực[cite: 1]</h1>
+    <h1>📋 Sổ Tay & Lịch Ca Trực</h1>
     <div class="header-btns">
       <button onclick="enableSoundTest()">🔊 Thử Chuông</button>
       <button onclick="requestNotificationPermission()">🔔 Báo</button>
@@ -587,7 +588,7 @@
         <div class="stat-label" id="statJournalsSub">0 hoàn thành</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">⚡ Việc cần xử lý[cite: 1]</div>
+        <div class="stat-label">⚡ Việc cần xử lý</div>
         <div class="stat-value" id="statIssues">0</div>
         <div class="stat-label" id="statIssuesSub">0 đang mở</div>
       </div>
@@ -698,13 +699,20 @@
           <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
         </div>
 
-        <!-- KHU VỰC CHỌN ẢNH ĐƠN GIẢN GỌN GÀNG -->
+        <!-- KHU VỰC CHỌN ẢNH ĐÃ ĐƯỢC FIX LỖI HOẠT ĐỘNG TRÊN DI ĐỘNG -->
         <div class="form-group">
           <label>Hình ảnh minh chứng:</label>
-          <label class="btn-media-single">
+          <button type="button" class="btn-media-single" onclick="triggerImagePicker()">
             📷 Chọn ảnh
-            <input type="file" accept="image/*" multiple style="display:none;" onchange="handleNewImages(this)">
-          </label>
+          </button>
+          <input 
+            type="file" 
+            id="hiddenJournalInput" 
+            accept="image/*,image/jpeg,image/png,image/webp" 
+            multiple 
+            style="display:none;" 
+            onchange="handleNewImages(this)"
+          >
           <div id="journalImgPreview" class="img-preview-box"></div>
         </div>
 
@@ -851,12 +859,19 @@
       showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
     }
 
-    // --- 2. XỬ LÝ ẢNH NHẬT KÝ ---
+    // --- 2. XỬ LÝ ẢNH NHẬT KÝ ĐẢM BẢO CHẠY TỐT TRÊN MỌI DI ĐỘNG ---
+    function triggerImagePicker() {
+      const input = document.getElementById('hiddenJournalInput');
+      if (input) {
+        input.click();
+      }
+    }
+
     async function handleNewImages(input) {
       if (!input.files || input.files.length === 0) return;
       showToast('Đang xử lý ảnh...');
 
-      for (let f of input.files) {
+      for (let f of Array.from(input.files)) {
         const b64 = await compressImage(f);
         if (b64) currentJournalImages.push(b64);
       }
@@ -1080,7 +1095,7 @@
       if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
     }
 
-    // --- 5. LỊCH CA & ĐỒNG BỘ (SỬA DỨT ĐIỂM LỆCH GIỜ BẰNG UTC CHUẨN) ---
+    // --- 5. LỊCH CA & ĐỒNG BỘ CHUẨN XÁC MÚI GIỜ ---
     function loadShiftTimeConfigUI() {
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
@@ -1278,7 +1293,7 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // --- XUẤT LỊCH ĐIỆN THOẠI (QUY ĐỔI UTC CHUẨN XÁC 100%, KHÔNG LỆCH GIỜ) ---
+    // --- XUẤT LỊCH ĐIỆN THOẠI (QUY ĐỔI UTC ZULU CHUẨN XÁC, CHỐNG NHẢY 23H30) ---
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
         alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
@@ -1291,10 +1306,8 @@
     function exportToICSCalendarList(weekIndices) {
       let events = [];
 
-      // Hàm chuyển ngày giờ Việt Nam (GMT+7) thành định dạng UTC (Zulu: Z) chuẩn tuyệt đối
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
-        // Tạo Date theo đúng giờ Việt Nam (GMT+7)
         const dateObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
         return dateObj.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       }
@@ -1343,7 +1356,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // CHECK-OUT (Đúng 22:00)
+          // CHECK-OUT (Chuẩn mốc thời gian cài đặt)
           events.push([
             'BEGIN:VEVENT',
             `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
