@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Sổ Tay & Lịch Ca Trực - Tuấn Tuấn</title>
+  <title>Sổ Tay Công Việc & Thời Khóa Biểu Gia Đình</title>
   <meta name="theme-color" content="#0284c7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,28 +97,25 @@
     }
 
     .sun-icon {
-      width: 32px;
-      height: 32px;
-      background: radial-gradient(circle, #fde047 30%, #f59e0b 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 14px #fbbf24, 0 0 28px rgba(245, 158, 11, 0.4);
-      animation: sunGlow 3s infinite alternate ease-in-out;
-      position: relative;
+      width: 34px; height: 34px; border-radius: 50%; position: relative; z-index: 1;
+      background: radial-gradient(circle at 32% 28%, #fff7b2 0 8%, #ffd34d 28%, #ffad24 66%, #f28b16 100%);
+      box-shadow: inset -3px -4px 7px rgba(194,94,0,.18), 0 0 18px rgba(255,183,40,.45);
+      animation: sunGlow 3.8s ease-in-out infinite alternate;
     }
     .sun-icon::before {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      background: repeating-conic-gradient(from 0deg, #f59e0b 0deg 15deg, transparent 15deg 30deg);
-      opacity: 0.55;
-      animation: rotateRays 12s linear infinite;
+      content: ''; position: absolute; z-index: -1; inset: -10px; border-radius: 50%;
+      background: repeating-conic-gradient(from 2deg, rgba(255,190,66,.92) 0deg 7deg, transparent 7deg 22.5deg);
+      -webkit-mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%);
+      mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%); opacity: .85;
+    }
+    .sun-icon::after {
+      content: ''; position: absolute; inset: 5px 8px auto 6px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.36); filter: blur(2px); transform: rotate(-28deg);
     }
     @keyframes sunGlow {
       0% { transform: scale(0.92); box-shadow: 0 0 10px #fbbf24; }
       100% { transform: scale(1.05); box-shadow: 0 0 20px #f59e0b, 0 0 30px rgba(245, 158, 11, 0.5); }
     }
-    @keyframes rotateRays { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     .partly-cloudy { position: relative; width: 44px; height: 38px; }
     .partly-cloudy .sun-small {
@@ -555,6 +552,32 @@
       z-index: 1000;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
+
+    /* Giao diện hoàn thiện: rõ ràng, đồng nhất và thân thiện với màn hình cảm ứng */
+    :root { --primary:#1769aa; --primary-dark:#124f85; --bg:#f3f6fb; --border:#dbe4ef; --text:#172b4d; --muted:#62748a; }
+    body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); }
+    header { background:linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%); box-shadow:0 6px 22px rgba(16,72,117,.2); }
+    .container { max-width:980px; padding:18px 16px 28px; }
+    .greeting-banner { border:1px solid #b7efd0; border-radius:22px; padding:18px 20px; box-shadow:0 10px 28px rgba(27,86,115,.07); }
+    .greeting-text-main { font-size:1.02rem; letter-spacing:-.02em; }
+    .greeting-text-sub { font-size:.88rem; } .weather-status-text { font-size:.8rem; }
+    .stats-grid { gap:12px; }
+    .stat-card,.card-box,.week-table-card,.search-filter-box { border-radius:20px !important; border:1px solid rgba(209,220,234,.9) !important; box-shadow:0 8px 24px rgba(24,55,91,.055) !important; }
+    .nav-tabs { gap:8px; padding:7px; border-radius:16px; background:rgba(226,235,246,.8); }
+    .nav-tab-btn { border-radius:12px !important; font-weight:750; transition:transform .15s ease,box-shadow .15s ease; }
+    .nav-tab-btn.active { box-shadow:0 4px 12px rgba(23,105,170,.18); }
+    button,input,select,textarea { font:inherit; } button { touch-action:manipulation; }
+    .btn-submit { border-radius:12px; box-shadow:0 5px 12px rgba(23,105,170,.14); }
+    input,select,textarea { border-radius:10px; }
+    #view-school .card-box:first-child { overflow:hidden; }
+    @media(min-width:760px) { .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .row { gap:14px; } }
+    @media(max-width:560px) {
+      header { align-items:flex-start; padding:10px 12px; } header h1 { white-space:normal; font-size:.9rem; max-width:44%; }
+      .header-btns { gap:4px; } .header-btns button { padding:7px 8px; font-size:.68rem; }
+      .container { padding:12px 10px 24px; } .greeting-banner { padding:14px; border-radius:18px; }
+      .weather-widget { width:48px; height:48px; } .nav-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .nav-tab-btn { padding:11px 7px; font-size:.78rem; } .stats-grid { gap:9px; } .stat-card { padding:13px !important; }
+    }
   </style>
 </head>
 <body>
@@ -700,25 +723,7 @@
           <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
         </div>
 
-        <!-- Dùng input file hiển thị thật, không ẩn/đè lớp phủ: ổn định hơn với Chrome Android/MIUI -->
-        <div class="form-group">
-          <label for="hiddenJournalInput">Hình ảnh minh chứng</label>
-          <div style="padding:12px;border:1px dashed #d4a017;border-radius:12px;background:linear-gradient(135deg,#fffbeb,#fff7ed);">
-            <div style="font-size:.84rem;font-weight:700;color:#854d0e;margin-bottom:8px;">📷 Chạm nút bên dưới để chọn ảnh</div>
-            <input
-              type="file"
-              id="hiddenJournalInput"
-              accept="image/*"
-              multiple
-              aria-label="Chọn ảnh minh chứng cho nhật ký"
-              style="display:block;box-sizing:border-box;width:100%;min-height:44px;padding:8px;background:#fff;border:1px solid #d6b65c;border-radius:8px;color:#334155;font-size:14px;"
-              onchange="handleNewImages(this)"
-            >
-            <div style="font-size:.72rem;color:#64748b;margin-top:6px;">Có thể chọn nhiều ảnh. Tối đa 5 ảnh cho mỗi nhật ký.</div>
-          </div>
-          <div id="journalImgPreview" class="img-preview-box"></div>
-        </div>
-
+        <!-- Chức năng đính kèm ảnh đã được bỏ theo yêu cầu; các nhật ký cũ vẫn được giữ nguyên. -->
         <button class="btn-submit btn-journal-submit" id="btnSaveJournal" onclick="saveJournalEntry()">+ Lưu Vào Nhật Ký</button>
       </div>
 
@@ -775,7 +780,7 @@
         <div style="padding:18px 16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;box-shadow:0 8px 18px rgba(99,102,241,.2);">
           <div style="font-size:1.35rem;margin-bottom:5px;">🎒 📚 ✨</div>
           <h3 style="font-size:1.08rem;margin:0 0 5px;color:#fff;">Thời khóa biểu của các con</h3>
-          <div style="font-size:.78rem;opacity:.92;">Mỗi buổi 5 tiết · Theo dõi lớp 10 và lớp 6</div>
+
         </div>
         <div class="row form-group">
           <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;"><label style="color:#4338ca;">🏫 Lớp học</label><select id="schoolClass" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#c7d2fe;"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
