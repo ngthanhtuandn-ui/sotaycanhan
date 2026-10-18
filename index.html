@@ -106,7 +106,8 @@
       content: ''; position: absolute; z-index: -1; inset: -10px; border-radius: 50%;
       background: repeating-conic-gradient(from 2deg, rgba(255,190,66,.92) 0deg 7deg, transparent 7deg 22.5deg);
       -webkit-mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%);
-      mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%); opacity: .85;
+      mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%); opacity: .9;
+      animation: sunRaysSpin 24s linear infinite; transform-origin: center;
     }
     .sun-icon::after {
       content: ''; position: absolute; inset: 5px 8px auto 6px; height: 8px; border-radius: 50%;
@@ -134,7 +135,7 @@
       position: absolute;
       bottom: 2px; left: 0;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      animation: floatCloud 3.5s ease-in-out infinite alternate;
+      animation: floatCloud 3.5s ease-in-out infinite alternate, cloudBob 2.8s ease-in-out infinite;
     }
     .partly-cloudy .cloud-front::before {
       content: ''; position: absolute; width: 14px; height: 14px; background: #e2e8f0; border-radius: 50%; top: -6px; left: 6px;
@@ -164,12 +165,24 @@
     .rain-drop.d3 { left: 29px; bottom: -1px; animation-delay: 0.5s; }
 
     @keyframes rainFall {
-      0% { transform: translateY(-5px); opacity: 0; }
+      0% { transform: translateY(-5px) translateX(0); opacity: 0; }
       50% { opacity: 1; }
-      100% { transform: translateY(8px); opacity: 0; }
+      100% { transform: translateY(8px) translateX(-2px); opacity: 0; }
     }
     @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(3px); } }
+    @keyframes cloudBob { 0%,100% { margin-bottom: 0; } 50% { margin-bottom: 2px; } }
     @keyframes floatSun { 0% { transform: translateY(0) scale(0.95); } 100% { transform: translateY(-2px) scale(1.05); } }
+    @keyframes sunRaysSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .weather-widget::after {
+      content: ''; position: absolute; inset: 2px; border: 1px solid rgba(255,255,255,.55);
+      border-radius: 50%; opacity: 0; transform: scale(.72); pointer-events: none;
+      animation: weatherHalo 3.2s ease-out infinite;
+    }
+    @keyframes weatherHalo { 0% { opacity: 0; transform: scale(.72); } 35% { opacity: .35; } 100% { opacity: 0; transform: scale(1.18); } }
+    @media (prefers-reduced-motion: reduce) {
+      .sun-icon, .sun-icon::before, .partly-cloudy .sun-small, .partly-cloudy .cloud-front,
+      .rain-cloud, .rain-drop, .moon-icon, .weather-widget::after { animation: none !important; }
+    }
 
     .moon-icon {
       width: 26px; height: 26px;
