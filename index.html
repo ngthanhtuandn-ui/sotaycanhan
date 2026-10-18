@@ -700,21 +700,22 @@
           <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
         </div>
 
-        <!-- Bộ chọn ảnh dùng input phủ trực tiếp lên vùng bấm: tương thích tốt hơn với Android/MIUI -->
+        <!-- Dùng input file hiển thị thật, không ẩn/đè lớp phủ: ổn định hơn với Chrome Android/MIUI -->
         <div class="form-group">
-          <label>Hình ảnh minh chứng:</label>
-          <label class="btn-media-single" for="hiddenJournalInput" style="position:relative;overflow:hidden;">
-            <span>📷 Chọn ảnh từ điện thoại</span>
+          <label for="hiddenJournalInput">Hình ảnh minh chứng</label>
+          <div style="padding:12px;border:1px dashed #d4a017;border-radius:12px;background:linear-gradient(135deg,#fffbeb,#fff7ed);">
+            <div style="font-size:.84rem;font-weight:700;color:#854d0e;margin-bottom:8px;">📷 Chạm nút bên dưới để chọn ảnh</div>
             <input
               type="file"
               id="hiddenJournalInput"
               accept="image/*"
               multiple
               aria-label="Chọn ảnh minh chứng cho nhật ký"
-              style="position:absolute;inset:0;width:100%;height:100%;opacity:0.001;cursor:pointer;z-index:2;margin:0;padding:0;"
+              style="display:block;box-sizing:border-box;width:100%;min-height:44px;padding:8px;background:#fff;border:1px solid #d6b65c;border-radius:8px;color:#334155;font-size:14px;"
               onchange="handleNewImages(this)"
             >
-          </label>
+            <div style="font-size:.72rem;color:#64748b;margin-top:6px;">Có thể chọn nhiều ảnh. Tối đa 5 ảnh cho mỗi nhật ký.</div>
+          </div>
           <div id="journalImgPreview" class="img-preview-box"></div>
         </div>
 
@@ -771,13 +772,16 @@
     <!-- VIEW 4: THỜI KHÓA BIỂU -->
     <div id="view-school" style="display:none;">
       <div class="card-box">
-        <h3 style="font-size:1rem;margin-bottom:8px;color:var(--primary-dark)">🎒 Thời khóa biểu của các con</h3>
-        <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Chọn lớp, buổi học và nhập môn học cho từng tiết. Dữ liệu tự lưu trên thiết bị này.</p>
-        <div class="row form-group">
-          <div><label>Lớp</label><select id="schoolClass" onchange="renderSchoolTimetable()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
-          <div><label>Buổi</label><select id="schoolShift" onchange="renderSchoolTimetable()"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select></div>
+        <div style="padding:18px 16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;box-shadow:0 8px 18px rgba(99,102,241,.2);">
+          <div style="font-size:1.35rem;margin-bottom:5px;">🎒 📚 ✨</div>
+          <h3 style="font-size:1.08rem;margin:0 0 5px;color:#fff;">Thời khóa biểu của các con</h3>
+          <div style="font-size:.78rem;opacity:.92;">Mỗi buổi 5 tiết · Theo dõi lớp 10 và lớp 6</div>
         </div>
-        <div class="form-group"><label>Ngày trong tuần</label><select id="schoolDay" onchange="renderSchoolTimetable()"><option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option></select></div>
+        <div class="row form-group">
+          <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;"><label style="color:#4338ca;">🏫 Lớp học</label><select id="schoolClass" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#c7d2fe;"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
+          <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;"><label style="color:#c2410c;">☀️ Buổi học</label><select id="schoolShift" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#fdba74;"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select></div>
+        </div>
+        <div class="form-group" style="padding:10px;border-radius:12px;background:#fdf2f8;border:1px solid #fbcfe8;"><label style="color:#9d174d;">🗓️ Ngày trong tuần</label><select id="schoolDay" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#f9a8d4;"><option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option></select></div>
         <div id="schoolLessons"></div>
         <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu thời khóa biểu</button>
         <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolDay()">Xóa nội dung buổi này</button>
@@ -882,14 +886,6 @@
     }
 
     // --- 2. XỬ LÝ ẢNH NHẬT KÝ ĐẢM BẢO CHẠY TỐT TRÊN MỌI DI ĐỘNG ---
-    function triggerImagePicker() {
-      const input = document.getElementById('hiddenJournalInput');
-      if (!input) { alert('Không tìm thấy bộ chọn ảnh. Vui lòng tải lại trang.'); return; }
-      // Android/MIUI: gọi trực tiếp từ thao tác chạm của người dùng.
-      input.value = '';
-      input.click();
-    }
-
     async function handleNewImages(input) {
       if (!input.files || input.files.length === 0) return;
       const files = Array.from(input.files).filter(f => f.type && f.type.startsWith('image/'));
@@ -1135,8 +1131,8 @@
       const host = document.getElementById('schoolLessons');
       if (!host) return;
       const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
-      host.innerHTML = '<div style="display:grid;grid-template-columns:48px 1fr;gap:7px;align-items:center;margin-bottom:10px">' +
-        [1,2,3,4,5].map((n,i) => `<label style="margin:0;padding:10px 0">Tiết ${n}</label><input id="schoolLesson${n}" maxlength="100" placeholder="Nhập môn học / ghi chú" value="${escapeHtml(saved[i] || '')}" />`).join('') + '</div>';
+      host.innerHTML = '<div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:9px;align-items:center;margin:12px 0 14px">' +
+        [1,2,3,4,5].map((n,i) => `<div style="display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 4px;border-radius:10px;background:${['#dbeafe','#dcfce7','#fef3c7','#fce7f3','#ede9fe'][i]};color:${['#1d4ed8','#166534','#92400e','#9d174d','#5b21b6'][i]};font-size:.78rem;font-weight:800;">📖 Tiết ${n}</div><input id="schoolLesson${n}" maxlength="100" placeholder="Môn học / ghi chú tiết ${n}" value="${escapeHtml(saved[i] || '')}" style="min-width:0;border-radius:10px;border:1px solid #cbd5e1;background:#fff;padding:11px;" />`).join('') + '</div>';
       renderSchoolTodaySummary();
     }
     function saveSchoolTimetable() {
