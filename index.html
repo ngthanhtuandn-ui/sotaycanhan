@@ -225,7 +225,7 @@
     }
 
     /* Tabs */
-    .nav-tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+    .nav-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
     .nav-tab-btn {
       padding: 10px 4px;
       border-radius: 12px;
@@ -610,6 +610,7 @@
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">📔 Nhật Ký</button>
       <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Làm</button>
+      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">🎒 Thời khóa biểu</button>
     </div>
 
     <!-- VIEW 1: LỊCH CA -->
@@ -709,8 +710,8 @@
             type="file" 
             id="hiddenJournalInput" 
             accept="image/*,image/jpeg,image/png,image/webp" 
-            multiple 
-            style="display:none;" 
+            multiple
+            style="position:absolute;width:1px;height:1px;opacity:0.01;left:-10000px;"
             onchange="handleNewImages(this)"
           >
           <div id="journalImgPreview" class="img-preview-box"></div>
@@ -764,6 +765,26 @@
       </div>
 
       <div id="issuesList"></div>
+    </div>
+
+    <!-- VIEW 4: THỜI KHÓA BIỂU -->
+    <div id="view-school" style="display:none;">
+      <div class="card-box">
+        <h3 style="font-size:1rem;margin-bottom:8px;color:var(--primary-dark)">🎒 Thời khóa biểu của các con</h3>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Chọn lớp, buổi học và nhập môn học cho từng tiết. Dữ liệu tự lưu trên thiết bị này.</p>
+        <div class="row form-group">
+          <div><label>Lớp</label><select id="schoolClass" onchange="renderSchoolTimetable()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
+          <div><label>Buổi</label><select id="schoolShift" onchange="renderSchoolTimetable()"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select></div>
+        </div>
+        <div class="form-group"><label>Ngày trong tuần</label><select id="schoolDay" onchange="renderSchoolTimetable()"><option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option></select></div>
+        <div id="schoolLessons"></div>
+        <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu thời khóa biểu</button>
+        <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolDay()">Xóa nội dung buổi này</button>
+      </div>
+      <div class="card-box">
+        <h3 style="font-size:.9rem;margin-bottom:8px">📌 Xem nhanh trong ngày</h3>
+        <div id="schoolTodaySummary" style="font-size:.85rem;line-height:1.7"></div>
+      </div>
     </div>
   </div>
 
@@ -862,21 +883,32 @@
     // --- 2. XỬ LÝ ẢNH NHẬT KÝ ĐẢM BẢO CHẠY TỐT TRÊN MỌI DI ĐỘNG ---
     function triggerImagePicker() {
       const input = document.getElementById('hiddenJournalInput');
-      if (input) {
-        input.click();
-      }
+      if (!input) { alert('Không tìm thấy bộ chọn ảnh. Vui lòng tải lại trang.'); return; }
+      // Android/MIUI: gọi trực tiếp từ thao tác chạm của người dùng.
+      input.value = '';
+      input.click();
     }
 
     async function handleNewImages(input) {
       if (!input.files || input.files.length === 0) return;
-      showToast('Đang xử lý ảnh...');
-
-      for (let f of Array.from(input.files)) {
-        const b64 = await compressImage(f);
-        if (b64) currentJournalImages.push(b64);
+      const files = Array.from(input.files).filter(f => f.type && f.type.startsWith('image/'));
+      if (!files.length) { showToast('Vui lòng chọn tệp hình ảnh.'); input.value=''; return; }
+      if (currentJournalImages.length + files.length > 5) {
+        alert('Mỗi nhật ký chỉ nên đính kèm tối đa 5 ảnh để tránh đầy bộ nhớ điện thoại.');
+        input.value = ''; return;
       }
-      renderJournalThumbnails();
-      input.value = '';
+      showToast('Đang tối ưu ảnh, vui lòng chờ...');
+      try {
+        for (const file of files) {
+          const b64 = await compressImage(file);
+          if (b64) currentJournalImages.push(b64);
+          else showToast('Có ảnh không đọc được; hãy thử ảnh JPG/PNG khác.');
+        }
+        renderJournalThumbnails();
+        if (currentJournalImages.length) showToast('Đã thêm ảnh vào nhật ký.');
+      } catch (err) {
+        alert('Không đọc được ảnh. Hãy thử chọn lại ảnh trong Thư viện của điện thoại.');
+      } finally { input.value = ''; }
     }
 
     function removeJournalImage(index) {
@@ -890,38 +922,42 @@
       currentJournalImages.forEach((imgSrc, idx) => {
         const wrap = document.createElement('div');
         wrap.className = 'preview-thumb-wrap';
-        wrap.innerHTML = `
-          <img src="${imgSrc}" class="img-thumb" onclick="openFullImg('${imgSrc}')">
-          <button type="button" class="btn-remove-thumb" onclick="removeJournalImage(${idx})">×</button>
-        `;
-        container.appendChild(wrap);
+        const img = document.createElement('img');
+        img.src = imgSrc; img.className = 'img-thumb'; img.alt = 'Ảnh nhật ký';
+        img.addEventListener('click', () => openFullImg(imgSrc));
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'btn-remove-thumb'; btn.textContent = '×';
+        btn.addEventListener('click', () => removeJournalImage(idx));
+        wrap.append(img, btn); container.appendChild(wrap);
       });
     }
 
     function compressImage(file) {
       return new Promise((resolve) => {
-        try {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            const img = new Image();
-            img.src = e.target.result;
-            img.onload = () => {
+        const reader = new FileReader();
+        reader.onerror = () => resolve(null);
+        reader.onload = () => {
+          const img = new Image();
+          img.onerror = () => resolve(null);
+          img.onload = () => {
+            try {
               const canvas = document.createElement('canvas');
-              let w = img.width, h = img.height;
-              const maxW = 900;
-              if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
+              const maxSide = 800;
+              const scale = Math.min(1, maxSide / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+              const w = Math.max(1, Math.round((img.naturalWidth || img.width) * scale));
+              const h = Math.max(1, Math.round((img.naturalHeight || img.height) * scale));
               canvas.width = w; canvas.height = h;
               const ctx = canvas.getContext('2d');
+              if (!ctx) { resolve(null); return; }
               ctx.drawImage(img, 0, 0, w, h);
-              resolve(canvas.toDataURL('image/jpeg', 0.65));
-            };
-            img.onerror = () => resolve(null);
+              // JPEG nén mạnh hơn, giảm nguy cơ vượt giới hạn lưu trữ trên Android.
+              resolve(canvas.toDataURL('image/jpeg', 0.5));
+              canvas.width = 0; canvas.height = 0;
+            } catch (_) { resolve(null); }
           };
-          reader.onerror = () => resolve(null);
-        } catch (_) {
-          resolve(null);
-        }
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
       });
     }
 
@@ -953,7 +989,13 @@
       };
 
       journals.unshift(newEntry);
-      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      try {
+        localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      } catch (err) {
+        journals.shift();
+        alert('Bộ nhớ trình duyệt đã đầy nên chưa lưu được nhật ký. Hãy sao lưu dữ liệu, xóa bớt nhật ký/ảnh cũ rồi thử lại.');
+        return;
+      }
 
       document.getElementById('journalTitle').value = '';
       document.getElementById('journalContent').value = '';
@@ -1066,7 +1108,7 @@
 
     // --- 4. VIEW & ĐIỀU HƯỚNG ---
     function switchView(tab) {
-      ['shifts', 'journal', 'issues'].forEach(t => {
+      ['shifts', 'journal', 'issues', 'school'].forEach(t => {
         const viewEl = document.getElementById(`view-${t}`);
         const btnEl = document.getElementById(`tabBtn-${t}`);
         if (viewEl) viewEl.style.display = (t === tab) ? 'block' : 'none';
@@ -1078,6 +1120,50 @@
           }
         }
       });
+    }
+
+    // --- THỜI KHÓA BIỂU LỚP 10 / LỚP 6 ---
+    const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+    function getSchoolKey() {
+      return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
+    }
+    function getSchoolData() {
+      try { return JSON.parse(localStorage.getItem('family_timetable_v1') || '{}'); } catch (_) { return {}; }
+    }
+    function renderSchoolTimetable() {
+      const host = document.getElementById('schoolLessons');
+      if (!host) return;
+      const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
+      host.innerHTML = '<div style="display:grid;grid-template-columns:48px 1fr;gap:7px;align-items:center;margin-bottom:10px">' +
+        [1,2,3,4,5].map((n,i) => `<label style="margin:0;padding:10px 0">Tiết ${n}</label><input id="schoolLesson${n}" maxlength="100" placeholder="Nhập môn học / ghi chú" value="${escapeHtml(saved[i] || '')}" />`).join('') + '</div>';
+      renderSchoolTodaySummary();
+    }
+    function saveSchoolTimetable() {
+      const data = getSchoolData();
+      data[getSchoolKey()] = [1,2,3,4,5].map(n => document.getElementById('schoolLesson'+n).value.trim());
+      try {
+        localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+        showToast('Đã lưu thời khóa biểu!');
+        renderSchoolTodaySummary();
+      } catch (_) { alert('Bộ nhớ trình duyệt đầy, chưa thể lưu thời khóa biểu. Hãy sao lưu và giải phóng bộ nhớ.'); }
+    }
+    function clearSchoolDay() {
+      if (!confirm('Xóa thời khóa biểu của lớp/buổi/ngày đang chọn?')) return;
+      const data = getSchoolData(); delete data[getSchoolKey()];
+      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+      renderSchoolTimetable(); showToast('Đã xóa nội dung buổi học.');
+    }
+    function renderSchoolTodaySummary() {
+      const host = document.getElementById('schoolTodaySummary');
+      if (!host) return;
+      const data = getSchoolData(), day = new Date().getDay();
+      const rows = ['10','6'].map(cls => {
+        const morning = data[`${cls}_morning_${day}`] || [];
+        const afternoon = data[`${cls}_afternoon_${day}`] || [];
+        const fmt = arr => arr.some(x => x) ? arr.map((x,i) => x ? `Tiết ${i+1}: ${escapeHtml(x)}` : '').filter(Boolean).join(' · ') : 'Chưa nhập';
+        return `<div style="padding:8px;border-bottom:1px solid var(--border)"><b>Lớp ${cls}</b><br>🌅 Sáng: ${fmt(morning)}<br>🌇 Chiều: ${fmt(afternoon)}</div>`;
+      });
+      host.innerHTML = `<b>${schoolDays[day]} hôm nay</b>` + rows.join('');
     }
 
     function updateGreetingHeader() {
@@ -1424,6 +1510,7 @@
 
       renderIssues();
       updateDashboard();
+      renderSchoolTimetable();
       showToast('Đã thêm việc cần làm!');
     }
 
@@ -1572,7 +1659,7 @@
     function exportData() {
       let allWeeksData = {};
       monthWeeksList.forEach(w => allWeeksData[getWeekStorageKey(w.index)] = getShiftsForWeekIndex(w.index));
-      const data = { allWeeksData, shiftTimes, journals, issues, backupDate: new Date().toISOString() };
+      const data = { allWeeksData, shiftTimes, journals, issues, familyTimetable: localStorage.getItem('family_timetable_v1') || '{}', backupDate: new Date().toISOString() };
       const a = document.createElement('a');
       a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
       a.download = `so_tay_nhat_ky_${new Date().toISOString().slice(0,10)}.json`;
@@ -1592,10 +1679,11 @@
           if (d.shiftTimes) shiftTimes = d.shiftTimes;
           if (d.journals || d.reports) journals = d.journals || d.reports;
           if (d.issues) issues = d.issues;
+          if (d.familyTimetable) localStorage.setItem('family_timetable_v1', typeof d.familyTimetable === 'string' ? d.familyTimetable : JSON.stringify(d.familyTimetable));
           localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
           localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
           localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
-          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard();
+          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard(); renderSchoolTimetable();
           alert('Khôi phục dữ liệu thành công!');
         } catch(_) { alert('Tệp không hợp lệ!'); }
       };
@@ -1622,6 +1710,7 @@
       filterJournals();
       renderIssues();
       updateDashboard();
+      renderSchoolTimetable();
     });
 
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
