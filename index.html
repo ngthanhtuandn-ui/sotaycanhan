@@ -83,11 +83,11 @@
     .greeting-text-sub { font-size: 0.78rem; font-weight: 600; color: #047857; }
     .weather-status-text { font-size: 0.72rem; color: #64748b; font-weight: 600; }
 
-    /* ICON THỜI TIẾT ANIMATED */
+    /* HIỆU ỨNG MẶT TRỜI XOAY CÓ TIA NẮNG RỰC RỠ */
     .weather-widget {
       position: relative;
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,23 +95,52 @@
       flex-shrink: 0;
     }
 
-    /* 1. Nắng */
-    .sun-icon {
-      width: 28px; height: 28px; border-radius: 50%; position: relative;
-      background: radial-gradient(circle at 35% 30%, #fffbeb 0%, #f59e0b 60%, #d97706 100%);
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
-      animation: sunPulse 3s ease-in-out infinite alternate;
+    .sun-animated-wrap {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .sun-icon::before {
-      content: ''; position: absolute; inset: -7px; border-radius: 50%;
-      background: repeating-conic-gradient(from 0deg, rgba(245, 158, 11, 0.8) 0deg 10deg, transparent 10deg 30deg);
-      animation: sunSpin 18s linear infinite;
-      z-index: -1;
-    }
-    @keyframes sunPulse { 0% { transform: scale(0.92); } 100% { transform: scale(1.08); } }
-    @keyframes sunSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    /* 2. Có mây */
+    /* Tâm mặt trời */
+    .sun-core {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff7b2 0%, #fbbf24 45%, #ea580c 100%);
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.8), inset -2px -2px 4px rgba(194, 65, 12, 0.4);
+      z-index: 2;
+      animation: sunGlow 3s ease-in-out infinite alternate;
+    }
+
+    /* Các tia nắng xoay tròn */
+    .sun-rays {
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(
+        from 0deg,
+        #f59e0b 0deg 8deg,
+        transparent 8deg 30deg
+      );
+      -webkit-mask: radial-gradient(circle, transparent 0 54%, #000 56% 100%);
+      mask: radial-gradient(circle, transparent 0 54%, #000 56% 100%);
+      z-index: 1;
+      animation: sunRaysSpin 16s linear infinite;
+    }
+
+    @keyframes sunGlow {
+      0% { transform: scale(0.92); box-shadow: 0 0 10px rgba(245, 158, 11, 0.6); }
+      100% { transform: scale(1.06); box-shadow: 0 0 20px rgba(245, 158, 11, 0.95); }
+    }
+    @keyframes sunRaysSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Có mây */
     .partly-cloudy { position: relative; width: 40px; height: 34px; }
     .partly-cloudy .sun-small {
       width: 18px; height: 18px; background: #f59e0b; border-radius: 50%;
@@ -130,7 +159,7 @@
     @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(4px); } }
     @keyframes floatSun { 0% { transform: translateY(0); } 100% { transform: translateY(-3px); } }
 
-    /* 3. Mưa */
+    /* Mưa */
     .rainy-icon { position: relative; width: 38px; height: 36px; }
     .rain-cloud {
       width: 32px; height: 16px; background: #94a3b8; border-radius: 12px;
@@ -146,7 +175,7 @@
     .rain-drop.d3 { left: 24px; bottom: 0px; animation-delay: 0.45s; }
     @keyframes rainDropFall { 0% { transform: translateY(-4px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
 
-    /* 4. Trăng Đêm */
+    /* Trăng Đêm */
     .night-icon-wrap { position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
     .moon-crescent {
       width: 22px; height: 22px; border-radius: 50%;
@@ -162,7 +191,7 @@
     @keyframes moonSway { 0% { transform: rotate(-5deg); filter: drop-shadow(0 0 3px #fde047); } 100% { transform: rotate(5deg); filter: drop-shadow(0 0 8px #facc15); } }
     @keyframes starBlink { 0% { opacity: 0.2; transform: scale(0.6); } 100% { opacity: 1; transform: scale(1.3); } }
 
-    /* BẢNG ĐIỀU HƯỚNG TAB TINH GỌN */
+    /* BẢNG ĐIỀU HƯỚNG TAB */
     .nav-tabs {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -205,7 +234,7 @@
       box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
     }
 
-    /* LƯỚI LỊCH & FIX LỖI MÀU ĐỎ NGÀY NGHỈ (OFF) */
+    /* LƯỚI LỊCH */
     .week-table-card {
       background: white;
       border-radius: 16px;
@@ -248,7 +277,7 @@
     }
     .day-col.today { outline: 2px solid #38bdf8; }
 
-    /* FIX MÀU ĐỎ NỔI BẬT CHO NGÀY OFF */
+    /* MÀU ĐỎ NỔI BẬT CHO NGÀY OFF TRÊN ỨNG DỤNG */
     .day-col.is-off {
       background-color: #fee2e2 !important;
       border: 1.5px solid #f87171 !important;
@@ -262,13 +291,13 @@
       font-weight: 800 !important;
     }
 
-    /* MÀU CHO CA 1 */
+    /* MÀU CA 1 */
     .day-col.is-ca1 { background-color: #e0f2fe !important; border: 1.5px solid #38bdf8 !important; }
     .day-col.is-ca1 .day-name { color: #0284c7 !important; font-weight: 800; }
     .day-col.is-ca1 .calendar-date { color: #0369a1 !important; font-weight: 700; }
     .day-col.is-ca1 .day-shift-select { border-color: #7dd3fc !important; color: #0369a1 !important; background: #fff !important; font-weight: 800; }
 
-    /* MÀU CHO CA 2 */
+    /* MÀU CA 2 */
     .day-col.is-ca2 { background-color: #fef9c3 !important; border: 1.5px solid #facc15 !important; }
     .day-col.is-ca2 .day-name { color: #b45309 !important; font-weight: 800; }
     .day-col.is-ca2 .calendar-date { color: #d97706 !important; font-weight: 700; }
@@ -283,11 +312,11 @@
 
     /* NÚT ĐỒNG BỘ */
     .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin-top: 8px; }
-    .sync-row { display: flex; gap: 6px; flex-wrap: wrap; }
-    .custom-multiselect { flex: 1.2; position: relative; min-width: 150px; }
+    .sync-row { display: flex; gap: 6px; }
+    .custom-multiselect { flex: 1.1; position: relative; }
     .multiselect-toggle-btn {
       width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px;
-      font-size: 0.76rem; font-weight: 750; padding: 8px 10px; color: #334155; text-align: left;
+      font-size: 0.76rem; font-weight: 750; padding: 9px 10px; color: #334155; text-align: left;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center;
     }
     .multiselect-dropdown {
@@ -301,49 +330,29 @@
     .multiselect-check { color: var(--primary); display: none; }
     .multiselect-item.selected .multiselect-check { display: inline-block; }
 
-    .sync-actions-group { display: flex; gap: 6px; flex: 1.5; }
     .btn-sync-submit {
-      flex: 1; background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
-      border: none; padding: 8px 6px; border-radius: 8px; font-size: 0.74rem; font-weight: 750; cursor: pointer; text-align: center;
+      flex: 1.2; background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      border: none; padding: 9px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 750; cursor: pointer; text-align: center;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
     }
-    .btn-sync-split {
-      background: #ecfdf5; border: 1px solid #86efac; color: #065f46;
-      padding: 8px 8px; border-radius: 8px; font-size: 0.72rem; font-weight: 750; cursor: pointer; white-space: nowrap;
-    }
+    .btn-sync-submit:active { transform: scale(0.98); opacity: 0.9; }
 
-    /* THỜI KHÓA BIỂU & MÀU SẮC TỪNG TIẾT */
+    /* THỜI KHÓA BIỂU */
     .timetable-lesson-grid { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 12px; }
     .lesson-input-row { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 6px; align-items: center; }
-    .lesson-tag {
-      padding: 9px 4px; border-radius: 9px; font-size: 0.76rem; font-weight: 800; text-align: center;
-    }
+    .lesson-tag { padding: 9px 4px; border-radius: 9px; font-size: 0.76rem; font-weight: 800; text-align: center; }
     .tag-t1 { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
     .tag-t2 { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
     .tag-t3 { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
     .tag-t4 { background: #fce7f3; color: #be185d; border: 1px solid #fbcfe8; }
     .tag-t5 { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; }
 
-    /* HUY HIỆU VÀNG NHẠT Ở PHẦN XEM NHANH */
     .quick-lesson-badge {
-      display: inline-block;
-      background: #fef9c3;
-      color: #854d0e;
-      border: 1px solid #fde047;
-      font-weight: 800;
-      font-size: 0.74rem;
-      padding: 2px 7px;
-      border-radius: 6px;
-      margin-right: 6px;
-      box-shadow: 0 1px 2px rgba(133, 77, 14, 0.08);
-      white-space: nowrap;
+      display: inline-block; background: #fef9c3; color: #854d0e; border: 1px solid #fde047;
+      font-weight: 800; font-size: 0.74rem; padding: 2px 7px; border-radius: 6px; margin-right: 6px;
+      box-shadow: 0 1px 2px rgba(133, 77, 14, 0.08); white-space: nowrap;
     }
-    .quick-lesson-item {
-      display: flex;
-      align-items: center;
-      padding: 4px 0;
-      font-size: 0.83rem;
-      color: #1e293b;
-    }
+    .quick-lesson-item { display: flex; align-items: center; padding: 4px 0; font-size: 0.83rem; color: #1e293b; }
 
     .form-group { margin-bottom: 10px; }
     label { display: block; font-size: 0.76rem; font-weight: 700; margin-bottom: 3px; color: var(--muted); }
@@ -368,8 +377,8 @@
     }
 
     @media(max-width:560px) {
-      .sync-actions-group { flex-direction: column; width: 100%; }
       .header-btns button { padding: 5px 6px; font-size: 0.65rem; }
+      .sync-row { flex-direction: column; }
     }
   </style>
 </head>
@@ -387,14 +396,14 @@
   </header>
 
   <div class="container">
-    <!-- BANNER LỜI CHÀO & ICON THỜI TIẾT ĐỘNG -->
+    <!-- LỜI CHÀO & ICON THỜI TIẾT ĐỘNG XOAY CÓ TIA -->
     <div class="greeting-banner">
       <div class="greeting-info">
         <div class="greeting-text-main">Xin chào Tuấn Tuấn ✨</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
-        <div class="weather-status-text" id="weatherStatusLabel">Đang tải thời tiết...</div>
+        <div class="weather-status-text" id="weatherStatusLabel">Trời nắng rực rỡ</div>
       </div>
-      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển thời tiết thử nghiệm"></div>
+      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển hiệu ứng thời tiết"></div>
     </div>
 
     <!-- TABS ĐIỀU HƯỚNG GỌN GÀNG -->
@@ -417,7 +426,7 @@
 
         <div class="sync-calendar-panel">
           <div style="font-size:0.74rem; font-weight:700; color:#475569; margin-bottom:5px;">
-            📲 Nạp Google Lịch điện thoại:
+            📲 Nạp Google Lịch điện thoại (Tự phân biệt màu 🔵 Ca 1 / 🟡 Ca 2 / 🔴 Nghỉ):
           </div>
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -427,14 +436,9 @@
               </button>
               <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
             </div>
-            <div class="sync-actions-group">
-              <button class="btn-sync-submit" onclick="executeSelectedSync('all')" title="Gắn chấm tròn màu trực quan 🔵/🟡">
-                📲 Nạp Google Lịch (Chuẩn Màu)
-              </button>
-              <button class="btn-sync-split" onclick="exportSplitCalendars()" title="Tách 2 file Ca 1 & Ca 2 riêng biệt">
-                ⚡ Tách 2 Lịch Riêng
-              </button>
-            </div>
+            <button class="btn-sync-submit" onclick="executeSelectedSync()" title="Nhấn để tự động nạp lịch vào điện thoại hoặc máy tính">
+              📲 Nạp Google Lịch
+            </button>
           </div>
         </div>
 
@@ -531,7 +535,6 @@
           </select>
         </div>
         
-        <!-- CÁC TIẾT HỌC MỖI TIẾT 1 MÀU KHÁC NHAU -->
         <div id="schoolLessons" class="timetable-lesson-grid"></div>
 
         <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu Thời Khóa Biểu</button>
@@ -559,7 +562,7 @@
     let selectedSyncWeeks = new Set();
     let audioCtx = null;
 
-    // 1. ANIMATED WEATHER
+    // 1. ANIMATED WEATHER VỚI MẶT TRỜI XOAY TIA NẮNG
     const weatherStates = [
       { type: 'sunny', label: 'Trời nắng rực rỡ' },
       { type: 'partly-cloudy', label: 'Trời dịu mát, có mây' },
@@ -574,7 +577,11 @@
       if (!widget) return;
 
       if (type === 'sunny') {
-        widget.innerHTML = `<div class="sun-icon"></div>`;
+        widget.innerHTML = `
+          <div class="sun-animated-wrap">
+            <div class="sun-rays"></div>
+            <div class="sun-core"></div>
+          </div>`;
         if (label) label.innerText = '☀️ Trời nắng rực rỡ';
       } else if (type === 'partly-cloudy') {
         widget.innerHTML = `
@@ -625,7 +632,7 @@
       });
     }
 
-    // 3. LỊCH CA & FIX LỖI MÀU ĐỎ NGÀY OFF
+    // 3. LỊCH CA & GIỜ BÁO
     function loadShiftTimeConfigUI() {
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
@@ -741,7 +748,6 @@
         const savedShift = shiftsData[d.key] || 'off';
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
-        // Gán class chuẩn xác: Nghỉ -> is-off (Đỏ)
         let shiftClass = 'is-off';
         if (savedShift === 'ca1') shiftClass = 'is-ca1';
         else if (savedShift === 'ca2') shiftClass = 'is-ca2';
@@ -830,8 +836,8 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // ĐỒNG BỘ LỊCH VỚI EMOJI MÀU
-    function buildICSEvents(weekIndices, filterShift = 'all') {
+    // 4. NẠP LỊCH GOOGLE (CÓ ĐẦY ĐỦ 🔴 NGÀY OFF, 🔵 CA 1, 🟡 CA 2)
+    function buildICSEvents(weekIndices) {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
@@ -847,8 +853,6 @@
         for (let i = 0; i < 7; i++) {
           const dayKey = i === 6 ? 8 : i + 2;
           const shift = shiftsData[dayKey] || 'off';
-          if (shift === 'off') continue;
-          if (filterShift !== 'all' && shift !== filterShift) continue;
 
           const dayDate = new Date(wObj.monday);
           dayDate.setDate(wObj.monday.getDate() + i);
@@ -857,6 +861,34 @@
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
+          // TẠO SỰ KIỆN MÀU ĐỎ CHO NGÀY OFF
+          if (shift === 'off') {
+            const nextDayDate = new Date(dayDate);
+            nextDayDate.setDate(nextDayDate.getDate() + 1);
+            const ny = nextDayDate.getFullYear();
+            const nm = nextDayDate.getMonth() + 1;
+            const nd = nextDayDate.getDate();
+            const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
+
+            events.push([
+              'BEGIN:VEVENT',
+              `UID:off-${dateStr}-${dayKey}@lantrai`,
+              `DTSTAMP:${dateStr}T000000Z`,
+              `DTSTART;VALUE=DATE:${dateStr}`,
+              `DTEND;VALUE=DATE:${nextDateStr}`,
+              `SUMMARY:🔴 [OFF] NGHỈ CA`,
+              `DESCRIPTION:Hôm nay nghỉ trực (OFF)`,
+              `CATEGORIES:NGHỈ CA`,
+              `COLOR:#ef4444`,
+              `X-APPLE-CALENDAR-COLOR:#ef4444`,
+              'STATUS:CONFIRMED',
+              'TRANSP:TRANSPARENT',
+              'END:VEVENT'
+            ].join('\r\n'));
+            continue;
+          }
+
+          // CÁC NGÀY ĐI CA (CA 1 / CA 2)
           const isC1 = (shift === 'ca1');
           const rawIn = isC1 ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15');
           const rawOut = isC1 ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00');
@@ -917,59 +949,38 @@
       return events;
     }
 
-    function downloadICSFile(filename, events) {
-      if (events.length === 0) {
-        alert('Không có ca làm việc nào được chọn!');
+    function executeSelectedSync() {
+      if (selectedSyncWeeks.size === 0) {
+        alert('Vui lòng chọn ít nhất 1 tuần để nạp!');
         return;
       }
+      const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
+      const evs = buildICSEvents(weekIndices);
+
       const icsData = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
         'PRODID:-//LanTrai//ShiftCalendar//VI',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        events.join('\r\n'),
+        evs.join('\r\n'),
         'END:VCALENDAR'
       ].join('\r\n');
 
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', filename);
+      link.href = url;
+      link.setAttribute('download', 'lich_ca_truc_google.ics');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      window.URL.revokeObjectURL(link.href);
+      setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+
+      showToast('Đang mở file nạp vào Google Lịch điện thoại!');
     }
 
-    function executeSelectedSync(type = 'all') {
-      if (selectedSyncWeeks.size === 0) {
-        alert('Vui lòng chọn ít nhất 1 tuần!');
-        return;
-      }
-      const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
-      const evs = buildICSEvents(weekIndices, type);
-      downloadICSFile('lich_ca_truc.ics', evs);
-      showToast('Đã tải tệp lịch 🔵/🟡! Mở tệp để thêm vào điện thoại.');
-    }
-
-    function exportSplitCalendars() {
-      if (selectedSyncWeeks.size === 0) {
-        alert('Vui lòng chọn tuần cần xuất!');
-        return;
-      }
-      const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
-      const c1Events = buildICSEvents(weekIndices, 'ca1');
-      const c2Events = buildICSEvents(weekIndices, 'ca2');
-
-      if (c1Events.length > 0) downloadICSFile('Lich_CA_1_Xanh.ics', c1Events);
-      setTimeout(() => {
-        if (c2Events.length > 0) downloadICSFile('Lich_CA_2_Vang.ics', c2Events);
-      }, 700);
-      showToast('Đã tách thành 2 file Ca 1 và Ca 2 riêng!');
-    }
-
-    // 4. THỜI KHÓA BIỂU PHÂN BIỆT MỖI TIẾT 1 MÀU
+    // 5. THỜI KHÓA BIỂU
     const lessonColorTags = [
       { class: 'tag-t1', name: 'Tiết 1' },
       { class: 'tag-t2', name: 'Tiết 2' },
@@ -1011,7 +1022,6 @@
       renderSchoolTimetable(); showToast('Đã xóa buổi học.');
     }
 
-    // XEM NHANH HÔM NAY: HUY HIỆU VÀNG NHẠT
     function renderSchoolTodaySummary() {
       const host = document.getElementById('schoolTodaySummary');
       if (!host) return;
@@ -1044,7 +1054,7 @@
       host.innerHTML = `<div style="font-weight:750; font-size:0.82rem; margin-bottom:6px;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
     }
 
-    // 5. NHẬT KÝ & CÔNG VIỆC
+    // 6. NHẬT KÝ & CÔNG VIỆC
     function saveJournalEntry() {
       const title = document.getElementById('journalTitle').value.trim();
       const content = document.getElementById('journalContent').value.trim();
@@ -1164,7 +1174,7 @@
       });
     }
 
-    // 6. TIỆN ÍCH ÂM THANH & SAO LƯU
+    // 7. TIỆN ÍCH ÂM THANH & SAO LƯU
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
