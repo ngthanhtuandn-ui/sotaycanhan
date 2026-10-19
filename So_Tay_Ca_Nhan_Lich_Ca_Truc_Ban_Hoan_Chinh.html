@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Sổ Tay Công Việc & Thời Khóa Biểu Gia Đình</title>
+  <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
+
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --journal-bg: #fefce8;
+      --journal-border: #fde047;
+      --journal-text: #854d0e;
+      --journal-accent: #eab308;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
+
+    header {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: white;
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.22);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    header h1 { font-size: 0.98rem; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+    .header-btns { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+    .header-btns button {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-weight: 600;
+      backdrop-filter: blur(6px);
+      transition: all 0.15s ease;
+    }
+    .header-btns button:active { background: rgba(255,255,255,0.4); transform: scale(0.96); }
+
+    .container { max-width: 650px; margin: auto; padding: 12px; }
+
+    /* LỜI CHÀO & ICON THỜI TIẾT ĐỘNG */
+    .greeting-banner {
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      border: 1.5px solid #bbf7d0;
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .greeting-info { display: flex; flex-direction: column; gap: 2px; }
+    .greeting-text-main { font-size: 0.88rem; font-weight: 800; color: #166534; }
+    .greeting-text-sub { font-size: 0.75rem; font-weight: 600; color: #047857; }
+    .weather-status-text { font-size: 0.7rem; color: #64748b; font-weight: 600; }
+
+    /* HIỆU ỨNG ICON ĐỘNG */
+    .weather-widget {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .sun-icon {
+      width: 34px; height: 34px; border-radius: 50%; position: relative; z-index: 1;
+      background: radial-gradient(circle at 32% 28%, #fff7b2 0 8%, #ffd34d 28%, #ffad24 66%, #f28b16 100%);
+      box-shadow: inset -3px -4px 7px rgba(194,94,0,.18), 0 0 18px rgba(255,183,40,.45);
+      animation: sunGlow 3.8s ease-in-out infinite alternate;
+    }
+    .sun-icon::before {
+      content: ''; position: absolute; z-index: -1; inset: -10px; border-radius: 50%;
+      background: repeating-conic-gradient(from 2deg, rgba(255,190,66,.92) 0deg 7deg, transparent 7deg 22.5deg);
+      -webkit-mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%);
+      mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%); opacity: .9;
+      animation: sunRaysSpin 24s linear infinite; transform-origin: center;
+    }
+    .sun-icon::after {
+      content: ''; position: absolute; inset: 5px 8px auto 6px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.36); filter: blur(2px); transform: rotate(-28deg);
+    }
+    @keyframes sunGlow {
+      0% { transform: scale(0.92); box-shadow: 0 0 10px #fbbf24; }
+      100% { transform: scale(1.05); box-shadow: 0 0 20px #f59e0b, 0 0 30px rgba(245, 158, 11, 0.5); }
+    }
+
+    .partly-cloudy { position: relative; width: 44px; height: 38px; }
+    .partly-cloudy .sun-small {
+      width: 22px; height: 22px;
+      background: #f59e0b;
+      border-radius: 50%;
+      position: absolute;
+      top: 0; right: 2px;
+      box-shadow: 0 0 8px #fbbf24;
+      animation: floatSun 3s ease-in-out infinite alternate;
+    }
+    .partly-cloudy .cloud-front {
+      width: 32px; height: 18px;
+      background: #e2e8f0;
+      border-radius: 12px;
+      position: absolute;
+      bottom: 2px; left: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      animation: floatCloud 3.5s ease-in-out infinite alternate, cloudBob 2.8s ease-in-out infinite;
+    }
+    .partly-cloudy .cloud-front::before {
+      content: ''; position: absolute; width: 14px; height: 14px; background: #e2e8f0; border-radius: 50%; top: -6px; left: 6px;
+    }
+
+    .rainy-icon { position: relative; width: 40px; height: 38px; }
+    .rain-cloud {
+      width: 36px; height: 18px;
+      background: #94a3b8;
+      border-radius: 12px;
+      position: absolute;
+      top: 2px; left: 2px;
+      animation: floatCloud 2.5s ease-in-out infinite alternate;
+    }
+    .rain-cloud::before {
+      content: ''; position: absolute; width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; top: -7px; left: 7px;
+    }
+    .rain-drop {
+      position: absolute;
+      width: 2.5px; height: 7px;
+      background: #0284c7;
+      border-radius: 2px;
+      animation: rainFall 0.8s linear infinite;
+    }
+    .rain-drop.d1 { left: 9px; bottom: 0; animation-delay: 0s; }
+    .rain-drop.d2 { left: 19px; bottom: 2px; animation-delay: 0.3s; }
+    .rain-drop.d3 { left: 29px; bottom: -1px; animation-delay: 0.5s; }
+
+    @keyframes rainFall {
+      0% { transform: translateY(-5px) translateX(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(8px) translateX(-2px); opacity: 0; }
+    }
+    @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(3px); } }
+    @keyframes cloudBob { 0%,100% { margin-bottom: 0; } 50% { margin-bottom: 2px; } }
+    @keyframes floatSun { 0% { transform: translateY(0) scale(0.95); } 100% { transform: translateY(-2px) scale(1.05); } }
+    @keyframes sunRaysSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .weather-widget::after {
+      content: ''; position: absolute; inset: 2px; border: 1px solid rgba(255,255,255,.55);
+      border-radius: 50%; opacity: 0; transform: scale(.72); pointer-events: none;
+      animation: weatherHalo 3.2s ease-out infinite;
+    }
+    @keyframes weatherHalo { 0% { opacity: 0; transform: scale(.72); } 35% { opacity: .35; } 100% { opacity: 0; transform: scale(1.18); } }
+    @media (prefers-reduced-motion: reduce) {
+      .sun-icon, .sun-icon::before, .partly-cloudy .sun-small, .partly-cloudy .cloud-front,
+      .rain-cloud, .rain-drop, .moon-icon, .weather-widget::after { animation: none !important; }
+    }
+
+    .moon-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      box-shadow: 7px 5px 0 0 #facc15;
+      animation: moonGlow 3s infinite alternate ease-in-out;
+      margin-left: -5px;
+    }
+    @keyframes moonGlow { 0% { filter: drop-shadow(0 0 3px #fde047); } 100% { filter: drop-shadow(0 0 8px #facc15); } }
+
+    /* Thống kê */
+    .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .stat-label { color: var(--muted); font-size: .74rem; font-weight: 600; }
+    .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
+
+    /* Banner chuông báo */
+    #alarmBanner {
+      display: none;
+      position: sticky;
+      top: 50px;
+      z-index: 99;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35);
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse { from { opacity: 0.94; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
+    .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .alarm-title { font-weight: 800; font-size: 0.92rem; }
+    .btn-stop-alarm {
+      background: white;
+      color: var(--danger);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /* Tabs */
+    .nav-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
+    .nav-tab-btn {
+      padding: 10px 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+    .nav-tab-btn.active-journal {
+      background: #fef08a !important;
+      color: #713f12 !important;
+      border-color: #facc15 !important;
+      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.25) !important;
+    }
+
+    /* Card chung & Card Nhật Ký */
+    .card-box {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .card-journal {
+      background: var(--journal-bg);
+      border: 1.5px solid var(--journal-border);
+    }
+    .journal-heading {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--journal-text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-journal-submit {
+      background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+      color: white;
+      box-shadow: 0 3px 8px rgba(202, 138, 4, 0.25);
+    }
+
+    .search-filter-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .search-row { display: flex; gap: 6px; }
+
+    .form-group { margin-bottom: 10px; }
+    label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; color: var(--muted); }
+    input, select, textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      background: #fff;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+    textarea { resize: vertical; min-height: 75px; }
+    .row { display: flex; gap: 8px; }
+    .row > div { flex: 1; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 11px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
+    }
+    .btn-submit:active { transform: scale(0.99); opacity: 0.9; }
+    .btn-submit-purple { background: var(--purple); box-shadow: 0 3px 8px rgba(139, 92, 246, 0.25); }
+
+    .journal-card-item {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1.5px solid #fef08a;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.08);
+    }
+    .journal-card-item.done { opacity: 0.65; background: #fafaf9; border-color: #e2e8f0; }
+    .badge-journal { background: #fef08a; color: #854d0e; }
+
+    .item-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+    }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .badge-phat-sinh { background: #ede9fe; color: #5b21b6; }
+    .card-title { font-size: 0.94rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
+    .card-time { font-size: 0.72rem; color: var(--muted); }
+    .card-desc { font-size: 0.85rem; line-height: 1.5; color: #334155; white-space: pre-line; margin-bottom: 8px; }
+    .card-alarm-tag { font-size: 0.75rem; color: var(--danger); font-weight: 700; margin-bottom: 6px; display: inline-block; }
+
+    .card-actions { display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid #f1f5f9; padding-top: 8px; }
+    .btn-action {
+      flex: 1;
+      padding: 7px 4px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-zalo { background: #0068ff; color: white; border: none; }
+    .btn-delete { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
+
+    .img-preview-box { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; margin-top: 6px; }
+
+    /* Lịch Tuần & Màu Ca Làm Việc */
+    .week-table-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+    .week-dropdown-wrap { flex: 1; position: relative; }
+    .week-select-menu {
+      width: 100%;
+      background: #f8fafc;
+      border: 1.5px solid var(--primary);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .btn-copy-month {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #166534;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; margin-bottom: 10px; }
+    .day-col {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 6px 1px;
+      background: #fafafa;
+      transition: all 0.2s ease;
+    }
+    .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
+    
+    /* Ngày OFF: Đỏ nhạt */
+    .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
+    .day-col.is-off .day-name { color: #b91c1c !important; }
+    .day-col.is-off .calendar-date { color: #ef4444 !important; }
+    .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 700; background: #fff1f2; }
+
+    /* Ca 1: Xanh da trời nhạt (đại diện buổi sáng) */
+    .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
+    .day-col.is-ca1 .day-name { color: #0369a1 !important; }
+    .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
+    .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 700; background: #f0f9ff; }
+
+    /* Ca 2: Vàng nhạt (đại diện buổi chiều) */
+    .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
+    .day-col.is-ca2 .day-name { color: #854d0e !important; }
+    .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
+    .day-col.is-ca2 .day-shift-select { border-color: #facc15 !important; color: #854d0e !important; font-weight: 700; background: #fefce8; }
+
+    .day-name { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
+    .calendar-date { display: block; font-size: .62rem; color: #64748b; margin: 2px 0 4px; }
+    .day-shift-select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      padding: 4px 0;
+      font-weight: 700;
+      text-align: center;
+      background: #fff;
+    }
+
+    .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px; margin-top: 8px; }
+    .sync-row { display: flex; gap: 6px; position: relative; }
+    .custom-multiselect { flex: 1.3; position: relative; }
+    .multiselect-toggle-btn {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 8px;
+      color: #334155;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .multiselect-dropdown {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #fff;
+      border: 1.5px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 200;
+      padding: 4px 0;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .multiselect-dropdown.show { display: block; }
+    .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+    .multiselect-item.selected { background: #eff6ff; color: var(--primary-dark); font-weight: 700; }
+    .multiselect-check { font-size: 0.85rem; color: var(--primary); display: none; }
+    .multiselect-item.selected .multiselect-check { display: inline-block; }
+
+    .btn-sync-submit {
+      flex: 1;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: white;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 10px; }
+    .shift-settings-title { font-size: 0.8rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .shift-config-card { background: white; padding: 8px; border-radius: 8px; border: 1px solid var(--border); }
+    .shift-config-card h4 { font-size: 0.78rem; margin-bottom: 6px; color: #334155; }
+    .time-input-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 0.72rem; color: var(--muted); }
+    .time-input-row span { width: 50px; font-weight: 600; }
+    .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
+
+    /* Định kiểu huy hiệu Tiết học Thời khóa biểu */
+    .lesson-badge {
+      display: inline-block;
+      background: #fef08a;
+      color: #854d0e;
+      border: 1px solid #fde047;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 1px 7px;
+      border-radius: 6px;
+      margin-right: 6px;
+      box-shadow: 0 1px 2px rgba(133, 77, 14, 0.08);
+      white-space: nowrap;
+    }
+    .lesson-row-item {
+      display: flex;
+      align-items: center;
+      padding: 3px 0;
+      font-size: 0.84rem;
+      color: #1e293b;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.92);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    /* Giao diện tương thích máy tính & điện thoại */
+    :root { --primary:#1769aa; --primary-dark:#124f85; --bg:#f3f6fb; --border:#dbe4ef; --text:#172b4d; --muted:#62748a; }
+    body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); }
+    header { background:linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%); box-shadow:0 6px 22px rgba(16,72,117,.2); }
+    .container { max-width:980px; padding:18px 16px 28px; }
+    .greeting-banner { border:1px solid #b7efd0; border-radius:22px; padding:18px 20px; box-shadow:0 10px 28px rgba(27,86,115,.07); }
+    .greeting-text-main { font-size:1.02rem; letter-spacing:-.02em; }
+    .greeting-text-sub { font-size:.88rem; } .weather-status-text { font-size:.8rem; }
+    .stats-grid { gap:12px; }
+    .stat-card,.card-box,.week-table-card,.search-filter-box { border-radius:20px !important; border:1px solid rgba(209,220,234,.9) !important; box-shadow:0 8px 24px rgba(24,55,91,.055) !important; }
+    .nav-tabs { gap:8px; padding:7px; border-radius:16px; background:rgba(226,235,246,.8); }
+    .nav-tab-btn { border-radius:12px !important; font-weight:750; transition:transform .15s ease,box-shadow .15s ease; }
+    .nav-tab-btn.active { box-shadow:0 4px 12px rgba(23,105,170,.18); }
+    button,input,select,textarea { font:inherit; } button { touch-action:manipulation; }
+    .btn-submit { border-radius:12px; box-shadow:0 5px 12px rgba(23,105,170,.14); }
+    input,select,textarea { border-radius:10px; }
+    #view-school .card-box:first-child { overflow:hidden; }
+    @media(min-width:760px) { .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .row { gap:14px; } }
+    @media(max-width:560px) {
+      header { align-items:flex-start; padding:10px 12px; } header h1 { white-space:normal; font-size:.9rem; max-width:44%; }
+      .header-btns { gap:4px; } .header-btns button { padding:7px 8px; font-size:.68rem; }
+      .container { padding:12px 10px 24px; } .greeting-banner { padding:14px; border-radius:18px; }
+      .weather-widget { width:48px; height:48px; } .nav-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .nav-tab-btn { padding:11px 7px; font-size:.78rem; } .stats-grid { gap:9px; } .stat-card { padding:13px !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📋 Sổ Tay & Lịch Ca Trực</h1>
+    <div class="header-btns">
+      <button onclick="enableSoundTest()">🔊 Thử Chuông</button>
+      <button onclick="requestNotificationPermission()">🔔 Báo</button>
+      <button onclick="exportData()">Sao Lưu</button>
+      <button onclick="document.getElementById('importFile').click()">Nhập</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- GREETING & ICON THỜI TIẾT ĐỘNG -->
+    <div class="greeting-banner">
+      <div class="greeting-info">
+        <div class="greeting-text-main">Xin chào Tuấn Tuấn ✨</div>
+        <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
+        <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết...</div>
+      </div>
+      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển thời tiết"></div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">📔 Nhật ký công việc</div>
+        <div class="stat-value" id="statJournals">0</div>
+        <div class="stat-label" id="statJournalsSub">0 hoàn thành</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">⚡ Việc cần xử lý</div>
+        <div class="stat-value" id="statIssues">0</div>
+        <div class="stat-label" id="statIssuesSub">0 đang mở</div>
+      </div>
+    </div>
+
+    <!-- BANNER CHUÔNG BÁO -->
+    <div id="alarmBanner">
+      <div class="alarm-content">
+        <div>
+          <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ NHẮC HẸN!</div>
+          <div style="font-size: 0.78rem; margin-top: 2px;" id="alarmDesc">Vui lòng kiểm tra và xử lý công việc.</div>
+        </div>
+        <button class="btn-stop-alarm" onclick="stopAlarm()">✔ ĐÃ XỬ LÝ</button>
+      </div>
+    </div>
+
+    <!-- TAB ĐIỀU HƯỚNG -->
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
+      <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">📔 Nhật Ký</button>
+      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Làm</button>
+      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">🎒 Thời khóa biểu</button>
+    </div>
+
+    <!-- VIEW 1: LỊCH CA -->
+    <div id="view-shifts">
+      <div class="week-table-card">
+        <div class="week-control-bar">
+          <div class="week-dropdown-wrap">
+            <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)"></select>
+          </div>
+          <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng tuần này cho cả tháng">⚡ Úp Cả Tháng</button>
+        </div>
+        
+        <div class="week-grid" id="weekGridContainer"></div>
+
+        <div class="sync-calendar-panel">
+          <div class="sync-row">
+            <div class="custom-multiselect">
+              <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
+                <span id="syncDropdownLabel">Đồng bộ lịch tuần...</span>
+                <span style="font-size:0.65rem; color:var(--muted);">▲</span>
+              </button>
+              <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
+            </div>
+            <button class="btn-sync-submit" onclick="executeSelectedSync()">
+              🔔 Nạp Vào Lịch ĐT
+            </button>
+          </div>
+        </div>
+
+        <div class="shift-settings-box">
+          <div class="shift-settings-title">
+            <span>⚙️ Cài Đặt Giờ Báo Ca</span>
+            <span style="font-size:0.7rem; font-weight:normal; color:var(--muted);">Tự lưu</span>
+          </div>
+          <div class="shift-config-grid">
+            <div class="shift-config-card">
+              <h4>Ca 1 (Sáng)</h4>
+              <div class="time-input-row"><span>Giờ vào:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Giờ ra:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+            <div class="shift-config-card">
+              <h4>Ca 2 (Chiều)</h4>
+              <div class="time-input-row"><span>Giờ vào:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Giờ ra:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: NHẬT KÝ HÀNG NGÀY -->
+    <div id="view-journal" style="display:none;">
+      <div class="card-box card-journal">
+        <div class="journal-heading">
+          <span>✍️ Ghi Nhật Ký Công Việc Trong Ngày</span>
+        </div>
+
+        <div class="row form-group">
+          <div>
+            <label>Phân loại nhật ký</label>
+            <select id="journalCategory">
+              <option value="viec-ngay">📝 Công việc thường nhật</option>
+              <option value="ban-giao">🤝 Bàn giao ca trực</option>
+              <option value="su-co">⚠️ Sự việc / Lưu ý</option>
+              <option value="ghi-chu">💡 Ý tưởng / Ghi nhớ</option>
+            </select>
+          </div>
+          <div>
+            <label>Ngày ghi nhận</label>
+            <input type="date" id="journalDate">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div>
+            <label>Tiêu đề việc / nội dung chính</label>
+            <input type="text" id="journalTitle" placeholder="Ví dụ: Kiểm tra an ninh cổng, bàn giao tài sản...">
+          </div>
+          <div style="flex: 0.6;">
+            <label>Hẹn giờ nhắc (nếu có)</label>
+            <input type="time" id="journalReminderTime">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nội dung chi tiết nhật ký</label>
+          <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
+        </div>
+
+        <button class="btn-submit btn-journal-submit" id="btnSaveJournal" onclick="saveJournalEntry()">+ Lưu Vào Nhật Ký</button>
+      </div>
+
+      <!-- TRA CỨU & TÌM KIẾM NHẬT KÝ -->
+      <div class="search-filter-box">
+        <div style="font-size:0.78rem; font-weight:700; color:#475569;">🔍 Tìm kiếm & Tra cứu nhật ký:</div>
+        <div class="search-row">
+          <input type="text" id="searchKeyword" placeholder="Nhập từ khóa cần tìm..." oninput="filterJournals()" style="flex:1;">
+          <input type="date" id="filterJournalDate" onchange="filterJournals()" style="flex:1;">
+          <button onclick="clearJournalFilter()" style="padding:0 10px; border-radius:10px; border:1px solid #cbd5e1; background:#f1f5f9; font-size:0.75rem; font-weight:700; cursor:pointer;">Hủy</button>
+        </div>
+      </div>
+
+      <div id="journalListContainer"></div>
+    </div>
+
+    <!-- VIEW 3: VIỆC CẦN XỬ LÝ -->
+    <div id="view-issues" style="display:none;">
+      <div class="card-box" style="border-left: 4px solid var(--purple);">
+        <div class="form-group">
+          <label>Tên công việc / Sự cố</label>
+          <input type="text" id="issueTitle" placeholder="Ví dụ: Sửa bóng đèn lán 3, kiểm tra bơm nước...">
+        </div>
+
+        <div class="row form-group">
+          <div>
+            <label>Mức độ</label>
+            <select id="issuePriority">
+              <option value="Gấp">🔴 Gấp</option>
+              <option value="Bình thường" selected>🟡 Bình thường</option>
+              <option value="Theo dõi">🟢 Theo dõi</option>
+            </select>
+          </div>
+          <div>
+            <label>Hẹn ngày & giờ xử lý</label>
+            <input type="datetime-local" id="issueDateTime">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nội dung chi tiết / Hướng xử lý</label>
+          <textarea id="issueContent" placeholder="Mô tả cụ thể việc cần làm..."></textarea>
+        </div>
+
+        <button class="btn-submit btn-submit-purple" onclick="saveIssue()">+ Lưu Việc Cần Xử Lý</button>
+      </div>
+
+      <div id="issuesList"></div>
+    </div>
+
+    <!-- VIEW 4: THỜI KHÓA BIỂU -->
+    <div id="view-school" style="display:none;">
+      <div class="card-box">
+        <div style="padding:18px 16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;box-shadow:0 8px 18px rgba(99,102,241,.2);">
+          <div style="font-size:1.35rem;margin-bottom:5px;">🎒 📚 ✨</div>
+          <h3 style="font-size:1.08rem;margin:0 0 5px;color:#fff;">Thời khóa biểu của các con</h3>
+        </div>
+        <div class="row form-group">
+          <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;"><label style="color:#4338ca;">🏫 Lớp học</label><select id="schoolClass" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#c7d2fe;"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
+          <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;"><label style="color:#c2410c;">☀️ Buổi học</label><select id="schoolShift" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#fdba74;"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select></div>
+        </div>
+        <div class="form-group" style="padding:10px;border-radius:12px;background:#fdf2f8;border:1px solid #fbcfe8;"><label style="color:#9d174d;">🗓️ Ngày trong tuần</label><select id="schoolDay" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#f9a8d4;"><option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option></select></div>
+        <div id="schoolLessons"></div>
+        <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu thời khóa biểu</button>
+        <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolDay()">Xóa nội dung buổi này</button>
+      </div>
+      <div class="card-box">
+        <h3 style="font-size:.9rem;margin-bottom:8px">📌 Xem nhanh trong ngày</h3>
+        <div id="schoolTodaySummary" style="font-size:.85rem;line-height:1.7"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast">Thông báo</div>
+
+  <script>
+    let journals = JSON.parse(localStorage.getItem('camp_journals_v1') || localStorage.getItem('camp_reports_v2') || '[]');
+    let issues = JSON.parse(localStorage.getItem('camp_issues_v2') || '[]');
+    let shiftTimes = JSON.parse(localStorage.getItem('camp_shift_times') || JSON.stringify({
+      c1_in: '05:15', c1_out: '14:00', c2_in: '13:15', c2_out: '22:00'
+    }));
+
+    let monthWeeksList = [];
+    let currentWeekIndex = 0;
+    let selectedSyncWeeks = new Set();
+    let currentJournalImages = [];
+
+    let audioCtx = null;
+    let alarmInterval = null;
+    let isAlarmPlaying = false;
+
+    // --- 1. ICON THỜI TIẾT ĐỘNG ---
+    const weatherStates = [
+      { type: 'sunny', label: 'Trời nắng đẹp, quang đãng' },
+      { type: 'partly-cloudy', label: 'Trời dịu, có nắng và mây' },
+      { type: 'rainy', label: 'Trời có mưa, chú ý mang ô' },
+      { type: 'night', label: 'Trời đêm trong lành' }
+    ];
+    let currentWeatherIndex = 0;
+
+    function renderWeatherIcon(type) {
+      const widget = document.getElementById('weatherWidget');
+      const label = document.getElementById('weatherStatusLabel');
+      if (!widget) return;
+
+      if (type === 'sunny') {
+        widget.innerHTML = `<div class="sun-icon"></div>`;
+        if (label) label.innerText = '☀️ Trời nắng rực rỡ';
+      } else if (type === 'partly-cloudy') {
+        widget.innerHTML = `
+          <div class="partly-cloudy">
+            <div class="sun-small"></div>
+            <div class="cloud-front"></div>
+          </div>`;
+        if (label) label.innerText = '⛅ Trời dịu mát, nắng và mây';
+      } else if (type === 'rainy') {
+        widget.innerHTML = `
+          <div class="rainy-icon">
+            <div class="rain-cloud"></div>
+            <div class="rain-drop d1"></div>
+            <div class="rain-drop d2"></div>
+            <div class="rain-drop d3"></div>
+          </div>`;
+        if (label) label.innerText = '🌧️ Trời đang có mưa';
+      } else {
+        widget.innerHTML = `<div class="moon-icon"></div>`;
+        if (label) label.innerText = '🌙 Trời đêm quang đãng';
+      }
+    }
+
+    async function initWeatherDetection() {
+      const hour = new Date().getHours();
+      if (hour >= 18 || hour < 5) currentWeatherIndex = 3;
+      else if (hour >= 6 && hour <= 10) currentWeatherIndex = 1;
+      else if (hour > 10 && hour <= 15) currentWeatherIndex = 0;
+      else currentWeatherIndex = 1;
+
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          try {
+            const { latitude, longitude } = pos.coords;
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=weather_code,is_day`);
+            const data = await res.json();
+            if (data && data.current) {
+              const code = data.current.weather_code;
+              const isDay = data.current.is_day;
+              if (!isDay) currentWeatherIndex = 3;
+              else if ([0, 1].includes(code)) currentWeatherIndex = 0;
+              else if ([2, 3].includes(code)) currentWeatherIndex = 1;
+              else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) currentWeatherIndex = 2;
+              renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+            }
+          } catch (_) {}
+        }, () => {});
+      }
+    }
+
+    function cycleWeatherDemo() {
+      currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+      showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
+    }
+
+    // --- 2. QUẢN LÝ NHẬT KÝ ---
+    function saveJournalEntry() {
+      const title = document.getElementById('journalTitle').value.trim();
+      const content = document.getElementById('journalContent').value.trim();
+      const category = document.getElementById('journalCategory').value;
+      const reminderTime = document.getElementById('journalReminderTime').value;
+      const journalDate = document.getElementById('journalDate').value || new Date().toISOString().split('T')[0];
+
+      if (!title && !content) {
+        alert('Vui lòng nhập tiêu đề hoặc nội dung nhật ký!');
+        return;
+      }
+      initAudio();
+
+      const now = new Date();
+      const newEntry = {
+        id: Date.now(),
+        title: title || 'Ghi chép trong ngày',
+        content: content,
+        category: category,
+        journalDate: journalDate,
+        reminderTime: reminderTime,
+        images: [...currentJournalImages],
+        done: false,
+        createdAt: now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN')
+      };
+
+      journals.unshift(newEntry);
+      try {
+        localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      } catch (err) {
+        journals.shift();
+        alert('Bộ nhớ trình duyệt đã đầy nên chưa lưu được nhật ký. Hãy sao lưu dữ liệu, xóa bớt nhật ký/ảnh cũ rồi thử lại.');
+        return;
+      }
+
+      document.getElementById('journalTitle').value = '';
+      document.getElementById('journalContent').value = '';
+      document.getElementById('journalReminderTime').value = '';
+
+      filterJournals();
+      updateDashboard();
+      showToast('Đã lưu nhật ký thành công! ✨');
+    }
+
+    function filterJournals() {
+      const keyword = (document.getElementById('searchKeyword').value || '').toLowerCase().trim();
+      const dateVal = document.getElementById('filterJournalDate').value;
+
+      let filtered = journals.filter(j => {
+        let matchWord = true;
+        let matchDate = true;
+        if (keyword) {
+          const t = (j.title || '').toLowerCase();
+          const c = (j.content || '').toLowerCase();
+          matchWord = t.includes(keyword) || c.includes(keyword);
+        }
+        if (dateVal) {
+          matchDate = j.journalDate === dateVal;
+        }
+        return matchWord && matchDate;
+      });
+
+      renderJournalList(filtered);
+    }
+
+    function clearJournalFilter() {
+      document.getElementById('searchKeyword').value = '';
+      document.getElementById('filterJournalDate').value = '';
+      renderJournalList(journals);
+    }
+
+    function renderJournalList(listToRender) {
+      const container = document.getElementById('journalListContainer');
+      container.innerHTML = '';
+
+      if (!listToRender || listToRender.length === 0) {
+        container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.85rem;">Không tìm thấy trang nhật ký nào.</div>`;
+        return;
+      }
+
+      const catMap = {
+        'viec-ngay': '📝 Thường nhật',
+        'ban-giao': '🤝 Bàn giao',
+        'su-co': '⚠️ Lưu ý',
+        'ghi-chu': '💡 Ghi nhớ'
+      };
+
+      listToRender.forEach(item => {
+        let imgHtml = '';
+        if (item.images && item.images.length > 0) {
+          imgHtml = `<div class="img-preview-box">` +
+            item.images.map(img => `<img src="${img}" class="img-thumb" onclick="openFullImg('${img}')">`).join('') +
+            `</div>`;
+        }
+
+        const dateParts = item.journalDate ? item.journalDate.split('-') : [];
+        const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : item.createdAt;
+
+        const div = document.createElement('div');
+        div.className = `journal-card-item ${item.done ? 'done' : ''}`;
+        div.innerHTML = `
+          <div class="card-top">
+            <span class="badge badge-journal">${catMap[item.category] || 'Nhật ký'}</span>
+            <span class="card-time">📅 ${formattedDate} (${escapeHtml(item.createdAt)})</span>
+          </div>
+          <div class="card-title">${escapeHtml(item.title)}</div>
+          ${item.reminderTime ? `<div class="card-alarm-tag">⏰ Hẹn nhắc: ${escapeHtml(item.reminderTime)}</div>` : ''}
+          <div class="card-desc">${escapeHtml(item.content) || 'Không có mô tả chi tiết'}</div>
+          ${imgHtml}
+          <div class="card-actions">
+            <button class="btn-action btn-zalo" onclick="copyJournalZalo(${item.id})">📲 Gửi Zalo</button>
+            <button class="btn-action" onclick="toggleDoneJournal(${item.id})">${item.done ? '↩ Mở lại' : '✔ Hoàn thành'}</button>
+            <button class="btn-delete btn-action" onclick="deleteJournal(${item.id})">🗑 Xóa</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleDoneJournal(id) {
+      journals = journals.map(j => j.id === id ? { ...j, done: !j.done } : j);
+      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      filterJournals();
+      updateDashboard();
+    }
+
+    function deleteJournal(id) {
+      if (confirm('Xóa mục nhật ký này?')) {
+        journals = journals.filter(j => j.id !== id);
+        localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+        filterJournals();
+        updateDashboard();
+      }
+    }
+
+    function copyJournalZalo(id) {
+      const j = journals.find(x => x.id === id);
+      if (!j) return;
+      const text = `📔 [NHẬT KÝ CA TRỰC - ${j.journalDate || ''}]\n📌 ${j.title}\n------------------\n${j.content}`;
+      navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép nhật ký để gửi Zalo!'));
+    }
+
+    // --- 3. VIEW & ĐIỀU HƯỚNG ---
+    function switchView(tab) {
+      ['shifts', 'journal', 'issues', 'school'].forEach(t => {
+        const viewEl = document.getElementById(`view-${t}`);
+        const btnEl = document.getElementById(`tabBtn-${t}`);
+        if (viewEl) viewEl.style.display = (t === tab) ? 'block' : 'none';
+        if (btnEl) {
+          btnEl.classList.remove('active', 'active-journal');
+          if (t === tab) {
+            if (t === 'journal') btnEl.classList.add('active-journal');
+            else btnEl.classList.add('active');
+          }
+        }
+      });
+    }
+
+    // --- 4. THỜI KHÓA BIỂU & XEM NHANH TRONG NGÀY ---
+    const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+    function getSchoolKey() {
+      return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
+    }
+    function getSchoolData() {
+      try { return JSON.parse(localStorage.getItem('family_timetable_v1') || '{}'); } catch (_) { return {}; }
+    }
+    function renderSchoolTimetable() {
+      const host = document.getElementById('schoolLessons');
+      if (!host) return;
+      const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
+      host.innerHTML = '<div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:9px;align-items:center;margin:12px 0 14px">' +
+        [1,2,3,4,5].map((n,i) => `<div style="display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 4px;border-radius:10px;background:${['#dbeafe','#dcfce7','#fef3c7','#fce7f3','#ede9fe'][i]};color:${['#1d4ed8','#166534','#92400e','#9d174d','#5b21b6'][i]};font-size:.78rem;font-weight:800;">📖 Tiết ${n}</div><input id="schoolLesson${n}" maxlength="100" placeholder="Môn học / ghi chú tiết ${n}" value="${escapeHtml(saved[i] || '')}" style="min-width:0;border-radius:10px;border:1px solid #cbd5e1;background:#fff;padding:11px;" />`).join('') + '</div>';
+      renderSchoolTodaySummary();
+    }
+    function saveSchoolTimetable() {
+      const data = getSchoolData();
+      data[getSchoolKey()] = [1,2,3,4,5].map(n => document.getElementById('schoolLesson'+n).value.trim());
+      try {
+        localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+        showToast('Đã lưu thời khóa biểu!');
+        renderSchoolTodaySummary();
+      } catch (_) { alert('Bộ nhớ trình duyệt đầy, chưa thể lưu thời khóa biểu. Hãy sao lưu và giải phóng bộ nhớ.'); }
+    }
+    function clearSchoolDay() {
+      if (!confirm('Xóa thời khóa biểu của lớp/buổi/ngày đang chọn?')) return;
+      const data = getSchoolData(); delete data[getSchoolKey()];
+      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+      renderSchoolTimetable(); showToast('Đã xóa nội dung buổi học.');
+    }
+
+    // XEM NHANH: Hiển thị từng tiết rõ ràng, gắn thẻ Tiết 1, 2 màu vàng nổi bật
+    function renderSchoolTodaySummary() {
+      const host = document.getElementById('schoolTodaySummary');
+      if (!host) return;
+      const data = getSchoolData(), day = new Date().getDay();
+
+      function formatShiftRows(shiftArr) {
+        if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) {
+          return `<div style="color:var(--muted);font-style:italic;font-size:0.78rem;padding-left:4px;">Chưa nhập</div>`;
+        }
+        return shiftArr.map((x, i) => {
+          if (!x || !x.trim()) return '';
+          return `<div class="lesson-row-item"><span class="lesson-badge">Tiết ${i+1}</span> <span>${escapeHtml(x)}</span></div>`;
+        }).filter(Boolean).join('');
+      }
+
+      const rows = ['10','6'].map(cls => {
+        const morning = data[`${cls}_morning_${day}`] || [];
+        const afternoon = data[`${cls}_afternoon_${day}`] || [];
+        return `
+          <div style="padding:10px;margin-bottom:10px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
+            <div style="font-weight:800;font-size:0.92rem;color:var(--primary-dark);margin-bottom:6px;">🏫 Lớp ${cls}</div>
+            <div style="margin-bottom:8px;">
+              <span style="font-size:0.75rem;font-weight:700;color:#c2410c;">🌅 Buổi Sáng:</span>
+              <div style="margin-top:2px;">${formatShiftRows(morning)}</div>
+            </div>
+            <div>
+              <span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>
+              <div style="margin-top:2px;">${formatShiftRows(afternoon)}</div>
+            </div>
+          </div>
+        `;
+      });
+      host.innerHTML = `<div style="font-weight:800;color:#0f172a;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
+    }
+
+    function updateGreetingHeader() {
+      const now = new Date();
+      const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      const dayName = days[now.getDay()];
+      const d = String(now.getDate()).padStart(2, '0');
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const y = now.getFullYear();
+      
+      const labelEl = document.getElementById('greetingDateLabel');
+      if (labelEl) labelEl.innerText = `Hôm nay ${dayName}, ngày ${d}/${m}/${y}`;
+
+      const journalDateInput = document.getElementById('journalDate');
+      if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
+    }
+
+    // --- 5. LỊCH CA & ĐỒNG BỘ MÀU SẮC CHUẨN ĐIỆN THOẠI ---
+    function loadShiftTimeConfigUI() {
+      document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
+      document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
+      document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '13:15';
+      document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
+    }
+
+    function updateShiftTimeConfig() {
+      shiftTimes.c1_in = document.getElementById('cfg_c1_in').value;
+      shiftTimes.c1_out = document.getElementById('cfg_c1_out').value;
+      shiftTimes.c2_in = document.getElementById('cfg_c2_in').value;
+      shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
+      localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
+      showToast('Đã lưu giờ ca trực!');
+    }
+
+    function buildMonthWeeksList() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const firstOfMonth = new Date(year, month, 1);
+      const dayOfWeekFirst = firstOfMonth.getDay();
+      const mondayOffset = (dayOfWeekFirst === 0) ? -6 : (1 - dayOfWeekFirst);
+      let curMonday = new Date(year, month, 1 + mondayOffset);
+
+      monthWeeksList = [];
+      let weekNum = 1;
+      while (true) {
+        let curSunday = new Date(curMonday);
+        curSunday.setDate(curMonday.getDate() + 6);
+        monthWeeksList.push({
+          index: weekNum - 1,
+          labelNumber: weekNum,
+          monday: new Date(curMonday),
+          sunday: new Date(curSunday)
+        });
+        if (curSunday.getMonth() !== month && curSunday > firstOfMonth) break;
+        curMonday.setDate(curMonday.getDate() + 7);
+        weekNum++;
+      }
+
+      const todayTime = new Date(year, month, now.getDate()).getTime();
+      let defaultIdx = 0;
+      monthWeeksList.forEach((w, idx) => {
+        if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) defaultIdx = idx;
+      });
+      currentWeekIndex = defaultIdx;
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+    }
+
+    function getWeekStorageKey(wIdx) {
+      const w = monthWeeksList[wIdx];
+      if (!w) return `shifts_w_${wIdx}`;
+      return `camp_shifts_${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
+    }
+
+    function getShiftsForWeekIndex(wIdx) {
+      const key = getWeekStorageKey(wIdx);
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      return JSON.parse(localStorage.getItem('camp_weekly_shifts') || JSON.stringify({
+        2: "ca1", 3: "ca1", 4: "ca1", 5: "ca2", 6: "ca2", 7: "off", 8: "off"
+      }));
+    }
+
+    function initMonthWeeksDropdown() {
+      buildMonthWeeksList();
+      const select = document.getElementById('weekDropdownSelect');
+      select.innerHTML = '';
+      monthWeeksList.forEach((w) => {
+        const monLabel = `${w.monday.getDate()}/${w.monday.getMonth()+1}`;
+        const sunLabel = `${w.sunday.getDate()}/${w.sunday.getMonth()+1}`;
+        const opt = document.createElement('option');
+        opt.value = w.index;
+        opt.text = `📅 Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
+        if (w.index === currentWeekIndex) opt.selected = true;
+        select.appendChild(opt);
+      });
+      renderSyncDropdownMenu();
+    }
+
+    function onWeekDropdownChange(val) {
+      currentWeekIndex = parseInt(val, 10);
+      renderWeekGrid();
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+      renderSyncDropdownMenu();
+    }
+
+    function renderWeekGrid() {
+      const container = document.getElementById('weekGridContainer');
+      container.innerHTML = '';
+      const dayLabels = [
+        { key: 2, label: 'T2' }, { key: 3, label: 'T3' }, { key: 4, label: 'T4' },
+        { key: 5, label: 'T5' }, { key: 6, label: 'T6' }, { key: 7, label: 'T7' }, { key: 8, label: 'CN' }
+      ];
+
+      const now = new Date();
+      const currentWeekObj = monthWeeksList[currentWeekIndex];
+      if (!currentWeekObj) return;
+
+      const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
+
+      dayLabels.forEach((d, idx) => {
+        const dayDate = new Date(currentWeekObj.monday);
+        dayDate.setDate(currentWeekObj.monday.getDate() + idx);
+
+        const isToday = (dayDate.getDate() === now.getDate() && 
+                         dayDate.getMonth() === now.getMonth() && 
+                         dayDate.getFullYear() === now.getFullYear());
+
+        const savedShift = shiftsData[d.key] || 'off';
+        const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
+
+        let shiftClass = '';
+        if (savedShift === 'off') shiftClass = 'is-off';
+        else if (savedShift === 'ca1') shiftClass = 'is-ca1';
+        else if (savedShift === 'ca2') shiftClass = 'is-ca2';
+
+        const col = document.createElement('div');
+        col.className = `day-col ${isToday ? 'today' : ''} ${shiftClass}`;
+        col.id = `col-day-${d.key}`;
+        col.innerHTML = `
+          <div class="day-name">${d.label} ${isToday ? '●' : ''}</div>
+          <span class="calendar-date">${dateLabel}</span>
+          <select class="day-shift-select" onchange="updateShift(${d.key}, this.value)">
+            <option value="off" ${savedShift === 'off' ? 'selected' : ''}>Nghỉ</option>
+            <option value="ca1" ${savedShift === 'ca1' ? 'selected' : ''}>Ca 1</option>
+            <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
+          </select>
+        `;
+        container.appendChild(col);
+      });
+    }
+
+    function updateShift(dayKey, val) {
+      const key = getWeekStorageKey(currentWeekIndex);
+      const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
+      shiftsData[dayKey] = val;
+      localStorage.setItem(key, JSON.stringify(shiftsData));
+      localStorage.setItem('camp_weekly_shifts', JSON.stringify(shiftsData));
+
+      const col = document.getElementById(`col-day-${dayKey}`);
+      if (col) {
+        col.classList.remove('is-off', 'is-ca1', 'is-ca2');
+        if (val === 'off') col.classList.add('is-off');
+        else if (val === 'ca1') col.classList.add('is-ca1');
+        else if (val === 'ca2') col.classList.add('is-ca2');
+      }
+      showToast('Đã lưu ca làm!');
+    }
+
+    function copyCurrentWeekToAll() {
+      const curData = getShiftsForWeekIndex(currentWeekIndex);
+      if (confirm(`Áp dụng lịch này cho tất cả các tuần trong tháng?`)) {
+        monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
+        localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
+        renderWeekGrid();
+        showToast('Đã nhân rộng lịch thành công!');
+      }
+    }
+
+    function toggleSyncDropdown(e) {
+      e.stopPropagation();
+      document.getElementById('syncDropdownMenu').classList.toggle('show');
+    }
+    document.addEventListener('click', (e) => {
+      const m = document.getElementById('syncDropdownMenu');
+      if (m && m.classList.contains('show') && !e.target.closest('.custom-multiselect')) m.classList.remove('show');
+    });
+
+    function renderSyncDropdownMenu() {
+      const menu = document.getElementById('syncDropdownMenu');
+      menu.innerHTML = '';
+      const isFullMonth = (selectedSyncWeeks.size === monthWeeksList.length);
+      const mItem = document.createElement('div');
+      mItem.className = `multiselect-item ${isFullMonth ? 'selected' : ''}`;
+      mItem.innerHTML = `<span>📅 Cả tháng</span><span class="multiselect-check">✔</span>`;
+      mItem.onclick = (e) => {
+        e.stopPropagation();
+        selectedSyncWeeks.clear();
+        if (!isFullMonth) monthWeeksList.forEach(w => selectedSyncWeeks.add(w.index));
+        renderSyncDropdownMenu();
+      };
+      menu.appendChild(mItem);
+
+      monthWeeksList.forEach((w) => {
+        const isSel = selectedSyncWeeks.has(w.index);
+        const item = document.createElement('div');
+        item.className = `multiselect-item ${isSel ? 'selected' : ''}`;
+        item.innerHTML = `<span>Tuần ${w.labelNumber}</span><span class="multiselect-check">✔</span>`;
+        item.onclick = (e) => {
+          e.stopPropagation();
+          if (selectedSyncWeeks.has(w.index)) selectedSyncWeeks.delete(w.index);
+          else selectedSyncWeeks.add(w.index);
+          renderSyncDropdownMenu();
+        };
+        menu.appendChild(item);
+      });
+      const lbl = document.getElementById('syncDropdownLabel');
+      lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
+    }
+
+    // NẠP VÀO LỊCH ĐIỆN THOẠI (Gán màu sắc theo chuẩn Ca 1 / Ca 2)
+    function executeSelectedSync() {
+      if (selectedSyncWeeks.size === 0) {
+        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
+        return;
+      }
+      const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
+      exportToICSCalendarList(weekIndices);
+    }
+
+    function exportToICSCalendarList(weekIndices) {
+      let events = [];
+
+      function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
+        const [h, m] = timeStr.split(':').map(Number);
+        const dateObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
+        return dateObj.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      }
+
+      weekIndices.forEach(wIdx => {
+        const wObj = monthWeeksList[wIdx];
+        if (!wObj) return;
+        const shiftsData = getShiftsForWeekIndex(wIdx);
+
+        for (let i = 0; i < 7; i++) {
+          const dayKey = i === 6 ? 8 : i + 2;
+          const shift = shiftsData[dayKey] || 'off';
+          const dayDate = new Date(wObj.monday);
+          dayDate.setDate(wObj.monday.getDate() + i);
+          const y = dayDate.getFullYear();
+          const m = dayDate.getMonth() + 1;
+          const d = dayDate.getDate();
+          const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+
+          if (shift === 'off') {
+            const nextDate = new Date(y, m - 1, d + 1);
+            const nextDateStr = `${nextDate.getFullYear()}${String(nextDate.getMonth()+1).padStart(2,'0')}${String(nextDate.getDate()).padStart(2,'0')}`;
+            events.push([
+              'BEGIN:VEVENT',
+              `UID:off-${dateStr}-${dayKey}@lantrai`,
+              `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+              `DTSTART;VALUE=DATE:${dateStr}`,
+              `DTEND;VALUE=DATE:${nextDateStr}`,
+              'SUMMARY:🌸 OFF',
+              'DESCRIPTION:Ngày nghỉ',
+              'COLOR:#FCA5A5',
+              'X-APPLE-CALENDAR-COLOR:#FCA5A5',
+              'CATEGORIES:OFF',
+              'END:VEVENT'
+            ].join('\\r\\n'));
+            continue;
+          }
+
+          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
+          const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
+          const shiftName = shift === 'ca1' ? 'Ca 1' : 'Ca 2';
+          const shiftColor = shift === 'ca1' ? '#38bdf8' : '#eab308';
+          const shiftColorHex = shift === 'ca1' ? '38BDF8' : 'EAB308';
+          const shiftCategory = shift === 'ca1' ? 'Ca Sáng' : 'Ca Chiều';
+
+          const inStartUTC = toUTCICSString(y, m, d, rawIn, 0);
+          const inEndUTC = toUTCICSString(y, m, d, rawIn, 15);
+
+          const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
+          const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
+
+          // CHECK-IN
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:checkin-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
+            `DTSTAMP:${inStartUTC}`,
+            `DTSTART:${inStartUTC}`,
+            `DTEND:${inEndUTC}`,
+            `SUMMARY:🔹 ${shiftName} · Vào (${rawIn})`,
+            `DESCRIPTION:Nhắc giờ bắt đầu ${shiftName}: ${rawIn}`,
+            `COLOR:${shiftColor}`,
+            `X-APPLE-CALENDAR-COLOR:${shiftColor}`,
+            `CATEGORIES:${shiftCategory}`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ bắt đầu ca!',
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          // CHECK-OUT
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
+            `DTSTAMP:${outStartUTC}`,
+            `DTSTART:${outStartUTC}`,
+            `DTEND:${outEndUTC}`,
+            `SUMMARY:🔹 ${shiftName} · Kết thúc (${rawOut})`,
+            `DESCRIPTION:Đến giờ kết thúc/bàn giao ${shiftName}: ${rawOut}`,
+            `COLOR:${shiftColor}`,
+            `X-APPLE-CALENDAR-COLOR:${shiftColor}`,
+            `CATEGORIES:${shiftCategory}`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ kết thúc ca!',
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+        }
+      });
+
+      if (events.length === 0) {
+        alert('Không có ca làm việc nào trong tuần đã chọn!');
+        return;
+      }
+
+      const icsHeader = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//LanTrai//Shift//VI',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH'
+      ].join('\r\n');
+
+      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
+
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `lich_ca_truc.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
+      showToast('Đang tải tệp lịch! Mở tệp để thêm vào điện thoại.');
+    }
+
+    // --- 6. VIỆC CẦN XỬ LÝ & BÁO ĐỘNG HỆ THỐNG ---
+    function saveIssue() {
+      const title = document.getElementById('issueTitle').value.trim();
+      const content = document.getElementById('issueContent').value.trim();
+      const priority = document.getElementById('issuePriority').value;
+      const reminderDateTime = document.getElementById('issueDateTime').value;
+
+      if (!title) { alert('Vui lòng nhập tên công việc!'); return; }
+      initAudio();
+
+      issues.unshift({
+        id: Date.now(),
+        title, content, priority, reminderDateTime, done: false,
+        createdAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN')
+      });
+      localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+
+      document.getElementById('issueTitle').value = '';
+      document.getElementById('issueContent').value = '';
+      document.getElementById('issueDateTime').value = '';
+
+      renderIssues();
+      updateDashboard();
+      renderSchoolTimetable();
+      showToast('Đã thêm việc cần làm!');
+    }
+
+    function renderIssues() {
+      const el = document.getElementById('issuesList');
+      el.innerHTML = '';
+      if (issues.length === 0) {
+        el.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:16px; font-size:0.85rem;">Không có việc cần làm.</div>`;
+        return;
+      }
+      issues.forEach(item => {
+        let reminderText = '';
+        if (item.reminderDateTime) {
+          const d = new Date(item.reminderDateTime);
+          if (!isNaN(d.getTime())) {
+            reminderText = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} - ${d.getDate()}/${d.getMonth()+1}`;
+          }
+        }
+        const div = document.createElement('div');
+        div.className = `item-card ${item.done ? 'done' : ''}`;
+        div.innerHTML = `
+          <div class="card-top">
+            <span class="badge badge-phat-sinh">${escapeHtml(item.priority)}</span>
+            <span class="card-time">${escapeHtml(item.createdAt)}</span>
+          </div>
+          <div class="card-title">${escapeHtml(item.title)}</div>
+          ${reminderText ? `<div class="card-alarm-tag">⏰ Hẹn xử lý: ${reminderText}</div>` : ''}
+          <div class="card-desc">${escapeHtml(item.content) || 'Không có mô tả chi tiết'}</div>
+          <div class="card-actions">
+            <button class="btn-action btn-zalo" onclick="copyIssueZalo(${item.id})">📲 Báo Việc</button>
+            <button class="btn-action" onclick="toggleDoneIssue(${item.id})">${item.done ? '↩ Mở lại' : '✔ Đã Xong'}</button>
+            <button class="btn-delete btn-action" onclick="deleteIssue(${item.id})">🗑 Xóa</button>
+          </div>
+        `;
+        el.appendChild(div);
+      });
+    }
+
+    function toggleDoneIssue(id) {
+      issues = issues.map(i => i.id === id ? { ...i, done: !i.done } : i);
+      localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+      renderIssues(); updateDashboard();
+    }
+
+    function deleteIssue(id) {
+      if (confirm('Xóa công việc này?')) {
+        issues = issues.filter(i => i.id !== id);
+        localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+        renderIssues(); updateDashboard();
+      }
+    }
+
+    function copyIssueZalo(id) {
+      const i = issues.find(x => x.id === id);
+      if (!i) return;
+      const text = `⚡ [CÔNG VIỆC CẦN XỬ LÝ - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
+      navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung việc!'));
+    }
+
+    function updateDashboard() {
+      const jDone = journals.filter(x => x.done).length;
+      const iDone = issues.filter(x => x.done).length;
+      document.getElementById('statJournals').textContent = journals.length;
+      document.getElementById('statJournalsSub').textContent = `${jDone} hoàn thành`;
+      document.getElementById('statIssues').textContent = issues.length;
+      document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
+    }
+
+    function initAudio() {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!audioCtx && Ctx) audioCtx = new Ctx();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      } catch (_) {}
+    }
+
+    function playBeep() {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(1200, audioCtx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.35);
+    }
+
+    function startContinuousAlarm(title, desc) {
+      initAudio();
+      document.getElementById('alarmTitle').innerText = title;
+      document.getElementById('alarmDesc').innerText = desc;
+      document.getElementById('alarmBanner').style.display = 'block';
+      if (isAlarmPlaying) return;
+      isAlarmPlaying = true;
+      playBeep();
+      alarmInterval = setInterval(playBeep, 700);
+      if ("vibrate" in navigator) navigator.vibrate([400, 200, 400, 200]);
+    }
+
+    function stopAlarm() {
+      if (alarmInterval) clearInterval(alarmInterval);
+      alarmInterval = null;
+      isAlarmPlaying = false;
+      document.getElementById('alarmBanner').style.display = 'none';
+      showToast('Đã tắt chuông báo!');
+    }
+
+    function enableSoundTest() {
+      initAudio();
+      startContinuousAlarm('🔔 THỬ NGHIỆM CHUÔNG BÁO', 'Chuông báo đang reo thử...');
+    }
+
+    function openFullImg(src) {
+      const w = window.open("");
+      if (!w) return;
+      const img = w.document.createElement('img');
+      img.src = src;
+      img.style.cssText = 'max-width:100%;height:auto;display:block;margin:auto';
+      w.document.body.appendChild(img);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2200);
+    }
+
+    function escapeHtml(t) {
+      if (!t) return '';
+      return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    async function requestNotificationPermission() {
+      if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ thông báo.'); return; }
+      try {
+        const res = await Notification.requestPermission();
+        showToast(res === 'granted' ? 'Đã bật thông báo!' : 'Chưa cấp quyền thông báo.');
+      } catch (_) {}
+    }
+
+    function exportData() {
+      let allWeeksData = {};
+      monthWeeksList.forEach(w => allWeeksData[getWeekStorageKey(w.index)] = getShiftsForWeekIndex(w.index));
+      const data = { allWeeksData, shiftTimes, journals, issues, familyTimetable: localStorage.getItem('family_timetable_v1') || '{}', backupDate: new Date().toISOString() };
+      const a = document.createElement('a');
+      a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+      a.download = `so_tay_nhat_ky_${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function importData(e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = (evt) => {
+        try {
+          const d = JSON.parse(evt.target.result);
+          if (d.allWeeksData) Object.keys(d.allWeeksData).forEach(k => localStorage.setItem(k, JSON.stringify(d.allWeeksData[k])));
+          if (d.shiftTimes) shiftTimes = d.shiftTimes;
+          if (d.journals || d.reports) journals = d.journals || d.reports;
+          if (d.issues) issues = d.issues;
+          if (d.familyTimetable) localStorage.setItem('family_timetable_v1', typeof d.familyTimetable === 'string' ? d.familyTimetable : JSON.stringify(d.familyTimetable));
+          localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
+          localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+          localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard(); renderSchoolTimetable();
+          alert('Khôi phục dữ liệu thành công!');
+        } catch(_) { alert('Tệp không hợp lệ!'); }
+      };
+      r.readAsText(f);
+    }
+
+    // Lịch nhắc chính xác theo giờ địa phương; chỉ kích hoạt khi now >= giờ hẹn.
+    // Dấu đã báo được lưu cục bộ để tránh reo lặp lại mỗi lần kiểm tra.
+    const ALARM_MARKS_KEY = 'personal_app_alarm_marks_v2';
+    function getAlarmMarks() {
+      try { return JSON.parse(localStorage.getItem(ALARM_MARKS_KEY) || '{}'); }
+      catch (_) { return {}; }
+    }
+    function markAlarmFired(key) {
+      const marks = getAlarmMarks();
+      marks[key] = Date.now();
+      const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000;
+      Object.keys(marks).forEach(k => { if (marks[k] < cutoff) delete marks[k]; });
+      try { localStorage.setItem(ALARM_MARKS_KEY, JSON.stringify(marks)); } catch (_) {}
+    }
+    function fireScheduledAlarm(key, title, desc, dueDate) {
+      if (getAlarmMarks()[key]) return;
+      const now = Date.now(), due = dueDate.getTime();
+      if (!Number.isFinite(due) || now < due) return; // tuyệt đối không báo sớm
+      // Khi app được mở lại, vẫn bắt kịp lịch hẹn vừa qua trong 6 giờ.
+      if (now - due > 6 * 60 * 60 * 1000) { markAlarmFired(key); return; }
+      markAlarmFired(key);
+      startContinuousAlarm(title, desc);
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try { new Notification(title, { body: desc, tag: key, renotify: false }); } catch (_) {}
+      }
+    }
+    function localDateKey(d) {
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function findShiftForDate(date) {
+      // Tìm tuần có ngày đó, kể cả khi ngày thuộc tuần giáp tháng.
+      const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const monday = new Date(target);
+      const offset = (monday.getDay() + 6) % 7;
+      monday.setDate(monday.getDate() - offset);
+      const key = `camp_shifts_${monday.getFullYear()}_${monday.getMonth()+1}_${monday.getDate()}`;
+      let data = null;
+      try { data = JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) {}
+      if (!data) {
+        try { data = JSON.parse(localStorage.getItem('camp_weekly_shifts') || 'null'); } catch (_) {}
+      }
+      const dayKey = target.getDay() === 0 ? 8 : target.getDay() + 1;
+      return data && data[dayKey] ? data[dayKey] : 'off';
+    }
+    function makeLocalDateTime(date, hhmm) {
+      if (!hhmm || !/^\d{2}:\d{2}$/.test(hhmm)) return null;
+      const [h, m] = hhmm.split(':').map(Number);
+      if (h > 23 || m > 59) return null;
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0, 0);
+    }
+    function checkScheduler() {
+      const now = new Date();
+      const todayKey = localDateKey(now);
+
+      journals.forEach(j => {
+        if (j.done || !j.reminderTime) return;
+        const dateStr = j.journalDate || todayKey;
+        const parts = dateStr.split('-').map(Number);
+        if (parts.length !== 3 || parts.some(n => !n)) return;
+        const due = makeLocalDateTime(new Date(parts[0], parts[1]-1, parts[2]), j.reminderTime);
+        if (due) fireScheduledAlarm(`journal-${j.id}-${dateStr}-${j.reminderTime}`,
+          `⏰ NHẬT KÝ: ${(j.title || 'Công việc').toUpperCase()}`,
+          j.content || 'Đến giờ hẹn nhật ký!', due);
+      });
+
+      issues.forEach(i => {
+        if (i.done || !i.reminderDateTime) return;
+        const due = new Date(i.reminderDateTime);
+        if (!Number.isNaN(due.getTime())) fireScheduledAlarm(`issue-${i.id}-${i.reminderDateTime}`,
+          `⏰ VIỆC CẦN LÀM: ${(i.title || 'Công việc').toUpperCase()}`,
+          i.content || 'Đến giờ xử lý công việc đã hẹn.', due);
+      });
+
+      const shift = findShiftForDate(now);
+      if (shift === 'ca1' || shift === 'ca2') {
+        const prefix = shift === 'ca1' ? 'c1' : 'c2';
+        const shiftName = shift === 'ca1' ? 'Ca 1' : 'Ca 2';
+        ['in', 'out'].forEach(kind => {
+          const time = shiftTimes[`${prefix}_${kind}`];
+          const due = makeLocalDateTime(now, time);
+          if (due) fireScheduledAlarm(`shift-${todayKey}-${shift}-${kind}-${time}`,
+            `⏰ ${shiftName}: ${kind === 'in' ? 'Đến giờ vào ca' : 'Đến giờ kết thúc ca'}`,
+            `${shiftName} · ${kind === 'in' ? 'Bắt đầu' : 'Kết thúc/bàn giao'} lúc ${time}.`, due);
+        });
+      }
+    }
+    // Kiểm tra thường xuyên khi trang hoạt động; kiểm tra lại ngay khi quay về app.
+    setInterval(checkScheduler, 5000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) checkScheduler(); });
+    window.addEventListener('focus', checkScheduler);
+    window.addEventListener('pageshow', checkScheduler);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateGreetingHeader();
+      initWeatherDetection();
+      initMonthWeeksDropdown();
+      renderWeekGrid();
+      loadShiftTimeConfigUI();
+      filterJournals();
+      renderIssues();
+      updateDashboard();
+      renderSchoolTimetable();
+      checkScheduler();
+    });
+
+    document.body.addEventListener('click', () => { initAudio(); }, { once: true });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
