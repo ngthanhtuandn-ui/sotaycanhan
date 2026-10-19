@@ -104,7 +104,6 @@
       justify-content: center;
     }
 
-    /* Tâm mặt trời */
     .sun-core {
       width: 24px;
       height: 24px;
@@ -115,7 +114,6 @@
       animation: sunGlow 3s ease-in-out infinite alternate;
     }
 
-    /* Các tia nắng xoay tròn */
     .sun-rays {
       position: absolute;
       inset: -2px;
@@ -140,7 +138,6 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Có mây */
     .partly-cloudy { position: relative; width: 40px; height: 34px; }
     .partly-cloudy .sun-small {
       width: 18px; height: 18px; background: #f59e0b; border-radius: 50%;
@@ -159,7 +156,6 @@
     @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(4px); } }
     @keyframes floatSun { 0% { transform: translateY(0); } 100% { transform: translateY(-3px); } }
 
-    /* Mưa */
     .rainy-icon { position: relative; width: 38px; height: 36px; }
     .rain-cloud {
       width: 32px; height: 16px; background: #94a3b8; border-radius: 12px;
@@ -175,7 +171,6 @@
     .rain-drop.d3 { left: 24px; bottom: 0px; animation-delay: 0.45s; }
     @keyframes rainDropFall { 0% { transform: translateY(-4px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
 
-    /* Trăng Đêm */
     .night-icon-wrap { position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
     .moon-crescent {
       width: 22px; height: 22px; border-radius: 50%;
@@ -191,7 +186,7 @@
     @keyframes moonSway { 0% { transform: rotate(-5deg); filter: drop-shadow(0 0 3px #fde047); } 100% { transform: rotate(5deg); filter: drop-shadow(0 0 8px #facc15); } }
     @keyframes starBlink { 0% { opacity: 0.2; transform: scale(0.6); } 100% { opacity: 1; transform: scale(1.3); } }
 
-    /* BẢNG ĐIỀU HƯỚNG TAB */
+    /* TABS */
     .nav-tabs {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -277,7 +272,7 @@
     }
     .day-col.today { outline: 2px solid #38bdf8; }
 
-    /* MÀU ĐỎ NỔI BẬT CHO NGÀY OFF TRÊN ỨNG DỤNG */
+    /* MÀU ĐỎ NGHỈ */
     .day-col.is-off {
       background-color: #fee2e2 !important;
       border: 1.5px solid #f87171 !important;
@@ -396,7 +391,6 @@
   </header>
 
   <div class="container">
-    <!-- LỜI CHÀO & ICON THỜI TIẾT ĐỘNG XOAY CÓ TIA -->
     <div class="greeting-banner">
       <div class="greeting-info">
         <div class="greeting-text-main">Xin chào Tuấn Tuấn ✨</div>
@@ -406,7 +400,6 @@
       <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển hiệu ứng thời tiết"></div>
     </div>
 
-    <!-- TABS ĐIỀU HƯỚNG GỌN GÀNG -->
     <div class="nav-tabs">
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">📔 Nhật Ký</button>
@@ -424,10 +417,8 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
+        <!-- PHẦN NẠP LỊCH TINH GỌN -->
         <div class="sync-calendar-panel">
-          <div style="font-size:0.74rem; font-weight:700; color:#475569; margin-bottom:5px;">
-            📲 Nạp Google Lịch điện thoại (Tự phân biệt màu 🔵 Ca 1 / 🟡 Ca 2 / 🔴 Nghỉ):
-          </div>
           <div class="sync-row">
             <div class="custom-multiselect">
               <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
@@ -836,7 +827,7 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // 4. NẠP LỊCH GOOGLE (CÓ ĐẦY ĐỦ 🔴 NGÀY OFF, 🔵 CA 1, 🟡 CA 2)
+    // 4. NẠP LỊCH GOOGLE
     function buildICSEvents(weekIndices) {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
@@ -861,7 +852,6 @@
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
-          // TẠO SỰ KIỆN MÀU ĐỎ CHO NGÀY OFF
           if (shift === 'off') {
             const nextDayDate = new Date(dayDate);
             nextDayDate.setDate(nextDayDate.getDate() + 1);
@@ -888,7 +878,6 @@
             continue;
           }
 
-          // CÁC NGÀY ĐI CA (CA 1 / CA 2)
           const isC1 = (shift === 'ca1');
           const rawIn = isC1 ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15');
           const rawOut = isC1 ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00');
