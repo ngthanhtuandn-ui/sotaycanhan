@@ -1336,7 +1336,7 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // NẠP VÀO LỊCH ĐIỆN THOẠI (Báo chính xác vào giờ ca trực PT0S)
+    // NẠP VÀO LỊCH ĐIỆN THOẠI (Gán màu sắc theo chuẩn Ca 1 / Ca 2)
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
         alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
@@ -1384,7 +1384,7 @@
           const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
           const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
-          // CHECK-IN: Báo chính xác lúc bắt đầu sự kiện
+          // CHECK-IN
           events.push([
             'BEGIN:VEVENT',
             `UID:checkin-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
@@ -1403,7 +1403,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // CHECK-OUT: Báo chính xác lúc bắt đầu sự kiện
+          // CHECK-OUT
           events.push([
             'BEGIN:VEVENT',
             `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
