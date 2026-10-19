@@ -289,55 +289,6 @@
       box-shadow: 0 3px 8px rgba(202, 138, 4, 0.25);
     }
 
-    /* Nút chọn ảnh đơn gọn gàng, siêu nhạy */
-    .btn-media-single {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #ffffff;
-      border: 1.5px solid #facc15;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #854d0e;
-      cursor: pointer;
-      margin-top: 4px;
-      margin-bottom: 8px;
-      width: 100%;
-      user-select: none;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-    .btn-media-single:active { background: #fef9c3; transform: scale(0.99); }
-
-    .preview-thumb-wrap { position: relative; display: inline-block; }
-    .img-thumb {
-      width: 60px;
-      height: 60px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-    }
-    .btn-remove-thumb {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #ef4444;
-      color: white;
-      border: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .search-filter-box {
       background: #fff;
       border: 1px solid var(--border);
@@ -431,7 +382,7 @@
 
     .img-preview-box { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; margin-top: 6px; }
 
-    /* Lịch Tuần */
+    /* Lịch Tuần & Màu Ca Làm Việc */
     .week-table-card {
       background: white;
       border-radius: 16px;
@@ -473,11 +424,26 @@
       background: #fafafa;
       transition: all 0.2s ease;
     }
-    .day-col.today { border-color: var(--primary); background: #eff6ff; }
-    .day-col.is-off { background: #fee2e2 !important; border-color: #ef4444 !important; }
+    .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
+    
+    /* Ngày OFF: Đỏ nhạt */
+    .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
-    .day-col.is-off .calendar-date { color: #dc2626 !important; }
-    .day-col.is-off .day-shift-select { border-color: #f87171 !important; color: #b91c1c !important; font-weight: 700; background: #fff5f5; }
+    .day-col.is-off .calendar-date { color: #ef4444 !important; }
+    .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 700; background: #fff1f2; }
+
+    /* Ca 1: Xanh da trời nhạt (đại diện buổi sáng) */
+    .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
+    .day-col.is-ca1 .day-name { color: #0369a1 !important; }
+    .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
+    .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 700; background: #f0f9ff; }
+
+    /* Ca 2: Vàng nhạt (đại diện buổi chiều) */
+    .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
+    .day-col.is-ca2 .day-name { color: #854d0e !important; }
+    .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
+    .day-col.is-ca2 .day-shift-select { border-color: #facc15 !important; color: #854d0e !important; font-weight: 700; background: #fefce8; }
+
     .day-name { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
     .calendar-date { display: block; font-size: .62rem; color: #64748b; margin: 2px 0 4px; }
     .day-shift-select {
@@ -551,6 +517,28 @@
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
+    /* Định kiểu huy hiệu Tiết học Thời khóa biểu */
+    .lesson-badge {
+      display: inline-block;
+      background: #fef08a;
+      color: #854d0e;
+      border: 1px solid #fde047;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 1px 7px;
+      border-radius: 6px;
+      margin-right: 6px;
+      box-shadow: 0 1px 2px rgba(133, 77, 14, 0.08);
+      white-space: nowrap;
+    }
+    .lesson-row-item {
+      display: flex;
+      align-items: center;
+      padding: 3px 0;
+      font-size: 0.84rem;
+      color: #1e293b;
+    }
+
     #toast {
       position: fixed;
       bottom: 24px;
@@ -566,7 +554,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* Giao diện hoàn thiện: rõ ràng, đồng nhất và thân thiện với màn hình cảm ứng */
+    /* Giao diện tương thích máy tính & điện thoại */
     :root { --primary:#1769aa; --primary-dark:#124f85; --bg:#f3f6fb; --border:#dbe4ef; --text:#172b4d; --muted:#62748a; }
     body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); }
     header { background:linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%); box-shadow:0 6px 22px rgba(16,72,117,.2); }
@@ -736,7 +724,6 @@
           <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
         </div>
 
-        <!-- Chức năng đính kèm ảnh đã được bỏ theo yêu cầu; các nhật ký cũ vẫn được giữ nguyên. -->
         <button class="btn-submit btn-journal-submit" id="btnSaveJournal" onclick="saveJournalEntry()">+ Lưu Vào Nhật Ký</button>
       </div>
 
@@ -793,7 +780,6 @@
         <div style="padding:18px 16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;box-shadow:0 8px 18px rgba(99,102,241,.2);">
           <div style="font-size:1.35rem;margin-bottom:5px;">🎒 📚 ✨</div>
           <h3 style="font-size:1.08rem;margin:0 0 5px;color:#fff;">Thời khóa biểu của các con</h3>
-
         </div>
         <div class="row form-group">
           <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;"><label style="color:#4338ca;">🏫 Lớp học</label><select id="schoolClass" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#c7d2fe;"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
@@ -903,80 +889,7 @@
       showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
     }
 
-    // --- 2. XỬ LÝ ẢNH NHẬT KÝ ĐẢM BẢO CHẠY TỐT TRÊN MỌI DI ĐỘNG ---
-    async function handleNewImages(input) {
-      if (!input.files || input.files.length === 0) return;
-      const files = Array.from(input.files).filter(f => f.type && f.type.startsWith('image/'));
-      if (!files.length) { showToast('Vui lòng chọn tệp hình ảnh.'); input.value=''; return; }
-      if (currentJournalImages.length + files.length > 5) {
-        alert('Mỗi nhật ký chỉ nên đính kèm tối đa 5 ảnh để tránh đầy bộ nhớ điện thoại.');
-        input.value = ''; return;
-      }
-      showToast('Đang tối ưu ảnh, vui lòng chờ...');
-      try {
-        for (const file of files) {
-          const b64 = await compressImage(file);
-          if (b64) currentJournalImages.push(b64);
-          else showToast('Có ảnh không đọc được; hãy thử ảnh JPG/PNG khác.');
-        }
-        renderJournalThumbnails();
-        if (currentJournalImages.length) showToast('Đã thêm ảnh vào nhật ký.');
-      } catch (err) {
-        alert('Không đọc được ảnh. Hãy thử chọn lại ảnh trong Thư viện của điện thoại.');
-      } finally { input.value = ''; }
-    }
-
-    function removeJournalImage(index) {
-      currentJournalImages.splice(index, 1);
-      renderJournalThumbnails();
-    }
-
-    function renderJournalThumbnails() {
-      const container = document.getElementById('journalImgPreview');
-      container.innerHTML = '';
-      currentJournalImages.forEach((imgSrc, idx) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'preview-thumb-wrap';
-        const img = document.createElement('img');
-        img.src = imgSrc; img.className = 'img-thumb'; img.alt = 'Ảnh nhật ký';
-        img.addEventListener('click', () => openFullImg(imgSrc));
-        const btn = document.createElement('button');
-        btn.type = 'button'; btn.className = 'btn-remove-thumb'; btn.textContent = '×';
-        btn.addEventListener('click', () => removeJournalImage(idx));
-        wrap.append(img, btn); container.appendChild(wrap);
-      });
-    }
-
-    function compressImage(file) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onerror = () => resolve(null);
-        reader.onload = () => {
-          const img = new Image();
-          img.onerror = () => resolve(null);
-          img.onload = () => {
-            try {
-              const canvas = document.createElement('canvas');
-              const maxSide = 800;
-              const scale = Math.min(1, maxSide / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
-              const w = Math.max(1, Math.round((img.naturalWidth || img.width) * scale));
-              const h = Math.max(1, Math.round((img.naturalHeight || img.height) * scale));
-              canvas.width = w; canvas.height = h;
-              const ctx = canvas.getContext('2d');
-              if (!ctx) { resolve(null); return; }
-              ctx.drawImage(img, 0, 0, w, h);
-              // JPEG nén mạnh hơn, giảm nguy cơ vượt giới hạn lưu trữ trên Android.
-              resolve(canvas.toDataURL('image/jpeg', 0.5));
-              canvas.width = 0; canvas.height = 0;
-            } catch (_) { resolve(null); }
-          };
-          img.src = reader.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // --- 3. QUẢN LÝ NHẬT KÝ ---
+    // --- 2. QUẢN LÝ NHẬT KÝ ---
     function saveJournalEntry() {
       const title = document.getElementById('journalTitle').value.trim();
       const content = document.getElementById('journalContent').value.trim();
@@ -1015,8 +928,6 @@
       document.getElementById('journalTitle').value = '';
       document.getElementById('journalContent').value = '';
       document.getElementById('journalReminderTime').value = '';
-      currentJournalImages = [];
-      renderJournalThumbnails();
 
       filterJournals();
       updateDashboard();
@@ -1121,7 +1032,7 @@
       navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép nhật ký để gửi Zalo!'));
     }
 
-    // --- 4. VIEW & ĐIỀU HƯỚNG ---
+    // --- 3. VIEW & ĐIỀU HƯỚNG ---
     function switchView(tab) {
       ['shifts', 'journal', 'issues', 'school'].forEach(t => {
         const viewEl = document.getElementById(`view-${t}`);
@@ -1137,7 +1048,7 @@
       });
     }
 
-    // --- THỜI KHÓA BIỂU LỚP 10 / LỚP 6 ---
+    // --- 4. THỜI KHÓA BIỂU & XEM NHANH TRONG NGÀY ---
     const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
     function getSchoolKey() {
       return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
@@ -1168,17 +1079,41 @@
       localStorage.setItem('family_timetable_v1', JSON.stringify(data));
       renderSchoolTimetable(); showToast('Đã xóa nội dung buổi học.');
     }
+
+    // XEM NHANH: Hiển thị từng tiết rõ ràng, gắn thẻ Tiết 1, 2 màu vàng nổi bật
     function renderSchoolTodaySummary() {
       const host = document.getElementById('schoolTodaySummary');
       if (!host) return;
       const data = getSchoolData(), day = new Date().getDay();
+
+      function formatShiftRows(shiftArr) {
+        if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) {
+          return `<div style="color:var(--muted);font-style:italic;font-size:0.78rem;padding-left:4px;">Chưa nhập</div>`;
+        }
+        return shiftArr.map((x, i) => {
+          if (!x || !x.trim()) return '';
+          return `<div class="lesson-row-item"><span class="lesson-badge">Tiết ${i+1}</span> <span>${escapeHtml(x)}</span></div>`;
+        }).filter(Boolean).join('');
+      }
+
       const rows = ['10','6'].map(cls => {
         const morning = data[`${cls}_morning_${day}`] || [];
         const afternoon = data[`${cls}_afternoon_${day}`] || [];
-        const fmt = arr => arr.some(x => x) ? arr.map((x,i) => x ? `Tiết ${i+1}: ${escapeHtml(x)}` : '').filter(Boolean).join(' · ') : 'Chưa nhập';
-        return `<div style="padding:8px;border-bottom:1px solid var(--border)"><b>Lớp ${cls}</b><br>🌅 Sáng: ${fmt(morning)}<br>🌇 Chiều: ${fmt(afternoon)}</div>`;
+        return `
+          <div style="padding:10px;margin-bottom:10px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
+            <div style="font-weight:800;font-size:0.92rem;color:var(--primary-dark);margin-bottom:6px;">🏫 Lớp ${cls}</div>
+            <div style="margin-bottom:8px;">
+              <span style="font-size:0.75rem;font-weight:700;color:#c2410c;">🌅 Buổi Sáng:</span>
+              <div style="margin-top:2px;">${formatShiftRows(morning)}</div>
+            </div>
+            <div>
+              <span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>
+              <div style="margin-top:2px;">${formatShiftRows(afternoon)}</div>
+            </div>
+          </div>
+        `;
       });
-      host.innerHTML = `<b>${schoolDays[day]} hôm nay</b>` + rows.join('');
+      host.innerHTML = `<div style="font-weight:800;color:#0f172a;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
     }
 
     function updateGreetingHeader() {
@@ -1196,7 +1131,7 @@
       if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
     }
 
-    // --- 5. LỊCH CA & ĐỒNG BỘ CHUẨN XÁC MÚI GIỜ ---
+    // --- 5. LỊCH CA & ĐỒNG BỘ MÀU SẮC CHUẨN ĐIỆN THOẠI ---
     function loadShiftTimeConfigUI() {
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
@@ -1310,11 +1245,15 @@
                          dayDate.getFullYear() === now.getFullYear());
 
         const savedShift = shiftsData[d.key] || 'off';
-        const isOff = (savedShift === 'off');
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
+        let shiftClass = '';
+        if (savedShift === 'off') shiftClass = 'is-off';
+        else if (savedShift === 'ca1') shiftClass = 'is-ca1';
+        else if (savedShift === 'ca2') shiftClass = 'is-ca2';
+
         const col = document.createElement('div');
-        col.className = `day-col ${isToday ? 'today' : ''} ${isOff ? 'is-off' : ''}`;
+        col.className = `day-col ${isToday ? 'today' : ''} ${shiftClass}`;
         col.id = `col-day-${d.key}`;
         col.innerHTML = `
           <div class="day-name">${d.label} ${isToday ? '●' : ''}</div>
@@ -1335,10 +1274,13 @@
       shiftsData[dayKey] = val;
       localStorage.setItem(key, JSON.stringify(shiftsData));
       localStorage.setItem('camp_weekly_shifts', JSON.stringify(shiftsData));
+
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
+        col.classList.remove('is-off', 'is-ca1', 'is-ca2');
         if (val === 'off') col.classList.add('is-off');
-        else col.classList.remove('is-off');
+        else if (val === 'ca1') col.classList.add('is-ca1');
+        else if (val === 'ca2') col.classList.add('is-ca2');
       }
       showToast('Đã lưu ca làm!');
     }
@@ -1394,7 +1336,7 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // --- XUẤT LỊCH ĐIỆN THOẠI (QUY ĐỔI UTC ZULU CHUẨN XÁC, CHỐNG NHẢY 23H30) ---
+    // NẠP VÀO LỊCH ĐIỆN THOẠI (Gán màu sắc theo chuẩn Ca 1 / Ca 2)
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
         alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
@@ -1432,7 +1374,9 @@
 
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
-          const shiftName = shift === 'ca1' ? 'Ca 1' : 'Ca 2';
+          const shiftName = shift === 'ca1' ? 'Ca 1 (Sáng)' : 'Ca 2 (Chiều)';
+          const shiftColor = shift === 'ca1' ? '#38bdf8' : '#eab308';
+          const shiftCategory = shift === 'ca1' ? 'Ca Sáng' : 'Ca Chiều';
 
           const inStartUTC = toUTCICSString(y, m, d, rawIn, 0);
           const inEndUTC = toUTCICSString(y, m, d, rawIn, 15);
@@ -1449,6 +1393,8 @@
             `DTEND:${inEndUTC}`,
             `SUMMARY:⏰ CHECK-IN: ${shiftName} (${rawIn})`,
             `DESCRIPTION:Đến giờ vào nhận ca làm việc: ${rawIn}`,
+            `COLOR:${shiftColor}`,
+            `CATEGORIES:${shiftCategory}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
@@ -1457,7 +1403,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // CHECK-OUT (Chuẩn mốc thời gian cài đặt)
+          // CHECK-OUT
           events.push([
             'BEGIN:VEVENT',
             `UID:checkout-${dateStr}-${dayKey}-${Date.now()}@lantrai`,
@@ -1466,6 +1412,8 @@
             `DTEND:${outEndUTC}`,
             `SUMMARY:⏰ CHECK-OUT: ${shiftName} (${rawOut})`,
             `DESCRIPTION:Đến giờ kiểm tra bàn giao và Check-out: ${rawOut}`,
+            `COLOR:${shiftColor}`,
+            `CATEGORIES:${shiftCategory}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
@@ -1499,7 +1447,7 @@
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(link.href);
-      showToast('Đang tải tệp lịch chuẩn giờ! Hãy mở tệp để thêm vào máy.');
+      showToast('Đang tải tệp lịch! Mở tệp để thêm vào điện thoại.');
     }
 
     // --- 6. VIỆC CẦN XỬ LÝ & BÁO ĐỘNG HỆ THỐNG ---
