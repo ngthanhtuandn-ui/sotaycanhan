@@ -18,76 +18,76 @@
       --primary: #1769aa;
       --primary-dark: #124f85;
       --accent: #f59e0b;
-      --bg: #f3f6fb;
+      --bg: #f1f5f9;
       --card: #ffffff;
-      --text: #172b4d;
-      --muted: #62748a;
-      --border: #dbe4ef;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #cbd5e1;
       --success: #10b981;
       --danger: #ef4444;
       --purple: #8b5cf6;
-      --journal-bg: #fefce8;
-      --journal-border: #fde047;
+      --journal-bg: #fffbeb;
+      --journal-border: #fde68a;
       --journal-text: #854d0e;
-      --journal-accent: #eab308;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); color: var(--text); padding-bottom: 90px; }
+    body { background: radial-gradient(ellipse at top,#e0f2fe 0%,#f8fafc 45%,#f1f5f9 100%); color: var(--text); padding-bottom: 90px; }
 
     header {
-      background: linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%);
+      background: linear-gradient(115deg,#0369a1 0%,#0284c7 60%,#0ea5e9 100%);
       color: white;
-      padding: 12px 16px;
+      padding: 10px 14px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 6px 22px rgba(16,72,117,.2);
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.25);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 6px;
     }
-    header h1 { font-size: 0.98rem; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
-    .header-btns { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+    header h1 { font-size: 0.94rem; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+    .header-btns { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
     .header-btns button {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.4);
       color: white;
-      padding: 5px 9px;
+      padding: 5px 8px;
       border-radius: 8px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       cursor: pointer;
       font-weight: 600;
       backdrop-filter: blur(6px);
       transition: all 0.15s ease;
     }
-    .header-btns button:active { background: rgba(255,255,255,0.4); transform: scale(0.96); }
+    .header-btns button:active { background: rgba(255,255,255,0.45); transform: scale(0.96); }
 
-    .container { max-width: 980px; margin: auto; padding: 18px 16px 28px; }
+    .container { max-width: 860px; margin: auto; padding: 12px 10px 24px; }
 
-    /* LỜI CHÀO & THỜI TIẾT ĐỘNG */
+    /* BANNER LỜI CHÀO & ICON THỜI TIẾT ĐỘNG */
     .greeting-banner {
       background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-      border: 1px solid #b7efd0;
-      border-radius: 20px;
-      padding: 16px 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 8px 24px rgba(27,86,115,.06);
+      border: 1.5px solid #86efac;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
-    .greeting-info { display: flex; flex-direction: column; gap: 3px; }
-    .greeting-text-main { font-size: 1.02rem; font-weight: 800; color: #166534; }
-    .greeting-text-sub { font-size: 0.85rem; font-weight: 600; color: #047857; }
-    .weather-status-text { font-size: 0.78rem; color: #64748b; font-weight: 600; }
+    .greeting-info { display: flex; flex-direction: column; gap: 2px; }
+    .greeting-text-main { font-size: 0.95rem; font-weight: 800; color: #166534; }
+    .greeting-text-sub { font-size: 0.78rem; font-weight: 600; color: #047857; }
+    .weather-status-text { font-size: 0.72rem; color: #64748b; font-weight: 600; }
 
+    /* ICON THỜI TIẾT ANIMATED */
     .weather-widget {
       position: relative;
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,161 +95,134 @@
       flex-shrink: 0;
     }
 
+    /* 1. Nắng */
     .sun-icon {
-      width: 32px; height: 32px; border-radius: 50%; position: relative; z-index: 1;
-      background: radial-gradient(circle at 32% 28%, #fff7b2 0 8%, #ffd34d 28%, #ffad24 66%, #f28b16 100%);
-      box-shadow: 0 0 16px rgba(255,183,40,.45);
-      animation: sunGlow 3.8s ease-in-out infinite alternate;
+      width: 28px; height: 28px; border-radius: 50%; position: relative;
+      background: radial-gradient(circle at 35% 30%, #fffbeb 0%, #f59e0b 60%, #d97706 100%);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+      animation: sunPulse 3s ease-in-out infinite alternate;
     }
-    @keyframes sunGlow { 0% { transform: scale(0.92); } 100% { transform: scale(1.05); } }
+    .sun-icon::before {
+      content: ''; position: absolute; inset: -7px; border-radius: 50%;
+      background: repeating-conic-gradient(from 0deg, rgba(245, 158, 11, 0.8) 0deg 10deg, transparent 10deg 30deg);
+      animation: sunSpin 18s linear infinite;
+      z-index: -1;
+    }
+    @keyframes sunPulse { 0% { transform: scale(0.92); } 100% { transform: scale(1.08); } }
+    @keyframes sunSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    .partly-cloudy { position: relative; width: 44px; height: 38px; }
+    /* 2. Có mây */
+    .partly-cloudy { position: relative; width: 40px; height: 34px; }
     .partly-cloudy .sun-small {
-      width: 20px; height: 20px; background: #f59e0b; border-radius: 50%;
-      position: absolute; top: 0; right: 2px;
+      width: 18px; height: 18px; background: #f59e0b; border-radius: 50%;
+      position: absolute; top: 1px; right: 2px;
+      box-shadow: 0 0 8px #fde047;
+      animation: floatSun 2.8s ease-in-out infinite alternate;
     }
     .partly-cloudy .cloud-front {
-      width: 32px; height: 18px; background: #e2e8f0; border-radius: 12px;
-      position: absolute; bottom: 2px; left: 0;
+      width: 30px; height: 16px; background: #cbd5e1; border-radius: 12px;
+      position: absolute; bottom: 1px; left: 1px;
+      animation: floatCloud 3.2s ease-in-out infinite alternate;
     }
     .partly-cloudy .cloud-front::before {
-      content: ''; position: absolute; width: 14px; height: 14px; background: #e2e8f0; border-radius: 50%; top: -6px; left: 6px;
+      content: ''; position: absolute; width: 14px; height: 14px; background: #cbd5e1; border-radius: 50%; top: -6px; left: 5px;
     }
+    @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(4px); } }
+    @keyframes floatSun { 0% { transform: translateY(0); } 100% { transform: translateY(-3px); } }
 
-    .rainy-icon { position: relative; width: 40px; height: 38px; }
+    /* 3. Mưa */
+    .rainy-icon { position: relative; width: 38px; height: 36px; }
     .rain-cloud {
-      width: 34px; height: 16px; background: #94a3b8; border-radius: 12px;
-      position: absolute; top: 2px; left: 2px;
+      width: 32px; height: 16px; background: #94a3b8; border-radius: 12px;
+      position: absolute; top: 2px; left: 3px;
+      animation: floatCloud 2.5s ease-in-out infinite alternate;
     }
     .rain-cloud::before {
-      content: ''; position: absolute; width: 15px; height: 15px; background: #94a3b8; border-radius: 50%; top: -6px; left: 6px;
+      content: ''; position: absolute; width: 14px; height: 14px; background: #94a3b8; border-radius: 50%; top: -6px; left: 6px;
     }
-    .rain-drop { position: absolute; width: 2px; height: 6px; background: #0284c7; border-radius: 2px; animation: rainFall 0.8s linear infinite; }
-    .rain-drop.d1 { left: 8px; bottom: 0; animation-delay: 0s; }
-    .rain-drop.d2 { left: 17px; bottom: 2px; animation-delay: 0.3s; }
-    .rain-drop.d3 { left: 26px; bottom: -1px; animation-delay: 0.5s; }
-    @keyframes rainFall { 0% { transform: translateY(-5px); opacity: 0; } 100% { transform: translateY(8px); opacity: 0; } }
+    .rain-drop { position: absolute; width: 2px; height: 6px; background: #0284c7; border-radius: 2px; animation: rainDropFall 0.75s linear infinite; }
+    .rain-drop.d1 { left: 8px; bottom: 1px; animation-delay: 0s; }
+    .rain-drop.d2 { left: 16px; bottom: 3px; animation-delay: 0.25s; }
+    .rain-drop.d3 { left: 24px; bottom: 0px; animation-delay: 0.45s; }
+    @keyframes rainDropFall { 0% { transform: translateY(-4px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
 
-    .moon-icon {
-      width: 24px; height: 24px; border-radius: 50%;
-      box-shadow: 6px 4px 0 0 #facc15;
+    /* 4. Trăng Đêm */
+    .night-icon-wrap { position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+    .moon-crescent {
+      width: 22px; height: 22px; border-radius: 50%;
+      box-shadow: 6px 3px 0 0 #facc15;
+      animation: moonSway 3s ease-in-out infinite alternate;
     }
+    .star-twinkle {
+      position: absolute; width: 4px; height: 4px; background: #fff; border-radius: 50%;
+      box-shadow: 0 0 4px #fff; animation: starBlink 1.4s ease-in-out infinite alternate;
+    }
+    .star1 { top: 5px; right: 5px; }
+    .star2 { bottom: 6px; left: 5px; animation-delay: 0.7s; }
+    @keyframes moonSway { 0% { transform: rotate(-5deg); filter: drop-shadow(0 0 3px #fde047); } 100% { transform: rotate(5deg); filter: drop-shadow(0 0 8px #facc15); } }
+    @keyframes starBlink { 0% { opacity: 0.2; transform: scale(0.6); } 100% { opacity: 1; transform: scale(1.3); } }
 
-    /* Thống kê */
-    .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
-    .stat-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 12px 14px;
-      box-shadow: 0 4px 16px rgba(24,55,91,.04);
-    }
-    .stat-label { color: var(--muted); font-size: .76rem; font-weight: 600; }
-    .stat-value { font-size: 1.3rem; font-weight: 800; margin-top: 2px; }
-
-    /* Banner chuông báo */
-    #alarmBanner {
-      display: none;
-      position: sticky;
-      top: 55px;
-      z-index: 99;
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-      padding: 12px 16px;
-      border-radius: 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 4px 18px rgba(239, 68, 68, 0.35);
-    }
-    .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .alarm-title { font-weight: 800; font-size: 0.95rem; }
-    .btn-stop-alarm {
-      background: white; color: var(--danger); border: none; padding: 8px 14px;
-      border-radius: 10px; font-weight: 800; cursor: pointer;
-    }
-
-    /* Tabs */
-    .nav-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; background: rgba(226,235,246,.8); padding: 6px; border-radius: 16px; }
-    .nav-tab-btn {
-      padding: 10px 6px;
+    /* BẢNG ĐIỀU HƯỚNG TAB TINH GỌN */
+    .nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-bottom: 12px;
+      background: #e2e8f0;
+      padding: 4px;
       border-radius: 12px;
+    }
+    .nav-tab-btn {
+      padding: 8px 4px;
+      border-radius: 9px;
       border: none;
       background: transparent;
-      font-size: 0.82rem;
-      font-weight: 750;
-      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #475569;
       cursor: pointer;
       text-align: center;
-      transition: all 0.2s ease;
+      white-space: nowrap;
+      transition: all 0.18s ease;
     }
     .nav-tab-btn.active {
       background: var(--primary);
       color: white;
-      box-shadow: 0 4px 12px rgba(23,105,170,.22);
+      box-shadow: 0 2px 8px rgba(23, 105, 170, 0.25);
     }
     .nav-tab-btn.active-journal {
       background: #fef08a !important;
-      color: #713f12 !important;
-      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.25) !important;
+      color: #854d0e !important;
+      box-shadow: 0 2px 8px rgba(202, 138, 4, 0.25) !important;
     }
 
     .card-box {
       background: var(--card);
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 14px;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 6px 20px rgba(24,55,91,.04);
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
     }
-    .card-journal { background: var(--journal-bg); border: 1.5px solid var(--journal-border); }
 
-    .form-group { margin-bottom: 12px; }
-    label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; color: var(--muted); }
-    input, select, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      font-size: 0.88rem;
-      background: #fff;
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
-    .row { display: flex; gap: 10px; }
-    .row > div { flex: 1; }
-
-    .btn-submit {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 11px;
-      font-weight: 750;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(23, 105, 170, 0.2);
-    }
-    .btn-submit-purple { background: var(--purple); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
-
-    /* Lịch Tuần & Màu Ca Làm Việc */
+    /* LƯỚI LỊCH & FIX LỖI MÀU ĐỎ NGÀY NGHỈ (OFF) */
     .week-table-card {
       background: white;
-      border-radius: 18px;
+      border-radius: 16px;
       border: 1px solid var(--border);
-      padding: 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 6px 20px rgba(24,55,91,.04);
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
     }
-    .week-control-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .week-dropdown-wrap { flex: 1; }
+    .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
     .week-select-menu {
-      width: 100%;
+      flex: 1;
       background: #f8fafc;
       border: 1.5px solid var(--primary);
       color: var(--primary-dark);
       font-weight: 750;
-      font-size: 0.85rem;
-      padding: 9px 12px;
+      font-size: 0.82rem;
+      padding: 8px 10px;
       border-radius: 10px;
       cursor: pointer;
     }
@@ -257,107 +230,146 @@
       background: #f0fdf4;
       border: 1px solid #86efac;
       color: #166534;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       font-weight: 750;
-      padding: 9px 12px;
+      padding: 8px 10px;
       border-radius: 10px;
       cursor: pointer;
       white-space: nowrap;
     }
 
-    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; margin-bottom: 12px; }
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; margin-bottom: 10px; }
     .day-col {
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 2px;
+      border-radius: 10px;
+      padding: 7px 2px;
       background: #fafafa;
       transition: all 0.2s ease;
     }
-    .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
-    
-    /* Ngày OFF: Đỏ */
-    .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
-    .day-col.is-off .day-name { color: #b91c1c !important; }
-    .day-col.is-off .calendar-date { color: #ef4444 !important; }
-    .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; background: #fff1f2; font-weight: 750; }
+    .day-col.today { outline: 2px solid #38bdf8; }
 
-    /* Ca 1: Xanh Dương Nhạt */
-    .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
-    .day-col.is-ca1 .day-name { color: #0369a1 !important; }
-    .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
-    .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; background: #f0f9ff; font-weight: 750; }
-
-    /* Ca 2: Vàng Nhạt */
-    .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
-    .day-col.is-ca2 .day-name { color: #854d0e !important; }
-    .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
-    .day-col.is-ca2 .day-shift-select { border-color: #facc15 !important; color: #854d0e !important; background: #fefce8; font-weight: 750; }
-
-    .day-name { font-size: 0.74rem; font-weight: 750; color: var(--muted); }
-    .calendar-date { display: block; font-size: .64rem; color: #64748b; margin: 2px 0 5px; font-weight: 600; }
-    .day-shift-select {
-      width: 100%; border: 1px solid var(--border); border-radius: 7px;
-      font-size: 0.75rem; padding: 4px 0; font-weight: 750; text-align: center; background: #fff;
+    /* FIX MÀU ĐỎ NỔI BẬT CHO NGÀY OFF */
+    .day-col.is-off {
+      background-color: #fee2e2 !important;
+      border: 1.5px solid #f87171 !important;
+    }
+    .day-col.is-off .day-name { color: #dc2626 !important; font-weight: 800 !important; }
+    .day-col.is-off .calendar-date { color: #ef4444 !important; font-weight: 700 !important; }
+    .day-col.is-off .day-shift-select {
+      border-color: #fca5a5 !important;
+      color: #b91c1c !important;
+      background: #ffffff !important;
+      font-weight: 800 !important;
     }
 
-    /* Thanh Đồng Bộ */
-    .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 10px; }
-    .sync-row { display: flex; gap: 8px; position: relative; flex-wrap: wrap; }
-    .custom-multiselect { flex: 1.2; position: relative; min-width: 180px; }
+    /* MÀU CHO CA 1 */
+    .day-col.is-ca1 { background-color: #e0f2fe !important; border: 1.5px solid #38bdf8 !important; }
+    .day-col.is-ca1 .day-name { color: #0284c7 !important; font-weight: 800; }
+    .day-col.is-ca1 .calendar-date { color: #0369a1 !important; font-weight: 700; }
+    .day-col.is-ca1 .day-shift-select { border-color: #7dd3fc !important; color: #0369a1 !important; background: #fff !important; font-weight: 800; }
+
+    /* MÀU CHO CA 2 */
+    .day-col.is-ca2 { background-color: #fef9c3 !important; border: 1.5px solid #facc15 !important; }
+    .day-col.is-ca2 .day-name { color: #b45309 !important; font-weight: 800; }
+    .day-col.is-ca2 .calendar-date { color: #d97706 !important; font-weight: 700; }
+    .day-col.is-ca2 .day-shift-select { border-color: #fde047 !important; color: #92400e !important; background: #fff !important; font-weight: 800; }
+
+    .day-name { font-size: 0.72rem; font-weight: 750; color: #64748b; }
+    .calendar-date { display: block; font-size: 0.62rem; color: #64748b; margin: 2px 0 4px; }
+    .day-shift-select {
+      width: 100%; border: 1px solid var(--border); border-radius: 6px;
+      font-size: 0.72rem; padding: 4px 0; font-weight: 750; text-align: center; background: #fff;
+    }
+
+    /* NÚT ĐỒNG BỘ */
+    .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin-top: 8px; }
+    .sync-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .custom-multiselect { flex: 1.2; position: relative; min-width: 150px; }
     .multiselect-toggle-btn {
-      width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 9px;
-      font-size: 0.8rem; font-weight: 750; padding: 10px; color: #334155; text-align: left;
+      width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.76rem; font-weight: 750; padding: 8px 10px; color: #334155; text-align: left;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center;
     }
     .multiselect-dropdown {
       display: none; position: absolute; bottom: calc(100% + 4px); left: 0; right: 0;
-      background: #fff; border: 1.5px solid var(--primary); border-radius: 10px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.14); z-index: 200; padding: 5px 0; max-height: 220px; overflow-y: auto;
+      background: #fff; border: 1.5px solid var(--primary); border-radius: 9px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 200; padding: 4px 0; max-height: 200px; overflow-y: auto;
     }
     .multiselect-dropdown.show { display: block; }
-    .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.8rem; font-weight: 650; cursor: pointer; }
+    .multiselect-item { display: flex; justify-content: space-between; padding: 7px 10px; font-size: 0.76rem; font-weight: 650; cursor: pointer; }
     .multiselect-item.selected { background: #eff6ff; color: var(--primary-dark); font-weight: 750; }
     .multiselect-check { color: var(--primary); display: none; }
     .multiselect-item.selected .multiselect-check { display: inline-block; }
 
-    .sync-actions-group { display: flex; gap: 6px; flex: 1.6; }
+    .sync-actions-group { display: flex; gap: 6px; flex: 1.5; }
     .btn-sync-submit {
-      flex: 1; background: linear-gradient(135deg, #167bb3, #124f85); color: white;
-      border: none; padding: 10px 10px; border-radius: 9px; font-size: 0.78rem; font-weight: 750; cursor: pointer; text-align: center;
+      flex: 1; background: linear-gradient(135deg, #0284c7, #0369a1); color: white;
+      border: none; padding: 8px 6px; border-radius: 8px; font-size: 0.74rem; font-weight: 750; cursor: pointer; text-align: center;
     }
     .btn-sync-split {
-      background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46;
-      padding: 10px 8px; border-radius: 9px; font-size: 0.74rem; font-weight: 750; cursor: pointer; white-space: nowrap;
+      background: #ecfdf5; border: 1px solid #86efac; color: #065f46;
+      padding: 8px 8px; border-radius: 8px; font-size: 0.72rem; font-weight: 750; cursor: pointer; white-space: nowrap;
     }
 
-    .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-top: 12px; }
-    .shift-settings-title { font-size: 0.82rem; font-weight: 750; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; }
-    .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .shift-config-card { background: white; padding: 10px; border-radius: 10px; border: 1px solid var(--border); }
-    .shift-config-card h4 { font-size: 0.8rem; margin-bottom: 6px; color: #334155; }
-    .time-input-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; font-size: 0.75rem; color: var(--muted); }
-    .time-input-row span { width: 55px; font-weight: 650; }
-    .time-input-row input { padding: 4px 6px; font-size: 0.78rem; border-radius: 6px; }
-
-    .lesson-badge {
-      display: inline-block; background: #fef08a; color: #854d0e; border: 1px solid #fde047;
-      font-weight: 800; font-size: 0.75rem; padding: 2px 8px; border-radius: 6px; margin-right: 6px;
+    /* THỜI KHÓA BIỂU & MÀU SẮC TỪNG TIẾT */
+    .timetable-lesson-grid { display: flex; flex-direction: column; gap: 8px; margin: 10px 0 12px; }
+    .lesson-input-row { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 6px; align-items: center; }
+    .lesson-tag {
+      padding: 9px 4px; border-radius: 9px; font-size: 0.76rem; font-weight: 800; text-align: center;
     }
-    .lesson-row-item { display: flex; align-items: center; padding: 4px 0; font-size: 0.86rem; }
+    .tag-t1 { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+    .tag-t2 { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .tag-t3 { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .tag-t4 { background: #fce7f3; color: #be185d; border: 1px solid #fbcfe8; }
+    .tag-t5 { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+
+    /* HUY HIỆU VÀNG NHẠT Ở PHẦN XEM NHANH */
+    .quick-lesson-badge {
+      display: inline-block;
+      background: #fef9c3;
+      color: #854d0e;
+      border: 1px solid #fde047;
+      font-weight: 800;
+      font-size: 0.74rem;
+      padding: 2px 7px;
+      border-radius: 6px;
+      margin-right: 6px;
+      box-shadow: 0 1px 2px rgba(133, 77, 14, 0.08);
+      white-space: nowrap;
+    }
+    .quick-lesson-item {
+      display: flex;
+      align-items: center;
+      padding: 4px 0;
+      font-size: 0.83rem;
+      color: #1e293b;
+    }
+
+    .form-group { margin-bottom: 10px; }
+    label { display: block; font-size: 0.76rem; font-weight: 700; margin-bottom: 3px; color: var(--muted); }
+    input, select, textarea {
+      width: 100%; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--border);
+      font-size: 0.84rem; background: #fff; outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+    .row { display: flex; gap: 8px; }
+    .row > div { flex: 1; }
+
+    .btn-submit {
+      width: 100%; background: var(--primary); color: white; border: none; padding: 10px;
+      border-radius: 9px; font-weight: 750; font-size: 0.85rem; cursor: pointer;
+    }
+    .btn-submit-purple { background: var(--purple); }
 
     #toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.94); color: white; padding: 10px 18px;
-      border-radius: 20px; font-size: 0.84rem; display: none; z-index: 1000; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.94); color: white; padding: 8px 16px;
+      border-radius: 18px; font-size: 0.8rem; display: none; z-index: 1000;
     }
 
     @media(max-width:560px) {
-      header { align-items:flex-start; padding:10px 12px; }
-      header h1 { white-space:normal; font-size:.88rem; max-width:44%; }
-      .header-btns button { padding:6px 7px; font-size:.66rem; }
-      .container { padding:12px 10px 24px; }
-      .nav-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
       .sync-actions-group { flex-direction: column; width: 100%; }
+      .header-btns button { padding: 5px 6px; font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -375,60 +387,37 @@
   </header>
 
   <div class="container">
+    <!-- BANNER LỜI CHÀO & ICON THỜI TIẾT ĐỘNG -->
     <div class="greeting-banner">
       <div class="greeting-info">
         <div class="greeting-text-main">Xin chào Tuấn Tuấn ✨</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
-        <div class="weather-status-text" id="weatherStatusLabel">Đang cập nhật thời tiết...</div>
+        <div class="weather-status-text" id="weatherStatusLabel">Đang tải thời tiết...</div>
       </div>
-      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm chuyển trạng thái thời tiết"></div>
+      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển thời tiết thử nghiệm"></div>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">📔 Nhật ký công việc</div>
-        <div class="stat-value" id="statJournals">0</div>
-        <div class="stat-label" id="statJournalsSub">0 hoàn thành</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">⚡ Việc cần xử lý</div>
-        <div class="stat-value" id="statIssues">0</div>
-        <div class="stat-label" id="statIssuesSub">0 đang mở</div>
-      </div>
-    </div>
-
-    <div id="alarmBanner">
-      <div class="alarm-content">
-        <div>
-          <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ NHẮC HẸN!</div>
-          <div style="font-size: 0.8rem; margin-top: 2px;" id="alarmDesc">Vui lòng kiểm tra và xử lý công việc.</div>
-        </div>
-        <button class="btn-stop-alarm" onclick="stopAlarm()">✔ ĐÃ XỬ LÝ</button>
-      </div>
-    </div>
-
+    <!-- TABS ĐIỀU HƯỚNG GỌN GÀNG -->
     <div class="nav-tabs">
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">📔 Nhật Ký</button>
-      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Làm</button>
-      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">🎒 Thời khóa biểu</button>
+      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Làm</button>
+      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">🎒 Thời Khóa Biểu</button>
     </div>
 
-    <!-- VIEW 1: LỊCH CA & ĐỒNG BỘ MÀU SẮC -->
+    <!-- VIEW 1: LỊCH CA -->
     <div id="view-shifts">
       <div class="week-table-card">
         <div class="week-control-bar">
-          <div class="week-dropdown-wrap">
-            <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)"></select>
-          </div>
-          <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng tuần này cho cả tháng">⚡ Úp Cả Tháng</button>
+          <select id="weekDropdownSelect" class="week-select-menu" onchange="onWeekDropdownChange(this.value)"></select>
+          <button class="btn-copy-month" onclick="copyCurrentWeekToAll()" title="Áp dụng tuần này cho cả tháng">⚡ Cả Tháng</button>
         </div>
         
         <div class="week-grid" id="weekGridContainer"></div>
 
         <div class="sync-calendar-panel">
-          <div style="font-size: 0.74rem; font-weight: 700; color: #475569; margin-bottom: 6px;">
-            🎨 Đồng bộ màu vào Google Lịch điện thoại:
+          <div style="font-size:0.74rem; font-weight:700; color:#475569; margin-bottom:5px;">
+            📲 Nạp Google Lịch điện thoại:
           </div>
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -439,31 +428,30 @@
               <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
             </div>
             <div class="sync-actions-group">
-              <button class="btn-sync-submit" onclick="executeSelectedSync('all')" title="Thêm emoji màu xanh/vàng trực quan vào Google Lịch">
+              <button class="btn-sync-submit" onclick="executeSelectedSync('all')" title="Gắn chấm tròn màu trực quan 🔵/🟡">
                 📲 Nạp Google Lịch (Chuẩn Màu)
               </button>
-              <button class="btn-sync-split" onclick="exportSplitCalendars()" title="Tách riêng 2 tệp Ca 1 & Ca 2 để chọn 2 màu riêng trong Google Calendar">
+              <button class="btn-sync-split" onclick="exportSplitCalendars()" title="Tách 2 file Ca 1 & Ca 2 riêng biệt">
                 ⚡ Tách 2 Lịch Riêng
               </button>
             </div>
           </div>
         </div>
 
-        <div class="shift-settings-box">
-          <div class="shift-settings-title">
-            <span>⚙️ Cài Đặt Giờ Báo Ca</span>
-            <span style="font-size:0.72rem; font-weight:normal; color:var(--muted);">Tự động lưu</span>
+        <div style="background:#f8fafc; border:1px solid var(--border); border-radius:12px; padding:10px; margin-top:10px;">
+          <div style="font-size:0.78rem; font-weight:750; color:var(--primary-dark); margin-bottom:6px;">
+            ⚙️ Giờ Báo Ca (Tự động lưu)
           </div>
-          <div class="shift-config-grid">
-            <div class="shift-config-card">
-              <h4>🔵 Ca 1 (Sáng)</h4>
-              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div style="background:#fff; padding:8px; border-radius:8px; border:1px solid var(--border);">
+              <div style="font-size:0.76rem; font-weight:750; color:#0369a1; margin-bottom:4px;">🔵 Ca 1 (Sáng)</div>
+              <div class="row" style="font-size:0.72rem; align-items:center; margin-bottom:4px;"><span>In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="row" style="font-size:0.72rem; align-items:center;"><span>Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
             </div>
-            <div class="shift-config-card">
-              <h4>🟡 Ca 2 (Chiều)</h4>
-              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+            <div style="background:#fff; padding:8px; border-radius:8px; border:1px solid var(--border);">
+              <div style="font-size:0.76rem; font-weight:750; color:#b45309; margin-bottom:4px;">🟡 Ca 2 (Chiều)</div>
+              <div class="row" style="font-size:0.72rem; align-items:center; margin-bottom:4px;"><span>In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="row" style="font-size:0.72rem; align-items:center;"><span>Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
             </div>
           </div>
         </div>
@@ -472,59 +460,42 @@
 
     <!-- VIEW 2: NHẬT KÝ -->
     <div id="view-journal" style="display:none;">
-      <div class="card-box card-journal">
-        <div style="font-size:0.9rem; font-weight:800; color:var(--journal-text); margin-bottom:10px;">
-          ✍️ Ghi Nhật Ký Công Việc Trong Ngày
-        </div>
+      <div class="card-box" style="background:var(--journal-bg); border-color:var(--journal-border);">
+        <div style="font-size:0.88rem; font-weight:800; color:var(--journal-text); margin-bottom:8px;">✍️ Ghi Nhật Ký Công Việc</div>
         <div class="row form-group">
           <div>
             <label>Phân loại</label>
             <select id="journalCategory">
-              <option value="viec-ngay">📝 Công việc thường nhật</option>
-              <option value="ban-giao">🤝 Bàn giao ca trực</option>
-              <option value="su-co">⚠️ Sự việc / Lưu ý</option>
-              <option value="ghi-chu">💡 Ý tưởng / Ghi nhớ</option>
+              <option value="viec-ngay">📝 Thường nhật</option>
+              <option value="ban-giao">🤝 Bàn giao</option>
+              <option value="su-co">⚠️ Sự việc</option>
+              <option value="ghi-chu">💡 Ghi nhớ</option>
             </select>
           </div>
-          <div>
-            <label>Ngày ghi nhận</label>
-            <input type="date" id="journalDate">
-          </div>
+          <div><label>Ngày</label><input type="date" id="journalDate"></div>
         </div>
         <div class="row form-group">
-          <div>
-            <label>Tiêu đề</label>
-            <input type="text" id="journalTitle" placeholder="Tiêu đề nhật ký...">
-          </div>
-          <div style="flex:0.6;">
-            <label>Hẹn giờ nhắc</label>
-            <input type="time" id="journalReminderTime">
-          </div>
+          <div><label>Tiêu đề</label><input type="text" id="journalTitle" placeholder="Tiêu đề việc..."></div>
+          <div style="flex:0.6;"><label>Hẹn giờ</label><input type="time" id="journalReminderTime"></div>
         </div>
-        <div class="form-group">
-          <label>Nội dung chi tiết</label>
-          <textarea id="journalContent" placeholder="Ghi chép công việc cụ thể..."></textarea>
-        </div>
+        <div class="form-group"><label>Nội dung</label><textarea id="journalContent" placeholder="Chi tiết việc diễn ra..."></textarea></div>
         <button class="btn-submit" style="background:linear-gradient(135deg,#eab308,#ca8a04);" onclick="saveJournalEntry()">+ Lưu Nhật Ký</button>
       </div>
 
-      <div class="card-box" style="padding:10px;">
+      <div class="card-box" style="padding:8px;">
         <div class="row">
-          <input type="text" id="searchKeyword" placeholder="Tìm theo từ khóa..." oninput="filterJournals()">
+          <input type="text" id="searchKeyword" placeholder="Tìm kiếm..." oninput="filterJournals()">
           <input type="date" id="filterJournalDate" onchange="filterJournals()">
-          <button onclick="clearJournalFilter()" style="padding:0 12px;border-radius:10px;border:1px solid #cbd5e1;background:#f1f5f9;font-weight:700;cursor:pointer;">Hủy</button>
+          <button onclick="clearJournalFilter()" style="padding:0 10px; border-radius:8px; border:1px solid #cbd5e1; background:#f1f5f9; font-weight:700;">Hủy</button>
         </div>
       </div>
       <div id="journalListContainer"></div>
     </div>
 
-    <!-- VIEW 3: VIỆC CẦN XỬ LÝ -->
+    <!-- VIEW 3: VIỆC CẦN LÀM -->
     <div id="view-issues" style="display:none;">
       <div class="card-box" style="border-left: 4px solid var(--purple);">
-        <div class="form-group">
-          <label>Tên công việc / Sự cố</label>
-          <input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra bơm nước, vệ sinh...">
-        </div>
+        <div class="form-group"><label>Tên công việc / sự cố</label><input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra đèn, bơm nước..."></div>
         <div class="row form-group">
           <div>
             <label>Mức độ</label>
@@ -534,15 +505,9 @@
               <option value="Theo dõi">🟢 Theo dõi</option>
             </select>
           </div>
-          <div>
-            <label>Hẹn thời gian</label>
-            <input type="datetime-local" id="issueDateTime">
-          </div>
+          <div><label>Thời hạn xử lý</label><input type="datetime-local" id="issueDateTime"></div>
         </div>
-        <div class="form-group">
-          <label>Chi tiết</label>
-          <textarea id="issueContent" placeholder="Nội dung cần thực hiện..."></textarea>
-        </div>
+        <div class="form-group"><label>Nội dung / hướng xử lý</label><textarea id="issueContent" placeholder="Mô tả công việc..."></textarea></div>
         <button class="btn-submit btn-submit-purple" onclick="saveIssue()">+ Lưu Việc Cần Làm</button>
       </div>
       <div id="issuesList"></div>
@@ -551,26 +516,30 @@
     <!-- VIEW 4: THỜI KHÓA BIỂU -->
     <div id="view-school" style="display:none;">
       <div class="card-box">
-        <div style="padding:16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;">
-          <h3 style="font-size:1.05rem;color:#fff;">🎒 📚 Thời khóa biểu của các con</h3>
+        <div style="padding:12px; margin:-4px -4px 12px; border-radius:14px; background:linear-gradient(135deg,#4338ca,#7c3aed); color:#fff;">
+          <h3 style="font-size:0.95rem; color:#fff;">🎒 Thời Khóa Biểu Của Các Con</h3>
         </div>
         <div class="row form-group">
           <div><label>🏫 Lớp</label><select id="schoolClass" onchange="renderSchoolTimetable()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
           <div><label>☀️ Buổi</label><select id="schoolShift" onchange="renderSchoolTimetable()"><option value="morning">🌅 Sáng</option><option value="afternoon">🌇 Chiều</option></select></div>
         </div>
         <div class="form-group">
-          <label>🗓️ Ngày</label>
+          <label>🗓️ Ngày trong tuần</label>
           <select id="schoolDay" onchange="renderSchoolTimetable()">
             <option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option>
             <option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option>
           </select>
         </div>
-        <div id="schoolLessons"></div>
-        <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu thời khóa biểu</button>
-        <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolDay()">Xóa buổi này</button>
+        
+        <!-- CÁC TIẾT HỌC MỖI TIẾT 1 MÀU KHÁC NHAU -->
+        <div id="schoolLessons" class="timetable-lesson-grid"></div>
+
+        <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu Thời Khóa Biểu</button>
+        <button class="btn-submit" style="margin-top:6px; background:#64748b;" onclick="clearSchoolDay()">Xóa Buổi Này</button>
       </div>
+
       <div class="card-box">
-        <h3 style="font-size:.9rem;margin-bottom:8px">📌 Xem nhanh hôm nay</h3>
+        <h3 style="font-size:0.86rem; margin-bottom:8px; color:#1e293b;">📌 Xem Nhanh Hôm Nay</h3>
         <div id="schoolTodaySummary"></div>
       </div>
     </div>
@@ -588,18 +557,14 @@
     let monthWeeksList = [];
     let currentWeekIndex = 0;
     let selectedSyncWeeks = new Set();
-    let currentJournalImages = [];
-
     let audioCtx = null;
-    let alarmInterval = null;
-    let isAlarmPlaying = false;
 
-    // 1. THỜI TIẾT
+    // 1. ANIMATED WEATHER
     const weatherStates = [
-      { type: 'sunny', label: 'Trời nắng đẹp' },
-      { type: 'partly-cloudy', label: 'Trời dịu mát' },
-      { type: 'rainy', label: 'Trời có mưa' },
-      { type: 'night', label: 'Trời đêm trong lành' }
+      { type: 'sunny', label: 'Trời nắng rực rỡ' },
+      { type: 'partly-cloudy', label: 'Trời dịu mát, có mây' },
+      { type: 'rainy', label: 'Trời đang có mưa' },
+      { type: 'night', label: 'Trời đêm quang đãng' }
     ];
     let currentWeatherIndex = 0;
 
@@ -607,17 +572,33 @@
       const widget = document.getElementById('weatherWidget');
       const label = document.getElementById('weatherStatusLabel');
       if (!widget) return;
+
       if (type === 'sunny') {
         widget.innerHTML = `<div class="sun-icon"></div>`;
         if (label) label.innerText = '☀️ Trời nắng rực rỡ';
       } else if (type === 'partly-cloudy') {
-        widget.innerHTML = `<div class="partly-cloudy"><div class="sun-small"></div><div class="cloud-front"></div></div>`;
+        widget.innerHTML = `
+          <div class="partly-cloudy">
+            <div class="sun-small"></div>
+            <div class="cloud-front"></div>
+          </div>`;
         if (label) label.innerText = '⛅ Trời dịu mát, có mây';
       } else if (type === 'rainy') {
-        widget.innerHTML = `<div class="rainy-icon"><div class="rain-cloud"></div><div class="rain-drop d1"></div><div class="rain-drop d2"></div><div class="rain-drop d3"></div></div>`;
+        widget.innerHTML = `
+          <div class="rainy-icon">
+            <div class="rain-cloud"></div>
+            <div class="rain-drop d1"></div>
+            <div class="rain-drop d2"></div>
+            <div class="rain-drop d3"></div>
+          </div>`;
         if (label) label.innerText = '🌧️ Trời đang có mưa';
       } else {
-        widget.innerHTML = `<div class="moon-icon"></div>`;
+        widget.innerHTML = `
+          <div class="night-icon-wrap">
+            <div class="moon-crescent"></div>
+            <div class="star-twinkle star1"></div>
+            <div class="star-twinkle star2"></div>
+          </div>`;
         if (label) label.innerText = '🌙 Trời đêm quang đãng';
       }
     }
@@ -625,26 +606,26 @@
     function cycleWeatherDemo() {
       currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
       renderWeatherIcon(weatherStates[currentWeatherIndex].type);
-      showToast(`Thời tiết: ${weatherStates[currentWeatherIndex].label}`);
+      showToast(weatherStates[currentWeatherIndex].label);
     }
 
-    // 2. VIEW VÀ TAB
+    // 2. CHUYỂN TAB
     function switchView(tab) {
       ['shifts', 'journal', 'issues', 'school'].forEach(t => {
-        const viewEl = document.getElementById(`view-${t}`);
-        const btnEl = document.getElementById(`tabBtn-${t}`);
-        if (viewEl) viewEl.style.display = (t === tab) ? 'block' : 'none';
-        if (btnEl) {
-          btnEl.classList.remove('active', 'active-journal');
+        const v = document.getElementById(`view-${t}`);
+        const b = document.getElementById(`tabBtn-${t}`);
+        if (v) v.style.display = (t === tab) ? 'block' : 'none';
+        if (b) {
+          b.classList.remove('active', 'active-journal');
           if (t === tab) {
-            if (t === 'journal') btnEl.classList.add('active-journal');
-            else btnEl.classList.add('active');
+            if (t === 'journal') b.classList.add('active-journal');
+            else b.classList.add('active');
           }
         }
       });
     }
 
-    // 3. LỊCH CA & TẠO SỰ KIỆN MÀU SẮC CHUẨN ĐIỆN THOẠI
+    // 3. LỊCH CA & FIX LỖI MÀU ĐỎ NGÀY OFF
     function loadShiftTimeConfigUI() {
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
@@ -720,7 +701,7 @@
         const sunLabel = `${w.sunday.getDate()}/${w.sunday.getMonth()+1}`;
         const opt = document.createElement('option');
         opt.value = w.index;
-        opt.text = `📅 Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
+        opt.text = `Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
         if (w.index === currentWeekIndex) opt.selected = true;
         select.appendChild(opt);
       });
@@ -760,9 +741,9 @@
         const savedShift = shiftsData[d.key] || 'off';
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
-        let shiftClass = '';
-        if (savedShift === 'off') shiftClass = 'is-off';
-        else if (savedShift === 'ca1') shiftClass = 'is-ca1';
+        // Gán class chuẩn xác: Nghỉ -> is-off (Đỏ)
+        let shiftClass = 'is-off';
+        if (savedShift === 'ca1') shiftClass = 'is-ca1';
         else if (savedShift === 'ca2') shiftClass = 'is-ca2';
 
         const col = document.createElement('div');
@@ -791,16 +772,16 @@
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
         col.classList.remove('is-off', 'is-ca1', 'is-ca2');
-        if (val === 'off') col.classList.add('is-off');
-        else if (val === 'ca1') col.classList.add('is-ca1');
+        if (val === 'ca1') col.classList.add('is-ca1');
         else if (val === 'ca2') col.classList.add('is-ca2');
+        else col.classList.add('is-off');
       }
       showToast('Đã lưu ca làm!');
     }
 
     function copyCurrentWeekToAll() {
       const curData = getShiftsForWeekIndex(currentWeekIndex);
-      if (confirm(`Áp dụng lịch tuần này cho tất cả các tuần trong tháng?`)) {
+      if (confirm(`Áp dụng lịch tuần này cho toàn bộ các tuần trong tháng?`)) {
         monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
         localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
         renderWeekGrid();
@@ -849,7 +830,7 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // TẠO TỆP ICS VỚI TIÊU ĐỀ MÀU VÀ THÔNG SỐ TƯƠNG THÍCH MỌI DÒNG MÁY
+    // ĐỒNG BỘ LỊCH VỚI EMOJI MÀU
     function buildICSEvents(weekIndices, filterShift = 'all') {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
@@ -880,7 +861,6 @@
           const rawIn = isC1 ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15');
           const rawOut = isC1 ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00');
 
-          // ĐẶT ICON MÀU Ở ĐẦU ĐỂ TRÊN ĐIỆN THOẠI THẤY NGAY
           const tagIn = isC1 ? `🔵 [CA 1] VÀO CA (${rawIn})` : `🟡 [CA 2] VÀO CA (${rawIn})`;
           const tagOut = isC1 ? `🟦 [CA 1] TAN CA (${rawOut})` : `🟨 [CA 2] TAN CA (${rawOut})`;
           const hexColor = isC1 ? '#0284c7' : '#eab308';
@@ -891,7 +871,6 @@
           const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
           const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
-          // CHECK-IN
           events.push([
             'BEGIN:VEVENT',
             `UID:in-${dateStr}-${dayKey}-${isC1?'c1':'c2'}@lantrai`,
@@ -899,7 +878,7 @@
             `DTSTART:${inStartUTC}`,
             `DTEND:${inEndUTC}`,
             `SUMMARY:${tagIn}`,
-            `DESCRIPTION:Nhận ca trực ${isC1?'Ca 1 (Sáng)':'Ca 2 (Chiều)'}. Giờ bắt đầu: ${rawIn}`,
+            `DESCRIPTION:Bắt đầu ${isC1?'Ca 1':'Ca 2'} lúc ${rawIn}`,
             `CATEGORIES:${catName}`,
             `COLOR:${hexColor}`,
             `X-APPLE-CALENDAR-COLOR:${hexColor}`,
@@ -913,7 +892,6 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // CHECK-OUT
           events.push([
             'BEGIN:VEVENT',
             `UID:out-${dateStr}-${dayKey}-${isC1?'c1':'c2'}@lantrai`,
@@ -921,7 +899,7 @@
             `DTSTART:${outStartUTC}`,
             `DTEND:${outEndUTC}`,
             `SUMMARY:${tagOut}`,
-            `DESCRIPTION:Bàn giao kiểm tra và kết thúc ca trực: ${rawOut}`,
+            `DESCRIPTION:Kết thúc ${isC1?'Ca 1':'Ca 2'} lúc ${rawOut}`,
             `CATEGORIES:${catName}`,
             `COLOR:${hexColor}`,
             `X-APPLE-CALENDAR-COLOR:${hexColor}`,
@@ -930,7 +908,7 @@
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Báo giờ kết thúc ca ${rawOut}`,
+            `DESCRIPTION:Báo giờ tan ca ${rawOut}`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -941,7 +919,7 @@
 
     function downloadICSFile(filename, events) {
       if (events.length === 0) {
-        alert('Không có lịch làm việc nào được chọn!');
+        alert('Không có ca làm việc nào được chọn!');
         return;
       }
       const icsData = [
@@ -966,16 +944,15 @@
 
     function executeSelectedSync(type = 'all') {
       if (selectedSyncWeeks.size === 0) {
-        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
+        alert('Vui lòng chọn ít nhất 1 tuần!');
         return;
       }
       const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
       const evs = buildICSEvents(weekIndices, type);
-      downloadICSFile('lich_ca_truc_mau_sac.ics', evs);
-      showToast('Đang tải file lịch có ký hiệu màu 🔵/🟡! Mở file để thêm vào Google Calendar.');
+      downloadICSFile('lich_ca_truc.ics', evs);
+      showToast('Đã tải tệp lịch 🔵/🟡! Mở tệp để thêm vào điện thoại.');
     }
 
-    // TÁCH 2 FILE LỊCH ĐỂ TẠO 2 LỊCH RIÊNG TRÊN GOOGLE (CHUẨN MÀU 100%)
     function exportSplitCalendars() {
       if (selectedSyncWeeks.size === 0) {
         alert('Vui lòng chọn tuần cần xuất!');
@@ -985,15 +962,89 @@
       const c1Events = buildICSEvents(weekIndices, 'ca1');
       const c2Events = buildICSEvents(weekIndices, 'ca2');
 
-      if (c1Events.length > 0) downloadICSFile('Lich_CA_1_Xanh_Duong.ics', c1Events);
+      if (c1Events.length > 0) downloadICSFile('Lich_CA_1_Xanh.ics', c1Events);
       setTimeout(() => {
         if (c2Events.length > 0) downloadICSFile('Lich_CA_2_Vang.ics', c2Events);
       }, 700);
-
-      alert('Đã tải 2 file riêng (Ca 1 & Ca 2).\n\nMẹo Google Lịch: Tạo 2 lịch con "Ca 1" (chọn màu Xanh) và "Ca 2" (chọn màu Vàng) rồi nhập tương ứng 2 file này vào. Lịch trên điện thoại sẽ có màu riêng biệt 100%!');
+      showToast('Đã tách thành 2 file Ca 1 và Ca 2 riêng!');
     }
 
-    // 4. NHẬT KÝ & CÔNG VIỆC
+    // 4. THỜI KHÓA BIỂU PHÂN BIỆT MỖI TIẾT 1 MÀU
+    const lessonColorTags = [
+      { class: 'tag-t1', name: 'Tiết 1' },
+      { class: 'tag-t2', name: 'Tiết 2' },
+      { class: 'tag-t3', name: 'Tiết 3' },
+      { class: 'tag-t4', name: 'Tiết 4' },
+      { class: 'tag-t5', name: 'Tiết 5' }
+    ];
+
+    function getSchoolKey() {
+      return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
+    }
+    function getSchoolData() {
+      try { return JSON.parse(localStorage.getItem('family_timetable_v1') || '{}'); } catch (_) { return {}; }
+    }
+    function renderSchoolTimetable() {
+      const host = document.getElementById('schoolLessons');
+      if (!host) return;
+      const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
+      
+      host.innerHTML = lessonColorTags.map((t, i) => `
+        <div class="lesson-input-row">
+          <div class="lesson-tag ${t.class}">📖 ${t.name}</div>
+          <input id="schoolLesson${i+1}" placeholder="Môn học / ghi chú tiết ${i+1}" value="${escapeHtml(saved[i] || '')}">
+        </div>
+      `).join('');
+      renderSchoolTodaySummary();
+    }
+    function saveSchoolTimetable() {
+      const data = getSchoolData();
+      data[getSchoolKey()] = [1,2,3,4,5].map(n => document.getElementById('schoolLesson'+n).value.trim());
+      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+      showToast('Đã lưu thời khóa biểu!');
+      renderSchoolTodaySummary();
+    }
+    function clearSchoolDay() {
+      if (!confirm('Xóa buổi học này?')) return;
+      const data = getSchoolData(); delete data[getSchoolKey()];
+      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+      renderSchoolTimetable(); showToast('Đã xóa buổi học.');
+    }
+
+    // XEM NHANH HÔM NAY: HUY HIỆU VÀNG NHẠT
+    function renderSchoolTodaySummary() {
+      const host = document.getElementById('schoolTodaySummary');
+      if (!host) return;
+      const data = getSchoolData(), day = new Date().getDay();
+      const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+
+      function formatShiftRows(shiftArr) {
+        if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) {
+          return `<div style="color:var(--muted);font-style:italic;font-size:0.75rem;">Không có tiết</div>`;
+        }
+        return shiftArr.map((x, i) => {
+          if (!x || !x.trim()) return '';
+          return `<div class="quick-lesson-item"><span class="quick-lesson-badge">Tiết ${i+1}</span> <span>${escapeHtml(x)}</span></div>`;
+        }).filter(Boolean).join('');
+      }
+
+      const rows = ['10','6'].map(cls => {
+        const morning = data[`${cls}_morning_${day}`] || [];
+        const afternoon = data[`${cls}_afternoon_${day}`] || [];
+        return `
+          <div style="padding:8px 10px; margin-bottom:8px; background:#f8fafc; border-radius:10px; border:1px solid var(--border)">
+            <div style="font-weight:800; font-size:0.86rem; color:var(--primary-dark); margin-bottom:4px;">🏫 Lớp ${cls}</div>
+            <div style="font-size:0.75rem; font-weight:700; color:#c2410c;">🌅 Buổi Sáng:</div>
+            <div style="margin:2px 0 6px;">${formatShiftRows(morning)}</div>
+            <div style="font-size:0.75rem; font-weight:700; color:#9d174d;">🌇 Buổi Chiều:</div>
+            <div style="margin-top:2px;">${formatShiftRows(afternoon)}</div>
+          </div>
+        `;
+      });
+      host.innerHTML = `<div style="font-weight:750; font-size:0.82rem; margin-bottom:6px;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
+    }
+
+    // 5. NHẬT KÝ & CÔNG VIỆC
     function saveJournalEntry() {
       const title = document.getElementById('journalTitle').value.trim();
       const content = document.getElementById('journalContent').value.trim();
@@ -1001,14 +1052,11 @@
       const reminderTime = document.getElementById('journalReminderTime').value;
       const journalDate = document.getElementById('journalDate').value || new Date().toISOString().split('T')[0];
 
-      if (!title && !content) { alert('Vui lòng nhập nội dung nhật ký!'); return; }
+      if (!title && !content) { alert('Vui lòng nhập nội dung!'); return; }
       initAudio();
 
       journals.unshift({
-        id: Date.now(),
-        title: title || 'Ghi chép trong ngày',
-        content, category, journalDate, reminderTime,
-        images: [...currentJournalImages], done: false,
+        id: Date.now(), title: title || 'Ghi chép trong ngày', content, category, journalDate, reminderTime, done: false,
         createdAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN')
       });
       localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
@@ -1018,7 +1066,6 @@
       document.getElementById('journalReminderTime').value = '';
 
       filterJournals();
-      updateDashboard();
       showToast('Đã lưu nhật ký!');
     }
 
@@ -1028,11 +1075,7 @@
 
       let filtered = journals.filter(j => {
         let matchWord = true, matchDate = true;
-        if (keyword) {
-          const t = (j.title || '').toLowerCase();
-          const c = (j.content || '').toLowerCase();
-          matchWord = t.includes(keyword) || c.includes(keyword);
-        }
+        if (keyword) matchWord = (j.title || '').toLowerCase().includes(keyword) || (j.content || '').toLowerCase().includes(keyword);
         if (dateVal) matchDate = j.journalDate === dateVal;
         return matchWord && matchDate;
       });
@@ -1049,43 +1092,36 @@
       const container = document.getElementById('journalListContainer');
       container.innerHTML = '';
       if (!listToRender || listToRender.length === 0) {
-        container.innerHTML = `<div style="text-align:center;color:#94a3b8;padding:20px;font-size:0.85rem;">Không có nhật ký nào.</div>`;
+        container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:16px; font-size:0.8rem;">Không có nhật ký.</div>`;
         return;
       }
       listToRender.forEach(item => {
         const div = document.createElement('div');
-        div.className = `card-box ${item.done ? 'done' : ''}`;
-        div.style.marginBottom = '10px';
+        div.className = `card-box`;
+        div.style.marginBottom = '8px';
         div.innerHTML = `
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <span style="font-size:0.7rem;font-weight:700;color:var(--journal-text);background:#fef08a;padding:2px 8px;border-radius:6px;">${escapeHtml(item.category)}</span>
-            <span style="font-size:0.7rem;color:var(--muted);">${escapeHtml(item.createdAt)}</span>
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span style="font-size:0.7rem; font-weight:750; background:#fef08a; color:#854d0e; padding:1px 6px; border-radius:5px;">${escapeHtml(item.category)}</span>
+            <span style="font-size:0.68rem; color:var(--muted);">${escapeHtml(item.createdAt)}</span>
           </div>
-          <div style="font-weight:750;font-size:0.92rem;margin-bottom:4px;">${escapeHtml(item.title)}</div>
-          <div style="font-size:0.85rem;color:#334155;white-space:pre-line;">${escapeHtml(item.content)}</div>
-          <div style="display:flex;gap:6px;margin-top:8px;">
-            <button onclick="toggleDoneJournal(${item.id})" style="padding:6px;border-radius:6px;border:1px solid #cbd5e1;background:#fff;font-size:0.72rem;cursor:pointer;">${item.done ? 'Mở lại' : 'Xong'}</button>
-            <button onclick="deleteJournal(${item.id})" style="padding:6px;border-radius:6px;border:1px solid #fca5a5;color:red;background:#fff5f5;font-size:0.72rem;cursor:pointer;">Xóa</button>
+          <div style="font-weight:750; font-size:0.88rem;">${escapeHtml(item.title)}</div>
+          <div style="font-size:0.8rem; color:#334155; margin-top:3px; white-space:pre-line;">${escapeHtml(item.content)}</div>
+          <div style="display:flex; gap:6px; margin-top:6px;">
+            <button onclick="deleteJournal(${item.id})" style="padding:4px 8px; border-radius:6px; border:1px solid #fecaca; color:red; background:#fff5f5; font-size:0.7rem; cursor:pointer;">Xóa</button>
           </div>
         `;
         container.appendChild(div);
       });
     }
 
-    function toggleDoneJournal(id) {
-      journals = journals.map(j => j.id === id ? { ...j, done: !j.done } : j);
-      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
-      filterJournals(); updateDashboard();
-    }
     function deleteJournal(id) {
       if (confirm('Xóa mục này?')) {
         journals = journals.filter(j => j.id !== id);
         localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
-        filterJournals(); updateDashboard();
+        filterJournals();
       }
     }
 
-    // 5. VIỆC CẦN XỬ LÝ
     function saveIssue() {
       const title = document.getElementById('issueTitle').value.trim();
       const content = document.getElementById('issueContent').value.trim();
@@ -1104,78 +1140,31 @@
       document.getElementById('issueTitle').value = '';
       document.getElementById('issueContent').value = '';
       document.getElementById('issueDateTime').value = '';
-
-      renderIssues(); updateDashboard();
-      showToast('Đã thêm việc cần làm!');
+      renderIssues();
+      showToast('Đã thêm công việc!');
     }
 
     function renderIssues() {
       const el = document.getElementById('issuesList');
       el.innerHTML = '';
       if (issues.length === 0) {
-        el.innerHTML = `<div style="text-align:center;color:#94a3b8;padding:16px;font-size:0.85rem;">Không có việc cần làm.</div>`;
+        el.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:16px; font-size:0.8rem;">Không có việc cần làm.</div>`;
         return;
       }
       issues.forEach(item => {
         const div = document.createElement('div');
         div.className = `card-box`;
-        div.style.marginBottom = '10px';
+        div.style.marginBottom = '8px';
         div.innerHTML = `
-          <div style="font-weight:750;font-size:0.92rem;margin-bottom:4px;">${escapeHtml(item.title)}</div>
-          <div style="font-size:0.82rem;color:var(--muted);">${escapeHtml(item.createdAt)} | Mức độ: ${escapeHtml(item.priority)}</div>
-          <div style="font-size:0.85rem;color:#334155;margin-top:4px;">${escapeHtml(item.content)}</div>
+          <div style="font-weight:750; font-size:0.88rem;">${escapeHtml(item.title)}</div>
+          <div style="font-size:0.72rem; color:var(--muted);">${escapeHtml(item.createdAt)} | Mức độ: ${escapeHtml(item.priority)}</div>
+          <div style="font-size:0.8rem; color:#334155; margin-top:3px;">${escapeHtml(item.content)}</div>
         `;
         el.appendChild(div);
       });
     }
 
-    // 6. THỜI KHÓA BIỂU
-    function getSchoolKey() {
-      return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
-    }
-    function getSchoolData() {
-      try { return JSON.parse(localStorage.getItem('family_timetable_v1') || '{}'); } catch (_) { return {}; }
-    }
-    function renderSchoolTimetable() {
-      const host = document.getElementById('schoolLessons');
-      if (!host) return;
-      const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
-      host.innerHTML = '<div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px;align-items:center;margin:12px 0">' +
-        [1,2,3,4,5].map((n,i) => `<div style="display:flex;align-items:center;justify-content:center;padding:10px 4px;border-radius:10px;background:#eef2ff;color:#4338ca;font-size:.78rem;font-weight:800;">Tiết ${n}</div><input id="schoolLesson${n}" placeholder="Môn học..." value="${escapeHtml(saved[i] || '')}" style="border-radius:10px;border:1px solid #cbd5e1;padding:10px;" />`).join('') + '</div>';
-      renderSchoolTodaySummary();
-    }
-    function saveSchoolTimetable() {
-      const data = getSchoolData();
-      data[getSchoolKey()] = [1,2,3,4,5].map(n => document.getElementById('schoolLesson'+n).value.trim());
-      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      showToast('Đã lưu thời khóa biểu!');
-      renderSchoolTodaySummary();
-    }
-    function clearSchoolDay() {
-      const data = getSchoolData(); delete data[getSchoolKey()];
-      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      renderSchoolTimetable(); showToast('Đã xóa buổi học.');
-    }
-    function renderSchoolTodaySummary() {
-      const host = document.getElementById('schoolTodaySummary');
-      if (!host) return;
-      const data = getSchoolData(), day = new Date().getDay();
-      const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-      const rows = ['10','6'].map(cls => {
-        const morning = (data[`${cls}_morning_${day}`] || []).filter(x => x && x.trim());
-        const afternoon = (data[`${cls}_afternoon_${day}`] || []).filter(x => x && x.trim());
-        return `
-          <div style="padding:10px;margin-bottom:8px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
-            <div style="font-weight:800;color:var(--primary-dark);font-size:0.9rem;">🏫 Lớp ${cls}</div>
-            <div style="font-size:0.8rem;margin-top:2px;">🌅 Sáng: ${morning.join(', ') || 'Nghỉ'}</div>
-            <div style="font-size:0.8rem;margin-top:2px;">🌇 Chiều: ${afternoon.join(', ') || 'Nghỉ'}</div>
-          </div>
-        `;
-      });
-      host.innerHTML = `<div style="font-weight:750;margin-bottom:6px;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
-    }
-
-    // 7. ÂM THANH & CÔNG CỤ
+    // 6. TIỆN ÍCH ÂM THANH & SAO LƯU
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1194,25 +1183,19 @@
     }
     function enableSoundTest() {
       initAudio(); playBeep();
-      document.getElementById('alarmBanner').style.display = 'block';
-      showToast('Chuông báo thử nghiệm đang reo!');
+      showToast('Chuông báo thử nghiệm đang kêu!');
     }
-    function stopAlarm() {
-      document.getElementById('alarmBanner').style.display = 'none';
-    }
-    function updateDashboard() {
-      document.getElementById('statJournals').textContent = journals.length;
-      document.getElementById('statIssues').textContent = issues.length;
-    }
+
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg; t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2200);
+      setTimeout(() => { t.style.display = 'none'; }, 2000);
     }
     function escapeHtml(t) {
       if (!t) return '';
       return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
+
     function exportData() {
       const data = { shiftTimes, journals, issues, familyTimetable: localStorage.getItem('family_timetable_v1') || '{}' };
       const a = document.createElement('a');
@@ -1229,6 +1212,7 @@
           if (d.shiftTimes) localStorage.setItem('camp_shift_times', JSON.stringify(d.shiftTimes));
           if (d.journals) localStorage.setItem('camp_journals_v1', JSON.stringify(d.journals));
           if (d.issues) localStorage.setItem('camp_issues_v2', JSON.stringify(d.issues));
+          if (d.familyTimetable) localStorage.setItem('family_timetable_v1', typeof d.familyTimetable === 'string' ? d.familyTimetable : JSON.stringify(d.familyTimetable));
           location.reload();
         } catch(_) { alert('Tệp không hợp lệ!'); }
       };
@@ -1238,14 +1222,13 @@
     document.addEventListener('DOMContentLoaded', () => {
       const now = new Date();
       const days = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-      document.getElementById('greetingDateLabel').innerText = `Hôm nay ${days[now.getDay()]}, ngày ${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+      document.getElementById('greetingDateLabel').innerText = `Hôm nay ${days[now.getDay()]}, ${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
       renderWeatherIcon('sunny');
       initMonthWeeksDropdown();
       renderWeekGrid();
       loadShiftTimeConfigUI();
       filterJournals();
       renderIssues();
-      updateDashboard();
       renderSchoolTimetable();
     });
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
