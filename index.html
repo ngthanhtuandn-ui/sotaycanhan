@@ -672,13 +672,13 @@
           <div class="shift-config-grid">
             <div class="shift-config-card">
               <h4>Ca 1 (Sáng)</h4>
-              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Giờ vào:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Giờ ra:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
             </div>
             <div class="shift-config-card">
               <h4>Ca 2 (Chiều)</h4>
-              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Giờ vào:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Giờ ra:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
             </div>
           </div>
         </div>
@@ -1363,8 +1363,6 @@
         for (let i = 0; i < 7; i++) {
           const dayKey = i === 6 ? 8 : i + 2;
           const shift = shiftsData[dayKey] || 'off';
-          if (shift === 'off') continue;
-
           const dayDate = new Date(wObj.monday);
           dayDate.setDate(wObj.monday.getDate() + i);
           const y = dayDate.getFullYear();
@@ -1372,10 +1370,30 @@
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
+          if (shift === 'off') {
+            const nextDate = new Date(y, m - 1, d + 1);
+            const nextDateStr = `${nextDate.getFullYear()}${String(nextDate.getMonth()+1).padStart(2,'0')}${String(nextDate.getDate()).padStart(2,'0')}`;
+            events.push([
+              'BEGIN:VEVENT',
+              `UID:off-${dateStr}-${dayKey}@lantrai`,
+              `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
+              `DTSTART;VALUE=DATE:${dateStr}`,
+              `DTEND;VALUE=DATE:${nextDateStr}`,
+              'SUMMARY:🌸 OFF',
+              'DESCRIPTION:Ngày nghỉ',
+              'COLOR:#FCA5A5',
+              'X-APPLE-CALENDAR-COLOR:#FCA5A5',
+              'CATEGORIES:OFF',
+              'END:VEVENT'
+            ].join('\\r\\n'));
+            continue;
+          }
+
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
-          const shiftName = shift === 'ca1' ? 'Ca 1 (Sáng)' : 'Ca 2 (Chiều)';
+          const shiftName = shift === 'ca1' ? 'Ca 1' : 'Ca 2';
           const shiftColor = shift === 'ca1' ? '#38bdf8' : '#eab308';
+          const shiftColorHex = shift === 'ca1' ? '38BDF8' : 'EAB308';
           const shiftCategory = shift === 'ca1' ? 'Ca Sáng' : 'Ca Chiều';
 
           const inStartUTC = toUTCICSString(y, m, d, rawIn, 0);
@@ -1391,14 +1409,15 @@
             `DTSTAMP:${inStartUTC}`,
             `DTSTART:${inStartUTC}`,
             `DTEND:${inEndUTC}`,
-            `SUMMARY:⏰ CHECK-IN: ${shiftName} (${rawIn})`,
-            `DESCRIPTION:Đến giờ vào nhận ca làm việc: ${rawIn}`,
+            `SUMMARY:🔹 ${shiftName} · Vào (${rawIn})`,
+            `DESCRIPTION:Nhắc giờ bắt đầu ${shiftName}: ${rawIn}`,
             `COLOR:${shiftColor}`,
+            `X-APPLE-CALENDAR-COLOR:${shiftColor}`,
             `CATEGORIES:${shiftCategory}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            'DESCRIPTION:Đến giờ Check-in!',
+            'DESCRIPTION:Đến giờ bắt đầu ca!',
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1410,14 +1429,15 @@
             `DTSTAMP:${outStartUTC}`,
             `DTSTART:${outStartUTC}`,
             `DTEND:${outEndUTC}`,
-            `SUMMARY:⏰ CHECK-OUT: ${shiftName} (${rawOut})`,
-            `DESCRIPTION:Đến giờ kiểm tra bàn giao và Check-out: ${rawOut}`,
+            `SUMMARY:🔹 ${shiftName} · Kết thúc (${rawOut})`,
+            `DESCRIPTION:Đến giờ kết thúc/bàn giao ${shiftName}: ${rawOut}`,
             `COLOR:${shiftColor}`,
+            `X-APPLE-CALENDAR-COLOR:${shiftColor}`,
             `CATEGORIES:${shiftCategory}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            'DESCRIPTION:Đến giờ Check-out!',
+            'DESCRIPTION:Đến giờ kết thúc ca!',
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1653,16 +1673,97 @@
       r.readAsText(f);
     }
 
+    // Lịch nhắc chính xác theo giờ địa phương; chỉ kích hoạt khi now >= giờ hẹn.
+    // Dấu đã báo được lưu cục bộ để tránh reo lặp lại mỗi lần kiểm tra.
+    const ALARM_MARKS_KEY = 'personal_app_alarm_marks_v2';
+    function getAlarmMarks() {
+      try { return JSON.parse(localStorage.getItem(ALARM_MARKS_KEY) || '{}'); }
+      catch (_) { return {}; }
+    }
+    function markAlarmFired(key) {
+      const marks = getAlarmMarks();
+      marks[key] = Date.now();
+      const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000;
+      Object.keys(marks).forEach(k => { if (marks[k] < cutoff) delete marks[k]; });
+      try { localStorage.setItem(ALARM_MARKS_KEY, JSON.stringify(marks)); } catch (_) {}
+    }
+    function fireScheduledAlarm(key, title, desc, dueDate) {
+      if (getAlarmMarks()[key]) return;
+      const now = Date.now(), due = dueDate.getTime();
+      if (!Number.isFinite(due) || now < due) return; // tuyệt đối không báo sớm
+      // Khi app được mở lại, vẫn bắt kịp lịch hẹn vừa qua trong 6 giờ.
+      if (now - due > 6 * 60 * 60 * 1000) { markAlarmFired(key); return; }
+      markAlarmFired(key);
+      startContinuousAlarm(title, desc);
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try { new Notification(title, { body: desc, tag: key, renotify: false }); } catch (_) {}
+      }
+    }
+    function localDateKey(d) {
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function findShiftForDate(date) {
+      // Tìm tuần có ngày đó, kể cả khi ngày thuộc tuần giáp tháng.
+      const target = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const monday = new Date(target);
+      const offset = (monday.getDay() + 6) % 7;
+      monday.setDate(monday.getDate() - offset);
+      const key = `camp_shifts_${monday.getFullYear()}_${monday.getMonth()+1}_${monday.getDate()}`;
+      let data = null;
+      try { data = JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) {}
+      if (!data) {
+        try { data = JSON.parse(localStorage.getItem('camp_weekly_shifts') || 'null'); } catch (_) {}
+      }
+      const dayKey = target.getDay() === 0 ? 8 : target.getDay() + 1;
+      return data && data[dayKey] ? data[dayKey] : 'off';
+    }
+    function makeLocalDateTime(date, hhmm) {
+      if (!hhmm || !/^\d{2}:\d{2}$/.test(hhmm)) return null;
+      const [h, m] = hhmm.split(':').map(Number);
+      if (h > 23 || m > 59) return null;
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0, 0);
+    }
     function checkScheduler() {
       const now = new Date();
-      const currentTime = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+      const todayKey = localDateKey(now);
+
       journals.forEach(j => {
-        if (!j.done && j.reminderTime === currentTime) {
-          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ hẹn nhật ký!');
-        }
+        if (j.done || !j.reminderTime) return;
+        const dateStr = j.journalDate || todayKey;
+        const parts = dateStr.split('-').map(Number);
+        if (parts.length !== 3 || parts.some(n => !n)) return;
+        const due = makeLocalDateTime(new Date(parts[0], parts[1]-1, parts[2]), j.reminderTime);
+        if (due) fireScheduledAlarm(`journal-${j.id}-${dateStr}-${j.reminderTime}`,
+          `⏰ NHẬT KÝ: ${(j.title || 'Công việc').toUpperCase()}`,
+          j.content || 'Đến giờ hẹn nhật ký!', due);
       });
+
+      issues.forEach(i => {
+        if (i.done || !i.reminderDateTime) return;
+        const due = new Date(i.reminderDateTime);
+        if (!Number.isNaN(due.getTime())) fireScheduledAlarm(`issue-${i.id}-${i.reminderDateTime}`,
+          `⏰ VIỆC CẦN LÀM: ${(i.title || 'Công việc').toUpperCase()}`,
+          i.content || 'Đến giờ xử lý công việc đã hẹn.', due);
+      });
+
+      const shift = findShiftForDate(now);
+      if (shift === 'ca1' || shift === 'ca2') {
+        const prefix = shift === 'ca1' ? 'c1' : 'c2';
+        const shiftName = shift === 'ca1' ? 'Ca 1' : 'Ca 2';
+        ['in', 'out'].forEach(kind => {
+          const time = shiftTimes[`${prefix}_${kind}`];
+          const due = makeLocalDateTime(now, time);
+          if (due) fireScheduledAlarm(`shift-${todayKey}-${shift}-${kind}-${time}`,
+            `⏰ ${shiftName}: ${kind === 'in' ? 'Đến giờ vào ca' : 'Đến giờ kết thúc ca'}`,
+            `${shiftName} · ${kind === 'in' ? 'Bắt đầu' : 'Kết thúc/bàn giao'} lúc ${time}.`, due);
+        });
+      }
     }
-    setInterval(checkScheduler, 15000);
+    // Kiểm tra thường xuyên khi trang hoạt động; kiểm tra lại ngay khi quay về app.
+    setInterval(checkScheduler, 5000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) checkScheduler(); });
+    window.addEventListener('focus', checkScheduler);
+    window.addEventListener('pageshow', checkScheduler);
 
     document.addEventListener('DOMContentLoaded', () => {
       updateGreetingHeader();
@@ -1674,6 +1775,7 @@
       renderIssues();
       updateDashboard();
       renderSchoolTimetable();
+      checkScheduler();
     });
 
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
