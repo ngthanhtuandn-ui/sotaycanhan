@@ -283,19 +283,19 @@
     .day-col { border: 1px solid var(--border); border-radius: 10px; padding: 6px 1px; background: #fafafa; }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
 
-    /* MÀU ĐỎ NHẠT RÕ RÀNG CHO NGÀY NGHỈ (OFF) TRÊN WEB */
+    /* MÀU ĐỎ NHẠT RÕ RÀNG CHO NGÀY NGHỈ (OFF) TRÊN BẢNG TUẦN */
     .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
     .day-col.is-off .calendar-date { color: #ef4444 !important; }
     .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 700; background: #fff1f2 !important; }
 
-    /* Ca 1: Xanh nhạt */
+    /* Ca 1 */
     .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
     .day-col.is-ca1 .day-name { color: #0369a1 !important; }
     .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
     .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 700; background: #f0f9ff; }
 
-    /* Ca 2: Vàng nhạt */
+    /* Ca 2 */
     .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
     .day-col.is-ca2 .day-name { color: #854d0e !important; }
     .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
@@ -1032,7 +1032,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- XUẤT LỊCH: ĐÃ BỔ SUNG SỰ KIỆN NGHỈ MÀU ĐỎ TRÊN GOOGLE CALENDAR ---
+    // --- XUẤT LỊCH: NGÀY NGHỈ GHI GỌN "OFF", CHUÔNG BÁO THỨC TỐI ƯU CHO ĐIỆN THOẠI ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
@@ -1057,7 +1057,7 @@
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
-          // NẾU LÀ NGÀY OFF: TẠO SỰ KIỆN NGUYÊN NGÀY MÀU ĐỎ
+          // NGÀY NGHỈ: CHỈ GHI GỌN "OFF"
           if (shift === 'off') {
             const nextDay = new Date(dayDate);
             nextDay.setDate(dayDate.getDate() + 1);
@@ -1072,8 +1072,8 @@
               `DTSTAMP:${dateStr}T000000Z`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 NGHỈ (OFF)`,
-              `DESCRIPTION:Hôm nay được nghỉ, không có ca trực.`,
+              `SUMMARY:OFF`,
+              `DESCRIPTION:Hôm nay nghỉ, không có ca trực.`,
               `CATEGORIES:Nghỉ,Holiday`,
               `COLOR:#ef4444`,
               `X-APPLE-CALENDAR-COLOR:#ef4444`,
@@ -1092,33 +1092,42 @@
           const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
           const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
+          // Sự kiện VÀO CA: Có chuông báo trước 5 phút và đúng giờ (đánh thức điện thoại)
           events.push([
             'BEGIN:VEVENT',
             `UID:ca-start-${dateStr}-${dayKey}-${shift}-${rawIn.replace(':','')}-shift@app`,
             `DTSTAMP:${inStartUTC}`,
             `DTSTART:${inStartUTC}`,
             `DTEND:${inEndUTC}`,
-            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Bắt đầu (${rawIn})`,
+            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Vào Ca (${rawIn})`,
             `DESCRIPTION:Đến giờ vào nhận ca làm việc: ${rawIn}`,
             'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
+            'TRIGGER:-PT5M',
             'ACTION:DISPLAY',
+            `DESCRIPTION:Còn 5 phút đến giờ vào ${shiftName}!`,
+            'END:VALARM',
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:AUDIO',
+            'ATTACH;VALUE=URI:Basso',
             `DESCRIPTION:Đến giờ nhận ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
+          // Sự kiện KẾT THÚC CA
           events.push([
             'BEGIN:VEVENT',
             `UID:ca-end-${dateStr}-${dayKey}-${shift}-${rawOut.replace(':','')}-shift@app`,
             `DTSTAMP:${outStartUTC}`,
             `DTSTART:${outStartUTC}`,
             `DTEND:${outEndUTC}`,
-            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Kết thúc (${rawOut})`,
+            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Hết Ca (${rawOut})`,
             `DESCRIPTION:Đến giờ kết thúc/bàn giao ${shiftName}: ${rawOut}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
+            'ACTION:AUDIO',
+            'ATTACH;VALUE=URI:Basso',
             `DESCRIPTION:Đến giờ tan ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
@@ -1135,7 +1144,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tải lịch có ngày nghỉ màu đỏ. Nhấn nạp vào Lịch Google!');
+      showToast('Đã tải lịch (Ngày nghỉ OFF). Hãy nạp vào lịch ĐT!');
     }
 
     // --- VIỆC CẦN XỬ LÝ ---
@@ -1225,7 +1234,7 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG ÂM THANH & BÁO THỨC ---
+    // --- HỆ THỐNG ÂM THANH & BÁO THỨC ĐIỆN THOẠI (SERVICE WORKER + NOTIFICATION) ---
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1242,7 +1251,7 @@
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(880, audioCtx.currentTime);
         osc.frequency.setValueAtTime(1320, audioCtx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -1251,16 +1260,28 @@
       } catch(_) {}
     }
 
-    function triggerSystemNotification(title, body) {
-      if ("Notification" in window && Notification.permission === "granted") {
-        try {
-          new Notification(title, {
-            body: body,
-            icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-            requireInteraction: true
-          });
-        } catch (_) {}
-      }
+    // BẬT BÁO THỨC TRÊN CẢ ĐIỆN THOẠI (DÙ KHÓA MÀN HÌNH NẾU ĐÃ BẬT PWA/NOTI)
+    async function triggerSystemNotification(title, body) {
+      if (!("Notification" in window) || Notification.permission !== "granted") return;
+      
+      const notiOptions = {
+        body: body,
+        icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
+        vibrate: [500, 250, 500, 250, 500],
+        requireInteraction: true,
+        tag: 'shift-alarm'
+      };
+
+      try {
+        if ('serviceWorker' in navigator) {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg && reg.showNotification) {
+            reg.showNotification(title, notiOptions);
+            return;
+          }
+        }
+        new Notification(title, notiOptions);
+      } catch (_) {}
     }
 
     function startContinuousAlarm(title, desc) {
@@ -1275,7 +1296,7 @@
       isAlarmPlaying = true;
       playBeep();
       alarmInterval = setInterval(playBeep, 800);
-      if ("vibrate" in navigator) navigator.vibrate([400, 200, 400, 200, 400]);
+      if ("vibrate" in navigator) navigator.vibrate([500, 250, 500, 250, 500]);
     }
 
     function stopAlarm() {
