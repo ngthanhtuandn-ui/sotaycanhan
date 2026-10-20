@@ -283,16 +283,19 @@
     .day-col { border: 1px solid var(--border); border-radius: 10px; padding: 6px 1px; background: #fafafa; }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
 
+    /* MÀU ĐỎ NHẠT RÕ RÀNG CHO NGÀY NGHỈ (OFF) TRÊN WEB */
     .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
     .day-col.is-off .calendar-date { color: #ef4444 !important; }
-    .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 700; background: #fff1f2; }
+    .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 700; background: #fff1f2 !important; }
 
+    /* Ca 1: Xanh nhạt */
     .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
     .day-col.is-ca1 .day-name { color: #0369a1 !important; }
     .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
     .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 700; background: #f0f9ff; }
 
+    /* Ca 2: Vàng nhạt */
     .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
     .day-col.is-ca2 .day-name { color: #854d0e !important; }
     .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
@@ -574,7 +577,7 @@
     let audioCtx = null;
     let alarmInterval = null;
     let isAlarmPlaying = false;
-    let lastTriggeredMinute = ""; // Ngăn báo lặp lại liên tục trong cùng 1 phút
+    let lastTriggeredMinute = "";
 
     const weatherStates = [
       { type: 'sunny', label: 'Trời nắng đẹp, quang đãng' },
@@ -933,9 +936,8 @@
         const savedShift = shiftsData[d.key] || 'off';
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
-        let shiftClass = '';
-        if (savedShift === 'off') shiftClass = 'is-off';
-        else if (savedShift === 'ca1') shiftClass = 'is-ca1';
+        let shiftClass = 'is-off';
+        if (savedShift === 'ca1') shiftClass = 'is-ca1';
         else if (savedShift === 'ca2') shiftClass = 'is-ca2';
 
         const col = document.createElement('div');
@@ -964,9 +966,9 @@
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
         col.classList.remove('is-off', 'is-ca1', 'is-ca2');
-        if (val === 'off') col.classList.add('is-off');
-        else if (val === 'ca1') col.classList.add('is-ca1');
+        if (val === 'ca1') col.classList.add('is-ca1');
         else if (val === 'ca2') col.classList.add('is-ca2');
+        else col.classList.add('is-off');
       }
       showToast('Đã lưu ca làm!');
     }
@@ -1030,6 +1032,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
+    // --- XUẤT LỊCH: ĐÃ BỔ SUNG SỰ KIỆN NGHỈ MÀU ĐỎ TRÊN GOOGLE CALENDAR ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
@@ -1046,7 +1049,6 @@
         for (let i = 0; i < 7; i++) {
           const dayKey = i === 6 ? 8 : i + 2;
           const shift = shiftsData[dayKey] || 'off';
-          if (shift === 'off') continue;
 
           const dayDate = new Date(wObj.monday);
           dayDate.setDate(wObj.monday.getDate() + i);
@@ -1054,6 +1056,32 @@
           const m = dayDate.getMonth() + 1;
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+
+          // NẾU LÀ NGÀY OFF: TẠO SỰ KIỆN NGUYÊN NGÀY MÀU ĐỎ
+          if (shift === 'off') {
+            const nextDay = new Date(dayDate);
+            nextDay.setDate(dayDate.getDate() + 1);
+            const ny = nextDay.getFullYear();
+            const nm = nextDay.getMonth() + 1;
+            const nd = nextDay.getDate();
+            const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
+
+            events.push([
+              'BEGIN:VEVENT',
+              `UID:ca-off-${dateStr}-${dayKey}-shift@app`,
+              `DTSTAMP:${dateStr}T000000Z`,
+              `DTSTART;VALUE=DATE:${dateStr}`,
+              `DTEND;VALUE=DATE:${nextDateStr}`,
+              `SUMMARY:🔴 NGHỈ (OFF)`,
+              `DESCRIPTION:Hôm nay được nghỉ, không có ca trực.`,
+              `CATEGORIES:Nghỉ,Holiday`,
+              `COLOR:#ef4444`,
+              `X-APPLE-CALENDAR-COLOR:#ef4444`,
+              `TRANSP:TRANSPARENT`,
+              'END:VEVENT'
+            ].join('\r\n'));
+            continue;
+          }
 
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
@@ -1070,7 +1098,7 @@
             `DTSTAMP:${inStartUTC}`,
             `DTSTART:${inStartUTC}`,
             `DTEND:${inEndUTC}`,
-            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Vào Ca (${rawIn})`,
+            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Bắt đầu (${rawIn})`,
             `DESCRIPTION:Đến giờ vào nhận ca làm việc: ${rawIn}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1086,7 +1114,7 @@
             `DTSTAMP:${outStartUTC}`,
             `DTSTART:${outStartUTC}`,
             `DTEND:${outEndUTC}`,
-            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Hết Ca (${rawOut})`,
+            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Kết thúc (${rawOut})`,
             `DESCRIPTION:Đến giờ kết thúc/bàn giao ${shiftName}: ${rawOut}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1098,11 +1126,6 @@
         }
       });
 
-      if (events.length === 0) {
-        alert('Không có ca làm việc nào trong tuần đã chọn!');
-        return;
-      }
-
       const icsHeader = ['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','PRODID:-//TuanTuan//ShiftApp//VI','METHOD:PUBLISH'].join('\r\n');
       const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
@@ -1112,7 +1135,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tải tệp lịch. Nhấn mở tệp để nạp vào Lịch ĐT!');
+      showToast('Đã tải lịch có ngày nghỉ màu đỏ. Nhấn nạp vào Lịch Google!');
     }
 
     // --- VIỆC CẦN XỬ LÝ ---
@@ -1202,7 +1225,7 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG ÂM THANH & BÁO THỨC CHUẨN ---
+    // --- HỆ THỐNG ÂM THANH & BÁO THỨC ---
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1293,7 +1316,7 @@
       } catch (_) {}
     }
 
-    // --- BỘ QUÉT TỰ ĐỘNG BÁO GIỜ CA TRỰC & NHẬT KÝ (ĐÃ BỔ SUNG TOÀN DIỆN) ---
+    // --- BỘ QUÉT TỰ ĐỘNG BÁO GIỜ CA TRỰC ---
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
@@ -1303,11 +1326,9 @@
 
       if (lastTriggeredMinute === minuteKey) return;
 
-      // 1. Kiểm tra Lịch Ca Trực của ngày hôm nay
-      const currentDayOfWeek = now.getDay(); // 0 là CN, 1 là T2, ...
-      const dayKey = (currentDayOfWeek === 0) ? 8 : (currentDayOfWeek + 1); // Đổi về chuẩn: 2 -> 8
+      const currentDayOfWeek = now.getDay();
+      const dayKey = (currentDayOfWeek === 0) ? 8 : (currentDayOfWeek + 1);
 
-      // Tìm dữ liệu tuần hiện tại
       let todayShift = 'off';
       if (monthWeeksList.length > 0) {
         const todayTime = now.getTime();
@@ -1343,7 +1364,6 @@
         }
       }
 
-      // 2. Kiểm tra nhắc nhở Nhật ký
       journals.forEach(j => {
         if (!j.done && j.reminderTime === currentTime) {
           lastTriggeredMinute = minuteKey;
@@ -1352,7 +1372,6 @@
       });
     }
 
-    // Quét mỗi 5 giây để không bao giờ bị trễ phút
     setInterval(checkScheduler, 5000);
 
     function exportData() {
@@ -1401,7 +1420,6 @@
       renderSchoolTimetable();
     });
 
-    // Mở khóa âm thanh khi người dùng chạm vào bất kỳ đâu trên màn hình
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) initAudio(); });
   </script>
