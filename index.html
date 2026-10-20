@@ -15,14 +15,14 @@
 
   <style>
     :root {
-      --primary: #0284c7;
-      --primary-dark: #0369a1;
+      --primary: #1769aa;
+      --primary-dark: #124f85;
       --accent: #f59e0b;
-      --bg: #f8fafc;
+      --bg: #f3f6fb;
       --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
+      --text: #172b4d;
+      --muted: #62748a;
+      --border: #dbe4ef;
       --success: #10b981;
       --danger: #ef4444;
       --purple: #8b5cf6;
@@ -33,16 +33,16 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
+    body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); color: var(--text); padding-bottom: 90px; }
 
     header {
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      background: linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%);
       color: white;
       padding: 12px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.22);
+      box-shadow: 0 6px 22px rgba(16,72,117,.2);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -54,7 +54,7 @@
       background: rgba(255,255,255,0.2);
       border: 1px solid rgba(255,255,255,0.35);
       color: white;
-      padding: 5px 9px;
+      padding: 6px 10px;
       border-radius: 8px;
       font-size: 0.72rem;
       cursor: pointer;
@@ -64,31 +64,29 @@
     }
     .header-btns button:active { background: rgba(255,255,255,0.4); transform: scale(0.96); }
 
-    .container { max-width: 650px; margin: auto; padding: 12px; }
+    .container { max-width: 760px; margin: auto; padding: 14px; }
 
-    /* LỜI CHÀO & ICON THỜI TIẾT ĐỘNG */
     .greeting-banner {
       background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-      border: 1.5px solid #bbf7d0;
-      border-radius: 16px;
-      padding: 10px 14px;
+      border: 1px solid #b7efd0;
+      border-radius: 20px;
+      padding: 14px 18px;
       margin-bottom: 12px;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.06);
+      box-shadow: 0 8px 24px rgba(27,86,115,.06);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
     }
-    .greeting-info { display: flex; flex-direction: column; gap: 2px; }
-    .greeting-text-main { font-size: 0.88rem; font-weight: 800; color: #166534; }
-    .greeting-text-sub { font-size: 0.75rem; font-weight: 600; color: #047857; }
-    .weather-status-text { font-size: 0.7rem; color: #64748b; font-weight: 600; }
+    .greeting-info { display: flex; flex-direction: column; gap: 3px; }
+    .greeting-text-main { font-size: 0.96rem; font-weight: 800; color: #166534; }
+    .greeting-text-sub { font-size: 0.78rem; font-weight: 600; color: #047857; }
+    .weather-status-text { font-size: 0.72rem; color: #64748b; font-weight: 600; }
 
-    /* HIỆU ỨNG ICON ĐỘNG */
     .weather-widget {
       position: relative;
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -97,141 +95,71 @@
     }
 
     .sun-icon {
-      width: 34px; height: 34px; border-radius: 50%; position: relative; z-index: 1;
+      width: 32px; height: 32px; border-radius: 50%; position: relative; z-index: 1;
       background: radial-gradient(circle at 32% 28%, #fff7b2 0 8%, #ffd34d 28%, #ffad24 66%, #f28b16 100%);
-      box-shadow: inset -3px -4px 7px rgba(194,94,0,.18), 0 0 18px rgba(255,183,40,.45);
+      box-shadow: inset -3px -4px 7px rgba(194,94,0,.18), 0 0 16px rgba(255,183,40,.45);
       animation: sunGlow 3.8s ease-in-out infinite alternate;
-    }
-    .sun-icon::before {
-      content: ''; position: absolute; z-index: -1; inset: -10px; border-radius: 50%;
-      background: repeating-conic-gradient(from 2deg, rgba(255,190,66,.92) 0deg 7deg, transparent 7deg 22.5deg);
-      -webkit-mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%);
-      mask: radial-gradient(circle, transparent 0 53%, #000 56% 72%, transparent 75%); opacity: .9;
-      animation: sunRaysSpin 24s linear infinite; transform-origin: center;
-    }
-    .sun-icon::after {
-      content: ''; position: absolute; inset: 5px 8px auto 6px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,.36); filter: blur(2px); transform: rotate(-28deg);
     }
     @keyframes sunGlow {
       0% { transform: scale(0.92); box-shadow: 0 0 10px #fbbf24; }
-      100% { transform: scale(1.05); box-shadow: 0 0 20px #f59e0b, 0 0 30px rgba(245, 158, 11, 0.5); }
+      100% { transform: scale(1.05); box-shadow: 0 0 20px #f59e0b; }
     }
 
     .partly-cloudy { position: relative; width: 44px; height: 38px; }
     .partly-cloudy .sun-small {
-      width: 22px; height: 22px;
-      background: #f59e0b;
-      border-radius: 50%;
-      position: absolute;
-      top: 0; right: 2px;
-      box-shadow: 0 0 8px #fbbf24;
-      animation: floatSun 3s ease-in-out infinite alternate;
+      width: 22px; height: 22px; background: #f59e0b; border-radius: 50%; position: absolute; top: 0; right: 2px;
     }
     .partly-cloudy .cloud-front {
-      width: 32px; height: 18px;
-      background: #e2e8f0;
-      border-radius: 12px;
-      position: absolute;
-      bottom: 2px; left: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      animation: floatCloud 3.5s ease-in-out infinite alternate, cloudBob 2.8s ease-in-out infinite;
+      width: 32px; height: 18px; background: #cbd5e1; border-radius: 12px; position: absolute; bottom: 2px; left: 0;
     }
     .partly-cloudy .cloud-front::before {
-      content: ''; position: absolute; width: 14px; height: 14px; background: #e2e8f0; border-radius: 50%; top: -6px; left: 6px;
+      content: ''; position: absolute; width: 14px; height: 14px; background: #cbd5e1; border-radius: 50%; top: -6px; left: 6px;
     }
 
     .rainy-icon { position: relative; width: 40px; height: 38px; }
-    .rain-cloud {
-      width: 36px; height: 18px;
-      background: #94a3b8;
-      border-radius: 12px;
-      position: absolute;
-      top: 2px; left: 2px;
-      animation: floatCloud 2.5s ease-in-out infinite alternate;
-    }
-    .rain-cloud::before {
-      content: ''; position: absolute; width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; top: -7px; left: 7px;
-    }
-    .rain-drop {
-      position: absolute;
-      width: 2.5px; height: 7px;
-      background: #0284c7;
-      border-radius: 2px;
-      animation: rainFall 0.8s linear infinite;
-    }
-    .rain-drop.d1 { left: 9px; bottom: 0; animation-delay: 0s; }
-    .rain-drop.d2 { left: 19px; bottom: 2px; animation-delay: 0.3s; }
-    .rain-drop.d3 { left: 29px; bottom: -1px; animation-delay: 0.5s; }
-
-    @keyframes rainFall {
-      0% { transform: translateY(-5px) translateX(0); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(8px) translateX(-2px); opacity: 0; }
-    }
-    @keyframes floatCloud { 0% { transform: translateX(0); } 100% { transform: translateX(3px); } }
-    @keyframes cloudBob { 0%,100% { margin-bottom: 0; } 50% { margin-bottom: 2px; } }
-    @keyframes floatSun { 0% { transform: translateY(0) scale(0.95); } 100% { transform: translateY(-2px) scale(1.05); } }
-    @keyframes sunRaysSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    .weather-widget::after {
-      content: ''; position: absolute; inset: 2px; border: 1px solid rgba(255,255,255,.55);
-      border-radius: 50%; opacity: 0; transform: scale(.72); pointer-events: none;
-      animation: weatherHalo 3.2s ease-out infinite;
-    }
-    @keyframes weatherHalo { 0% { opacity: 0; transform: scale(.72); } 35% { opacity: .35; } 100% { opacity: 0; transform: scale(1.18); } }
-    @media (prefers-reduced-motion: reduce) {
-      .sun-icon, .sun-icon::before, .partly-cloudy .sun-small, .partly-cloudy .cloud-front,
-      .rain-cloud, .rain-drop, .moon-icon, .night-star, .weather-widget::after { animation: none !important; }
-    }
+    .rain-cloud { width: 36px; height: 18px; background: #94a3b8; border-radius: 12px; position: absolute; top: 2px; left: 2px; }
+    .rain-cloud::before { content: ''; position: absolute; width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; top: -7px; left: 7px; }
+    .rain-drop { position: absolute; width: 2.5px; height: 7px; background: #0284c7; border-radius: 2px; }
+    .rain-drop.d1 { left: 9px; bottom: 0; } .rain-drop.d2 { left: 19px; bottom: 2px; } .rain-drop.d3 { left: 29px; bottom: -1px; }
 
     .night-sky { position:relative; width:48px; height:48px; }
     .night-sky .moon-icon { position:absolute; top:7px; left:8px; }
-    .night-star { position:absolute; color:#facc15; font-size:10px; animation: starTwinkle 1.8s ease-in-out infinite alternate; }
-    .night-star.s1 {top:3px;right:4px;} .night-star.s2 {top:25px;right:0;animation-delay:.6s;} .night-star.s3 {bottom:2px;left:3px;animation-delay:1s;}
-    @keyframes starTwinkle { from { opacity:.25; transform:scale(.75); } to { opacity:1; transform:scale(1.2); } }
-    .moon-icon {
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      box-shadow: 7px 5px 0 0 #facc15;
-      animation: moonGlow 3s infinite alternate ease-in-out;
-      margin-left: -5px;
-    }
-    @keyframes moonGlow { 0% { filter: drop-shadow(0 0 3px #fde047); } 100% { filter: drop-shadow(0 0 8px #facc15); } }
+    .night-star { position:absolute; color:#facc15; font-size:10px; }
+    .night-star.s1 {top:3px;right:4px;} .night-star.s2 {top:25px;right:0;} .night-star.s3 {bottom:2px;left:3px;}
+    .moon-icon { width: 24px; height: 24px; border-radius: 50%; box-shadow: 6px 4px 0 0 #facc15; margin-left: -5px; }
 
-    /* Thống kê */
     .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
     .stat-card {
       background: #fff;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      border-radius: 16px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 14px rgba(24,55,91,.04);
     }
     .stat-label { color: var(--muted); font-size: .74rem; font-weight: 600; }
     .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
 
-    /* Banner chuông báo */
     #alarmBanner {
       display: none;
       position: sticky;
-      top: 50px;
-      z-index: 99;
+      top: 55px;
+      z-index: 105;
       background: linear-gradient(135deg, #ef4444, #dc2626);
       color: white;
-      padding: 12px 14px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35);
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
       animation: pulse 1s infinite alternate;
     }
-    @keyframes pulse { from { opacity: 0.94; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
-    .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .alarm-title { font-weight: 800; font-size: 0.92rem; }
+    @keyframes pulse { from { opacity: 0.95; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
+    .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .alarm-title { font-weight: 800; font-size: 0.95rem; }
     .btn-stop-alarm {
       background: white;
       color: var(--danger);
       border: none;
-      padding: 8px 14px;
+      padding: 9px 16px;
       border-radius: 10px;
       font-weight: 800;
       cursor: pointer;
@@ -239,7 +167,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    /* Tabs */
     .nav-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
     .nav-tab-btn {
       padding: 10px 4px;
@@ -257,47 +184,30 @@
       background: var(--primary);
       color: white;
       border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+      box-shadow: 0 4px 12px rgba(23, 105, 170, 0.25);
     }
     .nav-tab-btn.active-journal {
       background: #fef08a !important;
       color: #713f12 !important;
       border-color: #facc15 !important;
-      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.25) !important;
     }
 
-    /* Card chung & Card Nhật Ký */
     .card-box {
       background: var(--card);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 14px;
       margin-bottom: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 16px rgba(24,55,91,.04);
     }
-    .card-journal {
-      background: var(--journal-bg);
-      border: 1.5px solid var(--journal-border);
-    }
-    .journal-heading {
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: var(--journal-text);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn-journal-submit {
-      background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
-      color: white;
-      box-shadow: 0 3px 8px rgba(202, 138, 4, 0.25);
-    }
+    .card-journal { background: var(--journal-bg); border: 1.5px solid var(--journal-border); }
+    .journal-heading { font-size: 0.88rem; font-weight: 800; color: var(--journal-text); margin-bottom: 10px; }
+    .btn-journal-submit { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: white; }
 
     .search-filter-box {
       background: #fff;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 10px;
       margin-bottom: 12px;
       display: flex;
@@ -332,10 +242,9 @@
       font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
-      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
+      box-shadow: 0 4px 12px rgba(23, 105, 170, 0.2);
     }
-    .btn-submit:active { transform: scale(0.99); opacity: 0.9; }
-    .btn-submit-purple { background: var(--purple); box-shadow: 0 3px 8px rgba(139, 92, 246, 0.25); }
+    .btn-submit-purple { background: var(--purple); }
 
     .journal-card-item {
       background: #ffffff;
@@ -343,107 +252,47 @@
       padding: 12px;
       margin-bottom: 10px;
       border: 1.5px solid #fef08a;
-      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.08);
     }
     .journal-card-item.done { opacity: 0.65; background: #fafaf9; border-color: #e2e8f0; }
     .badge-journal { background: #fef08a; color: #854d0e; }
 
-    .item-card {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 10px;
-      border: 1px solid var(--border);
-    }
+    .item-card { background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
     .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .badge {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
     .badge-phat-sinh { background: #ede9fe; color: #5b21b6; }
-    .card-title { font-size: 0.94rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
+    .card-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
     .card-time { font-size: 0.72rem; color: var(--muted); }
     .card-desc { font-size: 0.85rem; line-height: 1.5; color: #334155; white-space: pre-line; margin-bottom: 8px; }
     .card-alarm-tag { font-size: 0.75rem; color: var(--danger); font-weight: 700; margin-bottom: 6px; display: inline-block; }
 
     .card-actions { display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid #f1f5f9; padding-top: 8px; }
     .btn-action {
-      flex: 1;
-      padding: 7px 4px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      font-size: 0.72rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
+      flex: 1; padding: 7px 4px; border-radius: 8px; border: 1px solid var(--border);
+      background: #f8fafc; font-size: 0.72rem; font-weight: 700; cursor: pointer; text-align: center;
     }
     .btn-zalo { background: #0068ff; color: white; border: none; }
     .btn-delete { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
 
-    .img-preview-box { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; margin-top: 6px; }
-
-    /* Lịch Tuần & Màu Ca Làm Việc */
-    .week-table-card {
-      background: white;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      padding: 12px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-    }
+    .week-table-card { background: white; border-radius: 18px; border: 1px solid var(--border); padding: 12px; margin-bottom: 12px; }
     .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
-    .week-dropdown-wrap { flex: 1; position: relative; }
-    .week-select-menu {
-      width: 100%;
-      background: #f8fafc;
-      border: 1.5px solid var(--primary);
-      color: var(--primary-dark);
-      font-weight: 700;
-      font-size: 0.8rem;
-      padding: 8px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .btn-copy-month {
-      background: #f0fdf4;
-      border: 1px solid #86efac;
-      color: #166534;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 8px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
+    .week-dropdown-wrap { flex: 1; }
+    .week-select-menu { width: 100%; background: #f8fafc; border: 1.5px solid var(--primary); color: var(--primary-dark); font-weight: 700; font-size: 0.8rem; padding: 8px 10px; border-radius: 10px; }
+    .btn-copy-month { background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-size: 0.72rem; font-weight: 700; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
 
     .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; margin-bottom: 10px; }
-    .day-col {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 6px 1px;
-      background: #fafafa;
-      transition: all 0.2s ease;
-    }
+    .day-col { border: 1px solid var(--border); border-radius: 10px; padding: 6px 1px; background: #fafafa; }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
-    
-    /* Ngày OFF: Đỏ nhạt */
+
     .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
     .day-col.is-off .calendar-date { color: #ef4444 !important; }
     .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 700; background: #fff1f2; }
 
-    /* Ca 1: Xanh da trời nhạt (đại diện buổi sáng) */
     .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
     .day-col.is-ca1 .day-name { color: #0369a1 !important; }
     .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
     .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 700; background: #f0f9ff; }
 
-    /* Ca 2: Vàng nhạt (đại diện buổi chiều) */
     .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
     .day-col.is-ca2 .day-name { color: #854d0e !important; }
     .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
@@ -451,48 +300,16 @@
 
     .day-name { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
     .calendar-date { display: block; font-size: .62rem; color: #64748b; margin: 2px 0 4px; }
-    .day-shift-select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.72rem;
-      padding: 4px 0;
-      font-weight: 700;
-      text-align: center;
-      background: #fff;
-    }
+    .day-shift-select { width: 100%; border: 1px solid var(--border); border-radius: 6px; font-size: 0.72rem; padding: 4px 0; font-weight: 700; text-align: center; background: #fff; }
 
-    .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 6px 8px; margin-top: 8px; }
+    .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 8px; margin-top: 8px; }
     .sync-row { display: flex; gap: 6px; position: relative; }
     .custom-multiselect { flex: 1.3; position: relative; }
     .multiselect-toggle-btn {
-      width: 100%;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 8px;
-      color: #334155;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px; font-size: 0.75rem; font-weight: 700; padding: 8px; color: #334155; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
     }
     .multiselect-dropdown {
-      display: none;
-      position: absolute;
-      bottom: calc(100% + 4px);
-      left: 0; right: 0;
-      background: #fff;
-      border: 1.5px solid var(--primary);
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      z-index: 200;
-      padding: 4px 0;
-      max-height: 220px;
-      overflow-y: auto;
+      display: none; position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1.5px solid var(--primary); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 200; padding: 4px 0; max-height: 220px; overflow-y: auto;
     }
     .multiselect-dropdown.show { display: block; }
     .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
@@ -501,88 +318,31 @@
     .multiselect-item.selected .multiselect-check { display: inline-block; }
 
     .btn-sync-submit {
-      flex: 1;
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-      color: white;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
+      flex: 1; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 8px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; white-space: nowrap;
     }
 
-    .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 10px; }
-    .shift-settings-title { font-size: 0.8rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
+    .shift-settings-title { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
     .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .shift-config-card { background: white; padding: 8px; border-radius: 8px; border: 1px solid var(--border); }
+    .shift-config-card { background: white; padding: 8px; border-radius: 10px; border: 1px solid var(--border); }
     .shift-config-card h4 { font-size: 0.78rem; margin-bottom: 6px; color: #334155; }
     .time-input-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 0.72rem; color: var(--muted); }
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
-    /* Định kiểu huy hiệu Tiết học Thời khóa biểu */
     .lesson-badge {
-      display: inline-block;
-      background: #fef08a;
-      color: #854d0e;
-      border: 1px solid #fde047;
-      font-weight: 800;
-      font-size: 0.75rem;
-      padding: 1px 7px;
-      border-radius: 6px;
-      margin-right: 6px;
-      box-shadow: 0 1px 2px rgba(133, 77, 14, 0.08);
-      white-space: nowrap;
+      display: inline-block; background: #fef08a; color: #854d0e; border: 1px solid #fde047; font-weight: 800; font-size: 0.75rem; padding: 1px 7px; border-radius: 6px; margin-right: 6px; white-space: nowrap;
     }
-    .lesson-row-item {
-      display: flex;
-      align-items: center;
-      padding: 3px 0;
-      font-size: 0.84rem;
-      color: #1e293b;
-    }
+    .lesson-row-item { display: flex; align-items: center; padding: 3px 0; font-size: 0.84rem; color: #1e293b; }
 
     #toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.92);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      display: none;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.92); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.82rem; display: none; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* Giao diện tương thích máy tính & điện thoại */
-    :root { --primary:#1769aa; --primary-dark:#124f85; --bg:#f3f6fb; --border:#dbe4ef; --text:#172b4d; --muted:#62748a; }
-    body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); }
-    header { background:linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%); box-shadow:0 6px 22px rgba(16,72,117,.2); }
-    .container { max-width:980px; padding:18px 16px 28px; }
-    .greeting-banner { border:1px solid #b7efd0; border-radius:22px; padding:18px 20px; box-shadow:0 10px 28px rgba(27,86,115,.07); }
-    .greeting-text-main { font-size:1.02rem; letter-spacing:-.02em; }
-    .greeting-text-sub { font-size:.88rem; } .weather-status-text { font-size:.8rem; }
-    .stats-grid { gap:12px; }
-    .stat-card,.card-box,.week-table-card,.search-filter-box { border-radius:20px !important; border:1px solid rgba(209,220,234,.9) !important; box-shadow:0 8px 24px rgba(24,55,91,.055) !important; }
-    .nav-tabs { gap:8px; padding:7px; border-radius:16px; background:rgba(226,235,246,.8); }
-    .nav-tab-btn { border-radius:12px !important; font-weight:750; transition:transform .15s ease,box-shadow .15s ease; }
-    .nav-tab-btn.active { box-shadow:0 4px 12px rgba(23,105,170,.18); }
-    button,input,select,textarea { font:inherit; } button { touch-action:manipulation; }
-    .btn-submit { border-radius:12px; box-shadow:0 5px 12px rgba(23,105,170,.14); }
-    input,select,textarea { border-radius:10px; }
-    #view-school .card-box:first-child { overflow:hidden; }
-    @media(min-width:760px) { .stats-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .row { gap:14px; } }
     @media(max-width:560px) {
-      header { align-items:flex-start; padding:10px 12px; } header h1 { white-space:normal; font-size:.9rem; max-width:44%; }
-      .header-btns { gap:4px; } .header-btns button { padding:7px 8px; font-size:.68rem; }
-      .container { padding:12px 10px 24px; } .greeting-banner { padding:14px; border-radius:18px; }
-      .weather-widget { width:48px; height:48px; } .nav-tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .nav-tab-btn { padding:11px 7px; font-size:.78rem; } .stats-grid { gap:9px; } .stat-card { padding:13px !important; }
+      header h1 { font-size:.88rem; }
+      .header-btns button { padding:6px 7px; font-size:.68rem; }
+      .nav-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   </style>
 </head>
@@ -600,7 +360,6 @@
   </header>
 
   <div class="container">
-    <!-- GREETING & ICON THỜI TIẾT ĐỘNG -->
     <div class="greeting-banner">
       <div class="greeting-info">
         <div class="greeting-text-main" id="greetingMain">Xin chào Tuấn Tuấn ✨</div>
@@ -623,7 +382,6 @@
       </div>
     </div>
 
-    <!-- BANNER CHUÔNG BÁO -->
     <div id="alarmBanner">
       <div class="alarm-content">
         <div>
@@ -634,7 +392,6 @@
       </div>
     </div>
 
-    <!-- TAB ĐIỀU HƯỚNG -->
     <div class="nav-tabs">
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">📔 Nhật Ký</button>
@@ -671,8 +428,8 @@
 
         <div class="shift-settings-box">
           <div class="shift-settings-title">
-            <span>⚙️ Cài Đặt Giờ Báo Ca</span>
-            <span style="font-size:0.7rem; font-weight:normal; color:var(--muted);">Tự lưu</span>
+            <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
+            <span style="font-size:0.7rem; font-weight:normal; color:#10b981;">● Báo thức hoạt động</span>
           </div>
           <div class="shift-config-grid">
             <div class="shift-config-card">
@@ -690,13 +447,10 @@
       </div>
     </div>
 
-    <!-- VIEW 2: NHẬT KÝ HÀNG NGÀY -->
+    <!-- VIEW 2: NHẬT KÝ -->
     <div id="view-journal" style="display:none;">
       <div class="card-box card-journal">
-        <div class="journal-heading">
-          <span>✍️ Ghi Nhật Ký Công Việc Trong Ngày</span>
-        </div>
-
+        <div class="journal-heading">✍️ Ghi Nhật Ký Công Việc Trong Ngày</div>
         <div class="row form-group">
           <div>
             <label>Phân loại nhật ký</label>
@@ -712,27 +466,23 @@
             <input type="date" id="journalDate">
           </div>
         </div>
-
         <div class="row form-group">
           <div>
             <label>Tiêu đề việc / nội dung chính</label>
-            <input type="text" id="journalTitle" placeholder="Ví dụ: Kiểm tra an ninh cổng, bàn giao tài sản...">
+            <input type="text" id="journalTitle" placeholder="Ví dụ: Bàn giao ca trực, kiểm kê...">
           </div>
           <div style="flex: 0.6;">
             <label>Hẹn giờ nhắc (nếu có)</label>
             <input type="time" id="journalReminderTime">
           </div>
         </div>
-
         <div class="form-group">
           <label>Nội dung chi tiết nhật ký</label>
-          <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc diễn ra trong ngày..."></textarea>
+          <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc..."></textarea>
         </div>
-
         <button class="btn-submit btn-journal-submit" id="btnSaveJournal" onclick="saveJournalEntry()">+ Lưu Vào Nhật Ký</button>
       </div>
 
-      <!-- TRA CỨU & TÌM KIẾM NHẬT KÝ -->
       <div class="search-filter-box">
         <div style="font-size:0.78rem; font-weight:700; color:#475569;">🔍 Tìm kiếm & Tra cứu nhật ký:</div>
         <div class="search-row">
@@ -741,7 +491,6 @@
           <button onclick="clearJournalFilter()" style="padding:0 10px; border-radius:10px; border:1px solid #cbd5e1; background:#f1f5f9; font-size:0.75rem; font-weight:700; cursor:pointer;">Hủy</button>
         </div>
       </div>
-
       <div id="journalListContainer"></div>
     </div>
 
@@ -750,9 +499,8 @@
       <div class="card-box" style="border-left: 4px solid var(--purple);">
         <div class="form-group">
           <label>Tên công việc / Sự cố</label>
-          <input type="text" id="issueTitle" placeholder="Ví dụ: Sửa bóng đèn lán 3, kiểm tra bơm nước...">
+          <input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra lại chìa khóa kho...">
         </div>
-
         <div class="row form-group">
           <div>
             <label>Mức độ</label>
@@ -767,30 +515,37 @@
             <input type="datetime-local" id="issueDateTime">
           </div>
         </div>
-
         <div class="form-group">
           <label>Nội dung chi tiết / Hướng xử lý</label>
           <textarea id="issueContent" placeholder="Mô tả cụ thể việc cần làm..."></textarea>
         </div>
-
         <button class="btn-submit btn-submit-purple" onclick="saveIssue()">+ Lưu Việc Cần Xử Lý</button>
       </div>
-
       <div id="issuesList"></div>
     </div>
 
     <!-- VIEW 4: THỜI KHÓA BIỂU -->
     <div id="view-school" style="display:none;">
       <div class="card-box">
-        <div style="padding:18px 16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;box-shadow:0 8px 18px rgba(99,102,241,.2);">
-          <div style="font-size:1.35rem;margin-bottom:5px;">🎒 📚 ✨</div>
-          <h3 style="font-size:1.08rem;margin:0 0 5px;color:#fff;">Thời khóa biểu của các con</h3>
+        <div style="padding:16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;">
+          <h3 style="font-size:1.05rem;margin:0 0 4px;color:#fff;">🎒 Thời khóa biểu của các con</h3>
         </div>
         <div class="row form-group">
-          <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;"><label style="color:#4338ca;">🏫 Lớp học</label><select id="schoolClass" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#c7d2fe;"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select></div>
-          <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;"><label style="color:#c2410c;">☀️ Buổi học</label><select id="schoolShift" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#fdba74;"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select></div>
+          <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;">
+            <label style="color:#4338ca;">🏫 Lớp học</label>
+            <select id="schoolClass" onchange="renderSchoolTimetable()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select>
+          </div>
+          <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;">
+            <label style="color:#c2410c;">☀️ Buổi học</label>
+            <select id="schoolShift" onchange="renderSchoolTimetable()"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select>
+          </div>
         </div>
-        <div class="form-group" style="padding:10px;border-radius:12px;background:#fdf2f8;border:1px solid #fbcfe8;"><label style="color:#9d174d;">🗓️ Ngày trong tuần</label><select id="schoolDay" onchange="renderSchoolTimetable()" style="background:#fff;border-color:#f9a8d4;"><option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option></select></div>
+        <div class="form-group" style="padding:10px;border-radius:12px;background:#fdf2f8;border:1px solid #fbcfe8;">
+          <label style="color:#9d174d;">🗓️ Ngày trong tuần</label>
+          <select id="schoolDay" onchange="renderSchoolTimetable()">
+            <option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option>
+          </select>
+        </div>
         <div id="schoolLessons"></div>
         <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu thời khóa biểu</button>
         <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolDay()">Xóa nội dung buổi này</button>
@@ -808,7 +563,7 @@
     let journals = JSON.parse(localStorage.getItem('camp_journals_v1') || localStorage.getItem('camp_reports_v2') || '[]');
     let issues = JSON.parse(localStorage.getItem('camp_issues_v2') || '[]');
     let shiftTimes = JSON.parse(localStorage.getItem('camp_shift_times') || JSON.stringify({
-      c1_in: '05:15', c1_out: '14:00', c2_in: '13:15', c2_out: '22:00'
+      c1_in: '05:10', c1_out: '14:00', c2_in: '16:30', c2_out: '22:00'
     }));
 
     let monthWeeksList = [];
@@ -819,8 +574,8 @@
     let audioCtx = null;
     let alarmInterval = null;
     let isAlarmPlaying = false;
+    let lastTriggeredMinute = ""; // Ngăn báo lặp lại liên tục trong cùng 1 phút
 
-    // --- 1. ICON THỜI TIẾT ĐỘNG ---
     const weatherStates = [
       { type: 'sunny', label: 'Trời nắng đẹp, quang đãng' },
       { type: 'partly-cloudy', label: 'Trời dịu, có nắng và mây' },
@@ -833,28 +588,17 @@
       const widget = document.getElementById('weatherWidget');
       const label = document.getElementById('weatherStatusLabel');
       if (!widget) return;
-
       if (type === 'sunny') {
         widget.innerHTML = `<div class="sun-icon"></div>`;
         if (label) label.innerText = '☀️ Trời nắng rực rỡ';
       } else if (type === 'partly-cloudy') {
-        widget.innerHTML = `
-          <div class="partly-cloudy">
-            <div class="sun-small"></div>
-            <div class="cloud-front"></div>
-          </div>`;
+        widget.innerHTML = `<div class="partly-cloudy"><div class="sun-small"></div><div class="cloud-front"></div></div>`;
         if (label) label.innerText = '⛅ Trời dịu mát, nắng và mây';
       } else if (type === 'rainy') {
-        widget.innerHTML = `
-          <div class="rainy-icon">
-            <div class="rain-cloud"></div>
-            <div class="rain-drop d1"></div>
-            <div class="rain-drop d2"></div>
-            <div class="rain-drop d3"></div>
-          </div>`;
+        widget.innerHTML = `<div class="rainy-icon"><div class="rain-cloud"></div><div class="rain-drop d1"></div><div class="rain-drop d2"></div><div class="rain-drop d3"></div></div>`;
         if (label) label.innerText = '🌧️ Trời đang có mưa';
       } else {
-        widget.innerHTML = `<div class="night-sky" aria-label="Trời đêm, trăng và sao"><span class="moon-icon"></span><span class="night-star s1">✦</span><span class="night-star s2">✧</span><span class="night-star s3">✦</span></div>`;
+        widget.innerHTML = `<div class="night-sky"><span class="moon-icon"></span><span class="night-star s1">✦</span><span class="night-star s2">✧</span><span class="night-star s3">✦</span></div>`;
         if (label) label.innerText = '🌙 Trời đêm quang đãng';
       }
     }
@@ -865,36 +609,16 @@
       else if (hour >= 6 && hour <= 10) currentWeatherIndex = 1;
       else if (hour > 10 && hour <= 15) currentWeatherIndex = 0;
       else currentWeatherIndex = 1;
-
       renderWeatherIcon(weatherStates[currentWeatherIndex].type);
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-          try {
-            const { latitude, longitude } = pos.coords;
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=weather_code,is_day`);
-            const data = await res.json();
-            if (data && data.current) {
-              const code = data.current.weather_code;
-              const isDay = data.current.is_day;
-              if (!isDay) currentWeatherIndex = 3;
-              else if ([0, 1].includes(code)) currentWeatherIndex = 0;
-              else if ([2, 3].includes(code)) currentWeatherIndex = 1;
-              else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) currentWeatherIndex = 2;
-              renderWeatherIcon(weatherStates[currentWeatherIndex].type);
-            }
-          } catch (_) {}
-        }, () => {});
-      }
     }
 
     function cycleWeatherDemo() {
       currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
       renderWeatherIcon(weatherStates[currentWeatherIndex].type);
-      showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
+      showToast(`Thời tiết: ${weatherStates[currentWeatherIndex].label}`);
     }
 
-    // --- 2. QUẢN LÝ NHẬT KÝ ---
+    // --- QUẢN LÝ NHẬT KÝ ---
     function saveJournalEntry() {
       const title = document.getElementById('journalTitle').value.trim();
       const content = document.getElementById('journalContent').value.trim();
@@ -926,17 +650,16 @@
         localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
       } catch (err) {
         journals.shift();
-        alert('Bộ nhớ trình duyệt đã đầy nên chưa lưu được nhật ký. Hãy sao lưu dữ liệu, xóa bớt nhật ký/ảnh cũ rồi thử lại.');
+        alert('Bộ nhớ đầy!');
         return;
       }
 
       document.getElementById('journalTitle').value = '';
       document.getElementById('journalContent').value = '';
       document.getElementById('journalReminderTime').value = '';
-
       filterJournals();
       updateDashboard();
-      showToast('Đã lưu nhật ký thành công! ✨');
+      showToast('Đã lưu nhật ký!');
     }
 
     function filterJournals() {
@@ -944,19 +667,13 @@
       const dateVal = document.getElementById('filterJournalDate').value;
 
       let filtered = journals.filter(j => {
-        let matchWord = true;
-        let matchDate = true;
+        let matchWord = true, matchDate = true;
         if (keyword) {
-          const t = (j.title || '').toLowerCase();
-          const c = (j.content || '').toLowerCase();
-          matchWord = t.includes(keyword) || c.includes(keyword);
+          matchWord = (j.title || '').toLowerCase().includes(keyword) || (j.content || '').toLowerCase().includes(keyword);
         }
-        if (dateVal) {
-          matchDate = j.journalDate === dateVal;
-        }
+        if (dateVal) matchDate = j.journalDate === dateVal;
         return matchWord && matchDate;
       });
-
       renderJournalList(filtered);
     }
 
@@ -969,27 +686,14 @@
     function renderJournalList(listToRender) {
       const container = document.getElementById('journalListContainer');
       container.innerHTML = '';
-
       if (!listToRender || listToRender.length === 0) {
         container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.85rem;">Không tìm thấy trang nhật ký nào.</div>`;
         return;
       }
 
-      const catMap = {
-        'viec-ngay': '📝 Thường nhật',
-        'ban-giao': '🤝 Bàn giao',
-        'su-co': '⚠️ Lưu ý',
-        'ghi-chu': '💡 Ghi nhớ'
-      };
+      const catMap = { 'viec-ngay': '📝 Thường nhật', 'ban-giao': '🤝 Bàn giao', 'su-co': '⚠️ Lưu ý', 'ghi-chu': '💡 Ghi nhớ' };
 
       listToRender.forEach(item => {
-        let imgHtml = '';
-        if (item.images && item.images.length > 0) {
-          imgHtml = `<div class="img-preview-box">` +
-            item.images.map(img => `<img src="${img}" class="img-thumb" onclick="openFullImg('${img}')">`).join('') +
-            `</div>`;
-        }
-
         const dateParts = item.journalDate ? item.journalDate.split('-') : [];
         const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : item.createdAt;
 
@@ -998,15 +702,14 @@
         div.innerHTML = `
           <div class="card-top">
             <span class="badge badge-journal">${catMap[item.category] || 'Nhật ký'}</span>
-            <span class="card-time">📅 ${formattedDate} (${escapeHtml(item.createdAt)})</span>
+            <span class="card-time">📅 ${formattedDate}</span>
           </div>
           <div class="card-title">${escapeHtml(item.title)}</div>
           ${item.reminderTime ? `<div class="card-alarm-tag">⏰ Hẹn nhắc: ${escapeHtml(item.reminderTime)}</div>` : ''}
           <div class="card-desc">${escapeHtml(item.content) || 'Không có mô tả chi tiết'}</div>
-          ${imgHtml}
           <div class="card-actions">
             <button class="btn-action btn-zalo" onclick="copyJournalZalo(${item.id})">📲 Gửi Zalo</button>
-            <button class="btn-action" onclick="toggleDoneJournal(${item.id})">${item.done ? '↩ Mở lại' : '✔ Hoàn thành'}</button>
+            <button class="btn-action" onclick="toggleDoneJournal(${item.id})">${item.done ? '↩ Mở lại' : '✔ Xong'}</button>
             <button class="btn-delete btn-action" onclick="deleteJournal(${item.id})">🗑 Xóa</button>
           </div>
         `;
@@ -1017,16 +720,14 @@
     function toggleDoneJournal(id) {
       journals = journals.map(j => j.id === id ? { ...j, done: !j.done } : j);
       localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
-      filterJournals();
-      updateDashboard();
+      filterJournals(); updateDashboard();
     }
 
     function deleteJournal(id) {
       if (confirm('Xóa mục nhật ký này?')) {
         journals = journals.filter(j => j.id !== id);
         localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
-        filterJournals();
-        updateDashboard();
+        filterJournals(); updateDashboard();
       }
     }
 
@@ -1034,10 +735,9 @@
       const j = journals.find(x => x.id === id);
       if (!j) return;
       const text = `📔 [NHẬT KÝ CA TRỰC - ${j.journalDate || ''}]\n📌 ${j.title}\n------------------\n${j.content}`;
-      navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép nhật ký để gửi Zalo!'));
+      navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép sang Zalo!'));
     }
 
-    // --- 3. VIEW & ĐIỀU HƯỚNG ---
     function switchView(tab) {
       ['shifts', 'journal', 'issues', 'school'].forEach(t => {
         const viewEl = document.getElementById(`view-${t}`);
@@ -1053,7 +753,7 @@
       });
     }
 
-    // --- 4. THỜI KHÓA BIỂU & XEM NHANH TRONG NGÀY ---
+    // --- THỜI KHÓA BIỂU ---
     const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
     function getSchoolKey() {
       return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
@@ -1065,60 +765,39 @@
       const host = document.getElementById('schoolLessons');
       if (!host) return;
       const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
-      host.innerHTML = '<div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:9px;align-items:center;margin:12px 0 14px">' +
-        [1,2,3,4,5].map((n,i) => `<div style="display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 4px;border-radius:10px;background:${['#dbeafe','#dcfce7','#fef3c7','#fce7f3','#ede9fe'][i]};color:${['#1d4ed8','#166534','#92400e','#9d174d','#5b21b6'][i]};font-size:.78rem;font-weight:800;">📖 Tiết ${n}</div><input id="schoolLesson${n}" maxlength="100" placeholder="Môn học / ghi chú tiết ${n}" value="${escapeHtml(saved[i] || '')}" style="min-width:0;border-radius:10px;border:1px solid #cbd5e1;background:#fff;padding:11px;" />`).join('') + '</div>';
+      host.innerHTML = '<div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px;align-items:center;margin:12px 0 14px">' +
+        [1,2,3,4,5].map((n,i) => `<div style="display:flex;align-items:center;justify-content:center;padding:10px 4px;border-radius:10px;background:#e2e8f0;color:#1e293b;font-size:.78rem;font-weight:800;">Tiết ${n}</div><input id="schoolLesson${n}" maxlength="100" placeholder="Môn học tiết ${n}" value="${escapeHtml(saved[i] || '')}" style="min-width:0;padding:10px;" />`).join('') + '</div>';
       renderSchoolTodaySummary();
     }
     function saveSchoolTimetable() {
       const data = getSchoolData();
       data[getSchoolKey()] = [1,2,3,4,5].map(n => document.getElementById('schoolLesson'+n).value.trim());
-      try {
-        localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-        showToast('Đã lưu thời khóa biểu!');
-        renderSchoolTodaySummary();
-      } catch (_) { alert('Bộ nhớ trình duyệt đầy, chưa thể lưu thời khóa biểu. Hãy sao lưu và giải phóng bộ nhớ.'); }
+      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+      showToast('Đã lưu thời khóa biểu!');
+      renderSchoolTodaySummary();
     }
     function clearSchoolDay() {
-      if (!confirm('Xóa thời khóa biểu của lớp/buổi/ngày đang chọn?')) return;
+      if (!confirm('Xóa thời khóa biểu buổi này?')) return;
       const data = getSchoolData(); delete data[getSchoolKey()];
       localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      renderSchoolTimetable(); showToast('Đã xóa nội dung buổi học.');
+      renderSchoolTimetable(); showToast('Đã xóa!');
     }
-
-    // XEM NHANH: Hiển thị từng tiết rõ ràng, gắn thẻ Tiết 1, 2 màu vàng nổi bật
     function renderSchoolTodaySummary() {
       const host = document.getElementById('schoolTodaySummary');
       if (!host) return;
       const data = getSchoolData(), day = new Date().getDay();
-
       function formatShiftRows(shiftArr) {
-        if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) {
-          return `<div style="color:var(--muted);font-style:italic;font-size:0.78rem;padding-left:4px;">Chưa nhập</div>`;
-        }
-        return shiftArr.map((x, i) => {
-          if (!x || !x.trim()) return '';
-          return `<div class="lesson-row-item"><span class="lesson-badge">Tiết ${i+1}</span> <span>${escapeHtml(x)}</span></div>`;
-        }).filter(Boolean).join('');
+        if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) return `<div style="color:var(--muted);font-style:italic;font-size:0.75rem;">Chưa nhập</div>`;
+        return shiftArr.map((x, i) => x && x.trim() ? `<div class="lesson-row-item"><span class="lesson-badge">Tiết ${i+1}</span> <span>${escapeHtml(x)}</span></div>` : '').filter(Boolean).join('');
       }
-
-      const rows = ['10','6'].map(cls => {
-        const morning = data[`${cls}_morning_${day}`] || [];
-        const afternoon = data[`${cls}_afternoon_${day}`] || [];
-        return `
-          <div style="padding:10px;margin-bottom:10px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
-            <div style="font-weight:800;font-size:0.92rem;color:var(--primary-dark);margin-bottom:6px;">🏫 Lớp ${cls}</div>
-            <div style="margin-bottom:8px;">
-              <span style="font-size:0.75rem;font-weight:700;color:#c2410c;">🌅 Buổi Sáng:</span>
-              <div style="margin-top:2px;">${formatShiftRows(morning)}</div>
-            </div>
-            <div>
-              <span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>
-              <div style="margin-top:2px;">${formatShiftRows(afternoon)}</div>
-            </div>
-          </div>
-        `;
-      });
-      host.innerHTML = `<div style="font-weight:800;color:#0f172a;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
+      const rows = ['10','6'].map(cls => `
+        <div style="padding:10px;margin-bottom:8px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
+          <div style="font-weight:800;font-size:0.88rem;color:var(--primary-dark);margin-bottom:4px;">🏫 Lớp ${cls}</div>
+          <div style="margin-bottom:6px;"><span style="font-size:0.75rem;font-weight:700;color:#c2410c;">🌅 Buổi Sáng:</span>${formatShiftRows(data[`${cls}_morning_${day}`] || [])}</div>
+          <div><span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>${formatShiftRows(data[`${cls}_afternoon_${day}`] || [])}</div>
+        </div>
+      `);
+      host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
     }
 
     function updateGreetingHeader() {
@@ -1131,19 +810,18 @@
       
       const labelEl = document.getElementById('greetingDateLabel');
       if (labelEl) labelEl.innerText = `Hôm nay ${dayName}, ngày ${d}/${m}/${y}`;
-      const greetings = ['Xin chào Tuấn Tuấn, chúc một ngày tốt lành ✨','Chúc Tuấn Tuấn ngày mới vui vẻ, nhiều năng lượng ☀️','Chúc Tuấn Tuấn làm việc thuận lợi, mọi việc hanh thông 💪','Ngày mới bình an, công việc suôn sẻ nhé Tuấn Tuấn 🌿','Chúc Tuấn Tuấn luôn vui khỏe và hoàn thành tốt mọi kế hoạch 🚀'];
       const greetingEl = document.getElementById('greetingMain');
-      if (greetingEl) { const daySeed = Math.floor(new Date(y, now.getMonth(), now.getDate()).getTime()/86400000); greetingEl.textContent = greetings[((daySeed % greetings.length) + greetings.length) % greetings.length]; }
+      if (greetingEl) greetingEl.textContent = 'Xin chào Tuấn Tuấn, chúc một ngày tốt lành ✨';
 
       const journalDateInput = document.getElementById('journalDate');
       if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
     }
 
-    // --- 5. LỊCH CA & ĐỒNG BỘ MÀU SẮC CHUẨN ĐIỆN THOẠI ---
+    // --- CẤU HÌNH LỊCH CA & GIỜ BÁO ---
     function loadShiftTimeConfigUI() {
-      document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:15';
+      document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:10';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
-      document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '13:15';
+      document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '16:30';
       document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
     }
 
@@ -1295,11 +973,11 @@
 
     function copyCurrentWeekToAll() {
       const curData = getShiftsForWeekIndex(currentWeekIndex);
-      if (confirm(`Áp dụng lịch này cho tất cả các tuần trong tháng?`)) {
+      if (confirm(`Áp dụng lịch này cho cả tháng?`)) {
         monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
         localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
         renderWeekGrid();
-        showToast('Đã nhân rộng lịch thành công!');
+        showToast('Đã áp dụng thành công!');
       }
     }
 
@@ -1344,19 +1022,16 @@
       lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
     }
 
-    // NẠP VÀO LỊCH ĐIỆN THOẠI (Gán màu sắc theo chuẩn Ca 1 / Ca 2)
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
         alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
         return;
       }
-      const weekIndices = Array.from(selectedSyncWeeks).sort((a, b) => a - b);
-      exportToICSCalendarList(weekIndices);
+      exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
     function exportToICSCalendarList(weekIndices) {
       let events = [];
-
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         const dateObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
@@ -1380,52 +1055,43 @@
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
-          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:15') : (shiftTimes.c2_in || '13:15'));
+          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
           const shiftName = shift === 'ca1' ? 'Ca 1 (Sáng)' : 'Ca 2 (Chiều)';
-          const shiftColor = shift === 'ca1' ? '#38bdf8' : '#eab308';
-          const shiftCategory = shift === 'ca1' ? 'Ca Sáng' : 'Ca Chiều';
 
           const inStartUTC = toUTCICSString(y, m, d, rawIn, 0);
           const inEndUTC = toUTCICSString(y, m, d, rawIn, 15);
-
           const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
           const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
-          // Sự kiện bắt đầu ca: tên ngắn, dễ đọc trên màn hình điện thoại
           events.push([
             'BEGIN:VEVENT',
-            `UID:ca-start-${dateStr}-${dayKey}-${shift}-${rawIn.replace(':','')}-lantrai@local`,
+            `UID:ca-start-${dateStr}-${dayKey}-${shift}-${rawIn.replace(':','')}-shift@app`,
             `DTSTAMP:${inStartUTC}`,
             `DTSTART:${inStartUTC}`,
             `DTEND:${inEndUTC}`,
-            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Bắt đầu (${rawIn})`,
+            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Vào Ca (${rawIn})`,
             `DESCRIPTION:Đến giờ vào nhận ca làm việc: ${rawIn}`,
-            `COLOR:${shiftColor}`,
-            `CATEGORIES:${shiftCategory}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đến giờ bắt đầu ${shiftName}!`,
+            `DESCRIPTION:Đến giờ nhận ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
-          // Sự kiện kết thúc ca: tránh chữ CHECK-OUT dài dễ bị cắt trên điện thoại
           events.push([
             'BEGIN:VEVENT',
-            `UID:ca-end-${dateStr}-${dayKey}-${shift}-${rawOut.replace(':','')}-lantrai@local`,
+            `UID:ca-end-${dateStr}-${dayKey}-${shift}-${rawOut.replace(':','')}-shift@app`,
             `DTSTAMP:${outStartUTC}`,
             `DTSTART:${outStartUTC}`,
             `DTEND:${outEndUTC}`,
-            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Kết thúc (${rawOut})`,
-            `DESCRIPTION:Đến giờ kết thúc/bàn giao ${shiftName}. Giờ cài đặt: ${rawOut}.`,
-            `COLOR:${shiftColor}`,
-            `CATEGORIES:${shiftCategory}`,
+            `SUMMARY:${shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2'} - Hết Ca (${rawOut})`,
+            `DESCRIPTION:Đến giờ kết thúc/bàn giao ${shiftName}: ${rawOut}`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đến giờ kết thúc ${shiftName}!`,
+            `DESCRIPTION:Đến giờ tan ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1437,16 +1103,8 @@
         return;
       }
 
-      const icsHeader = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'CALSCALE:GREGORIAN',
-        'PRODID:-//LanTrai//Shift//VI',
-        'METHOD:PUBLISH'
-      ].join('\r\n');
-
+      const icsHeader = ['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','PRODID:-//TuanTuan//ShiftApp//VI','METHOD:PUBLISH'].join('\r\n');
       const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
-
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
@@ -1454,12 +1112,10 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      const downloadUrl = link.href;
-      setTimeout(() => window.URL.revokeObjectURL(downloadUrl), 1500);
-      showToast('Đã tạo lịch. Hãy nhập tệp vào ứng dụng Lịch trên điện thoại để nhận báo thức.');
+      showToast('Đã tải tệp lịch. Nhấn mở tệp để nạp vào Lịch ĐT!');
     }
 
-    // --- 6. VIỆC CẦN XỬ LÝ & BÁO ĐỘNG HỆ THỐNG ---
+    // --- VIỆC CẦN XỬ LÝ ---
     function saveIssue() {
       const title = document.getElementById('issueTitle').value.trim();
       const content = document.getElementById('issueContent').value.trim();
@@ -1470,8 +1126,7 @@
       initAudio();
 
       issues.unshift({
-        id: Date.now(),
-        title, content, priority, reminderDateTime, done: false,
+        id: Date.now(), title, content, priority, reminderDateTime, done: false,
         createdAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN')
       });
       localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
@@ -1479,11 +1134,9 @@
       document.getElementById('issueTitle').value = '';
       document.getElementById('issueContent').value = '';
       document.getElementById('issueDateTime').value = '';
-
       renderIssues();
       updateDashboard();
-      renderSchoolTimetable();
-      showToast('Đã thêm việc cần làm!');
+      showToast('Đã thêm việc!');
     }
 
     function renderIssues() {
@@ -1497,9 +1150,7 @@
         let reminderText = '';
         if (item.reminderDateTime) {
           const d = new Date(item.reminderDateTime);
-          if (!isNaN(d.getTime())) {
-            reminderText = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} - ${d.getDate()}/${d.getMonth()+1}`;
-          }
+          if (!isNaN(d.getTime())) reminderText = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} - ${d.getDate()}/${d.getMonth()+1}`;
         }
         const div = document.createElement('div');
         div.className = `item-card ${item.done ? 'done' : ''}`;
@@ -1538,8 +1189,8 @@
     function copyIssueZalo(id) {
       const i = issues.find(x => x.id === id);
       if (!i) return;
-      const text = `⚡ [CÔNG VIỆC CẦN XỬ LÝ - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
-      navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung việc!'));
+      const text = `⚡ [VIỆC CẦN LÀM - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
+      navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung!'));
     }
 
     function updateDashboard() {
@@ -1551,6 +1202,7 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
+    // --- HỆ THỐNG ÂM THANH & BÁO THỨC CHUẨN ---
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1561,17 +1213,31 @@
 
     function playBeep() {
       if (!audioCtx) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-      osc.frequency.setValueAtTime(1200, audioCtx.currentTime + 0.15);
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.35);
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(1320, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.4);
+      } catch(_) {}
+    }
+
+    function triggerSystemNotification(title, body) {
+      if ("Notification" in window && Notification.permission === "granted") {
+        try {
+          new Notification(title, {
+            body: body,
+            icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
+            requireInteraction: true
+          });
+        } catch (_) {}
+      }
     }
 
     function startContinuousAlarm(title, desc) {
@@ -1579,11 +1245,14 @@
       document.getElementById('alarmTitle').innerText = title;
       document.getElementById('alarmDesc').innerText = desc;
       document.getElementById('alarmBanner').style.display = 'block';
+
+      triggerSystemNotification(title, desc);
+
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
       playBeep();
-      alarmInterval = setInterval(playBeep, 700);
-      if ("vibrate" in navigator) navigator.vibrate([400, 200, 400, 200]);
+      alarmInterval = setInterval(playBeep, 800);
+      if ("vibrate" in navigator) navigator.vibrate([400, 200, 400, 200, 400]);
     }
 
     function stopAlarm() {
@@ -1596,16 +1265,7 @@
 
     function enableSoundTest() {
       initAudio();
-      startContinuousAlarm('🔔 THỬ NGHIỆM CHUÔNG BÁO', 'Chuông báo đang reo thử...');
-    }
-
-    function openFullImg(src) {
-      const w = window.open("");
-      if (!w) return;
-      const img = w.document.createElement('img');
-      img.src = src;
-      img.style.cssText = 'max-width:100%;height:auto;display:block;margin:auto';
-      w.document.body.appendChild(img);
+      startContinuousAlarm('🔔 THỬ NGHIỆM CHUÔNG BÁO', 'Chuông báo và thông báo đang chạy...');
     }
 
     function showToast(msg) {
@@ -1624,9 +1284,76 @@
       if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ thông báo.'); return; }
       try {
         const res = await Notification.requestPermission();
-        if (res === 'granted') { try { new Notification('Sổ Tay & Lịch Ca Trực', { body: 'Thông báo đã được bật thành công.' }); } catch (_) {} showToast('Đã bật thông báo thử nghiệm.'); } else showToast('Chưa cấp quyền thông báo.');
+        if (res === 'granted') {
+          triggerSystemNotification('Sổ Tay & Lịch Ca Trực', 'Thông báo đã được bật thành công!');
+          showToast('Đã bật thông báo thành công.');
+        } else {
+          showToast('Chưa cấp quyền thông báo.');
+        }
       } catch (_) {}
     }
+
+    // --- BỘ QUÉT TỰ ĐỘNG BÁO GIỜ CA TRỰC & NHẬT KÝ (ĐÃ BỔ SUNG TOÀN DIỆN) ---
+    function checkScheduler() {
+      const now = new Date();
+      const currentH = String(now.getHours()).padStart(2,'0');
+      const currentM = String(now.getMinutes()).padStart(2,'0');
+      const currentTime = `${currentH}:${currentM}`;
+      const minuteKey = `${now.toDateString()}_${currentTime}`;
+
+      if (lastTriggeredMinute === minuteKey) return;
+
+      // 1. Kiểm tra Lịch Ca Trực của ngày hôm nay
+      const currentDayOfWeek = now.getDay(); // 0 là CN, 1 là T2, ...
+      const dayKey = (currentDayOfWeek === 0) ? 8 : (currentDayOfWeek + 1); // Đổi về chuẩn: 2 -> 8
+
+      // Tìm dữ liệu tuần hiện tại
+      let todayShift = 'off';
+      if (monthWeeksList.length > 0) {
+        const todayTime = now.getTime();
+        let activeWIdx = 0;
+        monthWeeksList.forEach((w, idx) => {
+          if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) activeWIdx = idx;
+        });
+        const shiftsData = getShiftsForWeekIndex(activeWIdx);
+        todayShift = shiftsData[dayKey] || 'off';
+      }
+
+      if (todayShift === 'ca1') {
+        if (shiftTimes.c1_in === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm('⏰ BÁO GIỜ CA 1: VÀO CA', `Đã đến giờ bắt đầu Ca 1 lúc ${currentTime}. Chuẩn bị nhận ca!`);
+          return;
+        }
+        if (shiftTimes.c1_out === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm('⏰ BÁO GIỜ CA 1: KẾT THÚC', `Đã đến giờ hết Ca 1 lúc ${currentTime}. Bàn giao công việc!`);
+          return;
+        }
+      } else if (todayShift === 'ca2') {
+        if (shiftTimes.c2_in === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm('⏰ BÁO GIỜ CA 2: VÀO CA', `Đã đến giờ bắt đầu Ca 2 lúc ${currentTime}. Chuẩn bị nhận ca!`);
+          return;
+        }
+        if (shiftTimes.c2_out === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm('⏰ BÁO GIỜ CA 2: KẾT THÚC', `Đã đến giờ hết Ca 2 lúc ${currentTime}. Hoàn tất ca trực!`);
+          return;
+        }
+      }
+
+      // 2. Kiểm tra nhắc nhở Nhật ký
+      journals.forEach(j => {
+        if (!j.done && j.reminderTime === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ xử lý nhật ký công việc!');
+        }
+      });
+    }
+
+    // Quét mỗi 5 giây để không bao giờ bị trễ phút
+    setInterval(checkScheduler, 5000);
 
     function exportData() {
       let allWeeksData = {};
@@ -1662,17 +1389,6 @@
       r.readAsText(f);
     }
 
-    function checkScheduler() {
-      const now = new Date();
-      const currentTime = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-      journals.forEach(j => {
-        if (!j.done && j.reminderTime === currentTime) {
-          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ hẹn nhật ký!');
-        }
-      });
-    }
-    setInterval(checkScheduler, 15000);
-
     document.addEventListener('DOMContentLoaded', () => {
       updateGreetingHeader();
       initWeatherDetection();
@@ -1685,13 +1401,9 @@
       renderSchoolTimetable();
     });
 
+    // Mở khóa âm thanh khi người dùng chạm vào bất kỳ đâu trên màn hình
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
-    }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) initAudio(); });
   </script>
 </body>
 </html>
