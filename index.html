@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Sổ Tay Công Việc & Thời Khóa Biểu Gia Đình</title>
+  <title>Sổ Tay Công Việc & Lịch Ca Trực Chuyên Nghiệp</title>
   <meta name="theme-color" content="#0284c7">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -66,7 +66,6 @@
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
 
-    /* BANNER CHÀO MỪNG */
     .greeting-banner {
       background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
       border: 1px solid #b7efd0;
@@ -85,7 +84,6 @@
     .greeting-text-sub { font-size: 0.76rem; font-weight: 600; color: #0284c7; margin-top: 2px; }
     .weather-status-text { font-size: 0.74rem; color: #64748b; font-weight: 600; }
 
-    /* ICON THỜI TIẾT ĐỘNG HOÀN TOÀN KHÔNG CÓ NỀN ĐEN */
     .weather-widget {
       position: relative;
       width: 68px;
@@ -98,7 +96,6 @@
       user-select: none;
     }
 
-    /* 1. Nắng */
     .sunny-animated-box {
       position: relative;
       width: 68px;
@@ -145,225 +142,101 @@
       100% { transform: scale(1.1); box-shadow: 0 0 24px rgba(234, 88, 12, 0.9); }
     }
 
-    /* 2. Mây Trong Xanh */
-    .fair-animated-box {
-      position: relative;
-      width: 68px;
-      height: 68px;
-      background: transparent;
-    }
+    .fair-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
     .fair-sun {
-      position: absolute;
-      top: 6px;
-      right: 10px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
+      position: absolute; top: 6px; right: 10px; width: 24px; height: 24px; border-radius: 50%;
       background: radial-gradient(circle, #fef08a 25%, #f59e0b 100%);
-      box-shadow: 0 0 14px #fbbf24;
-      animation: sunPulse 3s ease-in-out infinite alternate;
+      box-shadow: 0 0 14px #fbbf24; animation: sunPulse 3s ease-in-out infinite alternate;
     }
     .floating-cloud-1 {
-      position: absolute;
-      bottom: 14px;
-      left: 4px;
-      width: 38px;
-      height: 16px;
-      background: #7dd3fc;
-      border-radius: 12px;
-      opacity: 0.95;
-      animation: floatCloud1 3.5s ease-in-out infinite alternate;
-      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.25);
+      position: absolute; bottom: 14px; left: 4px; width: 38px; height: 16px; background: #7dd3fc;
+      border-radius: 12px; opacity: 0.95; animation: floatCloud1 3.5s ease-in-out infinite alternate;
     }
-    .floating-cloud-1::before {
-      content: ''; position: absolute; top: -9px; left: 7px; width: 18px; height: 18px; background: #7dd3fc; border-radius: 50%;
-    }
+    .floating-cloud-1::before { content: ''; position: absolute; top: -9px; left: 7px; width: 18px; height: 18px; background: #7dd3fc; border-radius: 50%; }
     .floating-cloud-2 {
-      position: absolute;
-      bottom: 8px;
-      right: 2px;
-      width: 30px;
-      height: 13px;
-      background: #38bdf8;
-      border-radius: 10px;
-      animation: floatCloud2 4s ease-in-out infinite alternate;
-      opacity: 0.85;
+      position: absolute; bottom: 8px; right: 2px; width: 30px; height: 13px; background: #38bdf8;
+      border-radius: 10px; animation: floatCloud2 4s ease-in-out infinite alternate; opacity: 0.85;
     }
-    .floating-cloud-2::before {
-      content: ''; position: absolute; top: -7px; left: 6px; width: 14px; height: 14px; background: #38bdf8; border-radius: 50%;
-    }
+    .floating-cloud-2::before { content: ''; position: absolute; top: -7px; left: 6px; width: 14px; height: 14px; background: #38bdf8; border-radius: 50%; }
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* 3. Đêm Trăng Sao */
-    .night-animated-box {
-      position: relative;
-      width: 68px;
-      height: 68px;
-      background: transparent;
-    }
+    .night-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
     .night-moon {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      box-shadow: 8px 5px 0 0 #facc15;
-      transform: rotate(-15deg);
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75));
-      animation: moonGlow 3s ease-in-out infinite alternate;
+      position: absolute; top: 10px; left: 10px; width: 32px; height: 32px; border-radius: 50%;
+      box-shadow: 8px 5px 0 0 #facc15; transform: rotate(-15deg);
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75)); animation: moonGlow 3s ease-in-out infinite alternate;
     }
     .night-sparkle { position: absolute; line-height: 1; animation: starTwinkle 2s ease-in-out infinite alternate; }
     .night-sparkle.st1 { top: 6px; right: 12px; font-size: 14px; color: #f59e0b; animation-delay: 0.1s; }
     .night-sparkle.st2 { top: 34px; right: 8px; font-size: 16px; color: #6366f1; animation-delay: 0.7s; }
     .night-sparkle.st3 { bottom: 6px; left: 24px; font-size: 12px; color: #facc15; animation-delay: 1.2s; }
     .night-sparkle.st4 { bottom: 18px; right: 28px; font-size: 11px; color: #0284c7; animation-delay: 0.4s; }
+    @keyframes moonGlow { 0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); } 100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); } }
+    @keyframes starTwinkle { 0% { opacity: 0.25; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.25); } }
 
-    @keyframes moonGlow {
-      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-15deg) scale(0.96); }
-      100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); transform: rotate(-15deg) scale(1.06); }
-    }
-    @keyframes starTwinkle {
-      0% { opacity: 0.25; transform: scale(0.7); }
-      100% { opacity: 1; transform: scale(1.25); }
-    }
-
-    /* 4. Mưa */
-    .rainy-animated-box {
-      position: relative;
-      width: 68px;
-      height: 68px;
-      background: transparent;
-    }
-    .rain-main-cloud {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 44px;
-      height: 20px;
-      background: #94a3b8;
-      border-radius: 14px;
-      box-shadow: 0 3px 10px rgba(100, 116, 139, 0.3);
-    }
-    .rain-main-cloud::before {
-      content: ''; position: absolute; top: -11px; left: 10px; width: 22px; height: 22px; background: #94a3b8; border-radius: 50%;
-    }
-    .anim-drop {
-      position: absolute;
-      width: 2.8px;
-      height: 10px;
-      background: #0284c7;
-      border-radius: 3px;
-      animation: fallDown 0.75s linear infinite;
-    }
+    .rainy-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
+    .rain-main-cloud { position: absolute; top: 10px; left: 10px; width: 44px; height: 20px; background: #94a3b8; border-radius: 14px; }
+    .rain-main-cloud::before { content: ''; position: absolute; top: -11px; left: 10px; width: 22px; height: 22px; background: #94a3b8; border-radius: 50%; }
+    .anim-drop { position: absolute; width: 2.8px; height: 10px; background: #0284c7; border-radius: 3px; animation: fallDown 0.75s linear infinite; }
     .anim-drop.rd1 { left: 18px; top: 34px; animation-delay: 0s; }
     .anim-drop.rd2 { left: 30px; top: 34px; animation-delay: 0.25s; }
     .anim-drop.rd3 { left: 42px; top: 34px; animation-delay: 0.5s; }
-
-    @keyframes fallDown {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(18px); opacity: 0.15; }
-    }
+    @keyframes fallDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(18px); opacity: 0.15; } }
 
     .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
     .stat-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 14px;
+      background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px;
       box-shadow: 0 4px 14px rgba(24,55,91,.04);
     }
     .stat-label { color: var(--muted); font-size: .74rem; font-weight: 600; }
     .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
 
     #alarmBanner {
-      display: none;
-      position: sticky;
-      top: 55px;
-      z-index: 105;
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
-      padding: 14px 16px;
-      border-radius: 14px;
-      margin-bottom: 14px;
-      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+      display: none; position: sticky; top: 55px; z-index: 105;
+      background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 14px 16px;
+      border-radius: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
       animation: pulse 1s infinite alternate;
     }
     @keyframes pulse { from { opacity: 0.95; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
     .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
     .alarm-title { font-weight: 800; font-size: 0.95rem; }
     .btn-stop-alarm {
-      background: white;
-      color: var(--danger);
-      border: none;
-      padding: 9px 16px;
-      border-radius: 10px;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      background: white; color: var(--danger); border: none; padding: 9px 16px; border-radius: 10px;
+      font-weight: 800; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
     .nav-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
     .nav-tab-btn {
-      padding: 10px 4px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: white;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--muted);
-      cursor: pointer;
-      text-align: center;
+      padding: 10px 4px; border-radius: 12px; border: 1px solid var(--border); background: white;
+      font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: pointer; text-align: center;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .nav-tab-btn.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+      background: var(--primary); color: white; border-color: var(--primary);
       box-shadow: 0 4px 12px rgba(23, 105, 170, 0.25);
     }
-    .nav-tab-btn.active-journal {
-      background: #fef08a !important;
-      color: #713f12 !important;
-      border-color: #facc15 !important;
-    }
+    .nav-tab-btn.active-journal { background: #fef08a !important; color: #713f12 !important; border-color: #facc15 !important; }
 
     .card-box {
-      background: var(--card);
-      border-radius: 18px;
-      padding: 14px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 16px rgba(24,55,91,.04);
+      background: var(--card); border-radius: 18px; padding: 14px; margin-bottom: 12px;
+      border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(24,55,91,.04);
     }
     .card-journal { background: var(--journal-bg); border: 1.5px solid var(--journal-border); }
     .journal-heading { font-size: 0.88rem; font-weight: 800; color: var(--journal-text); margin-bottom: 10px; }
     .btn-journal-submit { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: white; }
 
     .search-filter-box {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 10px;
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 10px;
+      margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px;
     }
     .search-row { display: flex; gap: 6px; }
 
     .form-group { margin-bottom: 10px; }
     label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 4px; color: var(--muted); }
     input, select, textarea {
-      width: 100%;
-      padding: 9px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      font-size: 0.88rem;
-      background: #fff;
-      outline: none;
+      width: 100%; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--border);
+      font-size: 0.88rem; background: #fff; outline: none;
     }
     input:focus, select:focus, textarea:focus { border-color: var(--primary); }
     textarea { resize: vertical; min-height: 75px; }
@@ -371,25 +244,14 @@
     .row > div { flex: 1; }
 
     .btn-submit {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 11px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
+      width: 100%; background: var(--primary); color: white; border: none; padding: 11px;
+      border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
       box-shadow: 0 4px 12px rgba(23, 105, 170, 0.2);
     }
     .btn-submit-purple { background: var(--purple); }
 
     .journal-card-item {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 10px;
-      border: 1.5px solid #fef08a;
+      background: #ffffff; border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1.5px solid #fef08a;
     }
     .journal-card-item.done { opacity: 0.65; background: #fafaf9; border-color: #e2e8f0; }
     .badge-journal { background: #fef08a; color: #854d0e; }
@@ -417,23 +279,10 @@
     .week-select-menu { width: 100%; background: #f8fafc; border: 1.5px solid var(--primary); color: var(--primary-dark); font-weight: 700; font-size: 0.8rem; padding: 8px 10px; border-radius: 10px; }
     .btn-copy-month { background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-size: 0.72rem; font-weight: 700; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
 
-    .week-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 3px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; margin-bottom: 10px; }
     .day-col {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 5px 1px;
-      background: #fafafa;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-width: 0;
+      border: 1px solid var(--border); border-radius: 8px; padding: 5px 1px; background: #fafafa;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-width: 0;
     }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
 
@@ -456,30 +305,23 @@
     .calendar-date { display: block; font-size: .60rem; color: #64748b; margin: 2px 0 4px; font-weight: 600; }
     
     .day-shift-select {
-      width: 96%;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 0.72rem;
-      padding: 4px 0;
-      font-weight: 800;
-      text-align: center;
-      text-align-last: center;
-      background: #fff;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      outline: none;
-      cursor: pointer;
+      width: 96%; border: 1px solid var(--border); border-radius: 6px; font-size: 0.72rem;
+      padding: 4px 0; font-weight: 800; text-align: center; text-align-last: center; background: #fff;
+      -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
-    .sync-calendar-panel { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 8px; margin-top: 8px; }
+    .sync-calendar-panel { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 10px; margin-top: 8px; }
     .sync-row { display: flex; gap: 6px; position: relative; }
     .custom-multiselect { flex: 1.3; position: relative; }
     .multiselect-toggle-btn {
-      width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px; font-size: 0.75rem; font-weight: 700; padding: 8px; color: #334155; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.75rem; font-weight: 700; padding: 8px; color: #334155; text-align: left;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
     }
     .multiselect-dropdown {
-      display: none; position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1.5px solid var(--primary); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 200; padding: 4px 0; max-height: 220px; overflow-y: auto;
+      display: none; position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #fff;
+      border: 1.5px solid var(--primary); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 200; padding: 4px 0; max-height: 220px; overflow-y: auto;
     }
     .multiselect-dropdown.show { display: block; }
     .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
@@ -488,7 +330,9 @@
     .multiselect-item.selected .multiselect-check { display: inline-block; }
 
     .btn-sync-submit {
-      flex: 1; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 8px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+      flex: 1.2; background: linear-gradient(135deg, #16a34a, #15803d); color: white; border: none;
+      padding: 9px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
+      white-space: nowrap; box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
     }
 
     .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
@@ -502,167 +346,57 @@
 
     /* THỜI KHÓA BIỂU */
     .table-scroll-wrap {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 16px;
-      margin: 12px 0 10px;
-      background: #ffffff;
-      box-shadow: 0 4px 16px rgba(15,23,42,0.04);
+      width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1.5px solid #cbd5e1;
+      border-radius: 16px; margin: 12px 0 10px; background: #ffffff; box-shadow: 0 4px 16px rgba(15,23,42,0.04);
     }
-    .tt-table {
-      width: 100%;
-      min-width: 620px;
-      border-collapse: separate;
-      border-spacing: 0;
-      text-align: center;
-      font-size: 0.78rem;
-    }
-    .tt-table th, .tt-table td {
-      border-right: 1px solid #e2e8f0;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 6px 4px;
-    }
+    .tt-table { width: 100%; min-width: 620px; border-collapse: separate; border-spacing: 0; text-align: center; font-size: 0.78rem; }
+    .tt-table th, .tt-table td { border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 6px 4px; }
     .tt-table th:last-child, .tt-table td:last-child { border-right: none; }
     .tt-table tr:last-child td { border-bottom: none; }
 
-    .tt-hdr-day {
-      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-      color: #334155;
-      font-weight: 800;
-      font-size: 0.78rem;
-      padding: 9px 4px;
-    }
-    .tt-hdr-day.today-col-hdr {
-      background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
-      color: #1d4ed8;
-      border-bottom: 2px solid #3b82f6;
-    }
-
-    .tt-lesson-badge-cell {
-      background: #f8fafc;
-      width: 62px;
-      vertical-align: middle;
-      padding: 6px 2px;
-    }
+    .tt-hdr-day { background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); color: #334155; font-weight: 800; font-size: 0.78rem; padding: 9px 4px; }
+    .tt-hdr-day.today-col-hdr { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); color: #1d4ed8; border-bottom: 2px solid #3b82f6; }
+    .tt-lesson-badge-cell { background: #f8fafc; width: 62px; vertical-align: middle; padding: 6px 2px; }
     .tt-badge-pill {
-      display: inline-block;
-      padding: 4px 6px;
-      border-radius: 8px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-      color: #3730a3;
-      border: 1px solid #c7d2fe;
-      white-space: nowrap;
+      display: inline-block; padding: 4px 6px; border-radius: 8px; font-size: 0.72rem; font-weight: 800;
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3; border: 1px solid #c7d2fe; white-space: nowrap;
     }
-    .tt-badge-pill.afternoon-pill {
-      background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
-      color: #9a3412;
-      border: 1px solid #fdba74;
-    }
-
+    .tt-badge-pill.afternoon-pill { background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); color: #9a3412; border: 1px solid #fdba74; }
     .tt-cell-input-morning {
-      width: 100%;
-      border: 1px solid #f1f5f9;
-      background: #fafafa;
-      padding: 7px 4px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #0f172a;
-      text-align: center;
-      border-radius: 8px;
-      outline: none;
-      transition: all 0.15s ease;
+      width: 100%; border: 1px solid #f1f5f9; background: #fafafa; padding: 7px 4px; font-size: 0.78rem;
+      font-weight: 700; color: #0f172a; text-align: center; border-radius: 8px; outline: none;
     }
-    .tt-cell-input-morning:focus {
-      background: #ffffff;
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
-    }
-
-    /* Buổi chiều: hoàn toàn không có chữ placeholder */
-    .tt-cell-afternoon-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      padding: 2px 0;
-    }
+    .tt-cell-afternoon-wrap { display: flex; flex-direction: column; gap: 3px; padding: 2px 0; }
     .tt-input-subject {
-      width: 100%;
-      border: 1px solid #f1f5f9;
-      background: #fafafa;
-      padding: 5px 3px;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: #0f172a;
-      text-align: center;
-      border-radius: 6px;
-      outline: none;
-      transition: all 0.15s ease;
-    }
-    .tt-input-subject:focus {
-      background: #ffffff;
-      border-color: #f59e0b;
-      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+      width: 100%; border: 1px solid #f1f5f9; background: #fafafa; padding: 5px 3px; font-size: 0.76rem;
+      font-weight: 800; color: #0f172a; text-align: center; border-radius: 6px; outline: none;
     }
     .tt-input-time {
-      width: 100%;
-      border: 1px dashed #e2e8f0;
-      background: #ffffff;
-      padding: 3px 2px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: #0284c7;
-      text-align: center;
-      border-radius: 5px;
-      outline: none;
+      width: 100%; border: 1px dashed #e2e8f0; background: #ffffff; padding: 3px 2px; font-size: 0.68rem;
+      font-weight: 600; color: #0284c7; text-align: center; border-radius: 5px; outline: none;
     }
-    .tt-input-time:focus {
-      border-color: #0284c7;
-      background: #f0f9ff;
-    }
-
     .tt-table td.today-cell { background: #f0fdf4; }
 
-    .school-actions-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
+    .school-actions-row { display: flex; gap: 8px; margin-top: 10px; }
     .btn-school-save {
-      flex: 1.4;
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      color: white;
-      border: none;
-      padding: 10px 8px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.82rem;
-      cursor: pointer;
-      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.25);
+      flex: 1.4; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none;
+      padding: 10px 8px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; cursor: pointer;
     }
     .btn-school-clear {
-      flex: 1;
-      background: #f1f5f9;
-      color: #475569;
-      border: 1px solid #cbd5e1;
-      padding: 10px 8px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.78rem;
-      cursor: pointer;
+      flex: 1; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 10px 8px;
+      border-radius: 10px; font-weight: 700; font-size: 0.78rem; cursor: pointer;
     }
-    .btn-school-clear:active { background: #e2e8f0; }
 
     .lesson-badge {
-      display: inline-block; background: #fef08a; color: #854d0e; border: 1px solid #fde047; font-weight: 800; font-size: 0.75rem; padding: 1px 7px; border-radius: 6px; margin-right: 6px; white-space: nowrap;
+      display: inline-block; background: #fef08a; color: #854d0e; border: 1px solid #fde047; font-weight: 800;
+      font-size: 0.75rem; padding: 1px 7px; border-radius: 6px; margin-right: 6px; white-space: nowrap;
     }
     .lesson-row-item { display: flex; align-items: center; padding: 3px 0; font-size: 0.84rem; color: #1e293b; }
 
     #toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.92); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.82rem; display: none; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.94);
+      color: white; padding: 10px 20px; border-radius: 24px; font-size: 0.84rem; display: none; z-index: 1000;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25); text-align: center; max-width: 90%;
     }
 
     @media(max-width:560px) {
@@ -676,10 +410,10 @@
 <body>
 
   <header>
-    <h1>📋 Sổ Tay & Lịch Ca Trực</h1>
+    <h1>📋 Sổ Tay & Báo Ca</h1>
     <div class="header-btns">
       <button onclick="enableSoundTest()">🔊 Thử Chuông</button>
-      <button onclick="requestNotificationPermission()">🔔 Báo</button>
+      <button onclick="requestNotificationPermission()">🔔 Bật Báo</button>
       <button onclick="exportData()">Sao Lưu</button>
       <button onclick="document.getElementById('importFile').click()">Nhập</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
@@ -692,7 +426,7 @@
         <div class="greeting-title" id="greetingUser">Chào buổi sáng, Tuấn Tuấn! ☀️</div>
         <div class="greeting-quote" id="greetingMessage">Chúc một ngày ngập tràn năng lượng và may mắn ✨</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
-        <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết qua GPS...</div>
+        <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết...</div>
       </div>
       <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển đổi icon thời tiết"></div>
     </div>
@@ -713,15 +447,14 @@
     <div id="alarmBanner">
       <div class="alarm-content">
         <div>
-          <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ NHẮC HẸN!</div>
-          <div style="font-size: 0.78rem; margin-top: 2px;" id="alarmDesc">Vui lòng kiểm tra và xử lý công việc.</div>
+          <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ BÁO CA TRỰC!</div>
+          <div style="font-size: 0.78rem; margin-top: 2px;" id="alarmDesc">Chuông báo ca đang phát liên tục.</div>
         </div>
-        <button class="btn-stop-alarm" onclick="stopAlarm()">✔ ĐÃ XỬ LÝ</button>
+        <button class="btn-stop-alarm" onclick="stopAlarm()">✔ ĐÃ XỬ LÝ (TẮT)</button>
       </div>
     </div>
 
     <div class="nav-tabs">
-      <!-- Đã xóa bỏ icon số 17 nhỏ ở nút tab Lịch Ca -->
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">Lịch Ca</button>
       <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">Nhật Ký</button>
       <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">Việc Cần Làm</button>
@@ -740,7 +473,11 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
+        <!-- CÔNG CỤ ĐỒNG BỘ CHUÔNG BÁO HỆ THỐNG -->
         <div class="sync-calendar-panel">
+          <div style="font-size:0.75rem; font-weight:800; color:#15803d; margin-bottom:6px;">
+            🛡️ Báo Thức Hệ Thống (Reo kể cả khi tắt màn hình/khóa máy):
+          </div>
           <div class="sync-row">
             <div class="custom-multiselect">
               <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
@@ -758,7 +495,7 @@
         <div class="shift-settings-box">
           <div class="shift-settings-title">
             <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
-            <span style="font-size:0.7rem; font-weight:normal; color:#10b981;">● Báo thức hoạt động</span>
+            <span style="font-size:0.7rem; font-weight:bold; color:#10b981;">● Báo thức kích hoạt</span>
           </div>
           <div class="shift-config-grid">
             <div class="shift-config-card">
@@ -798,10 +535,10 @@
         <div class="row form-group">
           <div>
             <label>Tiêu đề việc / nội dung chính</label>
-            <input type="text" id="journalTitle" placeholder="Ví dụ: Bàn giao ca trực, kiểm kê...">
+            <input type="text" id="journalTitle" placeholder="Ví dụ: Bàn giao ca trực...">
           </div>
           <div style="flex: 0.6;">
-            <label>Hẹn giờ nhắc (nếu có)</label>
+            <label>Hẹn giờ nhắc</label>
             <input type="time" id="journalReminderTime">
           </div>
         </div>
@@ -828,7 +565,7 @@
       <div class="card-box" style="border-left: 4px solid var(--purple);">
         <div class="form-group">
           <label>Tên công việc / Sự cố</label>
-          <input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra lại chìa khóa kho...">
+          <input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra chìa khóa kho...">
         </div>
         <div class="row form-group">
           <div>
@@ -866,7 +603,6 @@
           </div>
           <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;">
             <label style="color:#c2410c;">☀️ Buổi học</label>
-            <!-- Đã rút gọn chỉ còn Buổi sáng, Buổi chiều -->
             <select id="schoolShift" onchange="renderSchoolTableGrid()">
               <option value="morning">🌅 Buổi sáng</option>
               <option value="afternoon">🌇 Buổi chiều</option>
@@ -883,7 +619,6 @@
           </table>
         </div>
 
-        <!-- 2 NÚT THAO TÁC CÙNG 1 HÀNG -->
         <div class="school-actions-row">
           <button class="btn-school-save" onclick="saveSchoolGridTimetable()">💾 Lưu Thời Khóa Biểu</button>
           <button class="btn-school-clear" onclick="clearSchoolGridTimetable()">🗑 Xóa Buổi Này</button>
@@ -916,7 +651,6 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // KHO CÂU CHÚC & CÂU HỎI THĂM TRUYỀN NĂNG LƯỢNG
     const energeticGreetingPairs = {
       morning: [
         { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày ngập tràn năng lượng và may mắn ✨" },
@@ -975,10 +709,9 @@
       showToast('Đã đổi câu chúc năng lượng ✨');
     }
 
-    // ICON THỜI TIẾT ĐỘNG
     const weatherStates = [
       { type: 'sunny', label: 'Trời nắng rực rỡ, chan hòa' },
-      { type: 'fair', label: 'Bầu trời trong xanh kèm vài áng mây' },
+      { type: 'fair', label: 'Bầu trời trong xanh dịu mát' },
       { type: 'rainy', label: 'Trời có mưa, bạn nhớ mang ô nhé' },
       { type: 'night', label: 'Đêm trong lành, trăng sao lấp lánh' }
     ];
@@ -990,48 +723,17 @@
       if (!widget) return;
 
       if (type === 'sunny') {
-        widget.innerHTML = `
-          <div class="sunny-animated-box" title="Trời nắng rực rỡ">
-            <div class="sun-core"></div>
-            <div class="sun-rays-wrap">
-              <span class="sun-beam"></span>
-              <span class="sun-beam"></span>
-              <span class="sun-beam"></span>
-              <span class="sun-beam"></span>
-            </div>
-          </div>
-        `;
+        widget.innerHTML = `<div class="sunny-animated-box"><div class="sun-core"></div><div class="sun-rays-wrap"><span class="sun-beam"></span><span class="sun-beam"></span><span class="sun-beam"></span><span class="sun-beam"></span></div></div>`;
         if (label) label.innerText = customLabel || '☀️ Ngoài trời nắng rực rỡ';
       } else if (type === 'fair') {
-        widget.innerHTML = `
-          <div class="fair-animated-box" title="Trời trong xanh mây trắng">
-            <div class="fair-sun"></div>
-            <div class="floating-cloud-1"></div>
-            <div class="floating-cloud-2"></div>
-          </div>
-        `;
+        widget.innerHTML = `<div class="fair-animated-box"><div class="fair-sun"></div><div class="floating-cloud-1"></div><div class="floating-cloud-2"></div></div>`;
         if (label) label.innerText = customLabel || '🌤️ Bầu trời trong xanh dịu mát';
       } else if (type === 'rainy') {
-        widget.innerHTML = `
-          <div class="rainy-animated-box" title="Trời mưa">
-            <div class="rain-main-cloud"></div>
-            <span class="anim-drop rd1"></span>
-            <span class="anim-drop rd2"></span>
-            <span class="anim-drop rd3"></span>
-          </div>
-        `;
+        widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        widget.innerHTML = `
-          <div class="night-animated-box" title="Trời đêm trăng sao">
-            <div class="night-moon"></div>
-            <span class="night-sparkle st1">✦</span>
-            <span class="night-sparkle st2">★</span>
-            <span class="night-sparkle st3">✧</span>
-            <span class="night-sparkle st4">✦</span>
-          </div>
-        `;
-        if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng, ngàn sao';
+        widget.innerHTML = `<div class="night-animated-box"><div class="night-moon"></div><span class="night-sparkle st1">✦</span><span class="night-sparkle st2">★</span><span class="night-sparkle st3">✧</span><span class="night-sparkle st4">✦</span></div>`;
+        if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
     }
 
@@ -1039,7 +741,6 @@
       const label = document.getElementById('weatherStatusLabel');
       const hour = new Date().getHours();
       const isNightTime = (hour >= 18 || hour < 5);
-
       if (isNightTime) currentWeatherIndex = 3;
       else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
       else currentWeatherIndex = 1;
@@ -1052,7 +753,7 @@
             const lat = pos.coords.latitude;
             const lon = pos.coords.longitude;
             const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m,is_day&timezone=auto`);
-            if (!res.ok) throw new Error('API lỗi');
+            if (!res.ok) throw new Error();
             const data = await res.json();
             const cur = data.current;
             const code = cur.weather_code;
@@ -1064,23 +765,17 @@
               renderWeatherIcon('rainy', `🌧️ Ngoài trời có mưa (${temp}°C)`);
             } else if (!isDay) {
               currentWeatherIndex = 3;
-              renderWeatherIcon('night', `🌙 Đêm trong lành, mát mẻ (${temp}°C)`);
+              renderWeatherIcon('night', `🌙 Đêm trong lành (${temp}°C)`);
             } else if (code <= 1) {
               currentWeatherIndex = 0;
               renderWeatherIcon('sunny', `☀️ Ngoài trời nắng rực rỡ (${temp}°C)`);
             } else {
               currentWeatherIndex = 1;
-              renderWeatherIcon('fair', `🌤️ Bầu trời trong xanh dịu mát (${temp}°C)`);
+              renderWeatherIcon('fair', `🌤️ Bầu trời dịu mát (${temp}°C)`);
             }
-          } catch (e) {
-            fallbackWeatherByHour();
-          }
-        }, () => {
-          fallbackWeatherByHour();
-        }, { timeout: 7000 });
-      } else {
-        fallbackWeatherByHour();
-      }
+          } catch (_) { fallbackWeatherByHour(); }
+        }, () => fallbackWeatherByHour(), { timeout: 7000 });
+      } else { fallbackWeatherByHour(); }
     }
 
     function fallbackWeatherByHour() {
@@ -1094,10 +789,9 @@
     function cycleWeatherDemo() {
       currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
       renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
-      showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
+      showToast(`Chế độ: ${weatherStates[currentWeatherIndex].label}`);
     }
 
-    // --- QUẢN LÝ NHẬT KÝ ---
     function saveJournalEntry() {
       const title = document.getElementById('journalTitle').value.trim();
       const content = document.getElementById('journalContent').value.trim();
@@ -1105,51 +799,32 @@
       const reminderTime = document.getElementById('journalReminderTime').value;
       const journalDate = document.getElementById('journalDate').value || new Date().toISOString().split('T')[0];
 
-      if (!title && !content) {
-        alert('Vui lòng nhập tiêu đề hoặc nội dung nhật ký!');
-        return;
-      }
+      if (!title && !content) { alert('Vui lòng nhập tiêu đề hoặc nội dung!'); return; }
       initAudio();
 
       const now = new Date();
-      const newEntry = {
+      journals.unshift({
         id: Date.now(),
-        title: title || 'Ghi chép trong ngày',
-        content: content,
-        category: category,
-        journalDate: journalDate,
-        reminderTime: reminderTime,
-        images: [...currentJournalImages],
-        done: false,
+        title: title || 'Ghi chép công việc',
+        content, category, journalDate, reminderTime,
+        images: [...currentJournalImages], done: false,
         createdAt: now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN')
-      };
-
-      journals.unshift(newEntry);
-      try {
-        localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
-      } catch (err) {
-        journals.shift();
-        alert('Bộ nhớ đầy!');
-        return;
-      }
+      });
+      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
 
       document.getElementById('journalTitle').value = '';
       document.getElementById('journalContent').value = '';
       document.getElementById('journalReminderTime').value = '';
-      filterJournals();
-      updateDashboard();
+      filterJournals(); updateDashboard();
       showToast('Đã lưu nhật ký!');
     }
 
     function filterJournals() {
       const keyword = (document.getElementById('searchKeyword').value || '').toLowerCase().trim();
       const dateVal = document.getElementById('filterJournalDate').value;
-
       let filtered = journals.filter(j => {
         let matchWord = true, matchDate = true;
-        if (keyword) {
-          matchWord = (j.title || '').toLowerCase().includes(keyword) || (j.content || '').toLowerCase().includes(keyword);
-        }
+        if (keyword) matchWord = (j.title || '').toLowerCase().includes(keyword) || (j.content || '').toLowerCase().includes(keyword);
         if (dateVal) matchDate = j.journalDate === dateVal;
         return matchWord && matchDate;
       });
@@ -1169,9 +844,7 @@
         container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.85rem;">Không tìm thấy trang nhật ký nào.</div>`;
         return;
       }
-
       const catMap = { 'viec-ngay': '📝 Thường nhật', 'ban-giao': '🤝 Bàn giao', 'su-co': '⚠️ Lưu ý', 'ghi-chu': '💡 Ghi nhớ' };
-
       listToRender.forEach(item => {
         const dateParts = item.journalDate ? item.journalDate.split('-') : [];
         const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : item.createdAt;
@@ -1232,14 +905,11 @@
       });
     }
 
-    // --- THỜI KHÓA BIỂU MA TRẬN 7 NGÀY ---
+    // --- THỜI KHÓA BIỂU MA TRẬN ---
     const daysOrder = [
-      { key: '1', label: 'Thứ 2' },
-      { key: '2', label: 'Thứ 3' },
-      { key: '3', label: 'Thứ 4' },
-      { key: '4', label: 'Thứ 5' },
-      { key: '5', label: 'Thứ 6' },
-      { key: '6', label: 'Thứ 7' },
+      { key: '1', label: 'Thứ 2' }, { key: '2', label: 'Thứ 3' },
+      { key: '3', label: 'Thứ 4' }, { key: '4', label: 'Thứ 5' },
+      { key: '5', label: 'Thứ 6' }, { key: '6', label: 'Thứ 7' },
       { key: '0', label: 'Chủ Nhật' }
     ];
 
@@ -1265,36 +935,28 @@
       tbody.innerHTML = '';
 
       if (shift === 'afternoon') {
-        // BUỔI CHIỀU: 4 HÀNG, HOÀN TOÀN KHÔNG CÓ CHỮ PLACEHOLDER
         for (let rowIdx = 1; rowIdx <= 4; rowIdx++) {
           const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="tt-lesson-badge-cell">
-              <span class="tt-badge-pill afternoon-pill">Học ${rowIdx}</span>
-            </td>
-          ` + daysOrder.map(d => {
+          tr.innerHTML = `<td class="tt-lesson-badge-cell"><span class="tt-badge-pill afternoon-pill">Học ${rowIdx}</span></td>` + daysOrder.map(d => {
             const isToday = (d.key === todayDay);
             const cellKey = `${cls}_afternoon_${d.key}`;
             const savedArr = data[cellKey] || [];
             const rawVal = savedArr[rowIdx - 1] || '';
 
-            let subject = rawVal;
-            let timeStr = '';
+            let subject = rawVal, timeStr = '';
             if (rawVal.includes('|')) {
               const parts = rawVal.split('|');
-              subject = parts[0].trim();
-              timeStr = parts[1].trim();
+              subject = parts[0].trim(); timeStr = parts[1].trim();
             } else if (rawVal.includes('\n')) {
               const parts = rawVal.split('\n');
-              subject = parts[0].trim();
-              timeStr = parts[1].trim();
+              subject = parts[0].trim(); timeStr = parts[1].trim();
             }
 
             return `
               <td class="${isToday ? 'today-cell' : ''}">
                 <div class="tt-cell-afternoon-wrap">
-                  <input type="text" class="tt-input-subject" id="sub_${d.key}_${rowIdx}" value="${escapeHtml(subject)}" placeholder="">
-                  <input type="text" class="tt-input-time" id="time_${d.key}_${rowIdx}" value="${escapeHtml(timeStr)}" placeholder="">
+                  <input type="text" class="tt-input-subject" id="sub_${d.key}_${rowIdx}" value="${escapeHtml(subject)}">
+                  <input type="text" class="tt-input-time" id="time_${d.key}_${rowIdx}" value="${escapeHtml(timeStr)}">
                 </div>
               </td>
             `;
@@ -1302,28 +964,22 @@
           tbody.appendChild(tr);
         }
       } else {
-        // BUỔI SÁNG: 5 TIẾT CHUẨN
         for (let lesson = 1; lesson <= 5; lesson++) {
           const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="tt-lesson-badge-cell">
-              <span class="tt-badge-pill">Tiết ${lesson}</span>
-            </td>
-          ` + daysOrder.map(d => {
+          tr.innerHTML = `<td class="tt-lesson-badge-cell"><span class="tt-badge-pill">Tiết ${lesson}</span></td>` + daysOrder.map(d => {
             const isToday = (d.key === todayDay);
             const cellKey = `${cls}_morning_${d.key}`;
             const lessonsArr = data[cellKey] || ['', '', '', '', ''];
             const val = lessonsArr[lesson - 1] || '';
             return `
               <td class="${isToday ? 'today-cell' : ''}">
-                <input type="text" class="tt-cell-input-morning" id="grid_cell_${d.key}_${lesson}" value="${escapeHtml(val)}" placeholder="">
+                <input type="text" class="tt-cell-input-morning" id="grid_cell_${d.key}_${lesson}" value="${escapeHtml(val)}">
               </td>
             `;
           }).join('');
           tbody.appendChild(tr);
         }
       }
-
       renderSchoolTodaySummary();
     }
 
@@ -1355,7 +1011,7 @@
       }
 
       localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      showToast('Đã lưu thời khóa biểu thành công!');
+      showToast('Đã lưu thời khóa biểu!');
       renderSchoolTodaySummary();
     }
 
@@ -1365,11 +1021,7 @@
       const cls = document.getElementById('schoolClass').value;
       const shift = document.getElementById('schoolShift').value;
       const data = getSchoolData();
-
-      daysOrder.forEach(d => {
-        delete data[`${cls}_${shift}_${d.key}`];
-      });
-
+      daysOrder.forEach(d => delete data[`${cls}_${shift}_${d.key}`]);
       localStorage.setItem('family_timetable_v1', JSON.stringify(data));
       renderSchoolTableGrid();
       showToast('Đã xóa dữ liệu buổi này!');
@@ -1389,9 +1041,7 @@
           if (isAfternoon && x.includes('|')) {
             const [m, t] = x.split('|');
             text = `<strong>${escapeHtml(m.trim())}</strong> <span style="color:#0284c7;font-size:0.75rem;">(${escapeHtml(t.trim())})</span>`;
-          } else {
-            text = escapeHtml(text);
-          }
+          } else { text = escapeHtml(text); }
           return `<div class="lesson-row-item"><span class="lesson-badge">${isAfternoon ? 'Học ' + (i+1) : 'Tiết ' + (i+1)}</span> <span>${text}</span></div>`;
         }).filter(Boolean).join('');
       }
@@ -1422,7 +1072,6 @@
       if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
     }
 
-    // --- CẤU HÌNH LỊCH CA & GIỜ BÁO ---
     function loadShiftTimeConfigUI() {
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:10';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
@@ -1498,7 +1147,6 @@
         const sunLabel = `${w.sunday.getDate()}/${w.sunday.getMonth()+1}`;
         const opt = document.createElement('option');
         opt.value = w.index;
-        // Đã bỏ emoji icon 17 trong dropdown tuần
         opt.text = `Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
         if (w.index === currentWeekIndex) opt.selected = true;
         select.appendChild(opt);
@@ -1578,7 +1226,7 @@
 
     function copyCurrentWeekToAll() {
       const curData = getShiftsForWeekIndex(currentWeekIndex);
-      if (confirm(`Áp dụng lịch này cho cả tháng?`)) {
+      if (confirm(`Áp dụng lịch tuần này cho cả tháng?`)) {
         monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
         localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
         renderWeekGrid();
@@ -1629,12 +1277,13 @@
 
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
-        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ!');
+        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ chuông!');
         return;
       }
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
+    // --- NÂNG CẤP LỊCH HỆ THỐNG VỚI ALARM REO ĐỘC LẬP TRÊN ĐIỆN THOẠI ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
@@ -1669,17 +1318,13 @@
 
             events.push([
               'BEGIN:VEVENT',
-              `UID:ca-off-${dateStr}-${dayKey}-shift@app`,
+              `UID:ca-off-${dateStr}-${dayKey}@tuantuan.shift`,
               `DTSTAMP:${dateStr}T000000Z`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 OFF`,
-              `DESCRIPTION:Hôm nay nghỉ`,
-              `COLOR:11`,
-              `X-COLOR:11`,
-              `X-APPLE-CALENDAR-COLOR:#ef4444`,
+              `SUMMARY:🔴 NGÀY NGHỈ (OFF)`,
+              `DESCRIPTION:Hôm nay nghỉ ca trực`,
               `CATEGORIES:OFF,Nghỉ`,
-              `TRANSP:TRANSPARENT`,
               'END:VEVENT'
             ].join('\r\n'));
             continue;
@@ -1688,77 +1333,69 @@
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
           
-          const shiftLabel = (shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2');
-          const googleColor = (shift === 'ca1' ? '7' : '5');
-          const hexColor = (shift === 'ca1' ? '#0284c7' : '#f59e0b');
-
+          const shiftName = (shift === 'ca1' ? 'Ca 1 (Sáng)' : 'Ca 2 (Chiều)');
           const inStartUTC = toUTCICSString(y, m, d, rawIn, 0);
-          const inEndUTC = toUTCICSString(y, m, d, rawIn, 15);
+          const inEndUTC = toUTCICSString(y, m, d, rawIn, 30);
           const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
-          const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
+          const outEndUTC = toUTCICSString(y, m, d, rawOut, 30);
 
+          // Sự kiện VÀO CA kèm 2 cấp báo thức âm thanh (Trước 10 phút & Đúng giờ)
           events.push([
             'BEGIN:VEVENT',
-            `UID:ca-start-${dateStr}-${dayKey}-${shift}-${rawIn.replace(':','')}-shift@app`,
+            `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v2@tuantuan.shift`,
             `DTSTAMP:${inStartUTC}`,
             `DTSTART:${inStartUTC}`,
             `DTEND:${inEndUTC}`,
-            `SUMMARY:${shiftLabel}`,
-            `DESCRIPTION:${shift === 'ca1' ? 'Ca 1' : 'Ca 2'}`,
-            `COLOR:${googleColor}`,
-            `X-COLOR:${googleColor}`,
-            `X-APPLE-CALENDAR-COLOR:${hexColor}`,
-            `CATEGORIES:${shift === 'ca1' ? 'Ca 1' : 'Ca 2'}`,
+            `SUMMARY:⏰ VÀO ${shiftName.toUpperCase()}`,
+            `DESCRIPTION:Đã đến giờ bắt đầu ${shiftName}. Hãy chuẩn bị làm việc!`,
+            'PRIORITY:1',
             'BEGIN:VALARM',
-            'TRIGGER:-PT5M',
+            'TRIGGER:-PT10M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:${shiftLabel}`,
+            `DESCRIPTION:Nhắc nhở: Sắp tới giờ ${shiftName} trong 10 phút!`,
             'END:VALARM',
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:AUDIO',
-            'ATTACH;VALUE=URI:Basso',
-            `DESCRIPTION:${shiftLabel}`,
+            'ATTACH;VALUE=URI:Alarm',
+            `DESCRIPTION:BÁO ĐỘNG: ĐÃ ĐẾN GIỜ VÀO ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
+          // Sự kiện RA CA kèm báo thức âm thanh
           events.push([
             'BEGIN:VEVENT',
-            `UID:ca-end-${dateStr}-${dayKey}-${shift}-${rawOut.replace(':','')}-shift@app`,
+            `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v2@tuantuan.shift`,
             `DTSTAMP:${outStartUTC}`,
             `DTSTART:${outStartUTC}`,
             `DTEND:${outEndUTC}`,
-            `SUMMARY:${shiftLabel}`,
-            `DESCRIPTION:${shift === 'ca1' ? 'Ca 1' : 'Ca 2'}`,
-            `COLOR:${googleColor}`,
-            `X-COLOR:${googleColor}`,
-            `X-APPLE-CALENDAR-COLOR:${hexColor}`,
-            `CATEGORIES:${shift === 'ca1' ? 'Ca 1' : 'Ca 2'}`,
+            `SUMMARY:🏁 HẾT ${shiftName.toUpperCase()}`,
+            `DESCRIPTION:Đã đến giờ hoàn thành ${shiftName}. Chuẩn bị bàn giao và ra về!`,
+            'PRIORITY:1',
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:AUDIO',
-            'ATTACH;VALUE=URI:Basso',
-            `DESCRIPTION:${shiftLabel}`,
+            'ATTACH;VALUE=URI:Alarm',
+            `DESCRIPTION:ĐẾN GIỜ HẾT ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
         }
       });
 
-      const icsHeader = ['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','PRODID:-//TuanTuan//ShiftApp//VI','METHOD:PUBLISH'].join('\r\n');
+      const icsHeader = ['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','PRODID:-//TuanTuan//AlarmShiftApp//VI','METHOD:PUBLISH'].join('\r\n');
       const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `lich_ca_truc.ics`);
+      link.setAttribute('download', `bao_thuc_lich_ca.ics`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tải lịch chuẩn màu Ca 1, Ca 2 và OFF!');
+      showToast('Đã tạo file báo ca! Mở tệp để nạp vào Lịch/Báo thức máy.');
     }
 
-    // --- VIỆC CẦN XỬ LÝ ---
     function saveIssue() {
       const title = document.getElementById('issueTitle').value.trim();
       const content = document.getElementById('issueContent').value.trim();
@@ -1777,8 +1414,7 @@
       document.getElementById('issueTitle').value = '';
       document.getElementById('issueContent').value = '';
       document.getElementById('issueDateTime').value = '';
-      renderIssues();
-      updateDashboard();
+      renderIssues(); updateDashboard();
       showToast('Đã thêm việc!');
     }
 
@@ -1845,29 +1481,40 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG ÂM THANH & BÁO THỨC ĐIỆN THOẠI ---
+    // --- CẢI TIẾN BỘ TỔNG HỢP ÂM CÒI BÁO ĐỘNG (ALARM SYNTHESIZER) ---
     function initAudio() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (!audioCtx && Ctx) audioCtx = new Ctx();
-        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+        if (!audioCtx && Ctx) {
+          audioCtx = new Ctx();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
       } catch (_) {}
     }
 
-    function playBeep() {
+    function playLoudAlarmBeep() {
+      initAudio();
       if (!audioCtx) return;
       try {
+        const nowTime = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-        osc.frequency.setValueAtTime(1320, audioCtx.currentTime + 0.15);
-        gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+
+        // Âm thanh còi đôi cấp cứu/báo động dứt khoát
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(850, nowTime);
+        osc.frequency.setValueAtTime(1250, nowTime + 0.18);
+        osc.frequency.setValueAtTime(850, nowTime + 0.36);
+
+        gain.gain.setValueAtTime(0.85, nowTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, nowTime + 0.55);
+
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.4);
+        osc.start(nowTime);
+        osc.stop(nowTime + 0.55);
       } catch(_) {}
     }
 
@@ -1876,7 +1523,7 @@
       const notiOptions = {
         body: body,
         icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-        vibrate: [500, 250, 500, 250, 500],
+        vibrate: [600, 200, 600, 200, 600],
         requireInteraction: true,
         tag: 'shift-alarm'
       };
@@ -1902,9 +1549,9 @@
 
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
-      playBeep();
-      alarmInterval = setInterval(playBeep, 800);
-      if ("vibrate" in navigator) navigator.vibrate([500, 250, 500, 250, 500]);
+      playLoudAlarmBeep();
+      alarmInterval = setInterval(playLoudAlarmBeep, 650);
+      if ("vibrate" in navigator) navigator.vibrate([600, 200, 600, 200, 600]);
     }
 
     function stopAlarm() {
@@ -1912,19 +1559,20 @@
       alarmInterval = null;
       isAlarmPlaying = false;
       document.getElementById('alarmBanner').style.display = 'none';
-      showToast('Đã tắt chuông báo!');
+      if ("vibrate" in navigator) navigator.vibrate(0);
+      showToast('Đã dừng chuông báo!');
     }
 
     function enableSoundTest() {
       initAudio();
-      startContinuousAlarm('🔔 THỬ NGHIỆM CHUÔNG BÁO', 'Chuông báo và thông báo đang chạy...');
+      startContinuousAlarm('🔔 THỬ NGHIỆM CHUÔNG BÁO CA', 'Chuông còi đang reo và điện thoại đang rung...');
     }
 
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
       t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2200);
+      setTimeout(() => { t.style.display = 'none'; }, 2600);
     }
 
     function escapeHtml(t) {
@@ -1933,19 +1581,19 @@
     }
 
     async function requestNotificationPermission() {
-      if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ thông báo.'); return; }
+      if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ Web Notification.'); return; }
       try {
         const res = await Notification.requestPermission();
         if (res === 'granted') {
-          triggerSystemNotification('Sổ Tay & Lịch Ca Trực', 'Thông báo đã được bật thành công!');
-          showToast('Đã bật thông báo thành công.');
+          triggerSystemNotification('Sổ Tay Báo Ca', 'Quyền thông báo đã sẵn sàng!');
+          showToast('Đã cấp quyền thông báo thành công!');
         } else {
-          showToast('Chưa cấp quyền thông báo.');
+          showToast('Chưa cho phép thông báo.');
         }
       } catch (_) {}
     }
 
-    // --- BỘ QUÉT TỰ ĐỘNG BÁO GIỜ CA TRỰC ---
+    // --- BỘ QUÉT TỰ ĐỘNG CHUÔNG BÁO THỜI GIAN THỰC ---
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
@@ -1977,7 +1625,7 @@
         }
         if (shiftTimes.c1_out === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 1: KẾT THÚC', `Đã đến giờ hết Ca 1 lúc ${currentTime}!`);
+          startContinuousAlarm('⏰ BÁO GIỜ CA 1: HẾT CA', `Đã đến giờ kết thúc Ca 1 lúc ${currentTime}!`);
           return;
         }
       } else if (todayShift === 'ca2') {
@@ -1988,7 +1636,7 @@
         }
         if (shiftTimes.c2_out === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 2: KẾT THÚC', `Đã đến giờ hết Ca 2 lúc ${currentTime}!`);
+          startContinuousAlarm('⏰ BÁO GIỜ CA 2: HẾT CA', `Đã đến giờ kết thúc Ca 2 lúc ${currentTime}!`);
           return;
         }
       }
@@ -1996,12 +1644,25 @@
       journals.forEach(j => {
         if (!j.done && j.reminderTime === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ xử lý nhật ký công việc!');
+          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ xử lý công việc đã hẹn!');
         }
       });
     }
 
-    setInterval(checkScheduler, 5000);
+    // Tần suất quét 3 giây một lần
+    setInterval(checkScheduler, 3000);
+
+    // Bắt sự kiện người dùng mở khóa màn hình hoặc quay lại tab để đánh thức AudioContext và quét ngay
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        initAudio();
+        checkScheduler();
+      }
+    });
+    window.addEventListener('focus', () => {
+      initAudio();
+      checkScheduler();
+    });
 
     function exportData() {
       let allWeeksData = {};
@@ -2049,8 +1710,9 @@
       renderSchoolTableGrid();
     });
 
+    // Tự động mồi AudioContext ngay ở lần chạm đầu tiên vào màn hình
+    document.body.addEventListener('touchstart', () => { initAudio(); }, { once: true });
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) initAudio(); });
   </script>
 </body>
 </html>
