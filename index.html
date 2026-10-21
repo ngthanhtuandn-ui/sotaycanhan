@@ -64,6 +64,18 @@
     }
     .header-btns button:active { background: rgba(255,255,255,0.4); transform: scale(0.96); }
 
+    /* Nút thông báo trạng thái trực quan */
+    #btnNotiStatus.noti-granted {
+      background: rgba(16, 185, 129, 0.45);
+      border-color: #34d399;
+      color: #ecfdf5;
+    }
+    #btnNotiStatus.noti-denied {
+      background: rgba(239, 68, 68, 0.45);
+      border-color: #f87171;
+      color: #fff;
+    }
+
     .container { max-width: 760px; margin: auto; padding: 12px; }
 
     .greeting-banner {
@@ -161,102 +173,19 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* CỤM ĐÊM: MẶT TRĂNG VÀ CÁC NGÔI SAO XANH ĐEN THẪM HUYỀN BÍ 3D */
-    .night-animated-box {
-      position: relative;
-      width: 68px;
-      height: 68px;
-      background: transparent;
-      perspective: 400px;
-    }
+    .night-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
     .night-moon {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      box-shadow: 8px 5px 0 0 #facc15;
-      transform: rotate(-15deg);
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75));
-      animation: moonGlow 3.5s ease-in-out infinite alternate;
-      z-index: 2;
+      position: absolute; top: 10px; left: 10px; width: 32px; height: 32px; border-radius: 50%;
+      box-shadow: 8px 5px 0 0 #facc15; transform: rotate(-15deg);
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75)); animation: moonGlow 3s ease-in-out infinite alternate;
     }
-    .night-sparkle {
-      position: absolute;
-      line-height: 1;
-      display: inline-block;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    /* Sao lớp gần: Rõ nét, kích thước trung bình lớn, sắc xanh đen thẫm pha ánh lam huyền bí */
-    .night-sparkle.st1 {
-      top: 6px;
-      right: 12px;
-      font-size: 14px;
-      color: #1e293b;
-      filter: drop-shadow(0 0 3px #38bdf8) drop-shadow(0 0 7px #0f172a);
-      animation: starPulse3D 2.2s ease-in-out infinite alternate;
-      animation-delay: 0.1s;
-      z-index: 3;
-    }
-    .night-sparkle.st2 {
-      top: 32px;
-      right: 6px;
-      font-size: 15px;
-      color: #0f172a;
-      filter: drop-shadow(0 0 4px #6366f1) drop-shadow(0 0 8px #1e1b4b);
-      animation: starPulse3D 3.1s ease-in-out infinite alternate;
-      animation-delay: 0.9s;
-      z-index: 3;
-    }
-
-    /* Sao lớp xa: Kích thước nhỏ, mờ ảo lùi sâu vào nền (3D depth) */
-    .night-sparkle.st3 {
-      bottom: 8px;
-      left: 22px;
-      font-size: 9px;
-      color: #1e1b4b;
-      filter: drop-shadow(0 0 2px rgba(125, 211, 252, 0.5));
-      animation: starFarDepth 2.6s ease-in-out infinite alternate;
-      animation-delay: 1.4s;
-      z-index: 1;
-    }
-    .night-sparkle.st4 {
-      bottom: 22px;
-      right: 24px;
-      font-size: 8px;
-      color: #0f172a;
-      filter: drop-shadow(0 0 2px rgba(99, 102, 241, 0.6));
-      animation: starFarDepth 3.5s ease-in-out infinite alternate;
-      animation-delay: 0.4s;
-      z-index: 1;
-    }
-    .night-sparkle.st5 {
-      top: 4px;
-      left: 26px;
-      font-size: 7px;
-      color: #1e293b;
-      filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.4));
-      animation: starFarDepth 2.9s ease-in-out infinite alternate;
-      animation-delay: 1.8s;
-      z-index: 1;
-    }
-
-    @keyframes moonGlow {
-      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-15deg) scale(0.97); }
-      100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); transform: rotate(-15deg) scale(1.03); }
-    }
-    @keyframes starPulse3D {
-      0% { opacity: 0.45; transform: scale(0.85) translateZ(-10px); }
-      50% { opacity: 0.95; transform: scale(1.2) translateZ(12px); }
-      100% { opacity: 0.5; transform: scale(0.9) translateZ(0px); }
-    }
-    @keyframes starFarDepth {
-      0% { opacity: 0.2; transform: scale(0.7) translateY(0); }
-      100% { opacity: 0.75; transform: scale(1.05) translateY(-2px); }
-    }
+    .night-sparkle { position: absolute; line-height: 1; animation: starTwinkle 2s ease-in-out infinite alternate; }
+    .night-sparkle.st1 { top: 6px; right: 12px; font-size: 14px; color: #f59e0b; animation-delay: 0.1s; }
+    .night-sparkle.st2 { top: 34px; right: 8px; font-size: 16px; color: #6366f1; animation-delay: 0.7s; }
+    .night-sparkle.st3 { bottom: 6px; left: 24px; font-size: 12px; color: #facc15; animation-delay: 1.2s; }
+    .night-sparkle.st4 { bottom: 18px; right: 28px; font-size: 11px; color: #0284c7; animation-delay: 0.4s; }
+    @keyframes moonGlow { 0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); } 100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); } }
+    @keyframes starTwinkle { 0% { opacity: 0.25; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.25); } }
 
     .rainy-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
     .rain-main-cloud { position: absolute; top: 10px; left: 10px; width: 44px; height: 20px; background: #94a3b8; border-radius: 14px; }
@@ -492,14 +421,13 @@
 </head>
 <body>
 
-  <!-- Audio backup dự phòng cho điện thoại -->
   <audio id="alarmAudioElement" preload="auto" loop></audio>
 
   <header>
     <h1>📋 Sổ Tay & Báo Ca</h1>
     <div class="header-btns">
       <button onclick="enableSoundTest()">🔊 Bật Chuông & Test</button>
-      <button onclick="requestNotificationPermission()">🔔 Bật Báo</button>
+      <button id="btnNotiStatus" onclick="requestNotificationPermission()">🔔 Bật Báo</button>
       <button onclick="exportData()">Sao Lưu</button>
       <button onclick="document.getElementById('importFile').click()">Nhập</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
@@ -560,8 +488,11 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI (ĐÃ TINH GỌN TIÊU ĐỀ) -->
+        <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI -->
         <div class="sync-calendar-panel">
+          <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
+            🔔 NẠP CHUÔNG HỆ THỐNG ĐIỆN THOẠI (Báo chuẩn 100% kể cả khi tắt màn hình):
+          </div>
           <div class="sync-row">
             <div class="custom-multiselect">
               <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
@@ -735,12 +666,12 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // TẠO ÂM THANH DỰ PHÒNG CHỐNG BỊ HỆ ĐIỀU HÀNH CHẶN
+    // TẠO FILE WAV ĐA ÂM SẮC (CHIME BÁO ĐỘNG SANG TRỌNG, ÂM VANG)
     function generateAlarmWav() {
-      const sampleRate = 8000;
-      const duration = 0.5;
-      const numSamples = sampleRate * duration;
-      const buffer = new ArrayBuffer(44 + numSamples);
+      const sampleRate = 16000;
+      const duration = 0.6;
+      const numSamples = Math.floor(sampleRate * duration);
+      const buffer = new ArrayBuffer(44 + numSamples * 2);
       const view = new DataView(buffer);
 
       function writeString(view, offset, string) {
@@ -748,23 +679,26 @@
       }
 
       writeString(view, 0, 'RIFF');
-      view.setUint32(4, 36 + numSamples, true);
+      view.setUint32(4, 36 + numSamples * 2, true);
       writeString(view, 8, 'WAVE');
       writeString(view, 12, 'fmt ');
       view.setUint32(16, 16, true);
       view.setUint16(20, 1, true); // PCM
       view.setUint16(22, 1, true); // mono
       view.setUint32(24, sampleRate, true);
-      view.setUint32(28, sampleRate, true);
-      view.setUint16(32, 1, true);
-      view.setUint16(34, 8, true);
+      view.setUint32(28, sampleRate * 2, true);
+      view.setUint16(32, 2, true); // 16-bit
+      view.setUint16(34, 16, true);
       writeString(view, 36, 'data');
-      view.setUint32(40, numSamples, true);
+      view.setUint32(40, numSamples * 2, true);
 
       for (let i = 0; i < numSamples; i++) {
-        const freq = (i < numSamples / 2) ? 900 : 1350;
-        const val = Math.sin((2 * Math.PI * freq * i) / sampleRate);
-        view.setUint8(44 + i, Math.floor((val + 1) * 127.5));
+        const t = i / sampleRate;
+        const freq1 = (t < 0.28) ? 659.25 : 880.00; // E5 -> A5
+        const freq2 = (t < 0.28) ? 1318.5 : 1760.0; // Hài âm E6 -> A6
+        const envelope = Math.max(0, 1 - (t % 0.28) / 0.28);
+        const sample = (0.7 * Math.sin(2 * Math.PI * freq1 * t) + 0.3 * Math.sin(2 * Math.PI * freq2 * t)) * envelope;
+        view.setInt16(44 + i * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
       }
 
       const blob = new Blob([buffer], { type: 'audio/wav' });
@@ -854,17 +788,7 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        // Icon Mặt trăng và hệ sao 3D xanh đen thẫm huyền bí
-        widget.innerHTML = `
-          <div class="night-animated-box">
-            <div class="night-moon"></div>
-            <span class="night-sparkle st1">✦</span>
-            <span class="night-sparkle st2">★</span>
-            <span class="night-sparkle st3">✦</span>
-            <span class="night-sparkle st4">✧</span>
-            <span class="night-sparkle st5">★</span>
-          </div>
-        `;
+        widget.innerHTML = `<div class="night-animated-box"><div class="night-moon"></div><span class="night-sparkle st1">✦</span><span class="night-sparkle st2">★</span><span class="night-sparkle st3">✧</span><span class="night-sparkle st4">✦</span></div>`;
         if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
     }
@@ -1415,7 +1339,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- FIX LỖI MÚI GIỜ & CHUẨN HOÁ CHUÔNG BÁO VÀO LỊCH ĐIỆN THOẠI (KHÔNG LỆCH GIỜ) ---
+    // NẠP TRỰC TIẾP VÀO LỊCH ĐIỆN THOẠI ĐỂ BÁO KỂ CẢ TẮT MÀN HÌNH
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
@@ -1478,10 +1402,10 @@
           const outStart = formatLocalICS(y, m, d, rawOut, 0);
           const outEnd = formatLocalICS(y, m, d, rawOut, 15);
 
-          // Báo thức Vào Ca - Kèm báo trước 5 phút và chuông reo to đúng giờ
+          // Báo thức Vào Ca - Chuông và rung trực tiếp trên hệ thống điện thoại
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v3@shiftapp.local`,
+            `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v4@shiftapp.local`,
             `DTSTAMP:${inStart}`,
             `DTSTART:${inStart}`,
             `DTEND:${inEnd}`,
@@ -1491,21 +1415,21 @@
             'BEGIN:VALARM',
             'TRIGGER:-PT5M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Nhắc trước: Chuẩn bị vào ${shiftName} trong 5 phút!`,
+            `DESCRIPTION:Nhắc trước 5 phút: Chuẩn bị vào ${shiftName}!`,
             'END:VALARM',
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:AUDIO',
-            'ATTACH;VALUE=URI:Basso',
+            'ATTACH;VALUE=URI:Alarm',
             `DESCRIPTION:CHUÔNG BÁO: ĐÃ ĐẾN GIỜ VÀO ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
-          // Báo thức Ra Ca - Reo chuông đúng giờ
+          // Báo thức Hết Ca
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v3@shiftapp.local`,
+            `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v4@shiftapp.local`,
             `DTSTAMP:${outStart}`,
             `DTSTART:${outStart}`,
             `DTEND:${outEnd}`,
@@ -1515,7 +1439,7 @@
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:AUDIO',
-            'ATTACH;VALUE=URI:Basso',
+            'ATTACH;VALUE=URI:Alarm',
             `DESCRIPTION:CHUÔNG BÁO: HẾT GIỜ ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
@@ -1540,7 +1464,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tạo tệp chuông! Hãy chọn Mở bằng "Lịch" để điện thoại tự báo.');
+      showToast('Đã nạp file chuông! Hãy chọn Mở bằng "Lịch" để điện thoại tự báo.');
     }
 
     function saveIssue() {
@@ -1628,7 +1552,7 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG PHÁT CHUÔNG TO RÕ VÀ RUNG ---
+    // --- HỆ THỐNG ÂM THANH MỚI & RUNG MẠNH MẼ ---
     function unlockAudioContext() {
       if (!alarmAudioBlobUrl) {
         alarmAudioBlobUrl = generateAlarmWav();
@@ -1647,22 +1571,38 @@
       }
     }
 
-    function playLoudAlarmBeep() {
+    // ÂM THANH ĐA ÂM VANG VÀ SANG TRỌNG
+    function playHarmonicAlarmChime() {
       unlockAudioContext();
       if (audioCtx) {
         try {
-          const nowTime = audioCtx.currentTime;
-          const osc = audioCtx.createOscillator();
+          const now = audioCtx.currentTime;
+          const osc1 = audioCtx.createOscillator();
+          const osc2 = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(900, nowTime);
-          osc.frequency.setValueAtTime(1350, nowTime + 0.2);
-          gain.gain.setValueAtTime(1.0, nowTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, nowTime + 0.48);
-          osc.connect(gain);
+
+          osc1.type = 'triangle';
+          osc2.type = 'sine';
+
+          // Chuỗi nốt báo thức: Mi (659Hz) nhảy lên La (880Hz)
+          osc1.frequency.setValueAtTime(659.25, now);
+          osc1.frequency.setValueAtTime(880.00, now + 0.22);
+
+          osc2.frequency.setValueAtTime(1318.5, now);
+          osc2.frequency.setValueAtTime(1760.0, now + 0.22);
+
+          gain.gain.setValueAtTime(0.01, now);
+          gain.gain.exponentialRampToValueAtTime(0.9, now + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
           gain.connect(audioCtx.destination);
-          osc.start(nowTime);
-          osc.stop(nowTime + 0.48);
+
+          osc1.start(now);
+          osc2.start(now);
+          osc1.stop(now + 0.58);
+          osc2.stop(now + 0.58);
         } catch (_) {}
       }
 
@@ -1675,12 +1615,19 @@
       } catch (_) {}
     }
 
+    // RUNG MẠNH HƠN VỚI CHUỖI NHỊP KÉP
+    function triggerStrongVibration() {
+      if ("vibrate" in navigator) {
+        navigator.vibrate([800, 150, 800, 150, 1000]);
+      }
+    }
+
     async function triggerSystemNotification(title, body) {
       if (!("Notification" in window) || Notification.permission !== "granted") return;
       const notiOptions = {
         body: body,
         icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-        vibrate: [600, 200, 600, 200, 600],
+        vibrate: [800, 150, 800, 150, 1000],
         requireInteraction: true,
         tag: 'shift-alarm'
       };
@@ -1706,9 +1653,13 @@
 
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
-      playLoudAlarmBeep();
-      alarmInterval = setInterval(playLoudAlarmBeep, 600);
-      if ("vibrate" in navigator) navigator.vibrate([600, 200, 600, 200, 600]);
+      playHarmonicAlarmChime();
+      triggerStrongVibration();
+
+      alarmInterval = setInterval(() => {
+        playHarmonicAlarmChime();
+        triggerStrongVibration();
+      }, 750);
     }
 
     function stopAlarm() {
@@ -1726,7 +1677,7 @@
 
     function enableSoundTest() {
       unlockAudioContext();
-      startContinuousAlarm('🔔 KIỂM TRA CHUÔNG BÁO CA', 'Chuông còi đang phát và điện thoại đang rung...');
+      startContinuousAlarm('🔔 KIỂM TRA CHUÔNG BÁO CA', 'Chuông âm sắc mới đang phát và rung dồn dập...');
     }
 
     function showToast(msg) {
@@ -1741,17 +1692,41 @@
       return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
+    // CẬP NHẬT TRỰC QUAN NÚT BẬT BÁO ĐỂ PHÂN BIỆT ĐÃ BẬT HAY CHƯA
+    function updateNotiButtonStatus() {
+      const btn = document.getElementById('btnNotiStatus');
+      if (!btn) return;
+      if (!('Notification' in window)) {
+        btn.innerText = '🔔 Không hỗ trợ';
+        btn.className = '';
+        return;
+      }
+      if (Notification.permission === 'granted') {
+        btn.innerText = '🟢 Đã Bật Báo';
+        btn.className = 'noti-granted';
+      } else if (Notification.permission === 'denied') {
+        btn.innerText = '🔴 Báo Bị Chặn';
+        btn.className = 'noti-denied';
+      } else {
+        btn.innerText = '🔔 Bật Báo';
+        btn.className = '';
+      }
+    }
+
     async function requestNotificationPermission() {
       if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ Web Notification.'); return; }
       try {
         const res = await Notification.requestPermission();
+        updateNotiButtonStatus();
         if (res === 'granted') {
-          triggerSystemNotification('Sổ Tay Báo Ca', 'Quyền thông báo đã sẵn sàng!');
-          showToast('Đã cấp quyền thông báo thành công!');
-        } else {
-          showToast('Chưa cho phép thông báo.');
+          triggerSystemNotification('Sổ Tay Báo Ca', 'Quyền thông báo đã kích hoạt thành công!');
+          showToast('Đã bật báo ca thành công!');
+        } else if (res === 'denied') {
+          showToast('Thông báo đang bị chặn trong cài đặt trình duyệt!');
         }
-      } catch (_) {}
+      } catch (_) {
+        updateNotiButtonStatus();
+      }
     }
 
     // --- BỘ QUÉT TỰ ĐỘNG BÁO ĐÚNG GIỜ CÀI ĐẶT ---
@@ -1816,11 +1791,13 @@
       if (!document.hidden) {
         unlockAudioContext();
         checkScheduler();
+        updateNotiButtonStatus();
       }
     });
     window.addEventListener('focus', () => {
       unlockAudioContext();
       checkScheduler();
+      updateNotiButtonStatus();
     });
 
     function exportData() {
@@ -1867,6 +1844,7 @@
       renderIssues();
       updateDashboard();
       renderSchoolTableGrid();
+      updateNotiButtonStatus();
     });
 
     document.body.addEventListener('touchstart', () => { unlockAudioContext(); }, { once: true });
