@@ -76,57 +76,236 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
     }
-    .greeting-info { display: flex; flex-direction: column; gap: 3px; }
-    .greeting-text-main { font-size: 0.96rem; font-weight: 800; color: #166534; }
+    .greeting-info { display: flex; flex-direction: column; gap: 3px; cursor: pointer; flex: 1; }
+    .greeting-text-main { font-size: 0.96rem; font-weight: 800; color: #166534; line-height: 1.35; transition: color 0.2s ease; }
+    .greeting-text-main:active { color: #15803d; }
     .greeting-text-sub { font-size: 0.78rem; font-weight: 600; color: #047857; }
     .weather-status-text { font-size: 0.72rem; color: #64748b; font-weight: 600; }
 
+    /* WIDGET & CÁC ICON THỜI TIẾT ĐỘNG */
     .weather-widget {
       position: relative;
-      width: 48px;
-      height: 48px;
+      width: 58px;
+      height: 58px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
+      user-select: none;
     }
 
-    .sun-icon {
-      width: 32px; height: 32px; border-radius: 50%; position: relative; z-index: 1;
-      background: radial-gradient(circle at 32% 28%, #fff7b2 0 8%, #ffd34d 28%, #ffad24 66%, #f28b16 100%);
-      box-shadow: inset -3px -4px 7px rgba(194,94,0,.18), 0 0 16px rgba(255,183,40,.45);
-      animation: sunGlow 3.8s ease-in-out infinite alternate;
+    /* 1. Trời Nắng Rực Rỡ Kèm Tia Nắng Động */
+    .sunny-animated-box {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    @keyframes sunGlow {
-      0% { transform: scale(0.92); box-shadow: 0 0 10px #fbbf24; }
-      100% { transform: scale(1.05); box-shadow: 0 0 20px #f59e0b; }
+    .sun-core {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fffde7 0%, #fde047 30%, #f59e0b 75%, #ea580c 100%);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.7), inset 0 0 4px #ffffff;
+      animation: sunPulse 3s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+    .sun-rays-wrap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      animation: sunSpin 14s linear infinite;
+      z-index: 1;
+    }
+    .sun-beam {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 48px;
+      margin-left: -1.5px;
+      margin-top: -24px;
+      background: linear-gradient(to bottom, #f59e0b 0%, rgba(251,191,36,0) 22%, rgba(251,191,36,0) 78%, #f59e0b 100%);
+      border-radius: 4px;
+    }
+    .sun-beam:nth-child(2) { transform: rotate(45deg); }
+    .sun-beam:nth-child(3) { transform: rotate(90deg); }
+    .sun-beam:nth-child(4) { transform: rotate(135deg); }
+
+    @keyframes sunSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes sunPulse {
+      0% { transform: scale(0.92); box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+      100% { transform: scale(1.08); box-shadow: 0 0 22px rgba(234, 88, 12, 0.85); }
     }
 
-    .partly-cloudy { position: relative; width: 44px; height: 38px; }
-    .partly-cloudy .sun-small {
-      width: 22px; height: 22px; background: #f59e0b; border-radius: 50%; position: absolute; top: 0; right: 2px;
+    /* 2. Ban Đêm Nền Xanh Đen Kèm Trăng & Sao Lấp Lánh */
+    .night-animated-box {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 75%, #020617 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.35);
+      border: 1px solid #334155;
     }
-    .partly-cloudy .cloud-front {
-      width: 32px; height: 18px; background: #cbd5e1; border-radius: 12px; position: absolute; bottom: 2px; left: 0;
+    .night-moon {
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      box-shadow: 5px 3px 0 0 #fde047;
+      transform: rotate(-15deg);
+      filter: drop-shadow(0 0 7px rgba(253, 224, 71, 0.7));
+      animation: moonGlow 3s ease-in-out infinite alternate;
     }
-    .partly-cloudy .cloud-front::before {
-      content: ''; position: absolute; width: 14px; height: 14px; background: #cbd5e1; border-radius: 50%; top: -6px; left: 6px;
+    .night-sparkle {
+      position: absolute;
+      color: #fef08a;
+      line-height: 1;
+      animation: starTwinkle 2s ease-in-out infinite alternate;
+    }
+    .night-sparkle.st1 { top: 6px; right: 10px; font-size: 8px; animation-delay: 0.1s; }
+    .night-sparkle.st2 { top: 26px; right: 8px; font-size: 11px; animation-delay: 0.7s; }
+    .night-sparkle.st3 { bottom: 8px; left: 16px; font-size: 7px; animation-delay: 1.2s; }
+    .night-sparkle.st4 { bottom: 12px; right: 18px; font-size: 6px; animation-delay: 0.4s; }
+
+    @keyframes moonGlow {
+      0% { filter: drop-shadow(0 0 4px rgba(253, 224, 71, 0.5)); transform: rotate(-15deg) scale(0.96); }
+      100% { filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.9)); transform: rotate(-15deg) scale(1.04); }
+    }
+    @keyframes starTwinkle {
+      0% { opacity: 0.25; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1.3); }
     }
 
-    .rainy-icon { position: relative; width: 40px; height: 38px; }
-    .rain-cloud { width: 36px; height: 18px; background: #94a3b8; border-radius: 12px; position: absolute; top: 2px; left: 2px; }
-    .rain-cloud::before { content: ''; position: absolute; width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; top: -7px; left: 7px; }
-    .rain-drop { position: absolute; width: 2.5px; height: 7px; background: #0284c7; border-radius: 2px; }
-    .rain-drop.d1 { left: 9px; bottom: 0; } .rain-drop.d2 { left: 19px; bottom: 2px; } .rain-drop.d3 { left: 29px; bottom: -1px; }
+    /* 3. Trời Đẹp Xanh Trong Kèm Vài Áng Mây Trôi */
+    .fair-animated-box {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #38bdf8 0%, #0284c7 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.3);
+      border: 1px solid #7dd3fc;
+    }
+    .fair-sun {
+      position: absolute;
+      top: 6px;
+      right: 7px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fef08a 20%, #f59e0b 100%);
+      box-shadow: 0 0 8px #fef08a;
+    }
+    .floating-cloud-1 {
+      position: absolute;
+      bottom: 12px;
+      left: 6px;
+      width: 26px;
+      height: 11px;
+      background: #ffffff;
+      border-radius: 10px;
+      opacity: 0.92;
+      animation: floatCloud1 3.4s ease-in-out infinite alternate;
+    }
+    .floating-cloud-1::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 5px;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+    .floating-cloud-2 {
+      position: absolute;
+      bottom: 6px;
+      right: 5px;
+      width: 20px;
+      height: 9px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 8px;
+      animation: floatCloud2 4s ease-in-out infinite alternate;
+    }
+    .floating-cloud-2::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 4px;
+      width: 9px;
+      height: 9px;
+      background: rgba(255,255,255,0.75);
+      border-radius: 50%;
+    }
 
-    .night-sky { position:relative; width:48px; height:48px; }
-    .night-sky .moon-icon { position:absolute; top:7px; left:8px; }
-    .night-star { position:absolute; color:#facc15; font-size:10px; }
-    .night-star.s1 {top:3px;right:4px;} .night-star.s2 {top:25px;right:0;} .night-star.s3 {bottom:2px;left:3px;}
-    .moon-icon { width: 24px; height: 24px; border-radius: 50%; box-shadow: 6px 4px 0 0 #facc15; margin-left: -5px; }
+    @keyframes floatCloud1 {
+      0% { transform: translateX(0px); }
+      100% { transform: translateX(6px); }
+    }
+    @keyframes floatCloud2 {
+      0% { transform: translateX(0px); }
+      100% { transform: translateX(-5px); }
+    }
+
+    /* 4. Trời Mưa Động */
+    .rainy-animated-box {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #64748b 0%, #334155 100%);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(51, 65, 85, 0.3);
+      border: 1px solid #94a3b8;
+    }
+    .rain-main-cloud {
+      position: absolute;
+      top: 9px;
+      left: 10px;
+      width: 32px;
+      height: 14px;
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .rain-main-cloud::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 7px;
+      width: 16px;
+      height: 16px;
+      background: #cbd5e1;
+      border-radius: 50%;
+    }
+    .anim-drop {
+      position: absolute;
+      width: 2px;
+      height: 7px;
+      background: #7dd3fc;
+      border-radius: 2px;
+      animation: fallDown 0.75s linear infinite;
+    }
+    .anim-drop.rd1 { left: 16px; top: 26px; animation-delay: 0s; }
+    .anim-drop.rd2 { left: 25px; top: 26px; animation-delay: 0.25s; }
+    .anim-drop.rd3 { left: 34px; top: 26px; animation-delay: 0.5s; }
+    @keyframes fallDown {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(14px); opacity: 0.1; }
+    }
 
     .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
     .stat-card {
@@ -273,7 +452,6 @@
     .btn-zalo { background: #0068ff; color: white; border: none; }
     .btn-delete { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
 
-    /* LỊCH TUẦN & TỐI ƯU CÁC CỘT KHÔNG BỊ CHE CHỮ TRÊN ĐIỆN THOẠI */
     .week-table-card { background: white; border-radius: 18px; border: 1px solid var(--border); padding: 10px; margin-bottom: 12px; }
     .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
     .week-dropdown-wrap { flex: 1; }
@@ -300,20 +478,16 @@
     }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
 
-    /* ĐỊNH DẠNG MÀU SẮC CHUẨN XÁC TRÊN BẢNG TUẦN WEB */
-    /* Ngày OFF: Đỏ nhạt */
     .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
     .day-col.is-off .calendar-date { color: #ef4444 !important; }
     .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 800; background: #fff1f2 !important; }
 
-    /* Ca 1: Xanh da trời */
     .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
     .day-col.is-ca1 .day-name { color: #0369a1 !important; }
     .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
     .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 800; background: #f0f9ff !important; }
 
-    /* Ca 2: Vàng */
     .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
     .day-col.is-ca2 .day-name { color: #854d0e !important; }
     .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
@@ -322,7 +496,6 @@
     .day-name { font-size: 0.72rem; font-weight: 800; color: var(--muted); line-height: 1.1; }
     .calendar-date { display: block; font-size: .60rem; color: #64748b; margin: 2px 0 4px; font-weight: 600; }
     
-    /* Ô SELECT PHÂN BỐ LẠI GỌN GÀNG, KHÔNG BỊ CHE KHUẤT */
     .day-shift-select {
       width: 96%;
       border: 1px solid var(--border);
@@ -400,12 +573,12 @@
 
   <div class="container">
     <div class="greeting-banner">
-      <div class="greeting-info">
-        <div class="greeting-text-main" id="greetingMain">Xin chào Tuấn Tuấn ✨</div>
+      <div class="greeting-info" onclick="cycleGreetingText()" title="Chạm để đổi câu chúc tràn đầy năng lượng">
+        <div class="greeting-text-main" id="greetingMain">Đang tạo năng lượng ngày mới...</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
-        <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết...</div>
+        <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết qua GPS...</div>
       </div>
-      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển thời tiết"></div>
+      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để xem đổi thời tiết hoặc bấm cập nhật"></div>
     </div>
 
     <div class="stats-grid">
@@ -615,46 +788,188 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    const weatherStates = [
-      { type: 'sunny', label: 'Trời nắng đẹp, quang đãng' },
-      { type: 'partly-cloudy', label: 'Trời dịu, có nắng và mây' },
-      { type: 'rainy', label: 'Trời có mưa, chú ý mang ô' },
-      { type: 'night', label: 'Trời đêm trong lành' }
-    ];
-    let currentWeatherIndex = 0;
+    // DANH SÁCH CÁC CÂU CHÚC TƯƠI SÁNG, TRUYỀN NĂNG LƯỢNG
+    const energeticGreetings = {
+      morning: [
+        "Chào buổi sáng, Tuấn Tuấn! Chúc một ngày ngập tràn năng lượng và may mắn ✨",
+        "Xin chào Tuấn Tuấn, chúc một ngày nhiều niềm vui và làm việc thật nhẹ nhàng!",
+        "Chào buổi sáng Tuấn Tuấn! Khởi đầu ngày mới với nụ cười rạng rỡ và bình an ☀️",
+        "Xin chào Tuấn Tuấn, chúc một ngày tốt lành, mọi điều hanh thông và thuận lợi!"
+      ],
+      afternoon: [
+        "Xin chào Tuấn Tuấn, chúc buổi chiều tràn đầy nhiệt huyết và năng suất cao!",
+        "Chào Tuấn Tuấn! Giữ năng lượng thật tích cực và thư thái suốt buổi chiều nhé ☕",
+        "Xin chào Tuấn Tuấn, chúc công việc luôn thuận buồn xuôi gió và nhiều may mắn!"
+      ],
+      evening: [
+        "Xin chào Tuấn Tuấn, chúc buổi tối đầm ấm, an vui và thảnh thơi bên gia đình!",
+        "Chào Tuấn Tuấn! Sau một ngày cố gắng, chúc buổi tối thật thư giãn và trọn vẹn ✨",
+        "Xin chào Tuấn Tuấn, chúc buổi tối thật an yên và nhiều tiếng cười hạnh phúc!"
+      ],
+      night: [
+        "Xin chào Tuấn Tuấn, chúc buổi tối ngon giấc và có những giấc mơ thật đẹp 🌙",
+        "Chào Tuấn Tuấn! Nghỉ ngơi thật trọn vẹn để nạp đầy năng lượng cho ngày mai nhé ✨",
+        "Xin chào Tuấn Tuấn, chúc một đêm bình an, ngủ thật sâu và thức dậy sảng khoái!"
+      ]
+    };
 
-    function renderWeatherIcon(type) {
-      const widget = document.getElementById('weatherWidget');
-      const label = document.getElementById('weatherStatusLabel');
-      if (!widget) return;
-      if (type === 'sunny') {
-        widget.innerHTML = `<div class="sun-icon"></div>`;
-        if (label) label.innerText = '☀️ Trời nắng rực rỡ';
-      } else if (type === 'partly-cloudy') {
-        widget.innerHTML = `<div class="partly-cloudy"><div class="sun-small"></div><div class="cloud-front"></div></div>`;
-        if (label) label.innerText = '⛅ Trời dịu mát, nắng và mây';
-      } else if (type === 'rainy') {
-        widget.innerHTML = `<div class="rainy-icon"><div class="rain-cloud"></div><div class="rain-drop d1"></div><div class="rain-drop d2"></div><div class="rain-drop d3"></div></div>`;
-        if (label) label.innerText = '🌧️ Trời đang có mưa';
-      } else {
-        widget.innerHTML = `<div class="night-sky"><span class="moon-icon"></span><span class="night-star s1">✦</span><span class="night-star s2">✧</span><span class="night-star s3">✦</span></div>`;
-        if (label) label.innerText = '🌙 Trời đêm quang đãng';
+    let greetingListForToday = [];
+    let currentGreetingIdx = 0;
+
+    function initGreetingPool() {
+      const h = new Date().getHours();
+      let pool = [];
+      if (h >= 5 && h < 11) pool = energeticGreetings.morning;
+      else if (h >= 11 && h < 17) pool = energeticGreetings.afternoon;
+      else if (h >= 17 && h < 21) pool = energeticGreetings.evening;
+      else pool = energeticGreetings.night;
+
+      // Trộn thêm 1-2 câu từ các mốc khác để phong phú
+      greetingListForToday = [...pool, ...energeticGreetings.morning, ...energeticGreetings.evening];
+      currentGreetingIdx = Math.floor(Math.random() * pool.length);
+      displayCurrentGreeting();
+    }
+
+    function displayCurrentGreeting() {
+      const el = document.getElementById('greetingMain');
+      if (el && greetingListForToday.length > 0) {
+        el.innerText = greetingListForToday[currentGreetingIdx % greetingListForToday.length];
       }
     }
 
+    function cycleGreetingText() {
+      currentGreetingIdx = (currentGreetingIdx + 1) % greetingListForToday.length;
+      displayCurrentGreeting();
+      showToast('Đổi câu chúc năng lượng ✨');
+    }
+
+    // ICON THỜI TIẾT ĐỘNG
+    const weatherStates = [
+      { type: 'sunny', label: 'Trời nắng rực rỡ, chan hòa' },
+      { type: 'fair', label: 'Bầu trời trong xanh kèm vài áng mây' },
+      { type: 'rainy', label: 'Trời có mưa, bạn nhớ mang ô nhé' },
+      { type: 'night', label: 'Đêm trong xanh, trăng sao lấp lánh' }
+    ];
+    let currentWeatherIndex = 0;
+
+    function renderWeatherIcon(type, customLabel) {
+      const widget = document.getElementById('weatherWidget');
+      const label = document.getElementById('weatherStatusLabel');
+      if (!widget) return;
+
+      if (type === 'sunny') {
+        widget.innerHTML = `
+          <div class="sunny-animated-box" title="Trời nắng rực rỡ">
+            <div class="sun-core"></div>
+            <div class="sun-rays-wrap">
+              <span class="sun-beam"></span>
+              <span class="sun-beam"></span>
+              <span class="sun-beam"></span>
+              <span class="sun-beam"></span>
+            </div>
+          </div>
+        `;
+        if (label) label.innerText = customLabel || '☀️ Trời nắng rực rỡ, chan hòa tia nắng';
+      } else if (type === 'fair') {
+        widget.innerHTML = `
+          <div class="fair-animated-box" title="Trời trong xanh mây trắng">
+            <div class="fair-sun"></div>
+            <div class="floating-cloud-1"></div>
+            <div class="floating-cloud-2"></div>
+          </div>
+        `;
+        if (label) label.innerText = customLabel || '🌤️ Bầu trời trong xanh, vài áng mây nhẹ';
+      } else if (type === 'rainy') {
+        widget.innerHTML = `
+          <div class="rainy-animated-box" title="Trời mưa">
+            <div class="rain-main-cloud"></div>
+            <span class="anim-drop rd1"></span>
+            <span class="anim-drop rd2"></span>
+            <span class="anim-drop rd3"></span>
+          </div>
+        `;
+        if (label) label.innerText = customLabel || '🌧️ Trời đang có mưa, chú ý đường trơn';
+      } else {
+        widget.innerHTML = `
+          <div class="night-animated-box" title="Trời đêm trăng sao">
+            <div class="night-moon"></div>
+            <span class="night-sparkle st1">✦</span>
+            <span class="night-sparkle st2">★</span>
+            <span class="night-sparkle st3">✧</span>
+            <span class="night-sparkle st4">✦</span>
+          </div>
+        `;
+        if (label) label.innerText = customLabel || '🌙 Trời đêm xanh đen, ngàn sao lấp lánh';
+      }
+    }
+
+    // NHẬN DIỆN THỜI TIẾT TỰ ĐỘNG QUA GPS (OPEN-METEO API MIỄN PHÍ)
     async function initWeatherDetection() {
+      const label = document.getElementById('weatherStatusLabel');
+      const hour = new Date().getHours();
+      const isNightTime = (hour >= 18 || hour < 5);
+
+      // Thiết lập mặc định trước theo giờ
+      if (isNightTime) {
+        currentWeatherIndex = 3;
+      } else if (hour >= 9 && hour <= 15) {
+        currentWeatherIndex = 0;
+      } else {
+        currentWeatherIndex = 1;
+      }
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+
+      // Cập nhật chuẩn xác qua GPS nếu thiết bị cho phép
+      if ("geolocation" in navigator) {
+        if (label) label.innerText = 'Đang đồng bộ thời tiết qua GPS...';
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          try {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m,is_day&timezone=auto`);
+            if (!res.ok) throw new Error('API lỗi');
+            const data = await res.json();
+            const cur = data.current;
+            const code = cur.weather_code;
+            const temp = Math.round(cur.temperature_2m);
+            const isDay = cur.is_day === 1;
+
+            if (code >= 51 && code <= 99) { // Mưa, bão, mưa rào
+              currentWeatherIndex = 2;
+              renderWeatherIcon('rainy', `🌧️ Ngoài trời có mưa (${temp}°C)`);
+            } else if (!isDay) { // Ban đêm
+              currentWeatherIndex = 3;
+              renderWeatherIcon('night', `🌙 Đêm quang đãng, mát mẻ (${temp}°C)`);
+            } else if (code <= 1) { // Nắng quang đãng
+              currentWeatherIndex = 0;
+              renderWeatherIcon('sunny', `☀️ Trời nắng rực rỡ, nhiệt độ ${temp}°C`);
+            } else { // Trời xanh mây đẹp
+              currentWeatherIndex = 1;
+              renderWeatherIcon('fair', `🌤️ Bầu trời trong xanh dịu mát (${temp}°C)`);
+            }
+          } catch (e) {
+            fallbackWeatherByHour();
+          }
+        }, () => {
+          fallbackWeatherByHour();
+        }, { timeout: 7000 });
+      } else {
+        fallbackWeatherByHour();
+      }
+    }
+
+    function fallbackWeatherByHour() {
       const hour = new Date().getHours();
       if (hour >= 18 || hour < 5) currentWeatherIndex = 3;
-      else if (hour >= 6 && hour <= 10) currentWeatherIndex = 1;
-      else if (hour > 10 && hour <= 15) currentWeatherIndex = 0;
+      else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
       else currentWeatherIndex = 1;
-      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
     }
 
     function cycleWeatherDemo() {
       currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
-      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
-      showToast(`Thời tiết: ${weatherStates[currentWeatherIndex].label}`);
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
+      showToast(`Chế độ thời tiết: ${weatherStates[currentWeatherIndex].label}`);
     }
 
     // --- QUẢN LÝ NHẬT KÝ ---
@@ -849,8 +1164,7 @@
       
       const labelEl = document.getElementById('greetingDateLabel');
       if (labelEl) labelEl.innerText = `Hôm nay ${dayName}, ngày ${d}/${m}/${y}`;
-      const greetingEl = document.getElementById('greetingMain');
-      if (greetingEl) greetingEl.textContent = 'Xin chào Tuấn Tuấn, chúc một ngày tốt lành ✨';
+      initGreetingPool();
 
       const journalDateInput = document.getElementById('journalDate');
       if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
@@ -1068,7 +1382,6 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- XUẤT LỊCH THÔNG MINH: CHUẨN MÀU GOOGLE/APPLE CALENDAR VÀ KHÔNG GHI THÊM CHỮ THỪA ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
@@ -1093,7 +1406,6 @@
           const d = dayDate.getDate();
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
-          // NGÀY NGHỈ (OFF): MÀU ĐỎ NHẠT / ĐỎ TƯƠI, CHỈ GHI DUY NHẤT "OFF"
           if (shift === 'off') {
             const nextDay = new Date(dayDate);
             nextDay.setDate(dayDate.getDate() + 1);
@@ -1123,7 +1435,6 @@
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
           
-          // CA 1: XANH DA TRỜI (Peacock - Color 7), CA 2: VÀNG (Banana - Color 5)
           const shiftLabel = (shift === 'ca1' ? '🔵 Ca 1' : '🟡 Ca 2');
           const googleColor = (shift === 'ca1' ? '7' : '5');
           const hexColor = (shift === 'ca1' ? '#0284c7' : '#f59e0b');
@@ -1133,7 +1444,6 @@
           const outStartUTC = toUTCICSString(y, m, d, rawOut, 0);
           const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
-          // SỰ KIỆN BẮT ĐẦU: CHỈ GHI DUY NHẤT "Ca 1" HOẶC "Ca 2"
           events.push([
             'BEGIN:VEVENT',
             `UID:ca-start-${dateStr}-${dayKey}-${shift}-${rawIn.replace(':','')}-shift@app`,
@@ -1160,7 +1470,6 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // SỰ KIỆN KẾT THÚC: CHỈ GHI DUY NHẤT "Ca 1" HOẶC "Ca 2"
           events.push([
             'BEGIN:VEVENT',
             `UID:ca-end-${dateStr}-${dayKey}-${shift}-${rawOut.replace(':','')}-shift@app`,
