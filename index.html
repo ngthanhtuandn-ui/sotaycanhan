@@ -66,11 +66,12 @@
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
 
+    /* BANNER CHÀO MỪNG ĐÃ ĐƯỢC TỐI ƯU BỐ CỤC ĐIỆN THOẠI */
     .greeting-banner {
       background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
       border: 1px solid #b7efd0;
       border-radius: 20px;
-      padding: 14px 18px;
+      padding: 14px 16px;
       margin-bottom: 12px;
       box-shadow: 0 8px 24px rgba(27,86,115,.06);
       display: flex;
@@ -78,17 +79,17 @@
       justify-content: space-between;
       gap: 12px;
     }
-    .greeting-info { display: flex; flex-direction: column; gap: 3px; cursor: pointer; flex: 1; }
-    .greeting-text-main { font-size: 0.96rem; font-weight: 800; color: #166534; line-height: 1.35; transition: color 0.2s ease; }
-    .greeting-text-main:active { color: #15803d; }
-    .greeting-text-sub { font-size: 0.78rem; font-weight: 600; color: #047857; }
-    .weather-status-text { font-size: 0.72rem; color: #64748b; font-weight: 600; }
+    .greeting-info { display: flex; flex-direction: column; gap: 4px; flex: 1; cursor: pointer; min-width: 0; }
+    .greeting-title { font-size: 1.02rem; font-weight: 800; color: #166534; line-height: 1.25; }
+    .greeting-quote { font-size: 0.84rem; font-weight: 700; color: #059669; line-height: 1.35; }
+    .greeting-text-sub { font-size: 0.76rem; font-weight: 600; color: #0284c7; margin-top: 2px; }
+    .weather-status-text { font-size: 0.74rem; color: #64748b; font-weight: 600; }
 
-    /* WIDGET & CÁC ICON THỜI TIẾT ĐỘNG */
+    /* ICON THỜI TIẾT ĐỘNG: KHÔNG NỀN ĐEN, PHÓNG TO, NỀN TRONG SUỐT HOÀN TOÀN */
     .weather-widget {
       position: relative;
-      width: 58px;
-      height: 58px;
+      width: 68px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -97,21 +98,22 @@
       user-select: none;
     }
 
-    /* 1. Trời Nắng Rực Rỡ Kèm Tia Nắng Động */
+    /* 1. Trời Nắng Rực Rỡ Kèm Tia Nắng */
     .sunny-animated-box {
       position: relative;
-      width: 54px;
-      height: 54px;
+      width: 68px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: transparent;
     }
     .sun-core {
-      width: 26px;
-      height: 26px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #fffde7 0%, #fde047 30%, #f59e0b 75%, #ea580c 100%);
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.7), inset 0 0 4px #ffffff;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.7), inset 0 0 5px #ffffff;
       animation: sunPulse 3s ease-in-out infinite alternate;
       z-index: 2;
     }
@@ -126,11 +128,11 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 3px;
-      height: 48px;
-      margin-left: -1.5px;
-      margin-top: -24px;
-      background: linear-gradient(to bottom, #f59e0b 0%, rgba(251,191,36,0) 22%, rgba(251,191,36,0) 78%, #f59e0b 100%);
+      width: 3.5px;
+      height: 62px;
+      margin-left: -1.75px;
+      margin-top: -31px;
+      background: linear-gradient(to bottom, #f59e0b 0%, rgba(251,191,36,0) 25%, rgba(251,191,36,0) 75%, #f59e0b 100%);
       border-radius: 4px;
     }
     .sun-beam:nth-child(2) { transform: rotate(45deg); }
@@ -142,169 +144,156 @@
       to { transform: rotate(360deg); }
     }
     @keyframes sunPulse {
-      0% { transform: scale(0.92); box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
-      100% { transform: scale(1.08); box-shadow: 0 0 22px rgba(234, 88, 12, 0.85); }
+      0% { transform: scale(0.92); box-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
+      100% { transform: scale(1.1); box-shadow: 0 0 24px rgba(234, 88, 12, 0.9); }
     }
 
-    /* 2. Ban Đêm Nền Xanh Đen Kèm Trăng & Sao Lấp Lánh */
-    .night-animated-box {
-      position: relative;
-      width: 52px;
-      height: 52px;
-      background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 75%, #020617 100%);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.35);
-      border: 1px solid #334155;
-    }
-    .night-moon {
-      position: absolute;
-      top: 9px;
-      left: 9px;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      box-shadow: 5px 3px 0 0 #fde047;
-      transform: rotate(-15deg);
-      filter: drop-shadow(0 0 7px rgba(253, 224, 71, 0.7));
-      animation: moonGlow 3s ease-in-out infinite alternate;
-    }
-    .night-sparkle {
-      position: absolute;
-      color: #fef08a;
-      line-height: 1;
-      animation: starTwinkle 2s ease-in-out infinite alternate;
-    }
-    .night-sparkle.st1 { top: 6px; right: 10px; font-size: 8px; animation-delay: 0.1s; }
-    .night-sparkle.st2 { top: 26px; right: 8px; font-size: 11px; animation-delay: 0.7s; }
-    .night-sparkle.st3 { bottom: 8px; left: 16px; font-size: 7px; animation-delay: 1.2s; }
-    .night-sparkle.st4 { bottom: 12px; right: 18px; font-size: 6px; animation-delay: 0.4s; }
-
-    @keyframes moonGlow {
-      0% { filter: drop-shadow(0 0 4px rgba(253, 224, 71, 0.5)); transform: rotate(-15deg) scale(0.96); }
-      100% { filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.9)); transform: rotate(-15deg) scale(1.04); }
-    }
-    @keyframes starTwinkle {
-      0% { opacity: 0.25; transform: scale(0.7); }
-      100% { opacity: 1; transform: scale(1.3); }
-    }
-
-    /* 3. Trời Đẹp Xanh Trong Kèm Vài Áng Mây Trôi */
+    /* 2. Bầu Trời Trong Xanh Kèm Vài Áng Mây Trôi (Nền trong suốt) */
     .fair-animated-box {
       position: relative;
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(145deg, #38bdf8 0%, #0284c7 100%);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.3);
-      border: 1px solid #7dd3fc;
+      width: 68px;
+      height: 68px;
+      background: transparent;
     }
     .fair-sun {
       position: absolute;
       top: 6px;
-      right: 7px;
-      width: 16px;
-      height: 16px;
+      right: 10px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: radial-gradient(circle, #fef08a 20%, #f59e0b 100%);
-      box-shadow: 0 0 8px #fef08a;
+      background: radial-gradient(circle, #fef08a 25%, #f59e0b 100%);
+      box-shadow: 0 0 14px #fbbf24;
+      animation: sunPulse 3s ease-in-out infinite alternate;
     }
     .floating-cloud-1 {
       position: absolute;
-      bottom: 12px;
-      left: 6px;
-      width: 26px;
-      height: 11px;
-      background: #ffffff;
-      border-radius: 10px;
-      opacity: 0.92;
-      animation: floatCloud1 3.4s ease-in-out infinite alternate;
+      bottom: 14px;
+      left: 4px;
+      width: 38px;
+      height: 16px;
+      background: #7dd3fc;
+      border-radius: 12px;
+      opacity: 0.95;
+      animation: floatCloud1 3.5s ease-in-out infinite alternate;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.25);
     }
     .floating-cloud-1::before {
       content: '';
       position: absolute;
-      top: -6px;
-      left: 5px;
-      width: 12px;
-      height: 12px;
-      background: #ffffff;
+      top: -9px;
+      left: 7px;
+      width: 18px;
+      height: 18px;
+      background: #7dd3fc;
       border-radius: 50%;
     }
     .floating-cloud-2 {
       position: absolute;
-      bottom: 6px;
-      right: 5px;
-      width: 20px;
-      height: 9px;
-      background: rgba(255,255,255,0.75);
-      border-radius: 8px;
+      bottom: 8px;
+      right: 2px;
+      width: 30px;
+      height: 13px;
+      background: #38bdf8;
+      border-radius: 10px;
       animation: floatCloud2 4s ease-in-out infinite alternate;
+      opacity: 0.85;
     }
     .floating-cloud-2::before {
       content: '';
       position: absolute;
-      top: -5px;
-      left: 4px;
-      width: 9px;
-      height: 9px;
-      background: rgba(255,255,255,0.75);
+      top: -7px;
+      left: 6px;
+      width: 14px;
+      height: 14px;
+      background: #38bdf8;
       border-radius: 50%;
     }
 
-    @keyframes floatCloud1 {
-      0% { transform: translateX(0px); }
-      100% { transform: translateX(6px); }
+    @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
+    @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
+
+    /* 3. Ban Đêm: Trăng Lưỡi Liềm & Sao Lấp Lánh (Nền trong suốt, không nền đen) */
+    .night-animated-box {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      background: transparent;
     }
-    @keyframes floatCloud2 {
-      0% { transform: translateX(0px); }
-      100% { transform: translateX(-5px); }
+    .night-moon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      box-shadow: 8px 5px 0 0 #facc15;
+      transform: rotate(-15deg);
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75));
+      animation: moonGlow 3s ease-in-out infinite alternate;
+    }
+    .night-sparkle {
+      position: absolute;
+      color: #3b82f6;
+      line-height: 1;
+      animation: starTwinkle 2s ease-in-out infinite alternate;
+    }
+    .night-sparkle.st1 { top: 6px; right: 12px; font-size: 14px; color: #f59e0b; animation-delay: 0.1s; }
+    .night-sparkle.st2 { top: 34px; right: 8px; font-size: 16px; color: #6366f1; animation-delay: 0.7s; }
+    .night-sparkle.st3 { bottom: 6px; left: 24px; font-size: 12px; color: #facc15; animation-delay: 1.2s; }
+    .night-sparkle.st4 { bottom: 18px; right: 28px; font-size: 11px; color: #0284c7; animation-delay: 0.4s; }
+
+    @keyframes moonGlow {
+      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-15deg) scale(0.96); }
+      100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); transform: rotate(-15deg) scale(1.06); }
+    }
+    @keyframes starTwinkle {
+      0% { opacity: 0.25; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1.25); }
     }
 
-    /* 4. Trời Mưa Động */
+    /* 4. Trời Mưa Động (Nền trong suốt, không viền hộp đen) */
     .rainy-animated-box {
       position: relative;
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(145deg, #64748b 0%, #334155 100%);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(51, 65, 85, 0.3);
-      border: 1px solid #94a3b8;
+      width: 68px;
+      height: 68px;
+      background: transparent;
     }
     .rain-main-cloud {
       position: absolute;
-      top: 9px;
+      top: 10px;
       left: 10px;
-      width: 32px;
-      height: 14px;
-      background: #cbd5e1;
-      border-radius: 10px;
+      width: 44px;
+      height: 20px;
+      background: #94a3b8;
+      border-radius: 14px;
+      box-shadow: 0 3px 10px rgba(100, 116, 139, 0.3);
     }
     .rain-main-cloud::before {
       content: '';
       position: absolute;
-      top: -8px;
-      left: 7px;
-      width: 16px;
-      height: 16px;
-      background: #cbd5e1;
+      top: -11px;
+      left: 10px;
+      width: 22px;
+      height: 22px;
+      background: #94a3b8;
       border-radius: 50%;
     }
     .anim-drop {
       position: absolute;
-      width: 2px;
-      height: 7px;
-      background: #7dd3fc;
-      border-radius: 2px;
+      width: 2.8px;
+      height: 10px;
+      background: #0284c7;
+      border-radius: 3px;
       animation: fallDown 0.75s linear infinite;
     }
-    .anim-drop.rd1 { left: 16px; top: 26px; animation-delay: 0s; }
-    .anim-drop.rd2 { left: 25px; top: 26px; animation-delay: 0.25s; }
-    .anim-drop.rd3 { left: 34px; top: 26px; animation-delay: 0.5s; }
+    .anim-drop.rd1 { left: 18px; top: 34px; animation-delay: 0s; }
+    .anim-drop.rd2 { left: 30px; top: 34px; animation-delay: 0.25s; }
+    .anim-drop.rd3 { left: 42px; top: 34px; animation-delay: 0.5s; }
+
     @keyframes fallDown {
       0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(14px); opacity: 0.1; }
+      100% { transform: translateY(18px); opacity: 0.15; }
     }
 
     .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
@@ -541,6 +530,64 @@
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
+    /* BẢNG THỜI KHÓA BIỂU TỔNG QUÁT TUẦN TỐI ƯU ĐIỆN THOẠI */
+    .table-scroll-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin: 10px 0;
+      background: #ffffff;
+    }
+    .tt-table {
+      width: 100%;
+      min-width: 580px;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+    .tt-table th, .tt-table td {
+      border: 1px solid #e2e8f0;
+      padding: 6px 4px;
+    }
+    .tt-table th {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+    .tt-table th.today-col-hdr {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .tt-lesson-num {
+      background: #f8fafc;
+      font-weight: 800;
+      color: #64748b;
+      width: 55px;
+      font-size: 0.72rem;
+    }
+    .tt-cell-input {
+      width: 100%;
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 4px 2px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #0f172a;
+      text-align: center;
+      border-radius: 6px;
+    }
+    .tt-cell-input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+    }
+    .tt-table td.today-cell {
+      background: #f0fdf4;
+    }
+
     .lesson-badge {
       display: inline-block; background: #fef08a; color: #854d0e; border: 1px solid #fde047; font-weight: 800; font-size: 0.75rem; padding: 1px 7px; border-radius: 6px; margin-right: 6px; white-space: nowrap;
     }
@@ -574,11 +621,12 @@
   <div class="container">
     <div class="greeting-banner">
       <div class="greeting-info" onclick="cycleGreetingText()" title="Chạm để đổi câu chúc tràn đầy năng lượng">
-        <div class="greeting-text-main" id="greetingMain">Đang tạo năng lượng ngày mới...</div>
+        <div class="greeting-title" id="greetingUser">Chào buổi sáng, Tuấn Tuấn! ☀️</div>
+        <div class="greeting-quote" id="greetingMessage">Chúc một ngày ngập tràn năng lượng và may mắn ✨</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
         <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết qua GPS...</div>
       </div>
-      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để xem đổi thời tiết hoặc bấm cập nhật"></div>
+      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển đổi icon thời tiết"></div>
     </div>
 
     <div class="stats-grid">
@@ -736,34 +784,49 @@
       <div id="issuesList"></div>
     </div>
 
-    <!-- VIEW 4: THỜI KHÓA BIỂU -->
+    <!-- VIEW 4: THỜI KHÓA BIỂU DẠNG BẢNG TỔNG QUÁT TUẦN -->
     <div id="view-school" style="display:none;">
       <div class="card-box">
         <div style="padding:16px;margin:-4px -4px 16px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;">
           <h3 style="font-size:1.05rem;margin:0 0 4px;color:#fff;">🎒 Thời khóa biểu của các con</h3>
+          <div style="font-size:0.75rem; opacity:0.9;">Bảng tổng quát Thứ Hai đến Chủ Nhật, nhập và lưu trực tiếp</div>
         </div>
         <div class="row form-group">
           <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;">
             <label style="color:#4338ca;">🏫 Lớp học</label>
-            <select id="schoolClass" onchange="renderSchoolTimetable()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select>
+            <select id="schoolClass" onchange="renderSchoolTableGrid()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select>
           </div>
           <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;">
             <label style="color:#c2410c;">☀️ Buổi học</label>
-            <select id="schoolShift" onchange="renderSchoolTimetable()"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select>
+            <select id="schoolShift" onchange="renderSchoolTableGrid()"><option value="morning">🌅 Buổi sáng</option><option value="afternoon">🌇 Buổi chiều</option></select>
           </div>
         </div>
-        <div class="form-group" style="padding:10px;border-radius:12px;background:#fdf2f8;border:1px solid #fbcfe8;">
-          <label style="color:#9d174d;">🗓️ Ngày trong tuần</label>
-          <select id="schoolDay" onchange="renderSchoolTimetable()">
-            <option value="1">Thứ Hai</option><option value="2">Thứ Ba</option><option value="3">Thứ Tư</option><option value="4">Thứ Năm</option><option value="5">Thứ Sáu</option><option value="6">Thứ Bảy</option><option value="0">Chủ Nhật</option>
-          </select>
+
+        <!-- BẢNG TỔNG QUÁT 7 NGÀY TRONG TUẦN -->
+        <div class="table-scroll-wrap">
+          <table class="tt-table" id="schoolGridTable">
+            <thead>
+              <tr id="schoolGridHeader">
+                <th class="tt-lesson-num">Tiết</th>
+                <th>Thứ 2</th>
+                <th>Thứ 3</th>
+                <th>Thứ 4</th>
+                <th>Thứ 5</th>
+                <th>Thứ 6</th>
+                <th>Thứ 7</th>
+                <th>Chủ Nhật</th>
+              </tr>
+            </thead>
+            <tbody id="schoolGridBody"></tbody>
+          </table>
         </div>
-        <div id="schoolLessons"></div>
-        <button class="btn-submit" onclick="saveSchoolTimetable()">💾 Lưu thời khóa biểu</button>
-        <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolDay()">Xóa nội dung buổi này</button>
+
+        <button class="btn-submit" onclick="saveSchoolGridTimetable()">💾 Lưu Bảng Thời Khóa Biểu</button>
+        <button class="btn-submit" style="margin-top:8px;background:#64748b" onclick="clearSchoolGridTimetable()">Xóa Hết Buổi Này</button>
       </div>
+
       <div class="card-box">
-        <h3 style="font-size:.9rem;margin-bottom:8px">📌 Xem nhanh trong ngày</h3>
+        <h3 style="font-size:.9rem;margin-bottom:8px">📌 Xem nhanh hôm nay</h3>
         <div id="schoolTodaySummary" style="font-size:.85rem;line-height:1.7"></div>
       </div>
     </div>
@@ -788,28 +851,28 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // DANH SÁCH CÁC CÂU CHÚC TƯƠI SÁNG, TRUYỀN NĂNG LƯỢNG
-    const energeticGreetings = {
+    // DANH SÁCH CÁC CÂU CHÚC TƯƠI SÁNG, PHÂN BỔ 2 DÒNG RIÊNG BIỆT
+    const energeticGreetingPairs = {
       morning: [
-        "Chào buổi sáng, Tuấn Tuấn! Chúc một ngày ngập tràn năng lượng và may mắn ✨",
-        "Xin chào Tuấn Tuấn, chúc một ngày nhiều niềm vui và làm việc thật nhẹ nhàng!",
-        "Chào buổi sáng Tuấn Tuấn! Khởi đầu ngày mới với nụ cười rạng rỡ và bình an ☀️",
-        "Xin chào Tuấn Tuấn, chúc một ngày tốt lành, mọi điều hanh thông và thuận lợi!"
+        { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày ngập tràn năng lượng và may mắn ✨" },
+        { title: "Xin chào Tuấn Tuấn! ✨", quote: "Chúc một ngày nhiều niềm vui và công việc suôn sẻ!" },
+        { title: "Chào ngày mới, Tuấn Tuấn! 🌸", quote: "Khởi đầu rực rỡ với nụ cười và tinh thần thoải mái nhất!" },
+        { title: "Xin chào Tuấn Tuấn! 🍀", quote: "Chúc một ngày thật tốt lành, mọi sự hanh thông!" }
       ],
       afternoon: [
-        "Xin chào Tuấn Tuấn, chúc buổi chiều tràn đầy nhiệt huyết và năng suất cao!",
-        "Chào Tuấn Tuấn! Giữ năng lượng thật tích cực và thư thái suốt buổi chiều nhé ☕",
-        "Xin chào Tuấn Tuấn, chúc công việc luôn thuận buồn xuôi gió và nhiều may mắn!"
+        { title: "Xin chào Tuấn Tuấn! ☕", quote: "Chúc buổi chiều tràn đầy nhiệt huyết và năng suất cao!" },
+        { title: "Chào buổi chiều, Tuấn Tuấn! ☀️", quote: "Giữ năng lượng tích cực và thật thư thái nhé!" },
+        { title: "Xin chào Tuấn Tuấn! 🚀", quote: "Chúc công việc thuận buồm xuôi gió và gặt hái nhiều kết quả!" }
       ],
       evening: [
-        "Xin chào Tuấn Tuấn, chúc buổi tối đầm ấm, an vui và thảnh thơi bên gia đình!",
-        "Chào Tuấn Tuấn! Sau một ngày cố gắng, chúc buổi tối thật thư giãn và trọn vẹn ✨",
-        "Xin chào Tuấn Tuấn, chúc buổi tối thật an yên và nhiều tiếng cười hạnh phúc!"
+        { title: "Xin chào Tuấn Tuấn! 🌆", quote: "Chúc buổi tối đầm ấm, an vui và thảnh thơi bên gia đình!" },
+        { title: "Chào buổi tối, Tuấn Tuấn! 🌿", quote: "Sau một ngày dài, chúc bạn thật thư giãn và trọn vẹn!" },
+        { title: "Xin chào Tuấn Tuấn! ✨", quote: "Chúc buổi tối nhiều tiếng cười và ấm áp yêu thương!" }
       ],
       night: [
-        "Xin chào Tuấn Tuấn, chúc buổi tối ngon giấc và có những giấc mơ thật đẹp 🌙",
-        "Chào Tuấn Tuấn! Nghỉ ngơi thật trọn vẹn để nạp đầy năng lượng cho ngày mai nhé ✨",
-        "Xin chào Tuấn Tuấn, chúc một đêm bình an, ngủ thật sâu và thức dậy sảng khoái!"
+        { title: "Xin chào Tuấn Tuấn! 🌙", quote: "Chúc buổi tối ngon giấc và có những giấc mơ thật đẹp!" },
+        { title: "Chào Tuấn Tuấn! ✨", quote: "Nghỉ ngơi thật sâu để nạp đầy năng lượng cho ngày mai nhé!" },
+        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Chúc bạn một đêm bình an, thư thái và sảng khoái thức giấc!" }
       ]
     };
 
@@ -819,36 +882,38 @@
     function initGreetingPool() {
       const h = new Date().getHours();
       let pool = [];
-      if (h >= 5 && h < 11) pool = energeticGreetings.morning;
-      else if (h >= 11 && h < 17) pool = energeticGreetings.afternoon;
-      else if (h >= 17 && h < 21) pool = energeticGreetings.evening;
-      else pool = energeticGreetings.night;
+      if (h >= 5 && h < 11) pool = energeticGreetingPairs.morning;
+      else if (h >= 11 && h < 17) pool = energeticGreetingPairs.afternoon;
+      else if (h >= 17 && h < 21) pool = energeticGreetingPairs.evening;
+      else pool = energeticGreetingPairs.night;
 
-      // Trộn thêm 1-2 câu từ các mốc khác để phong phú
-      greetingListForToday = [...pool, ...energeticGreetings.morning, ...energeticGreetings.evening];
+      greetingListForToday = [...pool, ...energeticGreetingPairs.morning, ...energeticGreetingPairs.evening];
       currentGreetingIdx = Math.floor(Math.random() * pool.length);
       displayCurrentGreeting();
     }
 
     function displayCurrentGreeting() {
-      const el = document.getElementById('greetingMain');
-      if (el && greetingListForToday.length > 0) {
-        el.innerText = greetingListForToday[currentGreetingIdx % greetingListForToday.length];
+      const titleEl = document.getElementById('greetingUser');
+      const quoteEl = document.getElementById('greetingMessage');
+      if (titleEl && quoteEl && greetingListForToday.length > 0) {
+        const item = greetingListForToday[currentGreetingIdx % greetingListForToday.length];
+        titleEl.innerText = item.title;
+        quoteEl.innerText = item.quote;
       }
     }
 
     function cycleGreetingText() {
       currentGreetingIdx = (currentGreetingIdx + 1) % greetingListForToday.length;
       displayCurrentGreeting();
-      showToast('Đổi câu chúc năng lượng ✨');
+      showToast('Đã đổi câu chúc năng lượng ✨');
     }
 
-    // ICON THỜI TIẾT ĐỘNG
+    // ICON THỜI TIẾT ĐỘNG: HOÀN TOÀN KHÔNG CÓ NỀN ĐEN, PHÓNG TO, NỀN TRONG SUỐT
     const weatherStates = [
       { type: 'sunny', label: 'Trời nắng rực rỡ, chan hòa' },
       { type: 'fair', label: 'Bầu trời trong xanh kèm vài áng mây' },
       { type: 'rainy', label: 'Trời có mưa, bạn nhớ mang ô nhé' },
-      { type: 'night', label: 'Đêm trong xanh, trăng sao lấp lánh' }
+      { type: 'night', label: 'Đêm trong lành, trăng sao lấp lánh' }
     ];
     let currentWeatherIndex = 0;
 
@@ -869,7 +934,7 @@
             </div>
           </div>
         `;
-        if (label) label.innerText = customLabel || '☀️ Trời nắng rực rỡ, chan hòa tia nắng';
+        if (label) label.innerText = customLabel || '☀️ Ngoài trời nắng rực rỡ';
       } else if (type === 'fair') {
         widget.innerHTML = `
           <div class="fair-animated-box" title="Trời trong xanh mây trắng">
@@ -878,7 +943,7 @@
             <div class="floating-cloud-2"></div>
           </div>
         `;
-        if (label) label.innerText = customLabel || '🌤️ Bầu trời trong xanh, vài áng mây nhẹ';
+        if (label) label.innerText = customLabel || '🌤️ Bầu trời trong xanh dịu mát';
       } else if (type === 'rainy') {
         widget.innerHTML = `
           <div class="rainy-animated-box" title="Trời mưa">
@@ -888,7 +953,7 @@
             <span class="anim-drop rd3"></span>
           </div>
         `;
-        if (label) label.innerText = customLabel || '🌧️ Trời đang có mưa, chú ý đường trơn';
+        if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
         widget.innerHTML = `
           <div class="night-animated-box" title="Trời đêm trăng sao">
@@ -899,27 +964,21 @@
             <span class="night-sparkle st4">✦</span>
           </div>
         `;
-        if (label) label.innerText = customLabel || '🌙 Trời đêm xanh đen, ngàn sao lấp lánh';
+        if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng, ngàn sao';
       }
     }
 
-    // NHẬN DIỆN THỜI TIẾT TỰ ĐỘNG QUA GPS (OPEN-METEO API MIỄN PHÍ)
+    // NHẬN DIỆN THỜI TIẾT TỰ ĐỘNG QUA GPS
     async function initWeatherDetection() {
       const label = document.getElementById('weatherStatusLabel');
       const hour = new Date().getHours();
       const isNightTime = (hour >= 18 || hour < 5);
 
-      // Thiết lập mặc định trước theo giờ
-      if (isNightTime) {
-        currentWeatherIndex = 3;
-      } else if (hour >= 9 && hour <= 15) {
-        currentWeatherIndex = 0;
-      } else {
-        currentWeatherIndex = 1;
-      }
+      if (isNightTime) currentWeatherIndex = 3;
+      else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
+      else currentWeatherIndex = 1;
       renderWeatherIcon(weatherStates[currentWeatherIndex].type);
 
-      // Cập nhật chuẩn xác qua GPS nếu thiết bị cho phép
       if ("geolocation" in navigator) {
         if (label) label.innerText = 'Đang đồng bộ thời tiết qua GPS...';
         navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -934,16 +993,16 @@
             const temp = Math.round(cur.temperature_2m);
             const isDay = cur.is_day === 1;
 
-            if (code >= 51 && code <= 99) { // Mưa, bão, mưa rào
+            if (code >= 51 && code <= 99) {
               currentWeatherIndex = 2;
               renderWeatherIcon('rainy', `🌧️ Ngoài trời có mưa (${temp}°C)`);
-            } else if (!isDay) { // Ban đêm
+            } else if (!isDay) {
               currentWeatherIndex = 3;
-              renderWeatherIcon('night', `🌙 Đêm quang đãng, mát mẻ (${temp}°C)`);
-            } else if (code <= 1) { // Nắng quang đãng
+              renderWeatherIcon('night', `🌙 Đêm trong lành, mát mẻ (${temp}°C)`);
+            } else if (code <= 1) {
               currentWeatherIndex = 0;
-              renderWeatherIcon('sunny', `☀️ Trời nắng rực rỡ, nhiệt độ ${temp}°C`);
-            } else { // Trời xanh mây đẹp
+              renderWeatherIcon('sunny', `☀️ Ngoài trời nắng rực rỡ (${temp}°C)`);
+            } else {
               currentWeatherIndex = 1;
               renderWeatherIcon('fair', `🌤️ Bầu trời trong xanh dịu mát (${temp}°C)`);
             }
@@ -1107,43 +1166,101 @@
       });
     }
 
-    // --- THỜI KHÓA BIỂU ---
-    const schoolDays = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-    function getSchoolKey() {
-      return `${document.getElementById('schoolClass').value}_${document.getElementById('schoolShift').value}_${document.getElementById('schoolDay').value}`;
-    }
+    // --- THỜI KHÓA BIỂU DẠNG BẢNG MA TRẬN 7 NGÀY ---
+    const daysOrder = [
+      { key: '1', label: 'T2' },
+      { key: '2', label: 'T3' },
+      { key: '3', label: 'T4' },
+      { key: '4', label: 'T5' },
+      { key: '5', label: 'T6' },
+      { key: '6', label: 'T7' },
+      { key: '0', label: 'CN' }
+    ];
+
     function getSchoolData() {
       try { return JSON.parse(localStorage.getItem('family_timetable_v1') || '{}'); } catch (_) { return {}; }
     }
-    function renderSchoolTimetable() {
-      const host = document.getElementById('schoolLessons');
-      if (!host) return;
-      const data = getSchoolData(), saved = data[getSchoolKey()] || ['','','','',''];
-      host.innerHTML = '<div style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:8px;align-items:center;margin:12px 0 14px">' +
-        [1,2,3,4,5].map((n,i) => `<div style="display:flex;align-items:center;justify-content:center;padding:10px 4px;border-radius:10px;background:#e2e8f0;color:#1e293b;font-size:.78rem;font-weight:800;">Tiết ${n}</div><input id="schoolLesson${n}" maxlength="100" placeholder="Môn học tiết ${n}" value="${escapeHtml(saved[i] || '')}" style="min-width:0;padding:10px;" />`).join('') + '</div>';
-      renderSchoolTodaySummary();
-    }
-    function saveSchoolTimetable() {
+
+    function renderSchoolTableGrid() {
+      const tbody = document.getElementById('schoolGridBody');
+      const headerRow = document.getElementById('schoolGridHeader');
+      if (!tbody || !headerRow) return;
+
+      const cls = document.getElementById('schoolClass').value;
+      const shift = document.getElementById('schoolShift').value;
       const data = getSchoolData();
-      data[getSchoolKey()] = [1,2,3,4,5].map(n => document.getElementById('schoolLesson'+n).value.trim());
-      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      showToast('Đã lưu thời khóa biểu!');
+      const todayDay = String(new Date().getDay());
+
+      // Cập nhật header cột nổi bật ngày hôm nay
+      headerRow.innerHTML = `<th class="tt-lesson-num">Tiết</th>` + daysOrder.map(d => {
+        const isToday = (d.key === todayDay);
+        return `<th class="${isToday ? 'today-col-hdr' : ''}">${d.label} ${isToday ? '●' : ''}</th>`;
+      }).join('');
+
+      // Vẽ 5 tiết học
+      tbody.innerHTML = '';
+      for (let lesson = 1; lesson <= 5; lesson++) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="tt-lesson-num">Tiết ${lesson}</td>` + daysOrder.map(d => {
+          const isToday = (d.key === todayDay);
+          const cellKey = `${cls}_${shift}_${d.key}`;
+          const lessonsArr = data[cellKey] || ['', '', '', '', ''];
+          const val = lessonsArr[lesson - 1] || '';
+          return `
+            <td class="${isToday ? 'today-cell' : ''}">
+              <input type="text" class="tt-cell-input" id="grid_cell_${d.key}_${lesson}" value="${escapeHtml(val)}" placeholder="...">
+            </td>
+          `;
+        }).join('');
+        tbody.appendChild(tr);
+      }
       renderSchoolTodaySummary();
     }
-    function clearSchoolDay() {
-      if (!confirm('Xóa thời khóa biểu buổi này?')) return;
-      const data = getSchoolData(); delete data[getSchoolKey()];
+
+    function saveSchoolGridTimetable() {
+      const cls = document.getElementById('schoolClass').value;
+      const shift = document.getElementById('schoolShift').value;
+      const data = getSchoolData();
+
+      daysOrder.forEach(d => {
+        const cellKey = `${cls}_${shift}_${d.key}`;
+        data[cellKey] = [1, 2, 3, 4, 5].map(l => {
+          const input = document.getElementById(`grid_cell_${d.key}_${l}`);
+          return input ? input.value.trim() : '';
+        });
+      });
+
       localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      renderSchoolTimetable(); showToast('Đã xóa!');
+      showToast('Đã lưu toàn bộ bảng thời khóa biểu!');
+      renderSchoolTodaySummary();
     }
+
+    function clearSchoolGridTimetable() {
+      if (!confirm('Xóa trắng bảng thời khóa biểu buổi này?')) return;
+      const cls = document.getElementById('schoolClass').value;
+      const shift = document.getElementById('schoolShift').value;
+      const data = getSchoolData();
+
+      daysOrder.forEach(d => {
+        delete data[`${cls}_${shift}_${d.key}`];
+      });
+
+      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
+      renderSchoolTableGrid();
+      showToast('Đã xóa dữ liệu bảng!');
+    }
+
     function renderSchoolTodaySummary() {
       const host = document.getElementById('schoolTodaySummary');
       if (!host) return;
       const data = getSchoolData(), day = new Date().getDay();
+      const schoolDaysFull = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+
       function formatShiftRows(shiftArr) {
         if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) return `<div style="color:var(--muted);font-style:italic;font-size:0.75rem;">Chưa nhập</div>`;
         return shiftArr.map((x, i) => x && x.trim() ? `<div class="lesson-row-item"><span class="lesson-badge">Tiết ${i+1}</span> <span>${escapeHtml(x)}</span></div>` : '').filter(Boolean).join('');
       }
+
       const rows = ['10','6'].map(cls => `
         <div style="padding:10px;margin-bottom:8px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
           <div style="font-weight:800;font-size:0.88rem;color:var(--primary-dark);margin-bottom:4px;">🏫 Lớp ${cls}</div>
@@ -1151,7 +1268,7 @@
           <div><span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>${formatShiftRows(data[`${cls}_afternoon_${day}`] || [])}</div>
         </div>
       `);
-      host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDays[day]} hôm nay:</div>` + rows.join('');
+      host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDaysFull[day]} hôm nay:</div>` + rows.join('');
     }
 
     function updateGreetingHeader() {
@@ -1777,7 +1894,7 @@
           localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
           localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
           localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
-          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard(); renderSchoolTimetable();
+          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard(); renderSchoolTableGrid();
           alert('Khôi phục dữ liệu thành công!');
         } catch(_) { alert('Tệp không hợp lệ!'); }
       };
@@ -1793,7 +1910,7 @@
       filterJournals();
       renderIssues();
       updateDashboard();
-      renderSchoolTimetable();
+      renderSchoolTableGrid();
     });
 
     document.body.addEventListener('click', () => { initAudio(); }, { once: true });
