@@ -161,19 +161,102 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    .night-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
-    .night-moon {
-      position: absolute; top: 10px; left: 10px; width: 32px; height: 32px; border-radius: 50%;
-      box-shadow: 8px 5px 0 0 #facc15; transform: rotate(-15deg);
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75)); animation: moonGlow 3s ease-in-out infinite alternate;
+    /* CỤM ĐÊM: MẶT TRĂNG VÀ CÁC NGÔI SAO XANH ĐEN THẪM HUYỀN BÍ 3D */
+    .night-animated-box {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      background: transparent;
+      perspective: 400px;
     }
-    .night-sparkle { position: absolute; line-height: 1; animation: starTwinkle 2s ease-in-out infinite alternate; }
-    .night-sparkle.st1 { top: 6px; right: 12px; font-size: 14px; color: #f59e0b; animation-delay: 0.1s; }
-    .night-sparkle.st2 { top: 34px; right: 8px; font-size: 16px; color: #6366f1; animation-delay: 0.7s; }
-    .night-sparkle.st3 { bottom: 6px; left: 24px; font-size: 12px; color: #facc15; animation-delay: 1.2s; }
-    .night-sparkle.st4 { bottom: 18px; right: 28px; font-size: 11px; color: #0284c7; animation-delay: 0.4s; }
-    @keyframes moonGlow { 0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); } 100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); } }
-    @keyframes starTwinkle { 0% { opacity: 0.25; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.25); } }
+    .night-moon {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      box-shadow: 8px 5px 0 0 #facc15;
+      transform: rotate(-15deg);
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75));
+      animation: moonGlow 3.5s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+    .night-sparkle {
+      position: absolute;
+      line-height: 1;
+      display: inline-block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Sao lớp gần: Rõ nét, kích thước trung bình lớn, sắc xanh đen thẫm pha ánh lam huyền bí */
+    .night-sparkle.st1 {
+      top: 6px;
+      right: 12px;
+      font-size: 14px;
+      color: #1e293b;
+      filter: drop-shadow(0 0 3px #38bdf8) drop-shadow(0 0 7px #0f172a);
+      animation: starPulse3D 2.2s ease-in-out infinite alternate;
+      animation-delay: 0.1s;
+      z-index: 3;
+    }
+    .night-sparkle.st2 {
+      top: 32px;
+      right: 6px;
+      font-size: 15px;
+      color: #0f172a;
+      filter: drop-shadow(0 0 4px #6366f1) drop-shadow(0 0 8px #1e1b4b);
+      animation: starPulse3D 3.1s ease-in-out infinite alternate;
+      animation-delay: 0.9s;
+      z-index: 3;
+    }
+
+    /* Sao lớp xa: Kích thước nhỏ, mờ ảo lùi sâu vào nền (3D depth) */
+    .night-sparkle.st3 {
+      bottom: 8px;
+      left: 22px;
+      font-size: 9px;
+      color: #1e1b4b;
+      filter: drop-shadow(0 0 2px rgba(125, 211, 252, 0.5));
+      animation: starFarDepth 2.6s ease-in-out infinite alternate;
+      animation-delay: 1.4s;
+      z-index: 1;
+    }
+    .night-sparkle.st4 {
+      bottom: 22px;
+      right: 24px;
+      font-size: 8px;
+      color: #0f172a;
+      filter: drop-shadow(0 0 2px rgba(99, 102, 241, 0.6));
+      animation: starFarDepth 3.5s ease-in-out infinite alternate;
+      animation-delay: 0.4s;
+      z-index: 1;
+    }
+    .night-sparkle.st5 {
+      top: 4px;
+      left: 26px;
+      font-size: 7px;
+      color: #1e293b;
+      filter: drop-shadow(0 0 2px rgba(56, 189, 248, 0.4));
+      animation: starFarDepth 2.9s ease-in-out infinite alternate;
+      animation-delay: 1.8s;
+      z-index: 1;
+    }
+
+    @keyframes moonGlow {
+      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-15deg) scale(0.97); }
+      100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); transform: rotate(-15deg) scale(1.03); }
+    }
+    @keyframes starPulse3D {
+      0% { opacity: 0.45; transform: scale(0.85) translateZ(-10px); }
+      50% { opacity: 0.95; transform: scale(1.2) translateZ(12px); }
+      100% { opacity: 0.5; transform: scale(0.9) translateZ(0px); }
+    }
+    @keyframes starFarDepth {
+      0% { opacity: 0.2; transform: scale(0.7) translateY(0); }
+      100% { opacity: 0.75; transform: scale(1.05) translateY(-2px); }
+    }
 
     .rainy-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
     .rain-main-cloud { position: absolute; top: 10px; left: 10px; width: 44px; height: 20px; background: #94a3b8; border-radius: 14px; }
@@ -477,11 +560,8 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI -->
+        <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI (ĐÃ TINH GỌN TIÊU ĐỀ) -->
         <div class="sync-calendar-panel">
-          <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
-            🔔 NẠP CHUÔNG HỆ THỐNG ĐIỆN THOẠI (Báo đúng giờ kể cả khi khoá màn hình):
-          </div>
           <div class="sync-row">
             <div class="custom-multiselect">
               <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
@@ -682,7 +762,7 @@
       view.setUint32(40, numSamples, true);
 
       for (let i = 0; i < numSamples; i++) {
-        const freq = (i < numSamples / 2) ? 900 : 1300;
+        const freq = (i < numSamples / 2) ? 900 : 1350;
         const val = Math.sin((2 * Math.PI * freq * i) / sampleRate);
         view.setUint8(44 + i, Math.floor((val + 1) * 127.5));
       }
@@ -774,7 +854,17 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        widget.innerHTML = `<div class="night-animated-box"><div class="night-moon"></div><span class="night-sparkle st1">✦</span><span class="night-sparkle st2">★</span><span class="night-sparkle st3">✧</span><span class="night-sparkle st4">✦</span></div>`;
+        // Icon Mặt trăng và hệ sao 3D xanh đen thẫm huyền bí
+        widget.innerHTML = `
+          <div class="night-animated-box">
+            <div class="night-moon"></div>
+            <span class="night-sparkle st1">✦</span>
+            <span class="night-sparkle st2">★</span>
+            <span class="night-sparkle st3">✦</span>
+            <span class="night-sparkle st4">✧</span>
+            <span class="night-sparkle st5">★</span>
+          </div>
+        `;
         if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
     }
@@ -1329,7 +1419,6 @@
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
-      // Giữ đúng định dạng Giờ Địa Phương (Floating Local Time YYYYMMDDTHHMMSS) chuẩn RFC 5545
       function formatLocalICS(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         const dateObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
@@ -1539,7 +1628,7 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG PHÁT CHUÔNG TO RÕ VÀ RUNG (ĐÃ VƯỢT RÀO CẢN TRÌNH DUYỆT) ---
+    // --- HỆ THỐNG PHÁT CHUÔNG TO RÕ VÀ RUNG ---
     function unlockAudioContext() {
       if (!alarmAudioBlobUrl) {
         alarmAudioBlobUrl = generateAlarmWav();
@@ -1560,7 +1649,6 @@
 
     function playLoudAlarmBeep() {
       unlockAudioContext();
-      // Cách 1: Web Audio Synth (tần số đôi còi cứu hỏa 900Hz -> 1350Hz)
       if (audioCtx) {
         try {
           const nowTime = audioCtx.currentTime;
@@ -1578,7 +1666,6 @@
         } catch (_) {}
       }
 
-      // Cách 2: HTML5 Audio Fallback đảm bảo loa luôn kêu
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) {
@@ -1723,10 +1810,8 @@
       });
     }
 
-    // Quét mỗi 2.5 giây một lần
     setInterval(checkScheduler, 2500);
 
-    // Kích hoạt ngay khi người dùng mở lại điện thoại/màn hình
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
         unlockAudioContext();
@@ -1784,7 +1869,6 @@
       renderSchoolTableGrid();
     });
 
-    // Mở khoá âm thanh ngay từ thao tác chạm đầu tiên trên điện thoại
     document.body.addEventListener('touchstart', () => { unlockAudioContext(); }, { once: true });
     document.body.addEventListener('click', () => { unlockAudioContext(); }, { once: true });
   </script>
