@@ -161,7 +161,6 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* CỤM ĐÊM: MẶT TRĂNG VÀ CÁC NGÔI SAO XANH ĐEN THẪM HUYỀN BÍ 3D */
     .night-animated-box {
       position: relative;
       width: 68px;
@@ -190,7 +189,6 @@
       pointer-events: none;
     }
 
-    /* Sao lớp gần: Rõ nét, kích thước trung bình lớn, sắc xanh đen thẫm pha ánh lam huyền bí */
     .night-sparkle.st1 {
       top: 6px;
       right: 12px;
@@ -211,8 +209,6 @@
       animation-delay: 0.9s;
       z-index: 3;
     }
-
-    /* Sao lớp xa: Kích thước nhỏ, mờ ảo lùi sâu vào nền (3D depth) */
     .night-sparkle.st3 {
       bottom: 8px;
       left: 22px;
@@ -427,7 +423,6 @@
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
-    /* THỜI KHÓA BIỂU */
     .table-scroll-wrap {
       width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1.5px solid #cbd5e1;
       border-radius: 16px; margin: 12px 0 10px; background: #ffffff; box-shadow: 0 4px 16px rgba(15,23,42,0.04);
@@ -560,7 +555,6 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI (ĐÃ TINH GỌN TIÊU ĐỀ) -->
         <div class="sync-calendar-panel">
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -735,7 +729,6 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // TẠO ÂM THANH DỰ PHÒNG CHỐNG BỊ HỆ ĐIỀU HÀNH CHẶN
     function generateAlarmWav() {
       const sampleRate = 8000;
       const duration = 0.5;
@@ -752,8 +745,8 @@
       writeString(view, 8, 'WAVE');
       writeString(view, 12, 'fmt ');
       view.setUint32(16, 16, true);
-      view.setUint16(20, 1, true); // PCM
-      view.setUint16(22, 1, true); // mono
+      view.setUint16(20, 1, true);
+      view.setUint16(22, 1, true);
       view.setUint32(24, sampleRate, true);
       view.setUint32(28, sampleRate, true);
       view.setUint16(32, 1, true);
@@ -854,7 +847,6 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        // Icon Mặt trăng và hệ sao 3D xanh đen thẫm huyền bí
         widget.innerHTML = `
           <div class="night-animated-box">
             <div class="night-moon"></div>
@@ -1037,7 +1029,6 @@
       });
     }
 
-    // --- THỜI KHÓA BIỂU MA TRẬN ---
     const daysOrder = [
       { key: '1', label: 'Thứ 2' }, { key: '2', label: 'Thứ 3' },
       { key: '3', label: 'Thứ 4' }, { key: '4', label: 'Thứ 5' },
@@ -1415,7 +1406,6 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- FIX LỖI MÚI GIỜ & CHUẨN HOÁ CHUÔNG BÁO VÀO LỊCH ĐIỆN THOẠI (KHÔNG LỆCH GIỜ) ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
@@ -1478,7 +1468,6 @@
           const outStart = formatLocalICS(y, m, d, rawOut, 0);
           const outEnd = formatLocalICS(y, m, d, rawOut, 15);
 
-          // Báo thức Vào Ca - Kèm báo trước 5 phút và chuông reo to đúng giờ
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v3@shiftapp.local`,
@@ -1502,7 +1491,6 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // Báo thức Ra Ca - Reo chuông đúng giờ
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v3@shiftapp.local`,
@@ -1628,7 +1616,6 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG PHÁT CHUÔNG TO RÕ VÀ RUNG ---
     function unlockAudioContext() {
       if (!alarmAudioBlobUrl) {
         alarmAudioBlobUrl = generateAlarmWav();
@@ -1754,7 +1741,6 @@
       } catch (_) {}
     }
 
-    // --- BỘ QUÉT TỰ ĐỘNG BÁO ĐÚNG GIỜ CÀI ĐẶT ---
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
