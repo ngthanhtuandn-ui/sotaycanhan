@@ -85,7 +85,7 @@
     .greeting-text-sub { font-size: 0.76rem; font-weight: 600; color: #0284c7; margin-top: 2px; }
     .weather-status-text { font-size: 0.74rem; color: #64748b; font-weight: 600; }
 
-    /* ICON THỜI TIẾT ĐỘNG KHÔNG CÓ NỀN ĐEN */
+    /* ICON THỜI TIẾT ĐỘNG HOÀN TOÀN KHÔNG CÓ NỀN ĐEN */
     .weather-widget {
       position: relative;
       width: 68px;
@@ -139,10 +139,7 @@
     .sun-beam:nth-child(3) { transform: rotate(90deg); }
     .sun-beam:nth-child(4) { transform: rotate(135deg); }
 
-    @keyframes sunSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    @keyframes sunSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     @keyframes sunPulse {
       0% { transform: scale(0.92); box-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
       100% { transform: scale(1.1); box-shadow: 0 0 24px rgba(234, 88, 12, 0.9); }
@@ -179,14 +176,7 @@
       box-shadow: 0 2px 8px rgba(56, 189, 248, 0.25);
     }
     .floating-cloud-1::before {
-      content: '';
-      position: absolute;
-      top: -9px;
-      left: 7px;
-      width: 18px;
-      height: 18px;
-      background: #7dd3fc;
-      border-radius: 50%;
+      content: ''; position: absolute; top: -9px; left: 7px; width: 18px; height: 18px; background: #7dd3fc; border-radius: 50%;
     }
     .floating-cloud-2 {
       position: absolute;
@@ -200,14 +190,7 @@
       opacity: 0.85;
     }
     .floating-cloud-2::before {
-      content: '';
-      position: absolute;
-      top: -7px;
-      left: 6px;
-      width: 14px;
-      height: 14px;
-      background: #38bdf8;
-      border-radius: 50%;
+      content: ''; position: absolute; top: -7px; left: 6px; width: 14px; height: 14px; background: #38bdf8; border-radius: 50%;
     }
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
@@ -231,11 +214,7 @@
       filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75));
       animation: moonGlow 3s ease-in-out infinite alternate;
     }
-    .night-sparkle {
-      position: absolute;
-      line-height: 1;
-      animation: starTwinkle 2s ease-in-out infinite alternate;
-    }
+    .night-sparkle { position: absolute; line-height: 1; animation: starTwinkle 2s ease-in-out infinite alternate; }
     .night-sparkle.st1 { top: 6px; right: 12px; font-size: 14px; color: #f59e0b; animation-delay: 0.1s; }
     .night-sparkle.st2 { top: 34px; right: 8px; font-size: 16px; color: #6366f1; animation-delay: 0.7s; }
     .night-sparkle.st3 { bottom: 6px; left: 24px; font-size: 12px; color: #facc15; animation-delay: 1.2s; }
@@ -268,14 +247,7 @@
       box-shadow: 0 3px 10px rgba(100, 116, 139, 0.3);
     }
     .rain-main-cloud::before {
-      content: '';
-      position: absolute;
-      top: -11px;
-      left: 10px;
-      width: 22px;
-      height: 22px;
-      background: #94a3b8;
-      border-radius: 50%;
+      content: ''; position: absolute; top: -11px; left: 10px; width: 22px; height: 22px; background: #94a3b8; border-radius: 50%;
     }
     .anim-drop {
       position: absolute;
@@ -528,7 +500,7 @@
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
-    /* THỜI KHÓA BIỂU TRANG TRÍ MỚI & BẮT MẮT */
+    /* THỜI KHÓA BIỂU */
     .table-scroll-wrap {
       width: 100%;
       overflow-x: auto;
@@ -552,14 +524,9 @@
       border-bottom: 1px solid #e2e8f0;
       padding: 6px 4px;
     }
-    .tt-table th:last-child, .tt-table td:last-child {
-      border-right: none;
-    }
-    .tt-table tr:last-child td {
-      border-bottom: none;
-    }
+    .tt-table th:last-child, .tt-table td:last-child { border-right: none; }
+    .tt-table tr:last-child td { border-bottom: none; }
 
-    /* Tiêu đề thứ đẹp mắt */
     .tt-hdr-day {
       background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
       color: #334155;
@@ -573,7 +540,6 @@
       border-bottom: 2px solid #3b82f6;
     }
 
-    /* Cột Tiết học trang trí dạng thẻ */
     .tt-lesson-badge-cell {
       background: #f8fafc;
       width: 62px;
@@ -597,7 +563,6 @@
       border: 1px solid #fdba74;
     }
 
-    /* Ô nhập liệu Buổi sáng (1 dòng) */
     .tt-cell-input-morning {
       width: 100%;
       border: 1px solid #f1f5f9;
@@ -617,7 +582,7 @@
       box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
     }
 
-    /* Ô nhập liệu Buổi chiều (2 dòng: Môn + Giờ, không có dấu ...) */
+    /* Buổi chiều: hoàn toàn không có chữ placeholder */
     .tt-cell-afternoon-wrap {
       display: flex;
       flex-direction: column;
@@ -659,11 +624,8 @@
       background: #f0f9ff;
     }
 
-    .tt-table td.today-cell {
-      background: #f0fdf4;
-    }
+    .tt-table td.today-cell { background: #f0fdf4; }
 
-    /* Hàng nút bấm thu gọn, cùng 1 hàng */
     .school-actions-row {
       display: flex;
       gap: 8px;
@@ -759,10 +721,11 @@
     </div>
 
     <div class="nav-tabs">
-      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
-      <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">📔 Nhật Ký</button>
-      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Làm</button>
-      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">🎒 Thời khóa biểu</button>
+      <!-- Đã xóa bỏ icon số 17 nhỏ ở nút tab Lịch Ca -->
+      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">Lịch Ca</button>
+      <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">Nhật Ký</button>
+      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">Việc Cần Làm</button>
+      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">Thời khóa biểu</button>
     </div>
 
     <!-- VIEW 1: LỊCH CA -->
@@ -890,12 +853,11 @@
       <div id="issuesList"></div>
     </div>
 
-    <!-- VIEW 4: THỜI KHÓA BIỂU DẠNG BẢNG TRANG TRÍ ĐẸP & TỐI ƯU BUỔI CHIỀU -->
+    <!-- VIEW 4: THỜI KHÓA BIỂU -->
     <div id="view-school" style="display:none;">
       <div class="card-box">
         <div style="padding:14px 16px;margin:-4px -4px 14px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;">
-          <h3 style="font-size:1.02rem;margin:0 0 4px;color:#fff;">🎒 Thời khóa biểu của các con</h3>
-          <div style="font-size:0.75rem; opacity:0.9;">Bảng ma trận tuần: Sáng 5 tiết chuẩn, Chiều 4 hàng học thêm</div>
+          <h3 style="font-size:1.02rem;margin:0;color:#fff;">🎒 Thời khóa biểu của các con</h3>
         </div>
         <div class="row form-group">
           <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;">
@@ -904,11 +866,14 @@
           </div>
           <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;">
             <label style="color:#c2410c;">☀️ Buổi học</label>
-            <select id="schoolShift" onchange="renderSchoolTableGrid()"><option value="morning">🌅 Buổi sáng (5 Tiết)</option><option value="afternoon">🌇 Buổi chiều (4 Hàng thêm)</option></select>
+            <!-- Đã rút gọn chỉ còn Buổi sáng, Buổi chiều -->
+            <select id="schoolShift" onchange="renderSchoolTableGrid()">
+              <option value="morning">🌅 Buổi sáng</option>
+              <option value="afternoon">🌇 Buổi chiều</option>
+            </select>
           </div>
         </div>
 
-        <!-- BẢNG TỔNG QUÁT 7 NGÀY ĐÃ ĐƯỢC TRANG TRÍ BẮT MẮT -->
         <div class="table-scroll-wrap">
           <table class="tt-table" id="schoolGridTable">
             <thead>
@@ -918,7 +883,7 @@
           </table>
         </div>
 
-        <!-- 2 NÚT THAO TÁC GỌN GÀNG TRÊN CÙNG 1 HÀNG -->
+        <!-- 2 NÚT THAO TÁC CÙNG 1 HÀNG -->
         <div class="school-actions-row">
           <button class="btn-school-save" onclick="saveSchoolGridTimetable()">💾 Lưu Thời Khóa Biểu</button>
           <button class="btn-school-clear" onclick="clearSchoolGridTimetable()">🗑 Xóa Buổi Này</button>
@@ -951,28 +916,30 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // DANH SÁCH CÂU CHÚC TƯƠI SÁNG PHÂN BỔ 2 DÒNG
+    // KHO CÂU CHÚC & CÂU HỎI THĂM TRUYỀN NĂNG LƯỢNG
     const energeticGreetingPairs = {
       morning: [
         { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày ngập tràn năng lượng và may mắn ✨" },
-        { title: "Xin chào Tuấn Tuấn! ✨", quote: "Chúc một ngày nhiều niềm vui và công việc suôn sẻ!" },
+        { title: "Tuấn Tuấn ơi, hôm nay bạn khỏe không ???", quote: "Chúc bạn một ngày tràn đầy năng lượng và nhiều niềm vui!" },
+        { title: "Xin chào Tuấn Tuấn! ✨", quote: "Hôm nay bạn có gì vui không ??? Chia sẻ năng lượng nhé!" },
         { title: "Chào ngày mới, Tuấn Tuấn! 🌸", quote: "Khởi đầu rực rỡ với nụ cười và tinh thần thoải mái nhất!" },
-        { title: "Xin chào Tuấn Tuấn! 🍀", quote: "Chúc một ngày thật tốt lành, mọi sự hanh thông!" }
+        { title: "Xin chào Tuấn Tuấn! 🍀", quote: "Chúc một ngày thật tốt lành, mọi điều thuận lợi và hanh thông!" }
       ],
       afternoon: [
-        { title: "Xin chào Tuấn Tuấn! ☕", quote: "Chúc buổi chiều tràn đầy nhiệt huyết và năng suất cao!" },
-        { title: "Chào buổi chiều, Tuấn Tuấn! ☀️", quote: "Giữ năng lượng tích cực và thật thư thái nhé!" },
-        { title: "Xin chào Tuấn Tuấn! 🚀", quote: "Chúc công việc thuận buồm xuôi gió và gặt hái nhiều kết quả!" }
+        { title: "Xin chào Tuấn Tuấn! ☕", quote: "Hôm nay công việc của bạn có gì vui không ???" },
+        { title: "Chào buổi chiều, Tuấn Tuấn! ☀️", quote: "Bạn có thấy khỏe và thoải mái không ??? Giữ năng lượng nhé!" },
+        { title: "Xin chào Tuấn Tuấn! 🚀", quote: "Chúc buổi chiều tràn đầy nhiệt huyết và năng suất cao!" },
+        { title: "Chào Tuấn Tuấn! 🌿", quote: "Chúc công việc thuận buồm xuôi gió và gặt hái nhiều kết quả tốt!" }
       ],
       evening: [
-        { title: "Xin chào Tuấn Tuấn! 🌆", quote: "Chúc buổi tối đầm ấm, an vui và thảnh thơi bên gia đình!" },
-        { title: "Chào buổi tối, Tuấn Tuấn! 🌿", quote: "Sau một ngày dài, chúc bạn thật thư giãn và trọn vẹn!" },
-        { title: "Xin chào Tuấn Tuấn! ✨", quote: "Chúc buổi tối nhiều tiếng cười và ấm áp yêu thương!" }
+        { title: "Xin chào Tuấn Tuấn! 🌆", quote: "Hôm nay của bạn thế nào rồi, có điều gì vui kể nghe nhé ???" },
+        { title: "Tuấn Tuấn ơi, hôm nay có mệt không ???", quote: "Chúc bạn buổi tối đầm ấm, an vui và thảnh thơi bên gia đình!" },
+        { title: "Chào buổi tối, Tuấn Tuấn! ✨", quote: "Chúc buổi tối nhiều tiếng cười, bình an và ấm áp yêu thương!" }
       ],
       night: [
         { title: "Xin chào Tuấn Tuấn! 🌙", quote: "Chúc buổi tối ngon giấc và có những giấc mơ thật đẹp!" },
-        { title: "Chào Tuấn Tuấn! ✨", quote: "Nghỉ ngơi thật sâu để nạp đầy năng lượng cho ngày mai nhé!" },
-        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Chúc bạn một đêm bình an, thư thái và sảng khoái thức giấc!" }
+        { title: "Tuấn Tuấn ơi, hôm nay có gì vui không ???", quote: "Nghỉ ngơi thật sâu để nạp đầy năng lượng cho ngày mai nhé ✨" },
+        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Chúc bạn một đêm bình an, ngủ thật ngon và thức dậy sảng khoái!" }
       ]
     };
 
@@ -1265,7 +1232,7 @@
       });
     }
 
-    // --- THỜI KHÓA BIỂU MA TRẬN 7 NGÀY (SÁNG 5 TIẾT, CHIỀU 4 HÀNG THÊM 2 DÒNG) ---
+    // --- THỜI KHÓA BIỂU MA TRẬN 7 NGÀY ---
     const daysOrder = [
       { key: '1', label: 'Thứ 2' },
       { key: '2', label: 'Thứ 3' },
@@ -1290,7 +1257,6 @@
       const data = getSchoolData();
       const todayDay = String(new Date().getDay());
 
-      // Vẽ Header các thứ
       headerRow.innerHTML = `<th class="tt-lesson-badge-cell" style="font-weight:800; font-size:0.75rem; color:#475569;">${shift === 'afternoon' ? 'Hàng' : 'Tiết'}</th>` + daysOrder.map(d => {
         const isToday = (d.key === todayDay);
         return `<th class="tt-hdr-day ${isToday ? 'today-col-hdr' : ''}">${d.label} ${isToday ? '●' : ''}</th>`;
@@ -1299,7 +1265,7 @@
       tbody.innerHTML = '';
 
       if (shift === 'afternoon') {
-        // BUỔI CHIỀU: 4 HÀNG NGANG, 2 DÒNG (TÊN MÔN + GIỜ HỌC), KHÔNG DẤU ...
+        // BUỔI CHIỀU: 4 HÀNG, HOÀN TOÀN KHÔNG CÓ CHỮ PLACEHOLDER
         for (let rowIdx = 1; rowIdx <= 4; rowIdx++) {
           const tr = document.createElement('tr');
           tr.innerHTML = `
@@ -1312,7 +1278,6 @@
             const savedArr = data[cellKey] || [];
             const rawVal = savedArr[rowIdx - 1] || '';
 
-            // Tách Môn và Giờ (nếu đã lưu dạng "Toán | 14h - 16h" hoặc "Toán\n14h")
             let subject = rawVal;
             let timeStr = '';
             if (rawVal.includes('|')) {
@@ -1328,8 +1293,8 @@
             return `
               <td class="${isToday ? 'today-cell' : ''}">
                 <div class="tt-cell-afternoon-wrap">
-                  <input type="text" class="tt-input-subject" id="sub_${d.key}_${rowIdx}" value="${escapeHtml(subject)}" placeholder="Môn học">
-                  <input type="text" class="tt-input-time" id="time_${d.key}_${rowIdx}" value="${escapeHtml(timeStr)}" placeholder="Giờ học">
+                  <input type="text" class="tt-input-subject" id="sub_${d.key}_${rowIdx}" value="${escapeHtml(subject)}" placeholder="">
+                  <input type="text" class="tt-input-time" id="time_${d.key}_${rowIdx}" value="${escapeHtml(timeStr)}" placeholder="">
                 </div>
               </td>
             `;
@@ -1337,7 +1302,7 @@
           tbody.appendChild(tr);
         }
       } else {
-        // BUỔI SÁNG: 5 TIẾT CHUẨN, KHÔNG DẤU ...
+        // BUỔI SÁNG: 5 TIẾT CHUẨN
         for (let lesson = 1; lesson <= 5; lesson++) {
           const tr = document.createElement('tr');
           tr.innerHTML = `
@@ -1427,7 +1392,7 @@
           } else {
             text = escapeHtml(text);
           }
-          return `<div class="lesson-row-item"><span class="lesson-badge">${isAfternoon ? 'Ca ' + (i+1) : 'Tiết ' + (i+1)}</span> <span>${text}</span></div>`;
+          return `<div class="lesson-row-item"><span class="lesson-badge">${isAfternoon ? 'Học ' + (i+1) : 'Tiết ' + (i+1)}</span> <span>${text}</span></div>`;
         }).filter(Boolean).join('');
       }
 
@@ -1435,10 +1400,10 @@
         <div style="padding:10px;margin-bottom:8px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
           <div style="font-weight:800;font-size:0.88rem;color:var(--primary-dark);margin-bottom:4px;">🏫 Lớp ${cls}</div>
           <div style="margin-bottom:6px;"><span style="font-size:0.75rem;font-weight:700;color:#c2410c;">🌅 Buổi Sáng:</span>${formatShiftRows(data[`${cls}_morning_${day}`] || [], false)}</div>
-          <div><span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều (Học thêm):</span>${formatShiftRows(data[`${cls}_afternoon_${day}`] || [], true)}</div>
+          <div><span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>${formatShiftRows(data[`${cls}_afternoon_${day}`] || [], true)}</div>
         </div>
       `);
-      host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">📅 ${schoolDaysFull[day]} hôm nay:</div>` + rows.join('');
+      host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">Thứ ${schoolDaysFull[day]} hôm nay:</div>` + rows.join('');
     }
 
     function updateGreetingHeader() {
@@ -1533,7 +1498,8 @@
         const sunLabel = `${w.sunday.getDate()}/${w.sunday.getMonth()+1}`;
         const opt = document.createElement('option');
         opt.value = w.index;
-        opt.text = `📅 Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
+        // Đã bỏ emoji icon 17 trong dropdown tuần
+        opt.text = `Tuần ${w.labelNumber} (${monLabel} - ${sunLabel})`;
         if (w.index === currentWeekIndex) opt.selected = true;
         select.appendChild(opt);
       });
@@ -1635,7 +1601,7 @@
       const isFullMonth = (selectedSyncWeeks.size === monthWeeksList.length);
       const mItem = document.createElement('div');
       mItem.className = `multiselect-item ${isFullMonth ? 'selected' : ''}`;
-      mItem.innerHTML = `<span>📅 Cả tháng</span><span class="multiselect-check">✔</span>`;
+      mItem.innerHTML = `<span>Cả tháng</span><span class="multiselect-check">✔</span>`;
       mItem.onclick = (e) => {
         e.stopPropagation();
         selectedSyncWeeks.clear();
