@@ -97,7 +97,7 @@
 
     .weather-widget {
       position: relative;
-      width: 100px;
+      width: 86px;
       height: 68px;
       display: flex;
       align-items: center;
@@ -149,12 +149,12 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* ICON ĐÊM TRĂNG ĐƯỢC ĐẨY LÊN CAO HƠN & DẢI SAO TRẢI TRẢI SANG BÊN TRÁI SỐNG ĐỘNG */
-    .night-animated-box { position: relative; width: 100px; height: 68px; }
+    /* ICON ĐÊM TRĂNG TO RỰC RỠ & SAO HUYỀN BÍ ĐẨY XA VỀ PHÍA TRÁI */
+    .night-animated-box { position: relative; width: 86px; height: 68px; }
     .night-moon {
-      position: absolute; top: 2px; right: 0px; width: 44px; height: 44px; border-radius: 50%;
-      box-shadow: 10px 6px 0 0 #facc15; transform: rotate(-15deg);
-      filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.9));
+      position: absolute; top: 6px; right: 2px; width: 48px; height: 48px; border-radius: 50%;
+      box-shadow: 11px 8px 0 0 #facc15; transform: rotate(-18deg);
+      filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.85));
       animation: moonGlow 3.2s ease-in-out infinite alternate;
       z-index: 2;
     }
@@ -163,40 +163,39 @@
       animation: starTwinkle 2.5s ease-in-out infinite alternate;
       z-index: 1;
     }
-    /* Dải sao trải dải xa dần về phía trái */
     .night-sparkle.st-far-left {
-      top: 10px; left: -10px; font-size: 15px; color: #1e3a8a;
-      text-shadow: 0 0 8px rgba(30, 58, 138, 0.9);
+      top: 6px; left: -4px; font-size: 14px; color: #1e3a8a;
+      text-shadow: 0 0 7px rgba(30, 58, 138, 0.85);
       animation-duration: 2.1s; animation-delay: 0.1s;
     }
     .night-sparkle.st-mid-left-high {
-      top: 4px; left: 12px; font-size: 10px; color: #0284c7;
-      text-shadow: 0 0 6px rgba(2, 132, 199, 0.8);
+      top: 28px; left: 8px; font-size: 11px; color: #0284c7;
+      text-shadow: 0 0 6px rgba(2, 132, 199, 0.75);
       animation-duration: 3.1s; animation-delay: 0.8s;
     }
     .night-sparkle.st-mid-left-low {
-      bottom: 8px; left: -2px; font-size: 16px; color: #172554;
-      text-shadow: 0 0 9px rgba(23, 37, 84, 0.9);
+      bottom: 6px; left: -2px; font-size: 15px; color: #172554;
+      text-shadow: 0 0 8px rgba(23, 37, 84, 0.9);
       animation-duration: 2.6s; animation-delay: 1.4s;
     }
     .night-sparkle.st-near-left {
-      bottom: 22px; left: 24px; font-size: 12px; color: #2563eb;
-      text-shadow: 0 0 7px rgba(37, 99, 235, 0.85);
+      bottom: 14px; left: 20px; font-size: 12px; color: #1e40af;
+      text-shadow: 0 0 6px rgba(30, 64, 175, 0.8);
       animation-duration: 1.9s; animation-delay: 0.4s;
     }
     .night-sparkle.st-near-moon {
-      top: 26px; left: 42px; font-size: 9px; color: #38bdf8;
-      text-shadow: 0 0 5px rgba(56, 189, 248, 0.8);
+      top: 2px; left: 18px; font-size: 10px; color: #0369a1;
+      text-shadow: 0 0 5px rgba(3, 105, 161, 0.75);
       animation-duration: 2.8s; animation-delay: 1.1s;
     }
 
     @keyframes moonGlow {
-      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-15deg) scale(0.96); }
-      100% { filter: drop-shadow(0 0 16px rgba(250, 204, 21, 1)); transform: rotate(-15deg) scale(1.04); }
+      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-18deg) scale(0.97); }
+      100% { filter: drop-shadow(0 0 16px rgba(250, 204, 21, 1)); transform: rotate(-18deg) scale(1.04); }
     }
     @keyframes starTwinkle {
-      0% { opacity: 0.25; transform: scale(0.65); }
-      50% { opacity: 1; transform: scale(1.2); }
+      0% { opacity: 0.2; transform: scale(0.65); }
+      50% { opacity: 0.95; transform: scale(1.15); }
       100% { opacity: 0.35; transform: scale(0.75); }
     }
 
@@ -498,6 +497,9 @@
         <div class="week-grid" id="weekGridContainer"></div>
 
         <div class="sync-calendar-panel">
+          <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
+            🔔 NẠP LỊCH BÁO CA VÀO GOOGLE / ĐIỆN THOẠI (Báo cả khi khóa màn hình):
+          </div>
           <div class="sync-row">
             <div class="custom-multiselect">
               <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
@@ -718,33 +720,29 @@
 
     let alarmAudioBlobUrl = null;
 
-    /* BỘ CÂU CHÚC PHONG PHÚ: ĐỀ TÀI NGÀY MỚI, NỖ LỰC, KIẾN THỨC, TÌNH YÊU & LẠC QUAN */
     const energeticGreetingPairs = {
       morning: [
-        { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày ngập tràn năng lượng, làm việc hiệu quả và may mắn ✨" },
-        { title: "Tuấn Tuấn ơi, khởi đầu ngày mới thật rực rỡ! 🚀", quote: "Mỗi ngày mới là một cơ hội để bứt phá và tiến gần hơn đến mục tiêu!" },
-        { title: "Xin chào Tuấn Tuấn! 🌿", quote: "Tích cực trau dồi kiến thức mỗi ngày - Chìa khóa vàng mở ra thành công!" },
-        { title: "Chào ngày mới, Tuấn Tuấn! 🌸", quote: "Hãy luôn tự tin, nỗ lực hết mình và lan tỏa năng lượng tích cực nhé!" },
-        { title: "Xin chào Tuấn Tuấn! 🍀", quote: "Nụ cười rạng rỡ, tinh thần lạc quan - Mọi khó khăn đều sẽ vượt qua dễ dàng!" },
-        { title: "Sáng tốt lành, Tuấn Tuấn! ☕", quote: "Học hỏi điều mới mỗi ngày giúp bạn ngày càng bản lĩnh và vững vàng hơn!" }
+        { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày ngập tràn năng lượng và may mắn ✨" },
+        { title: "Tuấn Tuấn ơi, hôm nay bạn khỏe không ???", quote: "Chúc bạn một ngày tràn đầy năng lượng và nhiều niềm vui!" },
+        { title: "Xin chào Tuấn Tuấn! ✨", quote: "Hôm nay bạn có gì vui không ??? Chia sẻ năng lượng nhé!" },
+        { title: "Chào ngày mới, Tuấn Tuấn! 🌸", quote: "Khởi đầu rực rỡ với nụ cười và tinh thần thoải mái nhất!" },
+        { title: "Xin chào Tuấn Tuấn! 🍀", quote: "Chúc một ngày thật tốt lành, mọi điều thuận lợi và hanh thông!" }
       ],
       afternoon: [
-        { title: "Xin chào Tuấn Tuấn! ☕", quote: "Chúc buổi chiều làm việc hăng hái, giữ vững phong độ và năng suất cao!" },
-        { title: "Chào buổi chiều, Tuấn Tuấn! ☀️", quote: "Hãy tự hào về những nỗ lực bạn đã bỏ ra từ sáng đến giờ nhé!" },
-        { title: "Xin chào Tuấn Tuấn! 🚀", quote: "Kiên trì và học hỏi không ngừng - Bông hoa thành công đang chờ bạn gặt hái!" },
-        { title: "Chào Tuấn Tuấn! 🌿", quote: "Giữ tâm thế lạc quan, làm việc hết mình và luôn tràn đầy tình yêu cuộc sống!" },
-        { title: "Buổi chiều vui vẻ, Tuấn Tuấn! 🎯", quote: "Tập trung cao độ, giải quyết gọn gàng công việc để có niềm vui trọn vẹn!" }
+        { title: "Xin chào Tuấn Tuấn! ☕", quote: "Hôm nay công việc của bạn có gì vui không ???" },
+        { title: "Chào buổi chiều, Tuấn Tuấn! ☀️", quote: "Bạn có thấy khỏe và thoải mái không ??? Giữ năng lượng nhé!" },
+        { title: "Xin chào Tuấn Tuấn! 🚀", quote: "Chúc buổi chiều tràn đầy nhiệt huyết và năng suất cao!" },
+        { title: "Chào Tuấn Tuấn! 🌿", quote: "Chúc công việc thuận buồm xuôi gió và gặt hái nhiều kết quả tốt!" }
       ],
       evening: [
-        { title: "Xin chào Tuấn Tuấn! 🌆", quote: "Một ngày làm việc chăm chỉ trôi qua, chúc bạn có buổi tối ấm áp bên gia đình!" },
-        { title: "Tuấn Tuấn ơi, hôm nay thế nào ???", quote: "Thả lỏng thư giãn, dành thời gian cho yêu thương và nạp lại năng lượng nhé!" },
-        { title: "Chào buổi tối, Tuấn Tuấn! ✨", quote: "Tình yêu thương và sự bình an trong tâm hồn là món quà tuyệt vời nhất!" },
-        { title: "Buổi tối an vui, Tuấn Tuấn! 🏡", quote: "Đọc thêm một vài trang sách hay để tích lũy thêm nhiều vốn sống quý báu!" }
+        { title: "Xin chào Tuấn Tuấn! 🌆", quote: "Hôm nay của bạn thế nào rồi, có điều gì vui kể nghe nhé ???" },
+        { title: "Tuấn Tuấn ơi, hôm nay có mệt không ???", quote: "Chúc bạn buổi tối đầm ấm, an vui và thảnh thơi bên gia đình!" },
+        { title: "Chào buổi tối, Tuấn Tuấn! ✨", quote: "Chúc buổi tối nhiều tiếng cười, bình an và ấm áp yêu thương!" }
       ],
       night: [
-        { title: "Xin chào Tuấn Tuấn! 🌙", quote: "Chúc buổi tối ngon giấc, gạt bỏ mọi lo âu và có giấc mơ thật đẹp!" },
-        { title: "Tuấn Tuấn ơi, chúc ngủ ngon! 💤", quote: "Bạn đã làm rất tốt hôm nay rồi. Nghỉ ngơi thật sâu để ngày mai bứt phá nhé!" },
-        { title: "Chúc ngủ ngon, Tuấn Tuấn! ✨", quote: "Giữ tinh thần lạc quan yêu đời, thức dậy sảng khoái vào sáng mai!" }
+        { title: "Xin chào Tuấn Tuấn! 🌙", quote: "Chúc buổi tối ngon giấc và có những giấc mơ thật đẹp!" },
+        { title: "Tuấn Tuấn ơi, hôm nay có gì vui không ???", quote: "Nghỉ ngơi thật sâu để nạp đầy năng lượng cho ngày mai nhé ✨" },
+        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Chúc bạn một đêm bình an, ngủ thật ngon và thức dậy sảng khoái!" }
       ]
     };
 
@@ -759,7 +757,7 @@
       else if (h >= 17 && h < 21) pool = energeticGreetingPairs.evening;
       else pool = energeticGreetingPairs.night;
 
-      greetingListForToday = [...pool, ...energeticGreetingPairs.morning, ...energeticGreetingPairs.afternoon, ...energeticGreetingPairs.evening];
+      greetingListForToday = [...pool, ...energeticGreetingPairs.morning, ...energeticGreetingPairs.evening];
       currentGreetingIdx = Math.floor(Math.random() * pool.length);
       displayCurrentGreeting();
     }
@@ -803,15 +801,14 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        /* ICON ĐÊM MỚI VỚI TRĂNG LÊN CAO VÀ DẢI SAO KÉO DÀI SANG TRÁI SỐNG ĐỘNG */
         widget.innerHTML = `
           <div class="night-animated-box">
             <div class="night-moon"></div>
             <span class="night-sparkle st-far-left" title="Sao xa góc trái">★</span>
-            <span class="night-sparkle st-mid-left-high" title="Sao trên góc trái">✦</span>
-            <span class="night-sparkle st-mid-left-low" title="Sao xa dưới trái">★</span>
-            <span class="night-sparkle st-near-left" title="Sao giữa trái">✦</span>
-            <span class="night-sparkle st-near-moon" title="Sao gần trăng">✧</span>
+            <span class="night-sparkle st-mid-left-high" title="Sao giữa trái">✦</span>
+            <span class="night-sparkle st-mid-left-low" title="Sao góc dưới xa">★</span>
+            <span class="night-sparkle st-near-left" title="Sao gần trăng">✦</span>
+            <span class="night-sparkle st-near-moon" title="Sao trên cao">✧</span>
           </div>`;
         if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
@@ -1362,12 +1359,13 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    /* RÚT GỌN TÊN CÁC SỰ KIỆN LỊCH (C1, C2, Off, Tan C1, Tan C2) */
+    // --- XUẤT LỊCH ĐIỆN THOẠI & GOOGLE CALENDAR BẰNG CHUẨN UTC TUYỆT ĐỐI (KHÔNG LỖI 0 SỰ KIỆN) ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
       const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
+      // Chuyển giờ địa phương Việt Nam sang chuỗi UTC kết thúc bằng Z (chuẩn RFC 5545)
       function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         const localDate = new Date(year, month - 1, day, h, m + addMinutes, 0);
@@ -1408,8 +1406,8 @@
               `DTSTAMP:${dtStamp}`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 Off`,
-              `DESCRIPTION:Hôm nay nghỉ ca`,
+              `SUMMARY:🔴 Off (Nghỉ ca)`,
+              `DESCRIPTION:Hôm nay bạn nghỉ trực`,
               `STATUS:CONFIRMED`,
               'TRANSP:TRANSPARENT',
               'END:VEVENT'
@@ -1426,11 +1424,10 @@
 
           const isCa1 = (shift === 'ca1');
           const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
-          const tanTitle = isCa1 ? '🏁 Tan C1' : '🏁 Tan C2';
           const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
 
           count++;
-          // Sự kiện 1: Vào Ca Trực
+          // Sự kiện 1: Vào Ca Trực (Đổ chuông đúng giờ vào)
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
@@ -1438,7 +1435,7 @@
             `DTSTART:${inTimeUTC}`,
             `DTEND:${outTimeUTC}`,
             `SUMMARY:${summaryTitle}`,
-            `DESCRIPTION:${shiftLabel} (${rawIn} - ${rawOut})`,
+            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1449,15 +1446,15 @@
           ].join('\r\n'));
 
           count++;
-          // Sự kiện 2: Báo Tan Ca
+          // Sự kiện 2: Báo Tan Ca (Đổ chuông đúng mốc hết giờ)
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-out-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${outTimeUTC}`,
             `DTEND:${outEndUTC}`,
-            `SUMMARY:${tanTitle}`,
-            `DESCRIPTION:Tan ${shiftLabel} (${rawOut})`,
+            `SUMMARY:🏁 Tan ${shiftLabel}`,
+            `DESCRIPTION:Đã kết thúc ${shiftLabel} (${rawOut}). Tan ca!`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
