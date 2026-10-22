@@ -60,20 +60,20 @@
       cursor: pointer;
       font-weight: 600;
       backdrop-filter: blur(6px);
-      transition: all 0.15s ease;
+      transition: all 0.2s ease;
     }
     .header-btns button:active { background: rgba(255,255,255,0.4); transform: scale(0.96); }
 
-    /* Nút thông báo trạng thái trực quan */
     #btnNotiStatus.noti-granted {
-      background: rgba(16, 185, 129, 0.45);
-      border-color: #34d399;
-      color: #ecfdf5;
+      background: #10b981 !important;
+      border-color: #34d399 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
     }
     #btnNotiStatus.noti-denied {
-      background: rgba(239, 68, 68, 0.45);
-      border-color: #f87171;
-      color: #fff;
+      background: #ef4444 !important;
+      border-color: #f87171 !important;
+      color: #ffffff !important;
     }
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
@@ -206,15 +206,15 @@
 
     #alarmBanner {
       display: none; position: sticky; top: 55px; z-index: 105;
-      background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 14px 16px;
-      border-radius: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white; padding: 14px 16px;
+      border-radius: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
       animation: pulse 1s infinite alternate;
     }
     @keyframes pulse { from { opacity: 0.95; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
     .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
     .alarm-title { font-weight: 800; font-size: 0.95rem; }
     .btn-stop-alarm {
-      background: white; color: var(--danger); border: none; padding: 9px 16px; border-radius: 10px;
+      background: white; color: var(--primary); border: none; padding: 9px 16px; border-radius: 10px;
       font-weight: 800; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
@@ -421,13 +421,14 @@
 </head>
 <body>
 
+  <!-- Audio backup với âm chuông êm dịu dự phòng -->
   <audio id="alarmAudioElement" preload="auto" loop></audio>
 
   <header>
     <h1>📋 Sổ Tay & Báo Ca</h1>
     <div class="header-btns">
-      <button onclick="enableSoundTest()">🔊 Bật Chuông & Test</button>
-      <button id="btnNotiStatus" onclick="requestNotificationPermission()">🔔 Bật Báo</button>
+      <button onclick="enableSoundTest()">🔊 Thử Chuông</button>
+      <button id="btnNotiStatus" onclick="toggleNotificationSetting()">🔔 Bật Báo</button>
       <button onclick="exportData()">Sao Lưu</button>
       <button onclick="document.getElementById('importFile').click()">Nhập</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
@@ -463,7 +464,7 @@
       <div class="alarm-content">
         <div>
           <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ BÁO CA TRỰC!</div>
-          <div style="font-size: 0.78rem; margin-top: 2px;" id="alarmDesc">Chuông báo ca đang phát liên tục.</div>
+          <div style="font-size: 0.78rem; margin-top: 2px;" id="alarmDesc">Chuông báo ca êm dịu đang phát...</div>
         </div>
         <button class="btn-stop-alarm" onclick="stopAlarm()">✔ ĐÃ XỬ LÝ (TẮT)</button>
       </div>
@@ -491,7 +492,7 @@
         <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI -->
         <div class="sync-calendar-panel">
           <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
-            🔔 NẠP CHUÔNG HỆ THỐNG ĐIỆN THOẠI (Báo chuẩn 100% kể cả khi tắt màn hình):
+            🔔 NẠP CHUÔNG HỆ THỐNG ĐIỆN THOẠI (Báo đúng giờ kể cả khi khoá màn hình):
           </div>
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -666,10 +667,10 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // TẠO FILE WAV ĐA ÂM SẮC (CHIME BÁO ĐỘNG SANG TRỌNG, ÂM VANG)
-    function generateAlarmWav() {
+    // TẠO ÂM THANH MARIMBA/CHIME DU DƯƠNG NHẸ NHÀNG, KHÔNG CHÓI TAI
+    function generateGentleAlarmWav() {
       const sampleRate = 16000;
-      const duration = 0.6;
+      const duration = 0.8;
       const numSamples = Math.floor(sampleRate * duration);
       const buffer = new ArrayBuffer(44 + numSamples * 2);
       const view = new DataView(buffer);
@@ -692,12 +693,21 @@
       writeString(view, 36, 'data');
       view.setUint32(40, numSamples * 2, true);
 
+      // Hòa âm 3 nốt nhạc êm tai C5 -> E5 -> G5
+      const notes = [523.25, 659.25, 783.99];
       for (let i = 0; i < numSamples; i++) {
         const t = i / sampleRate;
-        const freq1 = (t < 0.28) ? 659.25 : 880.00; // E5 -> A5
-        const freq2 = (t < 0.28) ? 1318.5 : 1760.0; // Hài âm E6 -> A6
-        const envelope = Math.max(0, 1 - (t % 0.28) / 0.28);
-        const sample = (0.7 * Math.sin(2 * Math.PI * freq1 * t) + 0.3 * Math.sin(2 * Math.PI * freq2 * t)) * envelope;
+        let sample = 0;
+        notes.forEach((freq, idx) => {
+          const noteStart = idx * 0.18;
+          if (t >= noteStart) {
+            const dt = t - noteStart;
+            const decay = Math.exp(-dt * 4.5);
+            // Sóng sin kết hợp hài hòa, tạo tiếng chuông gỗ ấm áp
+            sample += (Math.sin(2 * Math.PI * freq * dt) * 0.5 + Math.sin(2 * Math.PI * (freq * 2) * dt) * 0.15) * decay;
+          }
+        });
+        sample = Math.max(-1, Math.min(1, sample * 0.7));
         view.setInt16(44 + i * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
       }
 
@@ -1339,7 +1349,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // NẠP TRỰC TIẾP VÀO LỊCH ĐIỆN THOẠI ĐỂ BÁO KỂ CẢ TẮT MÀN HÌNH
+    // NẠP VÀO LỊCH ĐIỆN THOẠI VỚI BÁO ĐỘNG HỆ THỐNG
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
@@ -1398,30 +1408,29 @@
           const shiftName = (shift === 'ca1' ? 'Ca 1 (Sáng)' : 'Ca 2 (Chiều)');
 
           const inStart = formatLocalICS(y, m, d, rawIn, 0);
-          const inEnd = formatLocalICS(y, m, d, rawIn, 15);
+          const inEnd = formatLocalICS(y, m, d, rawIn, 30);
           const outStart = formatLocalICS(y, m, d, rawOut, 0);
-          const outEnd = formatLocalICS(y, m, d, rawOut, 15);
+          const outEnd = formatLocalICS(y, m, d, rawOut, 30);
 
-          // Báo thức Vào Ca - Chuông và rung trực tiếp trên hệ thống điện thoại
+          // Báo thức Vào Ca
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v4@shiftapp.local`,
+            `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v5@shiftapp.local`,
             `DTSTAMP:${inStart}`,
             `DTSTART:${inStart}`,
             `DTEND:${inEnd}`,
             `SUMMARY:⏰ VÀO ${shiftName.toUpperCase()}`,
-            `DESCRIPTION:Đã đến giờ bắt đầu ${shiftName}!`,
-            'PRIORITY:1',
+            `DESCRIPTION:Đã đến giờ vào ${shiftName}!`,
+            'STATUS:CONFIRMED',
             'BEGIN:VALARM',
-            'TRIGGER:-PT5M',
+            'TRIGGER:-PT10M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Nhắc trước 5 phút: Chuẩn bị vào ${shiftName}!`,
+            `DESCRIPTION:Nhắc trước 10 phút: Chuẩn bị vào ${shiftName}!`,
             'END:VALARM',
             'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:AUDIO',
-            'ATTACH;VALUE=URI:Alarm',
-            `DESCRIPTION:CHUÔNG BÁO: ĐÃ ĐẾN GIỜ VÀO ${shiftName}!`,
+            'TRIGGER:PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:BÁO CA: ĐẾN GIỜ VÀO ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1429,18 +1438,17 @@
           // Báo thức Hết Ca
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v4@shiftapp.local`,
+            `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v5@shiftapp.local`,
             `DTSTAMP:${outStart}`,
             `DTSTART:${outStart}`,
             `DTEND:${outEnd}`,
             `SUMMARY:🏁 HẾT ${shiftName.toUpperCase()}`,
-            `DESCRIPTION:Đã hết giờ ${shiftName}. Bàn giao và ra về!`,
-            'PRIORITY:1',
+            `DESCRIPTION:Đã kết thúc ${shiftName}! Bàn giao công việc và ra về.`,
+            'STATUS:CONFIRMED',
             'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:AUDIO',
-            'ATTACH;VALUE=URI:Alarm',
-            `DESCRIPTION:CHUÔNG BÁO: HẾT GIỜ ${shiftName}!`,
+            'TRIGGER:PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:BÁO CA: ĐÃ HẾT GIỜ ${shiftName}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1460,11 +1468,11 @@
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `bao_thuc_lich_ca.ics`);
+      link.setAttribute('download', `lich_bao_ca_truc.ics`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã nạp file chuông! Hãy chọn Mở bằng "Lịch" để điện thoại tự báo.');
+      showToast('Đã tải lịch! Hãy chọn "Thêm tất cả" vào ứng dụng Lịch điện thoại.');
     }
 
     function saveIssue() {
@@ -1552,10 +1560,10 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- HỆ THỐNG ÂM THANH MỚI & RUNG MẠNH MẼ ---
+    // --- MỞ KHÓA ÂM THANH & PHÁT CHIME ÊM DỊU ---
     function unlockAudioContext() {
       if (!alarmAudioBlobUrl) {
-        alarmAudioBlobUrl = generateAlarmWav();
+        alarmAudioBlobUrl = generateGentleAlarmWav();
       }
       const audioEl = document.getElementById('alarmAudioElement');
       if (audioEl && !audioEl.src) {
@@ -1571,41 +1579,32 @@
       }
     }
 
-    // ÂM THANH ĐA ÂM VANG VÀ SANG TRỌNG
-    function playHarmonicAlarmChime() {
+    function playGentleChime() {
       unlockAudioContext();
+      // Phát bằng Web Audio Synth nếu có
       if (audioCtx) {
         try {
           const now = audioCtx.currentTime;
-          const osc1 = audioCtx.createOscillator();
-          const osc2 = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
+          const notes = [523.25, 659.25, 783.99]; // Nốt C5, E5, G5 êm đềm
+          notes.forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.16);
 
-          osc1.type = 'triangle';
-          osc2.type = 'sine';
+            gain.gain.setValueAtTime(0.001, now + idx * 0.16);
+            gain.gain.exponentialRampToValueAtTime(0.35, now + idx * 0.16 + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.16 + 0.65);
 
-          // Chuỗi nốt báo thức: Mi (659Hz) nhảy lên La (880Hz)
-          osc1.frequency.setValueAtTime(659.25, now);
-          osc1.frequency.setValueAtTime(880.00, now + 0.22);
-
-          osc2.frequency.setValueAtTime(1318.5, now);
-          osc2.frequency.setValueAtTime(1760.0, now + 0.22);
-
-          gain.gain.setValueAtTime(0.01, now);
-          gain.gain.exponentialRampToValueAtTime(0.9, now + 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
-
-          osc1.connect(gain);
-          osc2.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc1.start(now);
-          osc2.start(now);
-          osc1.stop(now + 0.58);
-          osc2.stop(now + 0.58);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + idx * 0.16);
+            osc.stop(now + idx * 0.16 + 0.7);
+          });
         } catch (_) {}
       }
 
+      // Phát backup qua Audio Element
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) {
@@ -1615,10 +1614,12 @@
       } catch (_) {}
     }
 
-    // RUNG MẠNH HƠN VỚI CHUỖI NHỊP KÉP
-    function triggerStrongVibration() {
+    // Rung đầm, ngắt quãng rõ ràng
+    function triggerDeviceVibration() {
       if ("vibrate" in navigator) {
-        navigator.vibrate([800, 150, 800, 150, 1000]);
+        try {
+          navigator.vibrate([600, 150, 600, 150, 800]);
+        } catch (_) {}
       }
     }
 
@@ -1627,7 +1628,7 @@
       const notiOptions = {
         body: body,
         icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-        vibrate: [800, 150, 800, 150, 1000],
+        vibrate: [600, 150, 600, 150, 800],
         requireInteraction: true,
         tag: 'shift-alarm'
       };
@@ -1653,13 +1654,13 @@
 
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
-      playHarmonicAlarmChime();
-      triggerStrongVibration();
+      playGentleChime();
+      triggerDeviceVibration();
 
       alarmInterval = setInterval(() => {
-        playHarmonicAlarmChime();
-        triggerStrongVibration();
-      }, 750);
+        playGentleChime();
+        triggerDeviceVibration();
+      }, 1400); // Lặp lại êm ái mỗi 1.4 giây
     }
 
     function stopAlarm() {
@@ -1667,7 +1668,9 @@
       alarmInterval = null;
       isAlarmPlaying = false;
       document.getElementById('alarmBanner').style.display = 'none';
-      if ("vibrate" in navigator) navigator.vibrate(0);
+      if ("vibrate" in navigator) {
+        try { navigator.vibrate(0); } catch (_) {}
+      }
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) audioEl.pause();
@@ -1677,7 +1680,7 @@
 
     function enableSoundTest() {
       unlockAudioContext();
-      startContinuousAlarm('🔔 KIỂM TRA CHUÔNG BÁO CA', 'Chuông âm sắc mới đang phát và rung dồn dập...');
+      startContinuousAlarm('🔔 THỬ CHUÔNG BÁO CA', 'Chuông êm ái đang ngân và điện thoại đang rung...');
     }
 
     function showToast(msg) {
@@ -1692,20 +1695,30 @@
       return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    // CẬP NHẬT TRỰC QUAN NÚT BẬT BÁO ĐỂ PHÂN BIỆT ĐÃ BẬT HAY CHƯA
+    // --- CẬP NHẬT TRẠNG THÁI NÚT VÀ BẬT/TẮT THÔNG BÁO ---
+    let localNotiMockState = localStorage.getItem('camp_noti_mock_state') || 'default';
+
     function updateNotiButtonStatus() {
       const btn = document.getElementById('btnNotiStatus');
       if (!btn) return;
+
       if (!('Notification' in window)) {
-        btn.innerText = '🔔 Không hỗ trợ';
-        btn.className = '';
+        // Dự phòng cho môi trường WebView hoặc thiết bị cũ
+        if (localNotiMockState === 'granted') {
+          btn.innerText = '🟢 Đã Bật Báo';
+          btn.className = 'noti-granted';
+        } else {
+          btn.innerText = '🔔 Bật Báo';
+          btn.className = '';
+        }
         return;
       }
+
       if (Notification.permission === 'granted') {
         btn.innerText = '🟢 Đã Bật Báo';
         btn.className = 'noti-granted';
       } else if (Notification.permission === 'denied') {
-        btn.innerText = '🔴 Báo Bị Chặn';
+        btn.innerText = '🔴 Bị Chặn (Xem)';
         btn.className = 'noti-denied';
       } else {
         btn.innerText = '🔔 Bật Báo';
@@ -1713,19 +1726,58 @@
       }
     }
 
-    async function requestNotificationPermission() {
-      if (!('Notification' in window)) { showToast('Trình duyệt không hỗ trợ Web Notification.'); return; }
-      try {
-        const res = await Notification.requestPermission();
-        updateNotiButtonStatus();
-        if (res === 'granted') {
-          triggerSystemNotification('Sổ Tay Báo Ca', 'Quyền thông báo đã kích hoạt thành công!');
-          showToast('Đã bật báo ca thành công!');
-        } else if (res === 'denied') {
-          showToast('Thông báo đang bị chặn trong cài đặt trình duyệt!');
+    async function toggleNotificationSetting() {
+      unlockAudioContext();
+
+      if (!('Notification' in window)) {
+        // Toggle chế độ giả lập nếu WebView không có API
+        if (localNotiMockState === 'granted') {
+          localNotiMockState = 'default';
+          localStorage.setItem('camp_noti_mock_state', 'default');
+          showToast('Đã tắt thông báo!');
+        } else {
+          localNotiMockState = 'granted';
+          localStorage.setItem('camp_noti_mock_state', 'granted');
+          showToast('Đã bật thông báo trên web!');
         }
-      } catch (_) {
         updateNotiButtonStatus();
+        return;
+      }
+
+      if (Notification.permission === 'granted') {
+        showToast('Thông báo đang HOẠT ĐỘNG! Bấm "Thử Chuông" để kiểm tra.');
+        return;
+      }
+
+      if (Notification.permission === 'denied') {
+        alert('Thông báo đang bị CHẶN trên trình duyệt điện thoại. Bạn hãy vào Cài đặt trình duyệt (hoặc icon ổ khóa cạnh tên miền) -> Cài đặt trang web -> Bật "Thông báo".');
+        return;
+      }
+
+      try {
+        // Hỗ trợ cả chuẩn Promise và callback đời cũ trên điện thoại
+        const requestPromise = Notification.requestPermission();
+        if (requestPromise && typeof requestPromise.then === 'function') {
+          requestPromise.then(permission => {
+            handlePermissionResult(permission);
+          }).catch(() => {
+            updateNotiButtonStatus();
+          });
+        } else {
+          Notification.requestPermission(handlePermissionResult);
+        }
+      } catch (e) {
+        showToast('Không thể yêu cầu quyền thông báo.');
+      }
+    }
+
+    function handlePermissionResult(perm) {
+      updateNotiButtonStatus();
+      if (perm === 'granted') {
+        triggerSystemNotification('Sổ Tay Báo Ca', 'Báo ca trực đã sẵn sàng!');
+        showToast('Đã kích hoạt thông báo thành công!');
+      } else {
+        showToast('Chưa cho phép thông báo.');
       }
     }
 
@@ -1756,7 +1808,7 @@
       if (todayShift === 'ca1') {
         if (shiftTimes.c1_in === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 1: VÀO CA', `Đã đến giờ bắt đầu Ca 1 lúc ${currentTime}!`);
+          startContinuousAlarm('⏰ BÁO GIỜ CA 1: VÀO CA', `Đã đến giờ vào Ca 1 lúc ${currentTime}!`);
           return;
         }
         if (shiftTimes.c1_out === currentTime) {
@@ -1767,7 +1819,7 @@
       } else if (todayShift === 'ca2') {
         if (shiftTimes.c2_in === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 2: VÀO CA', `Đã đến giờ bắt đầu Ca 2 lúc ${currentTime}!`);
+          startContinuousAlarm('⏰ BÁO GIỜ CA 2: VÀO CA', `Đã đến giờ vào Ca 2 lúc ${currentTime}!`);
           return;
         }
         if (shiftTimes.c2_out === currentTime) {
@@ -1785,7 +1837,7 @@
       });
     }
 
-    setInterval(checkScheduler, 2500);
+    setInterval(checkScheduler, 2000);
 
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
