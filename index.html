@@ -97,7 +97,7 @@
 
     .weather-widget {
       position: relative;
-      width: 68px;
+      width: 76px;
       height: 68px;
       display: flex;
       align-items: center;
@@ -149,19 +149,54 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    .night-animated-box { position: relative; width: 68px; height: 68px; }
+    /* ICON ĐÊM TRĂNG HUYỀN BÍ: SAO ĐEN XANH THẨM VỀ PHÍA TRÁI */
+    .night-animated-box { position: relative; width: 76px; height: 68px; }
     .night-moon {
-      position: absolute; top: 10px; left: 10px; width: 32px; height: 32px; border-radius: 50%;
-      box-shadow: 8px 5px 0 0 #facc15; transform: rotate(-15deg);
-      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.75)); animation: moonGlow 3s ease-in-out infinite alternate;
+      position: absolute; top: 12px; right: 4px; width: 30px; height: 30px; border-radius: 50%;
+      box-shadow: 7px 5px 0 0 #facc15; transform: rotate(-18deg);
+      filter: drop-shadow(0 0 9px rgba(250, 204, 21, 0.7)); animation: moonGlow 3.2s ease-in-out infinite alternate;
+      z-index: 2;
     }
-    .night-sparkle { position: absolute; line-height: 1; animation: starTwinkle 2s ease-in-out infinite alternate; }
-    .night-sparkle.st1 { top: 6px; right: 12px; font-size: 14px; color: #f59e0b; animation-delay: 0.1s; }
-    .night-sparkle.st2 { top: 34px; right: 8px; font-size: 16px; color: #6366f1; animation-delay: 0.7s; }
-    .night-sparkle.st3 { bottom: 6px; left: 24px; font-size: 12px; color: #facc15; animation-delay: 1.2s; }
-    .night-sparkle.st4 { bottom: 18px; right: 28px; font-size: 11px; color: #0284c7; animation-delay: 0.4s; }
-    @keyframes moonGlow { 0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); } 100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); } }
-    @keyframes starTwinkle { 0% { opacity: 0.25; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.25); } }
+    .night-sparkle {
+      position: absolute; line-height: 1; user-select: none;
+      animation: starTwinkle 2.5s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    .night-sparkle.st-far-left {
+      top: 10px; left: 2px; font-size: 13px; color: #1e3a8a;
+      text-shadow: 0 0 6px rgba(30, 58, 138, 0.7);
+      animation-duration: 2.1s; animation-delay: 0.1s;
+    }
+    .night-sparkle.st-mid-left-high {
+      top: 32px; left: 14px; font-size: 10px; color: #0284c7;
+      text-shadow: 0 0 5px rgba(2, 132, 199, 0.7);
+      animation-duration: 3.1s; animation-delay: 0.8s;
+    }
+    .night-sparkle.st-mid-left-low {
+      bottom: 8px; left: 6px; font-size: 14px; color: #172554;
+      text-shadow: 0 0 7px rgba(23, 37, 84, 0.85);
+      animation-duration: 2.6s; animation-delay: 1.4s;
+    }
+    .night-sparkle.st-near-left {
+      bottom: 18px; left: 28px; font-size: 12px; color: #1e40af;
+      text-shadow: 0 0 6px rgba(30, 64, 175, 0.8);
+      animation-duration: 1.9s; animation-delay: 0.4s;
+    }
+    .night-sparkle.st-near-moon {
+      top: 6px; left: 28px; font-size: 9px; color: #0369a1;
+      text-shadow: 0 0 4px rgba(3, 105, 161, 0.7);
+      animation-duration: 2.8s; animation-delay: 1.1s;
+    }
+
+    @keyframes moonGlow {
+      0% { filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.45)); transform: rotate(-18deg) scale(0.97); }
+      100% { filter: drop-shadow(0 0 13px rgba(250, 204, 21, 0.95)); transform: rotate(-18deg) scale(1.03); }
+    }
+    @keyframes starTwinkle {
+      0% { opacity: 0.2; transform: scale(0.65); }
+      50% { opacity: 0.95; transform: scale(1.15); }
+      100% { opacity: 0.35; transform: scale(0.75); }
+    }
 
     .rainy-animated-box { position: relative; width: 68px; height: 68px; }
     .rain-main-cloud { position: absolute; top: 10px; left: 10px; width: 44px; height: 20px; background: #94a3b8; border-radius: 14px; }
@@ -746,7 +781,7 @@
       { type: 'sunny', label: 'Trời nắng rực rỡ, chan hòa' },
       { type: 'fair', label: 'Bầu trời trong xanh dịu mát' },
       { type: 'rainy', label: 'Trời có mưa, bạn nhớ mang ô nhé' },
-      { type: 'night', label: 'Đêm trong lành, trăng sao lấp lánh' }
+      { type: 'night', label: 'Đêm trong lành, trăng sao huyền bí' }
     ];
     let currentWeatherIndex = 0;
 
@@ -765,7 +800,16 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        widget.innerHTML = `<div class="night-animated-box"><div class="night-moon"></div><span class="night-sparkle st1">✦</span><span class="night-sparkle st2">★</span><span class="night-sparkle st3">✧</span><span class="night-sparkle st4">✦</span></div>`;
+        // Icon đêm trăng: Các ngôi sao màu đen xanh thẳm huyền bí, phân bố lùi về bên trái
+        widget.innerHTML = `
+          <div class="night-animated-box">
+            <div class="night-moon"></div>
+            <span class="night-sparkle st-far-left" title="Sao xa góc trái">★</span>
+            <span class="night-sparkle st-mid-left-high" title="Sao nhỏ giữa trái">✦</span>
+            <span class="night-sparkle st-mid-left-low" title="Sao huyền bí góc dưới">★</span>
+            <span class="night-sparkle st-near-left" title="Sao gần trăng">✦</span>
+            <span class="night-sparkle st-near-moon" title="Sao nhỏ trên cao">✧</span>
+          </div>`;
         if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
     }
@@ -1315,7 +1359,6 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- XUẤT LỊCH ĐIỆN THOẠI: BÁO CẢ GIỜ VÀO VÀ HẾT CA, MÀU CHUẨN XANH - VÀNG - ĐỎ ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
@@ -1355,7 +1398,6 @@
             const nd = nextDay.getDate();
             const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
 
-            // NGÀY NGHỈ: MÀU ĐỎ CHUẨN (🔴 Off)
             events.push([
               'BEGIN:VEVENT',
               `UID:shift-off-${dateStr}-${dayKey}@shiftapp.local`,
@@ -1378,14 +1420,12 @@
           const inTime = formatLocalICS(y, m, d, rawIn, 0);
           const outTime = formatLocalICS(y, m, d, rawOut, 0);
 
-          // Ca 1: Xanh da trời (🔵 Ca 1) | Ca 2: Vàng (🟡 Ca 2)
           const isCa1 = (shift === 'ca1');
           const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
           const hexColor = isCa1 ? '#0284c7' : '#f59e0b';
           const colorName = isCa1 ? 'skyblue' : 'gold';
           const googleColorId = isCa1 ? '7' : '5';
 
-          // BÁO CẢ GIỜ VÀO VÀ GIỜ RA TRỰC
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-${dateStr}-${dayKey}@shiftapp.local`,
