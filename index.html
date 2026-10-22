@@ -68,7 +68,6 @@
       background: #10b981 !important;
       border-color: #34d399 !important;
       color: #ffffff !important;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
     }
     #btnNotiStatus.noti-denied {
       background: #ef4444 !important;
@@ -108,39 +107,16 @@
       user-select: none;
     }
 
-    .sunny-animated-box {
-      position: relative;
-      width: 68px;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-    }
+    .sunny-animated-box { position: relative; width: 68px; height: 68px; display: flex; align-items: center; justify-content: center; }
     .sun-core {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #fffde7 0%, #fde047 30%, #f59e0b 75%, #ea580c 100%);
       box-shadow: 0 0 18px rgba(245, 158, 11, 0.7), inset 0 0 5px #ffffff;
-      animation: sunPulse 3s ease-in-out infinite alternate;
-      z-index: 2;
+      animation: sunPulse 3s ease-in-out infinite alternate; z-index: 2;
     }
-    .sun-rays-wrap {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      animation: sunSpin 14s linear infinite;
-      z-index: 1;
-    }
+    .sun-rays-wrap { position: absolute; width: 100%; height: 100%; animation: sunSpin 14s linear infinite; z-index: 1; }
     .sun-beam {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 3.5px;
-      height: 62px;
-      margin-left: -1.75px;
-      margin-top: -31px;
+      position: absolute; top: 50%; left: 50%; width: 3.5px; height: 62px; margin-left: -1.75px; margin-top: -31px;
       background: linear-gradient(to bottom, #f59e0b 0%, rgba(251,191,36,0) 25%, rgba(251,191,36,0) 75%, #f59e0b 100%);
       border-radius: 4px;
     }
@@ -154,11 +130,11 @@
       100% { transform: scale(1.1); box-shadow: 0 0 24px rgba(234, 88, 12, 0.9); }
     }
 
-    .fair-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
+    .fair-animated-box { position: relative; width: 68px; height: 68px; }
     .fair-sun {
       position: absolute; top: 6px; right: 10px; width: 24px; height: 24px; border-radius: 50%;
-      background: radial-gradient(circle, #fef08a 25%, #f59e0b 100%);
-      box-shadow: 0 0 14px #fbbf24; animation: sunPulse 3s ease-in-out infinite alternate;
+      background: radial-gradient(circle, #fef08a 25%, #f59e0b 100%); box-shadow: 0 0 14px #fbbf24;
+      animation: sunPulse 3s ease-in-out infinite alternate;
     }
     .floating-cloud-1 {
       position: absolute; bottom: 14px; left: 4px; width: 38px; height: 16px; background: #7dd3fc;
@@ -173,7 +149,7 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    .night-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
+    .night-animated-box { position: relative; width: 68px; height: 68px; }
     .night-moon {
       position: absolute; top: 10px; left: 10px; width: 32px; height: 32px; border-radius: 50%;
       box-shadow: 8px 5px 0 0 #facc15; transform: rotate(-15deg);
@@ -187,7 +163,7 @@
     @keyframes moonGlow { 0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); } 100% { filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.95)); } }
     @keyframes starTwinkle { 0% { opacity: 0.25; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.25); } }
 
-    .rainy-animated-box { position: relative; width: 68px; height: 68px; background: transparent; }
+    .rainy-animated-box { position: relative; width: 68px; height: 68px; }
     .rain-main-cloud { position: absolute; top: 10px; left: 10px; width: 44px; height: 20px; background: #94a3b8; border-radius: 14px; }
     .rain-main-cloud::before { content: ''; position: absolute; top: -11px; left: 10px; width: 22px; height: 22px; background: #94a3b8; border-radius: 50%; }
     .anim-drop { position: absolute; width: 2.8px; height: 10px; background: #0284c7; border-radius: 3px; animation: fallDown 0.75s linear infinite; }
@@ -204,17 +180,18 @@
     .stat-label { color: var(--muted); font-size: .74rem; font-weight: 600; }
     .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
 
+    /* BANNER BÁO ĐỘNG ĐÃ LƯỢC BỎ DÒNG CHỮ THỪA */
     #alarmBanner {
       display: none; position: sticky; top: 55px; z-index: 105;
-      background: linear-gradient(135deg, #0284c7, #0369a1); color: white; padding: 14px 16px;
+      background: linear-gradient(135deg, #0284c7, #0369a1); color: white; padding: 12px 16px;
       border-radius: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
       animation: pulse 1s infinite alternate;
     }
     @keyframes pulse { from { opacity: 0.95; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
     .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-    .alarm-title { font-weight: 800; font-size: 0.95rem; }
+    .alarm-title { font-weight: 800; font-size: 0.98rem; }
     .btn-stop-alarm {
-      background: white; color: var(--primary); border: none; padding: 9px 16px; border-radius: 10px;
+      background: white; color: var(--primary); border: none; padding: 9px 18px; border-radius: 10px;
       font-weight: 800; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
@@ -269,7 +246,7 @@
     .badge-journal { background: #fef08a; color: #854d0e; }
 
     .item-card { background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
-    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .card-top { display: space-between; align-items: center; margin-bottom: 6px; }
     .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
     .badge-phat-sinh { background: #ede9fe; color: #5b21b6; }
     .card-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
@@ -298,6 +275,7 @@
     }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
 
+    /* MÀU ĐẶC TRƯNG CHUẨN TRÊN APP */
     .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
     .day-col.is-off .calendar-date { color: #ef4444 !important; }
@@ -322,6 +300,7 @@
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
+    /* BẢNG ĐỒNG BỘ TINH GỌN CHỮ */
     .sync-calendar-panel { background: #eff6ff; border: 1.5px solid #60a5fa; border-radius: 12px; padding: 10px; margin-top: 8px; }
     .sync-row { display: flex; gap: 6px; position: relative; }
     .custom-multiselect { flex: 1.3; position: relative; }
@@ -421,7 +400,6 @@
 </head>
 <body>
 
-  <!-- Audio backup với âm chuông êm dịu dự phòng -->
   <audio id="alarmAudioElement" preload="auto" loop></audio>
 
   <header>
@@ -459,13 +437,10 @@
       </div>
     </div>
 
-    <!-- BANNER BÁO ĐỘNG ĐANG REO -->
+    <!-- BANNER BÁO ĐỘNG ĐANG REO (ĐÃ LƯỢC BỎ DÒNG CHỮ RƯỜM RÀ) -->
     <div id="alarmBanner">
       <div class="alarm-content">
-        <div>
-          <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ BÁO CA TRỰC!</div>
-          <div style="font-size: 0.78rem; margin-top: 2px;" id="alarmDesc">Chuông báo ca êm dịu đang phát...</div>
-        </div>
+        <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ BÁO CA TRỰC!</div>
         <button class="btn-stop-alarm" onclick="stopAlarm()">✔ ĐÃ XỬ LÝ (TẮT)</button>
       </div>
     </div>
@@ -492,7 +467,7 @@
         <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI -->
         <div class="sync-calendar-panel">
           <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
-            🔔 NẠP CHUÔNG HỆ THỐNG ĐIỆN THOẠI (Báo đúng giờ kể cả khi khoá màn hình):
+            🔔 NẠP LỊCH BÁO CA VÀO ĐIỆN THOẠI:
           </div>
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -684,16 +659,15 @@
       writeString(view, 8, 'WAVE');
       writeString(view, 12, 'fmt ');
       view.setUint32(16, 16, true);
-      view.setUint16(20, 1, true); // PCM
-      view.setUint16(22, 1, true); // mono
+      view.setUint16(20, 1, true);
+      view.setUint16(22, 1, true);
       view.setUint32(24, sampleRate, true);
       view.setUint32(28, sampleRate * 2, true);
-      view.setUint16(32, 2, true); // 16-bit
+      view.setUint16(32, 2, true);
       view.setUint16(34, 16, true);
       writeString(view, 36, 'data');
       view.setUint32(40, numSamples * 2, true);
 
-      // Hòa âm 3 nốt nhạc êm tai C5 -> E5 -> G5
       const notes = [523.25, 659.25, 783.99];
       for (let i = 0; i < numSamples; i++) {
         const t = i / sampleRate;
@@ -703,7 +677,6 @@
           if (t >= noteStart) {
             const dt = t - noteStart;
             const decay = Math.exp(-dt * 4.5);
-            // Sóng sin kết hợp hài hòa, tạo tiếng chuông gỗ ấm áp
             sample += (Math.sin(2 * Math.PI * freq * dt) * 0.5 + Math.sin(2 * Math.PI * (freq * 2) * dt) * 0.15) * decay;
           }
         });
@@ -1266,7 +1239,7 @@
           <select class="day-shift-select" onchange="updateShift(${d.key}, this.value)">
             <option value="ca1" ${savedShift === 'ca1' ? 'selected' : ''}>Ca 1</option>
             <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
-            <option value="off" ${savedShift === 'off' ? 'selected' : ''}>Nghỉ</option>
+            <option value="off" ${savedShift === 'off' ? 'selected' : ''}>Off</option>
           </select>
         `;
         container.appendChild(col);
@@ -1287,7 +1260,7 @@
         else if (val === 'ca2') col.classList.add('is-ca2');
         else col.classList.add('is-off');
       }
-      showToast('Đã lưu ca làm!');
+      showToast('Đã lưu!');
     }
 
     function copyCurrentWeekToAll() {
@@ -1296,7 +1269,7 @@
         monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
         localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
         renderWeekGrid();
-        showToast('Đã áp dụng thành công!');
+        showToast('Đã áp dụng cả tháng!');
       }
     }
 
@@ -1343,13 +1316,13 @@
 
     function executeSelectedSync() {
       if (selectedSyncWeeks.size === 0) {
-        alert('Vui lòng tích chọn ít nhất 1 tuần để đồng bộ chuông!');
+        alert('Vui lòng chọn tuần để nạp lịch!');
         return;
       }
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // NẠP VÀO LỊCH ĐIỆN THOẠI VỚI BÁO ĐỘNG HỆ THỐNG
+    // --- XUẤT LỊCH ĐIỆN THOẠI GỌN GÀNG: CHỈ HIỂN THỊ CA 1, CA 2, OFF KÈM MÀU CHUẨN ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
@@ -1389,15 +1362,17 @@
             const nd = nextDay.getDate();
             const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
 
+            // SỰ KIỆN OFF: HIỂN THỊ DUY NHẤT CHỮ "Off" VÀ ĐẶT MÀU ĐỎ (CRIMSON)
             events.push([
               'BEGIN:VEVENT',
-              `UID:ca-off-${dateStr}-${dayKey}@shiftapp.local`,
+              `UID:shift-off-${dateStr}-${dayKey}@shiftapp.local`,
               `DTSTAMP:${dateStr}T000000`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 NGÀY NGHỈ (OFF)`,
-              `DESCRIPTION:Hôm nay nghỉ ca trực`,
-              'STATUS:CONFIRMED',
+              `SUMMARY:Off`,
+              `COLOR:crimson`,
+              `X-APPLE-CALENDAR-COLOR:#ef4444`,
+              `STATUS:CONFIRMED`,
               'END:VEVENT'
             ].join('\r\n'));
             continue;
@@ -1405,50 +1380,30 @@
 
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
-          const shiftName = (shift === 'ca1' ? 'Ca 1 (Sáng)' : 'Ca 2 (Chiều)');
 
-          const inStart = formatLocalICS(y, m, d, rawIn, 0);
-          const inEnd = formatLocalICS(y, m, d, rawIn, 30);
-          const outStart = formatLocalICS(y, m, d, rawOut, 0);
-          const outEnd = formatLocalICS(y, m, d, rawOut, 30);
+          const inTime = formatLocalICS(y, m, d, rawIn, 0);
+          const outTime = formatLocalICS(y, m, d, rawOut, 0);
 
-          // Báo thức Vào Ca
+          const summaryTitle = (shift === 'ca1' ? 'Ca 1' : 'Ca 2');
+          // Ca 1: Xanh da trời (#0284c7) | Ca 2: Vàng (#f59e0b)
+          const eventColor = (shift === 'ca1' ? 'skyblue' : 'gold');
+          const hexColor = (shift === 'ca1' ? '#0284c7' : '#f59e0b');
+
+          // TẠO DUY NHẤT 1 SỰ KIỆN GỌN GÀNG CHO MỖI NGÀY
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-in-${dateStr}-${dayKey}-${rawIn.replace(':','')}-v5@shiftapp.local`,
-            `DTSTAMP:${inStart}`,
-            `DTSTART:${inStart}`,
-            `DTEND:${inEnd}`,
-            `SUMMARY:⏰ VÀO ${shiftName.toUpperCase()}`,
-            `DESCRIPTION:Đã đến giờ vào ${shiftName}!`,
-            'STATUS:CONFIRMED',
-            'BEGIN:VALARM',
-            'TRIGGER:-PT10M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Nhắc trước 10 phút: Chuẩn bị vào ${shiftName}!`,
-            'END:VALARM',
+            `UID:shift-${shift}-${dateStr}-${dayKey}@shiftapp.local`,
+            `DTSTAMP:${inTime}`,
+            `DTSTART:${inTime}`,
+            `DTEND:${outTime}`,
+            `SUMMARY:${summaryTitle}`,
+            `COLOR:${eventColor}`,
+            `X-APPLE-CALENDAR-COLOR:${hexColor}`,
+            `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:BÁO CA: ĐẾN GIỜ VÀO ${shiftName}!`,
-            'END:VALARM',
-            'END:VEVENT'
-          ].join('\r\n'));
-
-          // Báo thức Hết Ca
-          events.push([
-            'BEGIN:VEVENT',
-            `UID:shift-out-${dateStr}-${dayKey}-${rawOut.replace(':','')}-v5@shiftapp.local`,
-            `DTSTAMP:${outStart}`,
-            `DTSTART:${outStart}`,
-            `DTEND:${outEnd}`,
-            `SUMMARY:🏁 HẾT ${shiftName.toUpperCase()}`,
-            `DESCRIPTION:Đã kết thúc ${shiftName}! Bàn giao công việc và ra về.`,
-            'STATUS:CONFIRMED',
-            'BEGIN:VALARM',
-            'TRIGGER:PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:BÁO CA: ĐÃ HẾT GIỜ ${shiftName}!`,
+            `DESCRIPTION:Đã đến giờ ${summaryTitle}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1461,18 +1416,18 @@
         'PRODID:-//TuanTuan//AlarmShiftPro//VI',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        'X-WR-CALNAME:Lịch Báo Ca Trực'
+        'X-WR-CALNAME:Lịch Ca'
       ].join('\r\n');
 
       const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `lich_bao_ca_truc.ics`);
+      link.setAttribute('download', `lich_ca_truc.ics`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tải lịch! Hãy chọn "Thêm tất cả" vào ứng dụng Lịch điện thoại.');
+      showToast('Đã tải lịch ca gọn gàng!');
     }
 
     function saveIssue() {
@@ -1481,7 +1436,7 @@
       const priority = document.getElementById('issuePriority').value;
       const reminderDateTime = document.getElementById('issueDateTime').value;
 
-      if (!title) { alert('Vui lòng nhập tên công việc!'); return; }
+      if (!title) { alert('Vui lòng nhập tên việc!'); return; }
       unlockAudioContext();
 
       issues.unshift({
@@ -1581,11 +1536,10 @@
 
     function playGentleChime() {
       unlockAudioContext();
-      // Phát bằng Web Audio Synth nếu có
       if (audioCtx) {
         try {
           const now = audioCtx.currentTime;
-          const notes = [523.25, 659.25, 783.99]; // Nốt C5, E5, G5 êm đềm
+          const notes = [523.25, 659.25, 783.99];
           notes.forEach((freq, idx) => {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -1604,7 +1558,6 @@
         } catch (_) {}
       }
 
-      // Phát backup qua Audio Element
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) {
@@ -1614,7 +1567,6 @@
       } catch (_) {}
     }
 
-    // Rung đầm, ngắt quãng rõ ràng
     function triggerDeviceVibration() {
       if ("vibrate" in navigator) {
         try {
@@ -1644,13 +1596,13 @@
       } catch (_) {}
     }
 
-    function startContinuousAlarm(title, desc) {
+    // BẬT BÁO ĐỘNG GỌN GÀNG, KHÔNG CHỮ THỪA
+    function startContinuousAlarm(title) {
       unlockAudioContext();
       document.getElementById('alarmTitle').innerText = title;
-      document.getElementById('alarmDesc').innerText = desc;
       document.getElementById('alarmBanner').style.display = 'block';
 
-      triggerSystemNotification(title, desc);
+      triggerSystemNotification(title, '');
 
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
@@ -1660,7 +1612,7 @@
       alarmInterval = setInterval(() => {
         playGentleChime();
         triggerDeviceVibration();
-      }, 1400); // Lặp lại êm ái mỗi 1.4 giây
+      }, 1400);
     }
 
     function stopAlarm() {
@@ -1675,19 +1627,19 @@
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) audioEl.pause();
       } catch (_) {}
-      showToast('Đã tắt chuông báo!');
+      showToast('Đã tắt chuông!');
     }
 
     function enableSoundTest() {
       unlockAudioContext();
-      startContinuousAlarm('🔔 THỬ CHUÔNG BÁO CA', 'Chuông êm ái đang ngân và điện thoại đang rung...');
+      startContinuousAlarm('🔔 THỬ CHUÔNG BÁO CA');
     }
 
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
       t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2600);
+      setTimeout(() => { t.style.display = 'none'; }, 2400);
     }
 
     function escapeHtml(t) {
@@ -1695,7 +1647,6 @@
       return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    // --- CẬP NHẬT TRẠNG THÁI NÚT VÀ BẬT/TẮT THÔNG BÁO ---
     let localNotiMockState = localStorage.getItem('camp_noti_mock_state') || 'default';
 
     function updateNotiButtonStatus() {
@@ -1703,7 +1654,6 @@
       if (!btn) return;
 
       if (!('Notification' in window)) {
-        // Dự phòng cho môi trường WebView hoặc thiết bị cũ
         if (localNotiMockState === 'granted') {
           btn.innerText = '🟢 Đã Bật Báo';
           btn.className = 'noti-granted';
@@ -1718,7 +1668,7 @@
         btn.innerText = '🟢 Đã Bật Báo';
         btn.className = 'noti-granted';
       } else if (Notification.permission === 'denied') {
-        btn.innerText = '🔴 Bị Chặn (Xem)';
+        btn.innerText = '🔴 Bị Chặn';
         btn.className = 'noti-denied';
       } else {
         btn.innerText = '🔔 Bật Báo';
@@ -1730,32 +1680,30 @@
       unlockAudioContext();
 
       if (!('Notification' in window)) {
-        // Toggle chế độ giả lập nếu WebView không có API
         if (localNotiMockState === 'granted') {
           localNotiMockState = 'default';
           localStorage.setItem('camp_noti_mock_state', 'default');
-          showToast('Đã tắt thông báo!');
+          showToast('Đã tắt báo!');
         } else {
           localNotiMockState = 'granted';
           localStorage.setItem('camp_noti_mock_state', 'granted');
-          showToast('Đã bật thông báo trên web!');
+          showToast('Đã bật báo!');
         }
         updateNotiButtonStatus();
         return;
       }
 
       if (Notification.permission === 'granted') {
-        showToast('Thông báo đang HOẠT ĐỘNG! Bấm "Thử Chuông" để kiểm tra.');
+        showToast('Báo thức đang HOẠT ĐỘNG!');
         return;
       }
 
       if (Notification.permission === 'denied') {
-        alert('Thông báo đang bị CHẶN trên trình duyệt điện thoại. Bạn hãy vào Cài đặt trình duyệt (hoặc icon ổ khóa cạnh tên miền) -> Cài đặt trang web -> Bật "Thông báo".');
+        alert('Thông báo bị chặn. Bạn vào Cài đặt trình duyệt trên điện thoại để mở cấp quyền thông báo.');
         return;
       }
 
       try {
-        // Hỗ trợ cả chuẩn Promise và callback đời cũ trên điện thoại
         const requestPromise = Notification.requestPermission();
         if (requestPromise && typeof requestPromise.then === 'function') {
           requestPromise.then(permission => {
@@ -1767,7 +1715,7 @@
           Notification.requestPermission(handlePermissionResult);
         }
       } catch (e) {
-        showToast('Không thể yêu cầu quyền thông báo.');
+        showToast('Không thể yêu cầu quyền.');
       }
     }
 
@@ -1775,7 +1723,7 @@
       updateNotiButtonStatus();
       if (perm === 'granted') {
         triggerSystemNotification('Sổ Tay Báo Ca', 'Báo ca trực đã sẵn sàng!');
-        showToast('Đã kích hoạt thông báo thành công!');
+        showToast('Đã kích hoạt thông báo!');
       } else {
         showToast('Chưa cho phép thông báo.');
       }
@@ -1808,23 +1756,23 @@
       if (todayShift === 'ca1') {
         if (shiftTimes.c1_in === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 1: VÀO CA', `Đã đến giờ vào Ca 1 lúc ${currentTime}!`);
+          startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
           return;
         }
         if (shiftTimes.c1_out === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 1: HẾT CA', `Đã đến giờ kết thúc Ca 1 lúc ${currentTime}!`);
+          startContinuousAlarm(`🏁 HẾT GIỜ CA 1 (${currentTime})`);
           return;
         }
       } else if (todayShift === 'ca2') {
         if (shiftTimes.c2_in === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 2: VÀO CA', `Đã đến giờ vào Ca 2 lúc ${currentTime}!`);
+          startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
           return;
         }
         if (shiftTimes.c2_out === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm('⏰ BÁO GIỜ CA 2: HẾT CA', `Đã đến giờ kết thúc Ca 2 lúc ${currentTime}!`);
+          startContinuousAlarm(`🏁 HẾT GIỜ CA 2 (${currentTime})`);
           return;
         }
       }
@@ -1832,7 +1780,7 @@
       journals.forEach(j => {
         if (!j.done && j.reminderTime === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`, j.content || 'Đến giờ xử lý công việc đã hẹn!');
+          startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`);
         }
       });
     }
