@@ -180,7 +180,6 @@
     .stat-label { color: var(--muted); font-size: .74rem; font-weight: 600; }
     .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
 
-    /* BANNER BÁO ĐỘNG ĐÃ LƯỢC BỎ DÒNG CHỮ THỪA */
     #alarmBanner {
       display: none; position: sticky; top: 55px; z-index: 105;
       background: linear-gradient(135deg, #0284c7, #0369a1); color: white; padding: 12px 16px;
@@ -246,7 +245,7 @@
     .badge-journal { background: #fef08a; color: #854d0e; }
 
     .item-card { background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
-    .card-top { display: space-between; align-items: center; margin-bottom: 6px; }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
     .badge-phat-sinh { background: #ede9fe; color: #5b21b6; }
     .card-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
@@ -275,7 +274,6 @@
     }
     .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
 
-    /* MÀU ĐẶC TRƯNG CHUẨN TRÊN APP */
     .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; }
     .day-col.is-off .calendar-date { color: #ef4444 !important; }
@@ -300,7 +298,6 @@
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
-    /* BẢNG ĐỒNG BỘ TINH GỌN CHỮ */
     .sync-calendar-panel { background: #eff6ff; border: 1.5px solid #60a5fa; border-radius: 12px; padding: 10px; margin-top: 8px; }
     .sync-row { display: flex; gap: 6px; position: relative; }
     .custom-multiselect { flex: 1.3; position: relative; }
@@ -437,7 +434,6 @@
       </div>
     </div>
 
-    <!-- BANNER BÁO ĐỘNG ĐANG REO (ĐÃ LƯỢC BỎ DÒNG CHỮ RƯỜM RÀ) -->
     <div id="alarmBanner">
       <div class="alarm-content">
         <div class="alarm-title" id="alarmTitle">⏰ ĐẾN GIỜ BÁO CA TRỰC!</div>
@@ -464,7 +460,6 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- BẢNG ĐỒNG BỘ CHUÔNG VÀO HỆ THỐNG ĐIỆN THOẠI -->
         <div class="sync-calendar-panel">
           <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
             🔔 NẠP LỊCH BÁO CA VÀO ĐIỆN THOẠI:
@@ -642,7 +637,6 @@
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
 
-    // TẠO ÂM THANH MARIMBA/CHIME DU DƯƠNG NHẸ NHÀNG, KHÔNG CHÓI TAI
     function generateGentleAlarmWav() {
       const sampleRate = 16000;
       const duration = 0.8;
@@ -944,7 +938,6 @@
       });
     }
 
-    // --- THỜI KHÓA BIỂU MA TRẬN ---
     const daysOrder = [
       { key: '1', label: 'Thứ 2' }, { key: '2', label: 'Thứ 3' },
       { key: '3', label: 'Thứ 4' }, { key: '4', label: 'Thứ 5' },
@@ -1322,7 +1315,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- XUẤT LỊCH ĐIỆN THOẠI GỌN GÀNG: CHỈ HIỂN THỊ CA 1, CA 2, OFF KÈM MÀU CHUẨN ---
+    // --- XUẤT LỊCH ĐIỆN THOẠI: BÁO CẢ GIỜ VÀO VÀ HẾT CA, MÀU CHUẨN XANH - VÀNG - ĐỎ ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       
@@ -1362,16 +1355,17 @@
             const nd = nextDay.getDate();
             const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
 
-            // SỰ KIỆN OFF: HIỂN THỊ DUY NHẤT CHỮ "Off" VÀ ĐẶT MÀU ĐỎ (CRIMSON)
+            // NGÀY NGHỈ: MÀU ĐỎ CHUẨN (🔴 Off)
             events.push([
               'BEGIN:VEVENT',
               `UID:shift-off-${dateStr}-${dayKey}@shiftapp.local`,
               `DTSTAMP:${dateStr}T000000`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:Off`,
-              `COLOR:crimson`,
+              `SUMMARY:🔴 Off`,
+              `COLOR:#ef4444`,
               `X-APPLE-CALENDAR-COLOR:#ef4444`,
+              `X-GOOGLE-CALENDAR-COLOR-ID:11`,
               `STATUS:CONFIRMED`,
               'END:VEVENT'
             ].join('\r\n'));
@@ -1384,12 +1378,14 @@
           const inTime = formatLocalICS(y, m, d, rawIn, 0);
           const outTime = formatLocalICS(y, m, d, rawOut, 0);
 
-          const summaryTitle = (shift === 'ca1' ? 'Ca 1' : 'Ca 2');
-          // Ca 1: Xanh da trời (#0284c7) | Ca 2: Vàng (#f59e0b)
-          const eventColor = (shift === 'ca1' ? 'skyblue' : 'gold');
-          const hexColor = (shift === 'ca1' ? '#0284c7' : '#f59e0b');
+          // Ca 1: Xanh da trời (🔵 Ca 1) | Ca 2: Vàng (🟡 Ca 2)
+          const isCa1 = (shift === 'ca1');
+          const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
+          const hexColor = isCa1 ? '#0284c7' : '#f59e0b';
+          const colorName = isCa1 ? 'skyblue' : 'gold';
+          const googleColorId = isCa1 ? '7' : '5';
 
-          // TẠO DUY NHẤT 1 SỰ KIỆN GỌN GÀNG CHO MỖI NGÀY
+          // BÁO CẢ GIỜ VÀO VÀ GIỜ RA TRỰC
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-${dateStr}-${dayKey}@shiftapp.local`,
@@ -1397,13 +1393,20 @@
             `DTSTART:${inTime}`,
             `DTEND:${outTime}`,
             `SUMMARY:${summaryTitle}`,
-            `COLOR:${eventColor}`,
+            `COLOR:${hexColor}`,
+            `X-COLOR:${colorName}`,
             `X-APPLE-CALENDAR-COLOR:${hexColor}`,
+            `X-GOOGLE-CALENDAR-COLOR-ID:${googleColorId}`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đã đến giờ ${summaryTitle}!`,
+            `DESCRIPTION:Đã đến giờ vào ${isCa1 ? 'Ca 1' : 'Ca 2'}!`,
+            'END:VALARM',
+            'BEGIN:VALARM',
+            'TRIGGER;RELATED=END:PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:Đã hết giờ ${isCa1 ? 'Ca 1' : 'Ca 2'} (Tan ca)!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1427,7 +1430,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tải lịch ca gọn gàng!');
+      showToast('Đã tải lịch ca! Mở bằng Lịch để thêm chuông cả 2 mốc giờ.');
     }
 
     function saveIssue() {
@@ -1515,7 +1518,6 @@
       document.getElementById('statIssuesSub').textContent = `${issues.length - iDone} đang mở`;
     }
 
-    // --- MỞ KHÓA ÂM THANH & PHÁT CHIME ÊM DỊU ---
     function unlockAudioContext() {
       if (!alarmAudioBlobUrl) {
         alarmAudioBlobUrl = generateGentleAlarmWav();
@@ -1596,7 +1598,6 @@
       } catch (_) {}
     }
 
-    // BẬT BÁO ĐỘNG GỌN GÀNG, KHÔNG CHỮ THỪA
     function startContinuousAlarm(title) {
       unlockAudioContext();
       document.getElementById('alarmTitle').innerText = title;
@@ -1729,7 +1730,6 @@
       }
     }
 
-    // --- BỘ QUÉT TỰ ĐỘNG BÁO ĐÚNG GIỜ CÀI ĐẶT ---
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
