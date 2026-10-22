@@ -498,7 +498,7 @@
 
         <div class="sync-calendar-panel">
           <div style="font-size:0.75rem; font-weight:800; color:#1d4ed8; margin-bottom:6px;">
-            🔔 NẠP LỊCH BÁO CA VÀO ĐIỆN THOẠI:
+            🔔 NẠP LỊCH BÁO CA VÀO GOOGLE / ĐIỆN THOẠI (Báo cả khi khóa màn hình):
           </div>
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -801,15 +801,14 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        // Icon đêm trăng lớn rực rỡ, các ngôi sao đen xanh thẳm lùi xa hẳn về bên trái
         widget.innerHTML = `
           <div class="night-animated-box">
             <div class="night-moon"></div>
-            <span class="night-sparkle st-far-left" title="Sao góc trái xa">★</span>
+            <span class="night-sparkle st-far-left" title="Sao xa góc trái">★</span>
             <span class="night-sparkle st-mid-left-high" title="Sao giữa trái">✦</span>
             <span class="night-sparkle st-mid-left-low" title="Sao góc dưới xa">★</span>
             <span class="night-sparkle st-near-left" title="Sao gần trăng">✦</span>
-            <span class="night-sparkle st-near-moon" title="Sao nhỏ trên cao">✧</span>
+            <span class="night-sparkle st-near-moon" title="Sao trên cao">✧</span>
           </div>`;
         if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
@@ -1360,24 +1359,20 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // --- FIX LỖI NHẬP GOOGLE CALENDAR & APPLE CALENDAR THEO CHUẨN RFC-5545 ---
+    // --- XUẤT LỊCH ĐIỆN THOẠI & GOOGLE CALENDAR BẰNG CHUẨN UTC TUYỆT ĐỐI (KHÔNG LỖI 0 SỰ KIỆN) ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
-      const timestamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-      
-      function formatICSDate(year, month, day, timeStr, addMinutes = 0) {
+      const now = new Date();
+      const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+      // Chuyển giờ địa phương Việt Nam sang chuỗi UTC kết thúc bằng Z (chuẩn RFC 5545)
+      function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
-        const dt = new Date(year, month - 1, day, h, m + addMinutes, 0);
-        const Y = dt.getFullYear();
-        const M = String(dt.getMonth() + 1).padStart(2, '0');
-        const D = String(dt.getDate()).padStart(2, '0');
-        const HH = String(dt.getHours()).padStart(2, '0');
-        const MM = String(dt.getMinutes()).padStart(2, '0');
-        const SS = String(dt.getSeconds()).padStart(2, '0');
-        return `${Y}${M}${D}T${HH}${MM}${SS}`;
+        const localDate = new Date(year, month - 1, day, h, m + addMinutes, 0);
+        return localDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       }
 
-      let seq = 1;
+      let count = 0;
 
       weekIndices.forEach(wIdx => {
         const wObj = monthWeeksList[wIdx];
@@ -1393,6 +1388,7 @@
           const y = dayDate.getFullYear();
           const m = dayDate.getMonth() + 1;
           const d = dayDate.getDate();
+
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
           if (shift === 'off') {
@@ -1403,14 +1399,15 @@
             const nd = nextDay.getDate();
             const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
 
+            count++;
             events.push([
               'BEGIN:VEVENT',
-              `UID:shift-off-${dateStr}-${dayKey}-${seq++}@shiftapp.local`,
-              `DTSTAMP:${timestamp}`,
+              `UID:shift-off-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+              `DTSTAMP:${dtStamp}`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
               `SUMMARY:🔴 Off (Nghỉ ca)`,
-              `DESCRIPTION:Lịch nghỉ trực`,
+              `DESCRIPTION:Hôm nay bạn nghỉ trực`,
               `STATUS:CONFIRMED`,
               'TRANSP:TRANSPARENT',
               'END:VEVENT'
@@ -1421,46 +1418,48 @@
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
 
-          const inTime = formatICSDate(y, m, d, rawIn, 0);
-          const outTime = formatICSDate(y, m, d, rawOut, 0);
-          const outEndTime = formatICSDate(y, m, d, rawOut, 15); // Kéo dài 15p tránh lỗi độ dài bằng 0
+          const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
+          const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
+          const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
           const isCa1 = (shift === 'ca1');
           const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
           const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
 
-          // Sự kiện 1: Toàn bộ phiên ca trực
+          count++;
+          // Sự kiện 1: Vào Ca Trực (Đổ chuông đúng giờ vào)
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${seq++}@shiftapp.local`,
-            `DTSTAMP:${timestamp}`,
-            `DTSTART;TZID=Asia/Ho_Chi_Minh:${inTime}`,
-            `DTEND;TZID=Asia/Ho_Chi_Minh:${outTime}`,
+            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${inTimeUTC}`,
+            `DTEND:${outTimeUTC}`,
             `SUMMARY:${summaryTitle}`,
-            `DESCRIPTION:Thời gian trực ${shiftLabel} từ ${rawIn} đến ${rawOut}`,
+            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đã đến giờ vào ${shiftLabel}!`,
+            `DESCRIPTION:Báo thức: Đã đến giờ vào ${shiftLabel}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
-          // Sự kiện 2: Mốc báo tan ca trực
+          count++;
+          // Sự kiện 2: Báo Tan Ca (Đổ chuông đúng mốc hết giờ)
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-out-${shift}-${dateStr}-${dayKey}-${seq++}@shiftapp.local`,
-            `DTSTAMP:${timestamp}`,
-            `DTSTART;TZID=Asia/Ho_Chi_Minh:${outTime}`,
-            `DTEND;TZID=Asia/Ho_Chi_Minh:${outEndTime}`,
+            `UID:shift-out-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${outTimeUTC}`,
+            `DTEND:${outEndUTC}`,
             `SUMMARY:🏁 Tan ${shiftLabel}`,
             `DESCRIPTION:Đã kết thúc ${shiftLabel} (${rawOut}). Tan ca!`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Hết giờ ${shiftLabel} (Tan ca)!`,
+            `DESCRIPTION:Báo thức: Hết giờ trực ${shiftLabel}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1469,33 +1468,22 @@
 
       const icsHeader = [
         'BEGIN:VCALENDAR',
-        'VERSION:2.0',
         'PRODID:-//TuanTuan//AlarmShiftPro//VI',
+        'VERSION:2.0',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        'X-WR-CALNAME:Lịch Ca Trực',
-        'X-WR-TIMEZONE:Asia/Ho_Chi_Minh',
-        'BEGIN:VTIMEZONE',
-        'TZID:Asia/Ho_Chi_Minh',
-        'X-LIC-LOCATION:Asia/Ho_Chi_Minh',
-        'BEGIN:STANDARD',
-        'TZOFFSETFROM:+0700',
-        'TZOFFSETTO:+0700',
-        'TZNAME:ICT',
-        'DTSTART:19700101T000000',
-        'END:STANDARD',
-        'END:VTIMEZONE'
+        'X-WR-CALNAME:Lịch Ca Trực'
       ].join('\r\n');
 
-      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
-      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+      const icsContent = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', `lich_ca_truc.ics`);
+      link.setAttribute('download', 'lich_ca_truc.ics');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã xuất lịch chuẩn Google Calendar & Apple!');
+      showToast(`Đã xuất ${count} mốc báo ca sang ứng dụng Lịch!`);
     }
 
     function saveIssue() {
@@ -1645,7 +1633,7 @@
     async function triggerSystemNotification(title, body) {
       if (!("Notification" in window) || Notification.permission !== "granted") return;
       const notiOptions = {
-        body: body,
+        body: body || 'Nhấn để mở ứng dụng Sổ Tay & Báo Ca',
         icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
         vibrate: [600, 150, 600, 150, 800],
         requireInteraction: true,
@@ -1668,7 +1656,7 @@
       document.getElementById('alarmTitle').innerText = title;
       document.getElementById('alarmBanner').style.display = 'block';
 
-      triggerSystemNotification(title, '');
+      triggerSystemNotification(title, 'Đến giờ trực ca của bạn!');
 
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
