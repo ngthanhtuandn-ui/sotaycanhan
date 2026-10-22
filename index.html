@@ -97,7 +97,7 @@
 
     .weather-widget {
       position: relative;
-      width: 76px;
+      width: 86px;
       height: 68px;
       display: flex;
       align-items: center;
@@ -149,12 +149,13 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* ICON ĐÊM TRĂNG HUYỀN BÍ: SAO ĐEN XANH THẨM VỀ PHÍA TRÁI */
-    .night-animated-box { position: relative; width: 76px; height: 68px; }
+    /* ICON ĐÊM TRĂNG TO RỰC RỠ & SAO HUYỀN BÍ ĐẨY XA VỀ PHÍA TRÁI */
+    .night-animated-box { position: relative; width: 86px; height: 68px; }
     .night-moon {
-      position: absolute; top: 12px; right: 4px; width: 30px; height: 30px; border-radius: 50%;
-      box-shadow: 7px 5px 0 0 #facc15; transform: rotate(-18deg);
-      filter: drop-shadow(0 0 9px rgba(250, 204, 21, 0.7)); animation: moonGlow 3.2s ease-in-out infinite alternate;
+      position: absolute; top: 6px; right: 2px; width: 48px; height: 48px; border-radius: 50%;
+      box-shadow: 11px 8px 0 0 #facc15; transform: rotate(-18deg);
+      filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.85));
+      animation: moonGlow 3.2s ease-in-out infinite alternate;
       z-index: 2;
     }
     .night-sparkle {
@@ -163,34 +164,34 @@
       z-index: 1;
     }
     .night-sparkle.st-far-left {
-      top: 10px; left: 2px; font-size: 13px; color: #1e3a8a;
-      text-shadow: 0 0 6px rgba(30, 58, 138, 0.7);
+      top: 6px; left: -4px; font-size: 14px; color: #1e3a8a;
+      text-shadow: 0 0 7px rgba(30, 58, 138, 0.85);
       animation-duration: 2.1s; animation-delay: 0.1s;
     }
     .night-sparkle.st-mid-left-high {
-      top: 32px; left: 14px; font-size: 10px; color: #0284c7;
-      text-shadow: 0 0 5px rgba(2, 132, 199, 0.7);
+      top: 28px; left: 8px; font-size: 11px; color: #0284c7;
+      text-shadow: 0 0 6px rgba(2, 132, 199, 0.75);
       animation-duration: 3.1s; animation-delay: 0.8s;
     }
     .night-sparkle.st-mid-left-low {
-      bottom: 8px; left: 6px; font-size: 14px; color: #172554;
-      text-shadow: 0 0 7px rgba(23, 37, 84, 0.85);
+      bottom: 6px; left: -2px; font-size: 15px; color: #172554;
+      text-shadow: 0 0 8px rgba(23, 37, 84, 0.9);
       animation-duration: 2.6s; animation-delay: 1.4s;
     }
     .night-sparkle.st-near-left {
-      bottom: 18px; left: 28px; font-size: 12px; color: #1e40af;
+      bottom: 14px; left: 20px; font-size: 12px; color: #1e40af;
       text-shadow: 0 0 6px rgba(30, 64, 175, 0.8);
       animation-duration: 1.9s; animation-delay: 0.4s;
     }
     .night-sparkle.st-near-moon {
-      top: 6px; left: 28px; font-size: 9px; color: #0369a1;
-      text-shadow: 0 0 4px rgba(3, 105, 161, 0.7);
+      top: 2px; left: 18px; font-size: 10px; color: #0369a1;
+      text-shadow: 0 0 5px rgba(3, 105, 161, 0.75);
       animation-duration: 2.8s; animation-delay: 1.1s;
     }
 
     @keyframes moonGlow {
-      0% { filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.45)); transform: rotate(-18deg) scale(0.97); }
-      100% { filter: drop-shadow(0 0 13px rgba(250, 204, 21, 0.95)); transform: rotate(-18deg) scale(1.03); }
+      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-18deg) scale(0.97); }
+      100% { filter: drop-shadow(0 0 16px rgba(250, 204, 21, 1)); transform: rotate(-18deg) scale(1.04); }
     }
     @keyframes starTwinkle {
       0% { opacity: 0.2; transform: scale(0.65); }
@@ -800,13 +801,13 @@
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
         if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
       } else {
-        // Icon đêm trăng: Các ngôi sao màu đen xanh thẳm huyền bí, phân bố lùi về bên trái
+        // Icon đêm trăng lớn rực rỡ, các ngôi sao đen xanh thẳm lùi xa hẳn về bên trái
         widget.innerHTML = `
           <div class="night-animated-box">
             <div class="night-moon"></div>
-            <span class="night-sparkle st-far-left" title="Sao xa góc trái">★</span>
-            <span class="night-sparkle st-mid-left-high" title="Sao nhỏ giữa trái">✦</span>
-            <span class="night-sparkle st-mid-left-low" title="Sao huyền bí góc dưới">★</span>
+            <span class="night-sparkle st-far-left" title="Sao góc trái xa">★</span>
+            <span class="night-sparkle st-mid-left-high" title="Sao giữa trái">✦</span>
+            <span class="night-sparkle st-mid-left-low" title="Sao góc dưới xa">★</span>
             <span class="night-sparkle st-near-left" title="Sao gần trăng">✦</span>
             <span class="night-sparkle st-near-moon" title="Sao nhỏ trên cao">✧</span>
           </div>`;
@@ -1359,20 +1360,24 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
+    // --- FIX LỖI NHẬP GOOGLE CALENDAR & APPLE CALENDAR THEO CHUẨN RFC-5545 ---
     function exportToICSCalendarList(weekIndices) {
       let events = [];
+      const timestamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       
-      function formatLocalICS(year, month, day, timeStr, addMinutes = 0) {
+      function formatICSDate(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
-        const dateObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
-        const Y = dateObj.getFullYear();
-        const M = String(dateObj.getMonth() + 1).padStart(2, '0');
-        const D = String(dateObj.getDate()).padStart(2, '0');
-        const HH = String(dateObj.getHours()).padStart(2, '0');
-        const MM = String(dateObj.getMinutes()).padStart(2, '0');
-        const SS = String(dateObj.getSeconds()).padStart(2, '0');
+        const dt = new Date(year, month - 1, day, h, m + addMinutes, 0);
+        const Y = dt.getFullYear();
+        const M = String(dt.getMonth() + 1).padStart(2, '0');
+        const D = String(dt.getDate()).padStart(2, '0');
+        const HH = String(dt.getHours()).padStart(2, '0');
+        const MM = String(dt.getMinutes()).padStart(2, '0');
+        const SS = String(dt.getSeconds()).padStart(2, '0');
         return `${Y}${M}${D}T${HH}${MM}${SS}`;
       }
+
+      let seq = 1;
 
       weekIndices.forEach(wIdx => {
         const wObj = monthWeeksList[wIdx];
@@ -1400,15 +1405,14 @@
 
             events.push([
               'BEGIN:VEVENT',
-              `UID:shift-off-${dateStr}-${dayKey}@shiftapp.local`,
-              `DTSTAMP:${dateStr}T000000`,
+              `UID:shift-off-${dateStr}-${dayKey}-${seq++}@shiftapp.local`,
+              `DTSTAMP:${timestamp}`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 Off`,
-              `COLOR:#ef4444`,
-              `X-APPLE-CALENDAR-COLOR:#ef4444`,
-              `X-GOOGLE-CALENDAR-COLOR-ID:11`,
+              `SUMMARY:🔴 Off (Nghỉ ca)`,
+              `DESCRIPTION:Lịch nghỉ trực`,
               `STATUS:CONFIRMED`,
+              'TRANSP:TRANSPARENT',
               'END:VEVENT'
             ].join('\r\n'));
             continue;
@@ -1417,36 +1421,46 @@
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
 
-          const inTime = formatLocalICS(y, m, d, rawIn, 0);
-          const outTime = formatLocalICS(y, m, d, rawOut, 0);
+          const inTime = formatICSDate(y, m, d, rawIn, 0);
+          const outTime = formatICSDate(y, m, d, rawOut, 0);
+          const outEndTime = formatICSDate(y, m, d, rawOut, 15); // Kéo dài 15p tránh lỗi độ dài bằng 0
 
           const isCa1 = (shift === 'ca1');
           const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
-          const hexColor = isCa1 ? '#0284c7' : '#f59e0b';
-          const colorName = isCa1 ? 'skyblue' : 'gold';
-          const googleColorId = isCa1 ? '7' : '5';
+          const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
 
+          // Sự kiện 1: Toàn bộ phiên ca trực
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-${shift}-${dateStr}-${dayKey}@shiftapp.local`,
-            `DTSTAMP:${inTime}`,
-            `DTSTART:${inTime}`,
-            `DTEND:${outTime}`,
+            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${seq++}@shiftapp.local`,
+            `DTSTAMP:${timestamp}`,
+            `DTSTART;TZID=Asia/Ho_Chi_Minh:${inTime}`,
+            `DTEND;TZID=Asia/Ho_Chi_Minh:${outTime}`,
             `SUMMARY:${summaryTitle}`,
-            `COLOR:${hexColor}`,
-            `X-COLOR:${colorName}`,
-            `X-APPLE-CALENDAR-COLOR:${hexColor}`,
-            `X-GOOGLE-CALENDAR-COLOR-ID:${googleColorId}`,
+            `DESCRIPTION:Thời gian trực ${shiftLabel} từ ${rawIn} đến ${rawOut}`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
-            'TRIGGER:PT0M',
+            'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đã đến giờ vào ${isCa1 ? 'Ca 1' : 'Ca 2'}!`,
+            `DESCRIPTION:Đã đến giờ vào ${shiftLabel}!`,
             'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          // Sự kiện 2: Mốc báo tan ca trực
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:shift-out-${shift}-${dateStr}-${dayKey}-${seq++}@shiftapp.local`,
+            `DTSTAMP:${timestamp}`,
+            `DTSTART;TZID=Asia/Ho_Chi_Minh:${outTime}`,
+            `DTEND;TZID=Asia/Ho_Chi_Minh:${outEndTime}`,
+            `SUMMARY:🏁 Tan ${shiftLabel}`,
+            `DESCRIPTION:Đã kết thúc ${shiftLabel} (${rawOut}). Tan ca!`,
+            `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
-            'TRIGGER;RELATED=END:PT0M',
+            'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đã hết giờ ${isCa1 ? 'Ca 1' : 'Ca 2'} (Tan ca)!`,
+            `DESCRIPTION:Hết giờ ${shiftLabel} (Tan ca)!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1459,10 +1473,21 @@
         'PRODID:-//TuanTuan//AlarmShiftPro//VI',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        'X-WR-CALNAME:Lịch Ca'
+        'X-WR-CALNAME:Lịch Ca Trực',
+        'X-WR-TIMEZONE:Asia/Ho_Chi_Minh',
+        'BEGIN:VTIMEZONE',
+        'TZID:Asia/Ho_Chi_Minh',
+        'X-LIC-LOCATION:Asia/Ho_Chi_Minh',
+        'BEGIN:STANDARD',
+        'TZOFFSETFROM:+0700',
+        'TZOFFSETTO:+0700',
+        'TZNAME:ICT',
+        'DTSTART:19700101T000000',
+        'END:STANDARD',
+        'END:VTIMEZONE'
       ].join('\r\n');
 
-      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR`;
+      const icsData = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
       const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
@@ -1470,7 +1495,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast('Đã tải lịch ca! Mở bằng Lịch để thêm chuông cả 2 mốc giờ.');
+      showToast('Đã xuất lịch chuẩn Google Calendar & Apple!');
     }
 
     function saveIssue() {
