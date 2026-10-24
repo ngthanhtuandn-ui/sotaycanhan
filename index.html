@@ -149,7 +149,7 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* MẶT TRĂNG ĐƯA LÊN CAO NHẤT & SAO TRẢI DÀI TỪ PHẢI SANG TRÁI TẠO CHIỀU SÂU */
+    /* MẶT TRĂNG CAO & SAO HUYỀN BÍ TRẢI DÀI */
     .night-animated-box { position: relative; width: 86px; height: 68px; }
     .night-moon {
       position: absolute; top: -4px; right: 4px; width: 38px; height: 38px; border-radius: 50%;
@@ -334,6 +334,32 @@
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
+    /* KHU VỰC ĐỒNG BỘ LỊCH ĐIỆN THOẠI ĐƯỢC THIẾT KẾ GỌN GÀNG, CHUYÊN NGHIỆP */
+    .sync-calendar-panel { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 10px; margin-top: 10px; }
+    .sync-row { display: flex; gap: 8px; align-items: center; }
+    .custom-multiselect { flex: 1.3; position: relative; }
+    .multiselect-toggle-btn {
+      width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.76rem; font-weight: 700; padding: 8px; color: #334155; text-align: left;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    }
+    .multiselect-dropdown {
+      display: none; position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #fff;
+      border: 1.5px solid var(--primary); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 200; padding: 4px 0; max-height: 220px; overflow-y: auto;
+    }
+    .multiselect-dropdown.show { display: block; }
+    .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+    .multiselect-item.selected { background: #eff6ff; color: var(--primary-dark); font-weight: 700; }
+    .multiselect-check { font-size: 0.85rem; color: var(--primary); display: none; }
+    .multiselect-item.selected .multiselect-check { display: inline-block; }
+
+    .btn-sync-submit {
+      flex: 1.2; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none;
+      padding: 9px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
+      white-space: nowrap; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+    }
+
     .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
     .shift-settings-title { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
     .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -343,7 +369,7 @@
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
-    /* THỜI KHÓA BIỂU ĐƯỢC CẢI TIẾN RỰC RỠ & SANG TRỌNG HƠN */
+    /* THỜI KHÓA BIỂU */
     .table-scroll-wrap {
       width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 2px solid #a5b4fc;
       border-radius: 18px; margin: 12px 0 10px; background: #ffffff; box-shadow: 0 6px 20px rgba(99,102,241,0.08);
@@ -474,6 +500,22 @@
         </div>
         
         <div class="week-grid" id="weekGridContainer"></div>
+
+        <!-- KHU VỰC ĐỒNG BỘ LỊCH SANG ĐIỆN THOẠI TIỆN LỢI & SANG TRỌNG -->
+        <div class="sync-calendar-panel">
+          <div class="sync-row">
+            <div class="custom-multiselect">
+              <button class="multiselect-toggle-btn" id="syncDropdownToggle" onclick="toggleSyncDropdown(event)">
+                <span id="syncDropdownLabel">Chọn tuần đồng bộ...</span>
+                <span style="font-size:0.65rem; color:var(--muted);">▲</span>
+              </button>
+              <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
+            </div>
+            <button class="btn-sync-submit" onclick="executeSelectedSync()">
+              📲 Nạp Vào Lịch ĐT
+            </button>
+          </div>
+        </div>
 
         <div class="shift-settings-box">
           <div class="shift-settings-title">
@@ -626,6 +668,7 @@
 
     let monthWeeksList = [];
     let currentWeekIndex = 0;
+    let selectedSyncWeeks = new Set();
     let currentJournalImages = [];
     let wakeLock = null;
 
@@ -681,7 +724,6 @@
 
     let alarmAudioBlobUrl = null;
 
-    /* BỔ SUNG NHIỀU CÂU CHÚC VỀ NĂNG LƯỢNG LÀM VIỆC, LÀM VIỆC TỐT, TÌNH YÊU & NỖ LỰC HỌC TẬP */
     const energeticGreetingPairs = {
       morning: [
         { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày làm việc năng suất, tràn đầy nhiệt huyết và hoàn thành xuất sắc mọi mục tiêu! ✨" },
@@ -1158,6 +1200,8 @@
         if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) defaultIdx = idx;
       });
       currentWeekIndex = defaultIdx;
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
     }
 
     function getWeekStorageKey(wIdx) {
@@ -1188,11 +1232,15 @@
         if (w.index === currentWeekIndex) opt.selected = true;
         select.appendChild(opt);
       });
+      renderSyncDropdownMenu();
     }
 
     function onWeekDropdownChange(val) {
       currentWeekIndex = parseInt(val, 10);
       renderWeekGrid();
+      selectedSyncWeeks.clear();
+      selectedSyncWeeks.add(currentWeekIndex);
+      renderSyncDropdownMenu();
     }
 
     function renderWeekGrid() {
@@ -1265,6 +1313,179 @@
         renderWeekGrid();
         showToast('Đã áp dụng cả tháng!');
       }
+    }
+
+    /* ĐỒNG BỘ LỊCH SANG ĐIỆN THOẠI CHUẨN UTC */
+    function toggleSyncDropdown(e) {
+      e.stopPropagation();
+      document.getElementById('syncDropdownMenu').classList.toggle('show');
+    }
+    document.addEventListener('click', (e) => {
+      const m = document.getElementById('syncDropdownMenu');
+      if (m && m.classList.contains('show') && !e.target.closest('.custom-multiselect')) m.classList.remove('show');
+    });
+
+    function renderSyncDropdownMenu() {
+      const menu = document.getElementById('syncDropdownMenu');
+      menu.innerHTML = '';
+      const isFullMonth = (selectedSyncWeeks.size === monthWeeksList.length);
+      const mItem = document.createElement('div');
+      mItem.className = `multiselect-item ${isFullMonth ? 'selected' : ''}`;
+      mItem.innerHTML = `<span>Cả tháng</span><span class="multiselect-check">✔</span>`;
+      mItem.onclick = (e) => {
+        e.stopPropagation();
+        selectedSyncWeeks.clear();
+        if (!isFullMonth) monthWeeksList.forEach(w => selectedSyncWeeks.add(w.index));
+        renderSyncDropdownMenu();
+      };
+      menu.appendChild(mItem);
+
+      monthWeeksList.forEach((w) => {
+        const isSel = selectedSyncWeeks.has(w.index);
+        const item = document.createElement('div');
+        item.className = `multiselect-item ${isSel ? 'selected' : ''}`;
+        item.innerHTML = `<span>Tuần ${w.labelNumber}</span><span class="multiselect-check">✔</span>`;
+        item.onclick = (e) => {
+          e.stopPropagation();
+          if (selectedSyncWeeks.has(w.index)) selectedSyncWeeks.delete(w.index);
+          else selectedSyncWeeks.add(w.index);
+          renderSyncDropdownMenu();
+        };
+        menu.appendChild(item);
+      });
+      const lbl = document.getElementById('syncDropdownLabel');
+      lbl.innerText = selectedSyncWeeks.size === 0 ? 'Chọn tuần...' : `Đã chọn (${selectedSyncWeeks.size} tuần)`;
+    }
+
+    function executeSelectedSync() {
+      if (selectedSyncWeeks.size === 0) {
+        alert('Vui lòng chọn tuần để nạp lịch!');
+        return;
+      }
+      exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
+    }
+
+    function exportToICSCalendarList(weekIndices) {
+      let events = [];
+      const now = new Date();
+      const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+      function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
+        const [h, m] = timeStr.split(':').map(Number);
+        const localDate = new Date(year, month - 1, day, h, m + addMinutes, 0);
+        return localDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      }
+
+      let count = 0;
+
+      weekIndices.forEach(wIdx => {
+        const wObj = monthWeeksList[wIdx];
+        if (!wObj) return;
+        const shiftsData = getShiftsForWeekIndex(wIdx);
+
+        for (let i = 0; i < 7; i++) {
+          const dayKey = i === 6 ? 8 : i + 2;
+          const shift = shiftsData[dayKey] || 'off';
+
+          const dayDate = new Date(wObj.monday);
+          dayDate.setDate(wObj.monday.getDate() + i);
+          const y = dayDate.getFullYear();
+          const m = dayDate.getMonth() + 1;
+          const d = dayDate.getDate();
+
+          const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+
+          if (shift === 'off') {
+            const nextDay = new Date(dayDate);
+            nextDay.setDate(dayDate.getDate() + 1);
+            const ny = nextDay.getFullYear();
+            const nm = nextDay.getMonth() + 1;
+            const nd = nextDay.getDate();
+            const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
+
+            count++;
+            events.push([
+              'BEGIN:VEVENT',
+              `UID:shift-off-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+              `DTSTAMP:${dtStamp}`,
+              `DTSTART;VALUE=DATE:${dateStr}`,
+              `DTEND;VALUE=DATE:${nextDateStr}`,
+              `SUMMARY:🔴 Off (Nghỉ ca)`,
+              `DESCRIPTION:Hôm nay bạn nghỉ trực`,
+              `STATUS:CONFIRMED`,
+              'TRANSP:TRANSPARENT',
+              'END:VEVENT'
+            ].join('\r\n'));
+            continue;
+          }
+
+          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
+          const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
+
+          const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
+          const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
+          const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
+
+          const isCa1 = (shift === 'ca1');
+          const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
+          const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
+
+          count++;
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${inTimeUTC}`,
+            `DTEND:${outTimeUTC}`,
+            `SUMMARY:${summaryTitle}`,
+            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.`,
+            `STATUS:CONFIRMED`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:Báo thức: Đã đến giờ vào ${shiftLabel}!`,
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          count++;
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:shift-out-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${outTimeUTC}`,
+            `DTEND:${outEndUTC}`,
+            `SUMMARY:🏁 Tan ${shiftLabel}`,
+            `DESCRIPTION:Đã kết thúc ${shiftLabel} (${rawOut}). Tan ca!`,
+            `STATUS:CONFIRMED`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:Báo thức: Hết giờ trực ${shiftLabel}!`,
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+        }
+      });
+
+      const icsHeader = [
+        'BEGIN:VCALENDAR',
+        'PRODID:-//TuanTuan//AlarmShiftPro//VI',
+        'VERSION:2.0',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'X-WR-CALNAME:Lịch Ca Trực'
+      ].join('\r\n');
+
+      const icsContent = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', 'lich_ca_truc.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast(`Đã xuất ${count} mốc báo ca sang ứng dụng Lịch!`);
     }
 
     function saveIssue() {
@@ -1412,7 +1633,6 @@
       } catch (_) {}
     }
 
-    /* TĂNG CƯỜNG RUNG MẠNH ĐỂ DỄ NHẬN BIẾT KHI ĐỂ TRONG TÚI */
     function triggerDeviceVibration() {
       if ("vibrate" in navigator) {
         try {
