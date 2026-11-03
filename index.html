@@ -3,60 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Sổ Tay Công Việc & Lịch Ca Trực Chuyên Nghiệp</title>
-  <meta name="theme-color" content="#0284c7">
+  <title>Sổ Tay Yêu Thương - Ái Nhuy</title>
+  <meta name="theme-color" content="#f43f5e">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
 
   <style>
     :root {
-      --primary: #1769aa;
-      --primary-dark: #124f85;
-      --accent: #f59e0b;
-      --bg: #f3f6fb;
+      --primary: #f43f5e;
+      --primary-dark: #be123c;
+      --accent: #fb7185;
+      --bg: #fff1f2;
       --card: #ffffff;
-      --text: #172b4d;
-      --muted: #62748a;
-      --border: #dbe4ef;
+      --text: #475569;
+      --muted: #64748b;
+      --border: #fecdd3;
       --success: #10b981;
       --danger: #ef4444;
       --purple: #8b5cf6;
-      --journal-bg: #fefce8;
-      --journal-border: #fde047;
-      --journal-text: #854d0e;
-      --journal-accent: #eab308;
+      --journal-bg: #fff1f2;
+      --journal-border: #fda4af;
+      --journal-text: #9f1239;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: radial-gradient(ellipse at top,#eaf4ff 0%,#f5f7fb 42%,#f3f6fb 100%); color: var(--text); padding-bottom: 90px; }
+    body { background: radial-gradient(ellipse at top,#fff1f2 0%,#ffe4e6 42%,#fdf2f8 100%); color: var(--text); padding-bottom: 90px; overflow-x: hidden; position: relative; }
+
+    /* HIỆU ỨNG CÁNH HOA HỒNG NHẠT, BAY CHẬM RÃI, LÃNG MẠNG */
+    .rose-petals-container {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; overflow: hidden;
+    }
+    .petal {
+      position: absolute; background: linear-gradient(135deg, #fda4af 0%, #fb7185 100%);
+      border-radius: 150% 0 150% 0; opacity: 0.45;
+      animation: fallPetal linear infinite;
+    }
+    @keyframes fallPetal {
+      0% { transform: translateY(-10vh) translateX(0) rotate(0deg) scale(0.7); opacity: 0.5; }
+      50% { transform: translateY(50vh) translateX(40px) rotate(180deg) scale(0.85); opacity: 0.4; }
+      100% { transform: translateY(105vh) translateX(-40px) rotate(360deg) scale(0.6); opacity: 0; }
+    }
 
     header {
-      background: linear-gradient(115deg,#135d96 0%,#167bb3 60%,#2086b8 100%);
+      background: linear-gradient(115deg,#e11d48 0%,#f43f5e 60%,#fb7185 100%);
       color: white;
       padding: 12px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 6px 22px rgba(16,72,117,.2);
+      box-shadow: 0 6px 22px rgba(244,63,94,.25);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 6px;
     }
-    header h1 { font-size: 0.98rem; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
-    .header-btns { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+    header h1 { font-size: 1rem; font-weight: 800; white-space: nowrap; display: flex; align-items: center; gap: 6px; font-family: 'Segoe Script', cursive, sans-serif; letter-spacing: 0.5px; }
+    .header-btns { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
     .header-btns button {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.4);
       color: white;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 0.72rem;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.74rem;
       cursor: pointer;
       font-weight: 600;
       backdrop-filter: blur(6px);
@@ -77,23 +90,26 @@
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
 
+    /* BANNER NỮ TÍNH, TRONG SUỐT, NHẸ NHÀNG */
     .greeting-banner {
-      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-      border: 1px solid #b7efd0;
+      background: linear-gradient(135deg, rgba(255, 245, 247, 0.18) 0%, rgba(254, 235, 240, 0.12) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(251, 207, 232, 0.2);
       border-radius: 20px;
       padding: 14px 16px;
       margin-bottom: 12px;
-      box-shadow: 0 8px 24px rgba(27,86,115,.06);
+      box-shadow: 0 4px 20px rgba(244,63,94,.01);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
     }
     .greeting-info { display: flex; flex-direction: column; gap: 4px; flex: 1; cursor: pointer; min-width: 0; }
-    .greeting-title { font-size: 1.02rem; font-weight: 800; color: #166534; line-height: 1.25; }
-    .greeting-quote { font-size: 0.84rem; font-weight: 700; color: #059669; line-height: 1.35; }
-    .greeting-text-sub { font-size: 0.76rem; font-weight: 600; color: #0284c7; margin-top: 2px; }
-    .weather-status-text { font-size: 0.74rem; color: #64748b; font-weight: 600; }
+    .greeting-title { font-size: 1.05rem; font-weight: 800; color: #be123c; line-height: 1.25; font-family: 'Segoe UI', sans-serif; }
+    .greeting-quote { font-size: 0.84rem; font-weight: 700; color: #e11d48; line-height: 1.35; font-style: italic; }
+    .greeting-text-sub { font-size: 0.76rem; font-weight: 600; color: #f43f5e; margin-top: 2px; opacity: 0.85; }
+    
+    .weather-status-text { font-size: 0.74rem; color: #94a3b8; font-weight: 600; margin-top: 2px; }
 
     .weather-widget {
       position: relative;
@@ -107,17 +123,18 @@
       user-select: none;
     }
 
+    /* WIDGET THỜI TIẾT */
     .sunny-animated-box { position: relative; width: 68px; height: 68px; display: flex; align-items: center; justify-content: center; }
     .sun-core {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fffde7 0%, #fde047 30%, #f59e0b 75%, #ea580c 100%);
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.7), inset 0 0 5px #ffffff;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fef08a 35%, #eab308 75%, #ca8a04 100%);
+      box-shadow: 0 0 16px rgba(234, 179, 8, 0.85), inset 0 0 4px #ffffff;
       animation: sunPulse 3s ease-in-out infinite alternate; z-index: 2;
     }
     .sun-rays-wrap { position: absolute; width: 100%; height: 100%; animation: sunSpin 14s linear infinite; z-index: 1; }
     .sun-beam {
-      position: absolute; top: 50%; left: 50%; width: 3.5px; height: 62px; margin-left: -1.75px; margin-top: -31px;
-      background: linear-gradient(to bottom, #f59e0b 0%, rgba(251,191,36,0) 25%, rgba(251,191,36,0) 75%, #f59e0b 100%);
+      position: absolute; top: 50%; left: 50%; width: 3.5px; height: 56px; margin-left: -1.75px; margin-top: -28px;
+      background: linear-gradient(to bottom, #eab308 0%, rgba(234,179,8,0) 25%, rgba(234,179,8,0) 75%, #eab308 100%);
       border-radius: 4px;
     }
     .sun-beam:nth-child(2) { transform: rotate(45deg); }
@@ -126,35 +143,35 @@
 
     @keyframes sunSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     @keyframes sunPulse {
-      0% { transform: scale(0.92); box-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
-      100% { transform: scale(1.1); box-shadow: 0 0 24px rgba(234, 88, 12, 0.9); }
+      0% { transform: scale(0.92); box-shadow: 0 0 8px rgba(234,179,8,0.4); }
+      100% { transform: scale(1.12); box-shadow: 0 0 20px rgba(234,179,8,0.9); }
     }
 
     .fair-animated-box { position: relative; width: 68px; height: 68px; }
     .fair-sun {
-      position: absolute; top: 6px; right: 10px; width: 24px; height: 24px; border-radius: 50%;
-      background: radial-gradient(circle, #fef08a 25%, #f59e0b 100%); box-shadow: 0 0 14px #fbbf24;
+      position: absolute; top: 4px; right: 8px; width: 22px; height: 22px; border-radius: 50%;
+      background: radial-gradient(circle, #fef08a 25%, #f59e0b 100%); box-shadow: 0 0 10px #fbbf24;
       animation: sunPulse 3s ease-in-out infinite alternate;
     }
     .floating-cloud-1 {
-      position: absolute; bottom: 14px; left: 4px; width: 38px; height: 16px; background: #7dd3fc;
-      border-radius: 12px; opacity: 0.95; animation: floatCloud1 3.5s ease-in-out infinite alternate;
+      position: absolute; bottom: 12px; left: 4px; width: 40px; height: 16px; background: #ffffff;
+      border-radius: 12px; opacity: 0.95; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      animation: floatCloud1 3.5s ease-in-out infinite alternate;
     }
-    .floating-cloud-1::before { content: ''; position: absolute; top: -9px; left: 7px; width: 18px; height: 18px; background: #7dd3fc; border-radius: 50%; }
+    .floating-cloud-1::before { content: ''; position: absolute; top: -9px; left: 8px; width: 18px; height: 18px; background: #ffffff; border-radius: 50%; }
     .floating-cloud-2 {
-      position: absolute; bottom: 8px; right: 2px; width: 30px; height: 13px; background: #38bdf8;
-      border-radius: 10px; animation: floatCloud2 4s ease-in-out infinite alternate; opacity: 0.85;
+      position: absolute; bottom: 6px; right: 2px; width: 30px; height: 13px; background: #e2e8f0;
+      border-radius: 10px; animation: floatCloud2 4s ease-in-out infinite alternate; opacity: 0.9;
     }
-    .floating-cloud-2::before { content: ''; position: absolute; top: -7px; left: 6px; width: 14px; height: 14px; background: #38bdf8; border-radius: 50%; }
-    @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
-    @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
+    .floating-cloud-2::before { content: ''; position: absolute; top: -7px; left: 6px; width: 14px; height: 14px; background: #e2e8f0; border-radius: 50%; }
+    @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(6px); } }
+    @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-5px); } }
 
-    /* MẶT TRĂNG CAO & SAO HUYỀN BÍ TRẢI DÀI */
     .night-animated-box { position: relative; width: 86px; height: 68px; }
     .night-moon {
-      position: absolute; top: -4px; right: 4px; width: 38px; height: 38px; border-radius: 50%;
-      box-shadow: 8px 6px 0 0 #facc15; transform: rotate(-18deg);
-      filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.9));
+      position: absolute; top: -2px; right: 4px; width: 34px; height: 34px; border-radius: 50%;
+      box-shadow: 7px 5px 0 0 #facc15; transform: rotate(-18deg);
+      filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.85));
       animation: moonGlow 3.2s ease-in-out infinite alternate;
       z-index: 2;
     }
@@ -163,46 +180,26 @@
       animation: starTwinkle 2.5s ease-in-out infinite alternate;
       z-index: 1;
     }
-    .night-sparkle.st-far-left {
-      top: 6px; left: 2px; font-size: 13px; color: #fef08a;
-      text-shadow: 0 0 8px rgba(250, 204, 21, 0.9);
-      animation-duration: 2.1s; animation-delay: 0.1s;
-    }
-    .night-sparkle.st-mid-left-high {
-      top: 22px; left: 24px; font-size: 11px; color: #38bdf8;
-      text-shadow: 0 0 6px rgba(56, 189, 248, 0.8);
-      animation-duration: 3.1s; animation-delay: 0.8s;
-    }
-    .night-sparkle.st-mid-left-low {
-      bottom: 8px; left: 10px; font-size: 14px; color: #fde047;
-      text-shadow: 0 0 8px rgba(253, 224, 71, 0.9);
-      animation-duration: 2.6s; animation-delay: 1.4s;
-    }
-    .night-sparkle.st-near-left {
-      bottom: 16px; left: 42px; font-size: 10px; color: #93c5fd;
-      text-shadow: 0 0 6px rgba(147, 197, 253, 0.8);
-      animation-duration: 1.9s; animation-delay: 0.4s;
-    }
-    .night-sparkle.st-near-moon {
-      top: 4px; left: 34px; font-size: 12px; color: #ffffff;
-      text-shadow: 0 0 7px rgba(255, 255, 255, 0.9);
-      animation-duration: 2.8s; animation-delay: 1.1s;
-    }
+    .night-sparkle.st-far-left { top: 6px; left: 2px; font-size: 13px; color: #fde047; animation-duration: 2.1s; }
+    .night-sparkle.st-mid-left-high { top: 22px; left: 24px; font-size: 11px; color: #facc15; animation-duration: 3.1s; }
+    .night-sparkle.st-mid-left-low { bottom: 8px; left: 10px; font-size: 14px; color: #fef08a; animation-duration: 2.6s; }
+    .night-sparkle.st-near-left { bottom: 16px; left: 42px; font-size: 10px; color: #fef9c3; animation-duration: 1.9s; }
+    .night-sparkle.st-near-moon { top: 4px; left: 34px; font-size: 12px; color: #ffffff; animation-duration: 2.8s; }
 
     @keyframes moonGlow {
-      0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-18deg) scale(0.97); }
-      100% { filter: drop-shadow(0 0 18px rgba(250, 204, 21, 1)); transform: rotate(-18deg) scale(1.05); }
+      0% { filter: drop-shadow(0 0 5px rgba(250,204,21,0.4)); transform: rotate(-18deg) scale(0.97); }
+      100% { filter: drop-shadow(0 0 16px rgba(250,204,21,1)); transform: rotate(-18deg) scale(1.05); }
     }
     @keyframes starTwinkle {
-      0% { opacity: 0.2; transform: scale(0.65); }
-      50% { opacity: 0.95; transform: scale(1.15); }
-      100% { opacity: 0.35; transform: scale(0.75); }
+      0% { opacity: 0.25; transform: scale(0.65); }
+      50% { opacity: 1; transform: scale(1.15); }
+      100% { opacity: 0.4; transform: scale(0.75); }
     }
 
     .rainy-animated-box { position: relative; width: 68px; height: 68px; }
     .rain-main-cloud { position: absolute; top: 10px; left: 10px; width: 44px; height: 20px; background: #94a3b8; border-radius: 14px; }
     .rain-main-cloud::before { content: ''; position: absolute; top: -11px; left: 10px; width: 22px; height: 22px; background: #94a3b8; border-radius: 50%; }
-    .anim-drop { position: absolute; width: 2.8px; height: 10px; background: #0284c7; border-radius: 3px; animation: fallDown 0.75s linear infinite; }
+    .anim-drop { position: absolute; width: 2.8px; height: 10px; background: #f43f5e; border-radius: 3px; animation: fallDown 0.75s linear infinite; }
     .anim-drop.rd1 { left: 18px; top: 34px; animation-delay: 0s; }
     .anim-drop.rd2 { left: 30px; top: 34px; animation-delay: 0.25s; }
     .anim-drop.rd3 { left: 42px; top: 34px; animation-delay: 0.5s; }
@@ -211,44 +208,53 @@
     .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
     .stat-card {
       background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px;
-      box-shadow: 0 4px 14px rgba(24,55,91,.04);
+      box-shadow: 0 4px 14px rgba(244,63,94,.04);
     }
     .stat-label { color: var(--muted); font-size: .74rem; font-weight: 600; }
-    .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; }
+    .stat-value { font-size: 1.25rem; font-weight: 800; margin-top: 2px; color: var(--primary-dark); }
 
     #alarmBanner {
       display: none; position: sticky; top: 55px; z-index: 105;
-      background: linear-gradient(135deg, #0284c7, #0369a1); color: white; padding: 12px 16px;
-      border-radius: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+      background: linear-gradient(135deg, #e11d48, #f43f5e); color: white; padding: 12px 16px;
+      border-radius: 14px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(244, 63, 94, 0.4);
       animation: pulse 1s infinite alternate;
     }
     @keyframes pulse { from { opacity: 0.95; transform: scale(0.99); } to { opacity: 1; transform: scale(1.01); } }
     .alarm-content { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
     .alarm-title { font-weight: 800; font-size: 0.98rem; }
     .btn-stop-alarm {
-      background: white; color: var(--primary); border: none; padding: 9px 18px; border-radius: 10px;
+      background: white; color: var(--primary-dark); border: none; padding: 9px 18px; border-radius: 10px;
       font-weight: 800; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    .nav-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
+    /* 3 TAB VỚI 3 MÀU SẮC RIÊNG BIỆT, NỮ TÍNH VÀ HÀI HÒA */
+    .nav-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
     .nav-tab-btn {
       padding: 10px 4px; border-radius: 12px; border: 1px solid var(--border); background: white;
-      font-size: 0.78rem; font-weight: 700; color: var(--muted); cursor: pointer; text-align: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--muted); cursor: pointer; text-align: center;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .nav-tab-btn.active {
-      background: var(--primary); color: white; border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(23, 105, 170, 0.25);
+    
+    #tabBtn-shifts.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border-color: #0284c7;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
-    .nav-tab-btn.active-journal { background: #fef08a !important; color: #713f12 !important; border-color: #facc15 !important; }
+    #tabBtn-journal.active {
+      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%); color: white; border-color: #f43f5e;
+      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+    }
+    #tabBtn-issues.active {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; border-color: #8b5cf6;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
 
     .card-box {
       background: var(--card); border-radius: 18px; padding: 14px; margin-bottom: 12px;
-      border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(24,55,91,.04);
+      border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(244,63,94,.04);
     }
     .card-journal { background: var(--journal-bg); border: 1.5px solid var(--journal-border); }
     .journal-heading { font-size: 0.88rem; font-weight: 800; color: var(--journal-text); margin-bottom: 10px; }
-    .btn-journal-submit { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); color: white; }
+    .btn-journal-submit { background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%); color: white; }
 
     .search-filter-box {
       background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 10px;
@@ -270,20 +276,20 @@
     .btn-submit {
       width: 100%; background: var(--primary); color: white; border: none; padding: 11px;
       border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
-      box-shadow: 0 4px 12px rgba(23, 105, 170, 0.2);
+      box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
     }
     .btn-submit-purple { background: var(--purple); }
 
     .journal-card-item {
-      background: #ffffff; border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1.5px solid #fef08a;
+      background: #ffffff; border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1.5px solid #ffe4e6;
     }
     .journal-card-item.done { opacity: 0.65; background: #fafaf9; border-color: #e2e8f0; }
-    .badge-journal { background: #fef08a; color: #854d0e; }
+    .badge-journal { background: #ffe4e6; color: #9f1239; }
 
     .item-card { background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
     .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
-    .badge-phat-sinh { background: #ede9fe; color: #5b21b6; }
+    .badge-phat-sinh { background: #ffe4e6; color: #be123c; }
     .card-title { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
     .card-time { font-size: 0.72rem; color: var(--muted); }
     .card-desc { font-size: 0.85rem; line-height: 1.5; color: #334155; white-space: pre-line; margin-bottom: 8px; }
@@ -301,29 +307,34 @@
     .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
     .week-dropdown-wrap { flex: 1; }
     .week-select-menu { width: 100%; background: #f8fafc; border: 1.5px solid var(--primary); color: var(--primary-dark); font-weight: 700; font-size: 0.8rem; padding: 8px 10px; border-radius: 10px; }
-    .btn-copy-month { background: #f0fdf4; border: 1px solid #86efac; color: #166534; font-size: 0.72rem; font-weight: 700; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
+    .btn-copy-month { background: #ffe4e6; border: 1px solid #fda4af; color: #be123c; font-size: 0.72rem; font-weight: 700; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
 
     .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; margin-bottom: 10px; }
     .day-col {
       border: 1px solid var(--border); border-radius: 8px; padding: 5px 1px; background: #fafafa;
       display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-width: 0;
     }
-    .day-col.today { border-color: var(--primary); outline: 2px solid #bae6fd; }
+    .day-col.today { border-color: var(--primary); outline: 2px solid #fbcfe8; }
 
-    .day-col.is-off { background: #fee2e2 !important; border-color: #fca5a5 !important; }
-    .day-col.is-off .day-name { color: #b91c1c !important; }
-    .day-col.is-off .calendar-date { color: #ef4444 !important; }
-    .day-col.is-off .day-shift-select { border-color: #fca5a5 !important; color: #b91c1c !important; font-weight: 800; background: #fff1f2 !important; }
+    .day-col.is-off { background: #fecdd3 !important; border-color: #fb7185 !important; }
+    .day-col.is-off .day-name { color: #9f1239 !important; }
+    .day-col.is-off .calendar-date { color: #e11d48 !important; }
+    .day-col.is-off .day-shift-select { border-color: #fb7185 !important; color: #9f1239 !important; font-weight: 800; background: #fff1f2 !important; }
 
-    .day-col.is-ca1 { background: #e0f2fe !important; border-color: #7dd3fc !important; }
+    .day-col.is-ca1 { background: #bae6fd !important; border-color: #38bdf8 !important; }
     .day-col.is-ca1 .day-name { color: #0369a1 !important; }
     .day-col.is-ca1 .calendar-date { color: #0284c7 !important; }
-    .day-col.is-ca1 .day-shift-select { border-color: #38bdf8 !important; color: #0369a1 !important; font-weight: 800; background: #f0f9ff !important; }
+    .day-col.is-ca1 .day-shift-select { border-color: #0ea5e9 !important; color: #0369a1 !important; font-weight: 800; background: #e0f2fe !important; }
 
-    .day-col.is-ca2 { background: #fef9c3 !important; border-color: #fde047 !important; }
-    .day-col.is-ca2 .day-name { color: #854d0e !important; }
-    .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
-    .day-col.is-ca2 .day-shift-select { border-color: #facc15 !important; color: #854d0e !important; font-weight: 800; background: #fefce8 !important; }
+    .day-col.is-ca2 { background: #fde047 !important; border-color: #facc15 !important; }
+    .day-col.is-ca2 .day-name { color: #713f12 !important; }
+    .day-col.is-ca2 .calendar-date { color: #854d0e !important; }
+    .day-col.is-ca2 .day-shift-select { border-color: #eab308 !important; color: #713f12 !important; font-weight: 800; background: #fef9c3 !important; }
+
+    .day-col.is-admin { background: #e9d5ff !important; border-color: #c084fc !important; }
+    .day-col.is-admin .day-name { color: #581c87 !important; }
+    .day-col.is-admin .calendar-date { color: #6b21a8 !important; }
+    .day-col.is-admin .day-shift-select { border-color: #a855f7 !important; color: #581c87 !important; font-weight: 800; background: #f3e8ff !important; }
 
     .day-name { font-size: 0.72rem; font-weight: 800; color: var(--muted); line-height: 1.1; }
     .calendar-date { display: block; font-size: .60rem; color: #64748b; margin: 2px 0 4px; font-weight: 600; }
@@ -334,8 +345,7 @@
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
-    /* KHU VỰC ĐỒNG BỘ LỊCH ĐIỆN THOẠI ĐƯỢC THIẾT KẾ GỌN GÀNG, CHUYÊN NGHIỆP */
-    .sync-calendar-panel { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 10px; margin-top: 10px; }
+    .sync-calendar-panel { background: #fff1f2; border: 1px solid #fbcfe8; border-radius: 12px; padding: 10px; margin-top: 10px; }
     .sync-row { display: flex; gap: 8px; align-items: center; }
     .custom-multiselect { flex: 1.3; position: relative; }
     .multiselect-toggle-btn {
@@ -350,77 +360,38 @@
     }
     .multiselect-dropdown.show { display: block; }
     .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
-    .multiselect-item.selected { background: #eff6ff; color: var(--primary-dark); font-weight: 700; }
+    .multiselect-item.selected { background: #fff1f2; color: var(--primary-dark); font-weight: 700; }
     .multiselect-check { font-size: 0.85rem; color: var(--primary); display: none; }
     .multiselect-item.selected .multiselect-check { display: inline-block; }
 
     .btn-sync-submit {
-      flex: 1.2; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none;
+      flex: 1.2; background: linear-gradient(135deg, #f43f5e, #be123c); color: white; border: none;
       padding: 9px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
-      white-space: nowrap; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+      white-space: nowrap; box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
     }
 
+    /* CÀI ĐẶT GIỜ BÁO CA */
     .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
     .shift-settings-title { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-    .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+
     .shift-config-card { background: white; padding: 8px; border-radius: 10px; border: 1px solid var(--border); }
-    .shift-config-card h4 { font-size: 0.78rem; margin-bottom: 6px; color: #334155; }
-    .time-input-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 0.72rem; color: var(--muted); }
-    .time-input-row span { width: 50px; font-weight: 600; }
-    .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
+    .shift-config-card.card-c1 { background: #bae6fd !important; border-color: #38bdf8 !important; }
+    .shift-config-card.card-c1 h4 { color: #0369a1 !important; font-weight: 800; }
+    
+    .shift-config-card.card-c2 { background: #fde047 !important; border-color: #facc15 !important; }
+    .shift-config-card.card-c2 h4 { color: #713f12 !important; font-weight: 800; }
+    
+    .shift-config-card.card-admin { background: #e9d5ff !important; border-color: #c084fc !important; }
+    .shift-config-card.card-admin h4 { color: #581c87 !important; font-weight: 800; }
 
-    /* THỜI KHÓA BIỂU */
-    .table-scroll-wrap {
-      width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 2px solid #a5b4fc;
-      border-radius: 18px; margin: 12px 0 10px; background: #ffffff; box-shadow: 0 6px 20px rgba(99,102,241,0.08);
-    }
-    .tt-table { width: 100%; min-width: 640px; border-collapse: separate; border-spacing: 0; text-align: center; font-size: 0.8rem; }
-    .tt-table th, .tt-table td { border-right: 1px solid #e0e7ff; border-bottom: 1px solid #e0e7ff; padding: 8px 5px; }
-    .tt-table th:last-child, .tt-table td:last-child { border-right: none; }
-    .tt-table tr:last-child td { border-bottom: none; }
-
-    .tt-hdr-day { background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%); color: #1e293b; font-weight: 800; font-size: 0.8rem; padding: 10px 6px; }
-    .tt-hdr-day.today-col-hdr { background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%); color: #1e40af; border-bottom: 3px solid #2563eb; }
-    .tt-lesson-badge-cell { background: #f8fafc; width: 68px; vertical-align: middle; padding: 6px 4px; }
-    .tt-badge-pill {
-      display: inline-block; padding: 5px 8px; border-radius: 10px; font-size: 0.74rem; font-weight: 800;
-      background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%); color: #ffffff; border: 1px solid #4f46e5; white-space: nowrap;
-      box-shadow: 0 2px 6px rgba(99,102,241,0.25);
-    }
-    .tt-badge-pill.afternoon-pill { background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%); color: #ffffff; border: 1px solid #c2410c; box-shadow: 0 2px 6px rgba(234,88,12,0.25); }
-    .tt-cell-input-morning {
-      width: 100%; border: 1px solid #e0e7ff; background: #fafcff; padding: 8px 6px; font-size: 0.8rem;
-      font-weight: 700; color: #1e293b; text-align: center; border-radius: 8px; outline: none; transition: all 0.2s;
-    }
-    .tt-cell-input-morning:focus { border-color: #6366f1; background: #ffffff; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
-    .tt-cell-afternoon-wrap { display: flex; flex-direction: column; gap: 4px; padding: 2px 0; }
-    .tt-input-subject {
-      width: 100%; border: 1px solid #ffedd5; background: #fffaf5; padding: 6px 4px; font-size: 0.78rem;
-      font-weight: 800; color: #9a3412; text-align: center; border-radius: 7px; outline: none; transition: all 0.2s;
-    }
-    .tt-input-subject:focus { border-color: #ea580c; background: #ffffff; box-shadow: 0 0 0 3px rgba(234,88,12,0.15); }
-    .tt-input-time {
-      width: 100%; border: 1px dashed #fed7aa; background: #ffffff; padding: 4px 2px; font-size: 0.7rem;
-      font-weight: 700; color: #0284c7; text-align: center; border-radius: 6px; outline: none;
-    }
-    .tt-table td.today-cell { background: #f0fdf4; }
-
-    .school-actions-row { display: flex; gap: 8px; margin-top: 10px; }
-    .btn-school-save {
-      flex: 1.4; background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); color: white; border: none;
-      padding: 11px 10px; border-radius: 12px; font-weight: 800; font-size: 0.84rem; cursor: pointer;
-      box-shadow: 0 4px 12px rgba(79,70,229,0.3);
-    }
-    .btn-school-clear {
-      flex: 1; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 11px 10px;
-      border-radius: 12px; font-weight: 700; font-size: 0.8rem; cursor: pointer;
-    }
-
-    .lesson-badge {
-      display: inline-block; background: #fef08a; color: #854d0e; border: 1px solid #fde047; font-weight: 800;
-      font-size: 0.75rem; padding: 2px 8px; border-radius: 6px; margin-right: 6px; white-space: nowrap;
-    }
-    .lesson-row-item { display: flex; align-items: center; padding: 4px 0; font-size: 0.85rem; color: #1e293b; }
+    .shift-config-card h4 { font-size: 0.74rem; margin-bottom: 6px; }
+    .time-input-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 0.7rem; color: var(--muted); }
+    .shift-config-card.card-c1 .time-input-row { color: #0284c7; }
+    .shift-config-card.card-c2 .time-input-row { color: #854d0e; }
+    .shift-config-card.card-admin .time-input-row { color: #6b21a8; }
+    .time-input-row span { width: 34px; font-weight: 700; }
+    .time-input-row input { padding: 4px 6px; font-size: 0.75rem; font-weight: 700; border-radius: 6px; background: #fff; border-color: rgba(0,0,0,0.1); }
 
     #toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.94);
@@ -429,47 +400,48 @@
     }
 
     @media(max-width:560px) {
-      header h1 { font-size:.88rem; }
-      .header-btns button { padding:6px 7px; font-size:.68rem; }
-      .nav-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .day-shift-select { font-size: 0.68rem; padding: 3px 0; }
+      header h1 { font-size:.9rem; }
+      .header-btns button { padding:6px 10px; font-size:.72rem; }
+      .nav-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .day-shift-select { font-size: 0.65rem; padding: 3px 0; }
+      .shift-config-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+  <!-- HIỆU ỨNG CÁNH HOA HỒNG NHẠT, BAY CHẬM RÃI, LÃNG MẠNG -->
+  <div class="rose-petals-container" id="rosePetalsContainer"></div>
+
   <audio id="alarmAudioElement" preload="auto" loop></audio>
 
   <header>
-    <h1>📋 Sổ Tay & Báo Ca</h1>
+    <h1>🌸 Sổ Tay Ái Nhuy</h1>
     <div class="header-btns">
       <button onclick="enableSoundTest()">🔊 Thử Chuông</button>
       <button id="btnNotiStatus" onclick="toggleNotificationSetting()">🔔 Bật Báo</button>
-      <button onclick="exportData()">Sao Lưu</button>
-      <button onclick="document.getElementById('importFile').click()">Nhập</button>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     </div>
   </header>
 
   <div class="container">
     <div class="greeting-banner">
-      <div class="greeting-info" onclick="cycleGreetingText()" title="Chạm để đổi câu chúc tràn đầy năng lượng, tình yêu & học tập">
-        <div class="greeting-title" id="greetingUser">Chào buổi sáng, Tuấn Tuấn! ☀️</div>
-        <div class="greeting-quote" id="greetingMessage">Chúc một ngày làm việc năng suất, tràn đầy nhiệt huyết và yêu thương ✨</div>
+      <div class="greeting-info" onclick="cycleGreetingText()" title="Chạm để đổi câu chúc tràn đầy tình yêu, năng lượng & sức khỏe">
+        <div class="greeting-title" id="greetingUser">Chào buổi sáng, Ái Nhuy yêu dấu! 💖</div>
+        <div class="greeting-quote" id="greetingMessage">Chúc ngày mới làm việc thật hiệu quả, luôn rạng rỡ và tràn ngập năng lượng ✨</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
         <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết...</div>
       </div>
-      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để chuyển đổi icon thời tiết"></div>
+      <div class="weather-widget" id="weatherWidget" onclick="cycleWeatherDemo()" title="Chạm để đổi icon thời tiết"></div>
     </div>
 
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-label">📔 Nhật ký công việc</div>
+        <div class="stat-label">📔 Nhật ký yêu thương</div>
         <div class="stat-value" id="statJournals">0</div>
         <div class="stat-label" id="statJournalsSub">0 hoàn thành</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">⚡ Việc cần xử lý</div>
+        <div class="stat-label">⚡ Việc cần nhớ</div>
         <div class="stat-value" id="statIssues">0</div>
         <div class="stat-label" id="statIssuesSub">0 đang mở</div>
       </div>
@@ -483,13 +455,12 @@
     </div>
 
     <div class="nav-tabs">
-      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">Lịch Ca</button>
+      <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">Lịch Trực Ca</button>
       <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">Nhật Ký</button>
-      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">Việc Cần Làm</button>
-      <button class="nav-tab-btn" id="tabBtn-school" onclick="switchView('school')">Thời khóa biểu</button>
+      <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">Việc Cần Nhớ</button>
     </div>
 
-    <!-- VIEW 1: LỊCH CA -->
+    <!-- VIEW 1: LỊCH TRỰC CA -->
     <div id="view-shifts">
       <div class="week-table-card">
         <div class="week-control-bar">
@@ -501,7 +472,6 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- KHU VỰC ĐỒNG BỘ LỊCH SANG ĐIỆN THOẠI TIỆN LỢI & SANG TRỌNG -->
         <div class="sync-calendar-panel">
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -523,31 +493,37 @@
             <span style="font-size:0.7rem; font-weight:bold; color:#10b981;">● Báo thức kích hoạt</span>
           </div>
           <div class="shift-config-grid">
-            <div class="shift-config-card">
+            <div class="shift-config-card card-c1">
               <h4>Ca 1 (Sáng)</h4>
-              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
             </div>
-            <div class="shift-config-card">
+            <div class="shift-config-card card-c2">
               <h4>Ca 2 (Chiều)</h4>
-              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+            <div class="shift-config-card card-admin">
+              <h4>Hành chính</h4>
+              <div class="time-input-row"><span>In:</span><input type="time" id="cfg_admin_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Out:</span><input type="time" id="cfg_admin_out" onchange="updateShiftTimeConfig()"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- VIEW 2: NHẬT KÝ -->
+    <!-- VIEW 2: NHẬT KÝ YÊU THƯƠNG -->
     <div id="view-journal" style="display:none;">
       <div class="card-box card-journal">
-        <div class="journal-heading">✍️ Ghi Nhật Ký Công Việc Trong Ngày</div>
+        <div class="journal-heading">✍️ Ghi Nhật Ký Công Việc & Yêu Thương</div>
         <div class="row form-group">
           <div>
             <label>Phân loại nhật ký</label>
             <select id="journalCategory">
               <option value="viec-ngay">📝 Công việc thường nhật</option>
               <option value="ban-giao">🤝 Bàn giao ca trực</option>
+              <option value="tinh-yeu">💖 Nhật ký tình yêu & Nỗi nhớ</option>
               <option value="su-co">⚠️ Sự việc / Lưu ý</option>
               <option value="ghi-chu">💡 Ý tưởng / Ghi nhớ</option>
             </select>
@@ -560,7 +536,7 @@
         <div class="row form-group">
           <div>
             <label>Tiêu đề việc / nội dung chính</label>
-            <input type="text" id="journalTitle" placeholder="Ví dụ: Bàn giao ca trực...">
+            <input type="text" id="journalTitle" placeholder="Ví dụ: Lời yêu thương gửi Ái Nhuy...">
           </div>
           <div style="flex: 0.6;">
             <label>Hẹn giờ nhắc</label>
@@ -569,7 +545,7 @@
         </div>
         <div class="form-group">
           <label>Nội dung chi tiết nhật ký</label>
-          <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc..."></textarea>
+          <textarea id="journalContent" placeholder="Ghi chú cụ thể các việc hoặc tâm sự..."></textarea>
         </div>
         <button class="btn-submit btn-journal-submit" id="btnSaveJournal" onclick="saveJournalEntry()">+ Lưu Vào Nhật Ký</button>
       </div>
@@ -585,12 +561,12 @@
       <div id="journalListContainer"></div>
     </div>
 
-    <!-- VIEW 3: VIỆC CẦN XỬ LÝ -->
+    <!-- VIEW 3: VIỆC CẦN NHỚ -->
     <div id="view-issues" style="display:none;">
       <div class="card-box" style="border-left: 4px solid var(--purple);">
         <div class="form-group">
           <label>Tên công việc / Sự cố</label>
-          <input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra chìa khóa kho...">
+          <input type="text" id="issueTitle" placeholder="Ví dụ: Kiểm tra tiến độ công việc...">
         </div>
         <div class="row form-group">
           <div>
@@ -610,72 +586,46 @@
           <label>Nội dung chi tiết / Hướng xử lý</label>
           <textarea id="issueContent" placeholder="Mô tả cụ thể việc cần làm..."></textarea>
         </div>
-        <button class="btn-submit btn-submit-purple" onclick="saveIssue()">+ Lưu Việc Cần Xử Lý</button>
+        <button class="btn-submit btn-submit-purple" onclick="saveIssue()">+ Lưu Việc Cần Nhớ</button>
       </div>
       <div id="issuesList"></div>
-    </div>
-
-    <!-- VIEW 4: THỜI KHÓA BIỂU -->
-    <div id="view-school" style="display:none;">
-      <div class="card-box">
-        <div style="padding:14px 16px;margin:-4px -4px 14px;border-radius:16px;background:linear-gradient(135deg,#4338ca 0%,#7c3aed 52%,#ec4899 100%);color:#fff;">
-          <h3 style="font-size:1.02rem;margin:0;color:#fff;">🎒 Thời khóa biểu của các con</h3>
-        </div>
-        <div class="row form-group">
-          <div style="padding:10px;border-radius:12px;background:#eef2ff;border:1px solid #c7d2fe;">
-            <label style="color:#4338ca;">🏫 Lớp học</label>
-            <select id="schoolClass" onchange="renderSchoolTableGrid()"><option value="10">Lớp 10</option><option value="6">Lớp 6</option></select>
-          </div>
-          <div style="padding:10px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;">
-            <label style="color:#c2410c;">☀️ Buổi học</label>
-            <select id="schoolShift" onchange="renderSchoolTableGrid()">
-              <option value="morning">🌅 Buổi sáng</option>
-              <option value="afternoon">🌇 Buổi chiều</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="table-scroll-wrap">
-          <table class="tt-table" id="schoolGridTable">
-            <thead>
-              <tr id="schoolGridHeader"></tr>
-            </thead>
-            <tbody id="schoolGridBody"></tbody>
-          </table>
-        </div>
-
-        <div class="school-actions-row">
-          <button class="btn-school-save" onclick="saveSchoolGridTimetable()">💾 Lưu Thời Khóa Biểu</button>
-          <button class="btn-school-clear" onclick="clearSchoolGridTimetable()">🗑 Xóa Buổi Này</button>
-        </div>
-      </div>
-
-      <div class="card-box">
-        <h3 style="font-size:.9rem;margin-bottom:8px">📌 Xem nhanh hôm nay</h3>
-        <div id="schoolTodaySummary" style="font-size:.85rem;line-height:1.7"></div>
-      </div>
     </div>
   </div>
 
   <div id="toast">Thông báo</div>
 
   <script>
-    let journals = JSON.parse(localStorage.getItem('camp_journals_v1') || localStorage.getItem('camp_reports_v2') || '[]');
-    let issues = JSON.parse(localStorage.getItem('camp_issues_v2') || '[]');
-    let shiftTimes = JSON.parse(localStorage.getItem('camp_shift_times') || JSON.stringify({
-      c1_in: '05:10', c1_out: '14:00', c2_in: '16:30', c2_out: '22:00'
+    let journals = JSON.parse(localStorage.getItem('ainhuy_journals_v1') || '[]');
+    let issues = JSON.parse(localStorage.getItem('ainhuy_issues_v1') || '[]');
+    let shiftTimes = JSON.parse(localStorage.getItem('ainhuy_shift_times') || JSON.stringify({
+      c1_in: '05:10', c1_out: '14:00', c2_in: '16:30', c2_out: '22:00', admin_in: '08:00', admin_out: '17:00'
     }));
 
     let monthWeeksList = [];
     let currentWeekIndex = 0;
     let selectedSyncWeeks = new Set();
-    let currentJournalImages = [];
-    let wakeLock = null;
-
     let audioCtx = null;
     let alarmInterval = null;
     let isAlarmPlaying = false;
     let lastTriggeredMinute = "";
+
+    function createRosePetals() {
+      const container = document.getElementById('rosePetalsContainer');
+      if (!container) return;
+      const petalCount = 14;
+      for (let i = 0; i < petalCount; i++) {
+        const p = document.createElement('div');
+        p.className = 'petal';
+        const size = Math.floor(Math.random() * 8) + 10;
+        p.style.width = `${size}px`;
+        p.style.height = `${size * 1.3}px`;
+        p.style.left = `${Math.random() * 100}vw`;
+        p.style.top = `-${Math.random() * 20}vh`;
+        p.style.animationDuration = `${Math.random() * 6 + 10}s`;
+        p.style.animationDelay = `${Math.random() * 7}s`;
+        container.appendChild(p);
+      }
+    }
 
     function generateGentleAlarmWav() {
       const sampleRate = 16000;
@@ -724,46 +674,110 @@
 
     let alarmAudioBlobUrl = null;
 
-    const energeticGreetingPairs = {
-      morning: [
-        { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày làm việc năng suất, tràn đầy nhiệt huyết và hoàn thành xuất sắc mọi mục tiêu! ✨" },
-        { title: "Khởi đầu rực rỡ, Tuấn Tuấn ơi! 🚀", quote: "Năng lượng tràn đầy cho một ngày làm việc hiệu quả và học tập hăng say!" },
-        { title: "Tuấn Tuấn tuyệt vời! 💖", quote: "Chúc bạn ngập tràn tình yêu thương, năng lượng tích cực và may mắn cả ngày!" },
-        { title: "Ngày mới tốt lành! 📚", quote: "Cùng nỗ lực học tập, làm việc hết mình để gặt hái những thành tựu rực rỡ nhất!" },
-        { title: "Chào ngày mới năng lượng! 🌟", quote: "Làm việc bằng cả đam mê, học tập với tất cả sự quyết tâm bạn nhé!" },
-        { title: "Năng lượng ngập tràn! 💼", quote: "Chúc bạn một ngày làm việc cực tốt, xử lý mọi việc suôn sẻ và hanh thông!" }
-      ],
-      afternoon: [
-        { title: "Buổi chiều năng suất nhé Tuấn Tuấn! ☕", quote: "Giữ vững phong độ, xử lý công việc suôn sẻ và gặt hái nhiều kết quả tốt đẹp!" },
-        { title: "Nhiệt huyết buổi chiều! 🔥", quote: "Tập trung cao độ, làm việc hiệu quả và lan tỏa năng lượng tích cực đến mọi người!" },
-        { title: "Tình yêu và công việc! 💖", quote: "Mỗi khoảnh khắc làm việc và học tập đều là cơ hội để khẳng định bản thân." },
-        { title: "Cố lên Tuấn Tuấn ơi! 🌟", quote: "Nỗ lực học tập và làm việc chăm chỉ sẽ mang lại thành công xứng đáng!" },
-        { title: "Làm việc thật tốt nhé! 🎯", quote: "Buổi chiều bứt phá, hoàn thành xuất sắc các nhiệm vụ đề ra!" }
-      ],
-      evening: [
-        { title: "Buổi tối ấm áp, Tuấn Tuấn nhé! 🌆", quote: "Tận hưởng phút giây bình yên bên gia đình và tình yêu thương trọn vẹn ❤️" },
-        { title: "Khép lại ngày dài năng suất! ✨", quote: "Tự hào vì hôm nay bạn đã làm việc hết mình và nỗ lực không ngừng nghỉ!" },
-        { title: "Yêu thương ngập tràn! 🌙", quote: "Chúc buổi tối an lành, thư giãn và nạp đầy năng lượng cho ngày mai." }
-      ],
-      night: [
-        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Giấc ngủ sâu để tái tạo năng lượng tuyệt vời cho hành trình thành công ngày mai ✨" },
-        { title: "Đêm bình yên! 🌟", quote: "Mang theo những thành quả hôm nay vào giấc mơ đẹp và sẵn sàng bứt phá!" }
-      ]
-    };
+    /* KHO TÀNG CÂU CHÚC ĐA DẠNG: NĂNG LƯỢNG, LÀM VIỆC TỐT, SỨC KHỎE & HỌC TẬP */
+    const loveAndEnergyQuotes = [
+      /* --- CHỦ ĐỀ: NĂNG LƯỢNG & NGÀY MỚI RỰC RỠ --- */
+      { title: "Chào buổi sáng, Ái Nhuy yêu dấu! 💖", quote: "Chúc một ngày làm việc năng suất, nỗ lực hết mình và luôn mỉm cười rạng rỡ! ✨" },
+      { title: "Khởi đầu rực rỡ, Ái Nhuy nhé! 🌹", quote: "Nỗi nhớ mong gửi theo gió sớm, chúc tình yêu của anh tràn đầy năng lượng làm việc!" },
+      { title: "Ái Nhuy tuyệt vời nhất! 🌸", quote: "Luôn học hỏi, nỗ lực hết mình để gặt hái những thành công rực rỡ hôm nay nhé!" },
+      { title: "Ngày mới tốt lành, em yêu! ☀️", quote: "Chúc em ngày mới nhiều năng lượng, làm việc hiệu quả và luôn cảm thấy hạnh phúc!" },
+      { title: "Bình minh rực rỡ! 🌅", quote: "Chào đón ngày mới cùng năng lượng tích cực và sự tự tin tuyệt đối nhé em." },
+      { title: "Năng lượng bừng sáng! 💡", quote: "Bừng sáng ngày mới với sự tự tin, nhiệt huyết và quyết tâm cao độ em nhé." },
+      { title: "Sức sống căng tràn! 🌱", quote: "Chúc em một ngày tràn trề nhựa sống, năng động và sáng tạo hết mình." },
+      { title: "Ái Nhuy tỏa sáng! ⭐", quote: "Hôm nay em sẽ là ngôi sao sáng nhất trong mọi công việc và cuộc họp." },
+
+      /* --- CHỦ ĐỀ: LÀM VIỆC TỐT & HIỆU QUẢ --- */
+      { title: "Buổi chiều ấm áp nhé Ái Nhuy! ☕", quote: "Giữ vững phong độ, nỗ lực hết mình và xử lý công việc thật hoàn hảo em nhé!" },
+      { title: "Nỗi nhớ và tình yêu gửi em! 💞", quote: "Buổi chiều bứt phá, học hỏi thêm nhiều điều mới và hoàn thành xuất sắc nhiệm vụ!" },
+      { title: "Ái Nhuy siêu nhân chăm chỉ! 💪", quote: "Dù công việc có bận rộn thế nào, nhớ giữ gìn sức khỏe và ăn uống đầy đủ em nhé." },
+      { title: "Nụ cười chiến thắng! 🏆", quote: "Chúc em hoàn thành xuất sắc mọi dự án và nhiệm vụ được giao hôm nay." },
+      { title: "Ái Nhuy tuyệt đỉnh! ✨", quote: "Hôm nay em sẽ chinh phục mọi đỉnh cao công việc một cách xuất sắc nhất!" },
+      { title: "Nguồn động lực to lớn! 🚀", quote: "Chỉ cần nghĩ đến em là anh có thêm sức mạnh để hoàn thành mọi mục tiêu." },
+      { title: "Bản lĩnh kiên cường! 🛡️", quote: "Ái Nhuy của anh rất kiên cường và giỏi giang, không gì làm khó được em." },
+      { title: "Vững vàng bước tới! 🛤️", quote: "Cứ tự tin tỏa sáng đi em, phía sau lưng em luôn có bờ vai vững chắc của anh." },
+
+      /* --- CHỦ ĐỀ: GIỮ GÌN SỨC KHỎE & NGHỈ NGƠI --- */
+      { title: "Yêu bản thân thật nhiều nhé! 🌿", quote: "Làm việc chăm chỉ nhưng đừng quên uống đủ nước và nghỉ ngơi điều độ em nhé." },
+      { title: "Sức khỏe là vàng! 🍏", quote: "Bữa trưa ngon miệng và giấc ngủ trưa sâu giấc sẽ giúp em nạp đầy năng lượng." },
+      { title: "Bình yên nơi anh! 🛡️", quote: "Cứ yên tâm làm việc và tận hưởng cuộc sống, sức khỏe của em là quan trọng nhất!" },
+      { title: "Vòng tay ấm áp! 🤗", quote: "Lại đây với anh, anh ôm em vào lòng để xua tan mọi mỏi mệt sau giờ làm." },
+      { title: "Buổi tối bình yên, Ái Nhuy nhé! 🌆", quote: "Khép lại một ngày làm việc nỗ lực hết mình, tận hưởng không gian lãng mạn và yêu thương ❤️" },
+      { title: "Chúc ngủ ngon, Ái Nhuy của anh! 💤", quote: "Ngủ thật ngon để tái tạo năng lượng cho một ngày mới ngập tràn yêu thương ✨" },
+
+      /* --- CHỦ ĐỀ: KHÔNG NGỪNG HỌC TẬP & PHÁT TRIỂN --- */
+      { title: "Không ngừng vươn lên! 📚", quote: "Mỗi ngày học hỏi thêm một chút tri thức mới là bước đệm vững chắc cho tương lai." },
+      { title: "Ái Nhuy thông thái! 🦉", quote: "Sự thông minh, ham học hỏi và nhạy bén của em luôn làm anh thán phục." },
+      { title: "Tri thức là sức mạnh! 🧠", quote: "Trau dồi bản thân mỗi ngày chính là chìa khóa mở ra những cánh cửa thành công rực rỡ." },
+      { title: "Kiên trì và tiến bước! 🎯", quote: "Cứ kiên nhẫn trau dồi kỹ năng, mọi nỗ lực học tập của em sẽ được đền đáp xứng đáng." },
+
+      /* --- CHỦ ĐỀ: TÌNH YÊU NGỌT NGÀO & NỖI NHỚ --- */
+      { title: "Chào buổi sáng, Ái Nhuy yêu dấu! 💖", quote: "Chúc một ngày làm việc năng suất, nỗ lực hết mình và luôn mỉm cười rạng rỡ! ✨" },
+      { title: "Nhớ em nhiều lắm, Ái Nhuy ơi! 💞", quote: "Dù ở đâu hay làm gì, trái tim anh vẫn luôn hướng về em với tất cả yêu thương." },
+      { title: "Em là ánh nắng của đời anh! ☀️", quote: "Mỗi ngày thức dậy được nghĩ về em là niềm hạnh phúc lớn lao nhất." },
+      { title: "Ái Nhuy xinh đẹp ơi! 🌷", quote: "Hãy luôn tự tin vào bản thân vì em luôn có anh ở đây đồng hành và yêu thương." },
+      { title: "Nụ cười của em là hạnh phúc! 😊", quote: "Mong rằng hôm nay và mãi về sau, nụ cười ấy sẽ luôn rạng ngời trên môi em." },
+      { title: "Gửi ngàn cái ôm đến em! 🤗", quote: "Dù khoảng cách thế nào, tình yêu của chúng ta vẫn luôn đong đầy từng giây phút." },
+      { title: "Tình yêu ngọt ngào của anh! 🍬", quote: "Cảm ơn em đã đến bên anh, làm cho thế giới này trở nên ấm áp và nhiệm màu." },
+      { title: "Yêu em hôm nay, ngày mai mãi mãi! 💖", quote: "Tình cảm anh dành cho Ái Nhuy sẽ ngày càng sâu đậm theo năm tháng." },
+      { title: "Món quà tuyệt vời nhất! 🎁", quote: "Chính sự tồn tại của em trong cuộc đời này là món quà vô giá đối với anh." },
+      { title: "Gió xuân gửi lời yêu! 🍃", quote: "Chúc em một ngày tràn đầy hứng khởi, làm việc gì cũng hanh thông, thuận lợi." },
+      { title: "Nhớ em từng nhịp đập! 💓", quote: "Nỗi nhớ em cứ đong đầy theo từng giờ, mong sớm được gặp tình yêu của anh." },
+      { title: "Luôn sát cánh bên em! 🤝", quote: "Bất cứ khi nào em cần, anh sẽ luôn ở đây lắng nghe và sẻ chia cùng em." },
+      { title: "Ái Nhuy rạng rỡ như hoa! 🌺", quote: "Chúc bông hoa đẹp nhất trong tim anh hôm nay thật vui vẻ và hạnh phúc." },
+      { title: "Tương lai tươi sáng chờ đón! 🌟", quote: "Cùng nhau vượt qua mọi thử thách để xây dựng ngôi nhà hạnh phúc em nhé." },
+      { title: "Hơi ấm tình yêu gửi em! 🔥", quote: "Dù thời tiết ngoài kia có lạnh thế nào, trái tim anh vẫn luôn sưởi ấm em." },
+      { title: "Khoảnh khắc tuyệt diệu! ⏳", quote: "Khoảng thời gian bên em là những giây phút đẹp đẽ nhất trong cuộc đời anh." },
+      { title: "Hạnh phúc đơn sơ là có em! 🥰", quote: "Chỉ cần nhìn thấy tin nhắn của em là anh lại thấy trọn vẹn một ngày bình yên." },
+      { title: "Ái Nhuy là duy nhất! 👑", quote: "Không ai có thể thay thế được vị trí của em trong trái tim anh." },
+      { title: "Gửi ngàn nụ hôn ngọt ngào! 😘", quote: "Hôn lên trán em dịu dàng, chúc tình yêu của anh có những giấc ngủ thật đẹp." },
+      { title: "Tình yêu vượt thời gian! 🕰️", quote: "Thời gian có trôi đi đâu, tình yêu anh dành cho Ái Nhuy vẫn nguyên vẹn như ngày đầu." },
+      { title: "Nụ hồng buổi sớm! 🌹", quote: "Tặng em ngàn đóa hồng thắm tươi thay cho ngàn lời yêu thương ngọt ngào." },
+      { title: "Giai điệu tình yêu! 🎶", quote: "Tên em chính là bản tình ca đẹp nhất mà cuộc đời đã ban tặng cho anh." },
+      { title: "Hơi thở của mùa xuân! 🌸", quote: "Em mang lại sức sống và sự tươi mới cho mọi không gian em bước qua." },
+      { title: "Bầu trời yêu thương! 🌌", quote: "Bầu trời đêm ngàn sao cũng không sánh bằng đôi mắt long lanh của em." },
+      { title: "Sức mạnh từ tình yêu! ⚡", quote: "Yêu em là điều tuyệt vời nhất giúp anh trở nên hoàn thiện hơn mỗi ngày." },
+      { title: "Hạnh phúc ngập tràn! 🏡", quote: "Mong ước lớn nhất của anh là được cùng em chung đôi đi đến cuối cuộc đời." },
+      { title: "Lời yêu chưa ngơi! 💌", quote: "Mỗi ngày anh đều muốn nói yêu em nhiều hơn ngày hôm qua." },
+      { title: "Ánh dương ấm áp! 🌅", quote: "Em sưởi ấm tâm hồn lạnh giá của anh bằng sự dịu dàng và ngọt ngào." },
+      { title: "Nỗi nhớ không tên! 💭", quote: "Nhớ nụ cười, nhớ giọng nói, nhớ tất cả mọi thứ thuộc về Ái Nhuy." },
+      { title: "Tình yêu mãnh liệt! 🔥", quote: "Ngọn lửa tình yêu trong anh đối với em chưa bao giờ tắt, chỉ ngày càng bùng cháy." },
+      { title: "Ái Nhuy đáng yêu nhất quả đất! 🌍", quote: "Không gì có thể so sánh được sự dễ thương và ngọt ngào của em." },
+      { title: "Hành trình hạnh phúc! 🚂", quote: "Cùng nhau nắm tay nhau đi qua mọi thăng trầm của cuộc sống này em nhé." },
+      { title: "Nụ cười tỏa nắng! ☀️", quote: "Chỉ cần em cười là mọi mây mù trong lòng anh đều bay biến sạch." },
+      { title: "Tâm hồn đẹp đẽ! 💎", quote: "Vẻ đẹp tâm hồn và sự nhân hậu của em khiến anh ngày càng yêu em sâu đậm." },
+      { title: "Ái Nhuy là tất cả! 💯", quote: "Em là quá khứ, là hiện tại và là tương lai duy nhất trong đời anh." },
+      { title: "Thanh xuân có em! 🍃", quote: "Cảm ơn em đã cùng anh đi qua những năm tháng thanh xuân đẹp đẽ nhất." },
+      { title: "Gửi trọn niềm tin! 🤝", quote: "Anh trao trọn trái tim và niềm tin nơi em, mãi gắn bó không rời." },
+      { title: "Ái Nhuy ngọt ngào! 🍓", quote: "Em ngọt ngào hơn cả những viên kẹo ngọt trong ký ức tuổi thơ." },
+      { title: "Tình yêu vĩnh cửu! ♾️", quote: "Tình yêu của chúng ta sẽ trường tồn cùng thời gian và không gì lay chuyển được." },
+      { title: "Mỗi ngày là một niềm vui! 🎉", quote: "Chúc em hôm nay nhận được thật nhiều bất ngờ ngọt ngào và thú vị." },
+      { title: "Ái Nhuy của anh là số 1! 🥇", quote: "Trong lòng anh, em luôn là người xuất sắc và hoàn hảo nhất." },
+      { title: "Ánh sáng cuối đường hầm! 🕯️", quote: "Em là hy vọng, là động lực giúp anh vượt qua mọi giông bão cuộc đời." },
+      { title: "Hạnh phúc giản dị! 🌾", quote: "Hạnh phúc đôi khi chỉ là buổi chiều cùng ngồi bên nhau thưởng thức ly trà ấm." },
+      { title: "Yêu thương đong đầy! 🌊", quote: "Tình yêu anh dành cho em rộng lớn và sâu sắc như đại dương bao la." },
+      { title: "Ái Nhuy ngọc ngà! 💎", quote: "Em là viên ngọc quý giá nhất mà cuộc đời đã ban ơn cho anh." },
+      { title: "Gói gọn yêu thương! ☁️", quote: "Dù trời có mưa hay nắng, anh vẫn luôn ở bên cạnh che chở cho em." },
+      { title: "Ái Nhuy dịu dàng! 🌸", quote: "Sự dịu dàng và ân cần của em khiến thế giới này trở nên thật đáng yêu." },
+      { title: "Thế giới nhỏ của anh! 🏡", quote: "Thế giới của anh rất nhỏ, chỉ bé bằng một góc hình bóng của Ái Nhuy." },
+      { title: "Tình yêu bất tận! 🌠", quote: "Mỗi ngôi sao trên trời đều là một lời chúc anh gửi đến em mỗi đêm." },
+      { title: "Nỗi nhớ dịu dàng! 💌", quote: "Nhớ em không phải là bệnh, mà là thói quen ngọt ngào không thể bỏ." },
+      { title: "Ái Nhuy kiêu sa! 👑", quote: "Em tỏa sáng rực rỡ theo cách riêng biệt mà không ai có được." },
+      { title: "Nụ hôn gió gửi trao! 💨", quote: "Gửi cơn gió mang theo nụ hôn ấm áp đến bên má em lúc này." },
+      { title: "Hạnh phúc trọn vẹn! 🍀", quote: "Cảm ơn cuộc đời đã cho anh gặp và yêu một người tuyệt vời như em." },
+      { title: "Tình yêu chân thành! 💖", quote: "Tất cả những gì anh làm đều mong muốn mang lại nụ cười cho Ái Nhuy." },
+      { title: "Ái Nhuy ngọt ngào nhất! 🍯", quote: "Mỗi lời em nói đều ngọt ngào như rót mật vào tim anh." },
+      { title: "Tương lai tươi đẹp! 🌈", quote: "Cầu vồng sau mưa, tương lai của chúng ta sẽ ngập tràn sắc màu hạnh phúc." },
+      { title: "Ái Nhuy của anh! 👩‍❤️‍👨", quote: "Hai tiếng 'Ái Nhuy' gọi tên thôi cũng đủ làm tim anh ấm áp lạ thường." },
+      { title: "Thanh âm hạnh phúc! 🎵", quote: "Giọng nói của em chính là âm thanh tuyệt vời nhất anh muốn nghe mỗi ngày." },
+      { title: "Trọn đời bên nhau! 💍", quote: "Nguyện cùng em đi đến tận cùng thế giới, yêu thương không bao giờ phai." }
+    ];
 
     let greetingListForToday = [];
     let currentGreetingIdx = 0;
 
     function initGreetingPool() {
-      const h = new Date().getHours();
-      let pool = [];
-      if (h >= 5 && h < 11) pool = energeticGreetingPairs.morning;
-      else if (h >= 11 && h < 17) pool = energeticGreetingPairs.afternoon;
-      else if (h >= 17 && h < 21) pool = energeticGreetingPairs.evening;
-      else pool = energeticGreetingPairs.night;
-
-      greetingListForToday = [...pool, ...energeticGreetingPairs.morning, ...energeticGreetingPairs.evening];
-      currentGreetingIdx = Math.floor(Math.random() * pool.length);
+      greetingListForToday = [...loveAndEnergyQuotes];
+      currentGreetingIdx = Math.floor(Math.random() * greetingListForToday.length);
       displayCurrentGreeting();
     }
 
@@ -780,42 +794,44 @@
     function cycleGreetingText() {
       currentGreetingIdx = (currentGreetingIdx + 1) % greetingListForToday.length;
       displayCurrentGreeting();
-      showToast('Đã đổi câu chúc năng lượng ✨');
+      showToast('Đã đổi câu chúc yêu thương ✨');
     }
 
     const weatherStates = [
-      { type: 'sunny', label: 'Trời nắng rực rỡ, chan hòa' },
-      { type: 'fair', label: 'Bầu trời trong xanh dịu mát' },
-      { type: 'rainy', label: 'Trời có mưa, bạn nhớ mang ô nhé' },
-      { type: 'night', label: 'Đêm trong lành, trăng sao huyền bí' }
+      { type: 'sunny', label: 'Trời nắng rực rỡ', tip: 'Ngoài trời nắng nóng, em nhớ uống nước nhé !' },
+      { type: 'fair', label: 'Trời xanh mây trắng', tip: 'Thời tiết dịu mát, chúc em một ngày tuyệt vời!' },
+      { type: 'rainy', label: 'Trời có mưa', tip: 'Trời đang có mưa, em nhớ mang áo mưa nhé' },
+      { type: 'night', label: 'Đêm lãng mạn', tip: 'Trời lạnh, em mặc thêm áo khoác nha....' }
     ];
     let currentWeatherIndex = 0;
 
-    function renderWeatherIcon(type, customLabel) {
+    function renderWeatherIcon(type, customLabel, customTip) {
       const widget = document.getElementById('weatherWidget');
       const label = document.getElementById('weatherStatusLabel');
       if (!widget) return;
 
+      const stateObj = weatherStates.find(s => s.type === type) || weatherStates[0];
+
       if (type === 'sunny') {
         widget.innerHTML = `<div class="sunny-animated-box"><div class="sun-core"></div><div class="sun-rays-wrap"><span class="sun-beam"></span><span class="sun-beam"></span><span class="sun-beam"></span><span class="sun-beam"></span></div></div>`;
-        if (label) label.innerText = customLabel || '☀️ Ngoài trời nắng rực rỡ';
+        if (label) label.innerText = customTip || stateObj.tip;
       } else if (type === 'fair') {
         widget.innerHTML = `<div class="fair-animated-box"><div class="fair-sun"></div><div class="floating-cloud-1"></div><div class="floating-cloud-2"></div></div>`;
-        if (label) label.innerText = customLabel || '🌤️ Bầu trời trong xanh dịu mát';
+        if (label) label.innerText = customTip || stateObj.tip;
       } else if (type === 'rainy') {
         widget.innerHTML = `<div class="rainy-animated-box"><div class="rain-main-cloud"></div><span class="anim-drop rd1"></span><span class="anim-drop rd2"></span><span class="anim-drop rd3"></span></div>`;
-        if (label) label.innerText = customLabel || '🌧️ Ngoài trời có mưa';
+        if (label) label.innerText = customTip || stateObj.tip;
       } else {
         widget.innerHTML = `
           <div class="night-animated-box">
             <div class="night-moon"></div>
-            <span class="night-sparkle st-far-left" title="Sao xa góc trái">★</span>
-            <span class="night-sparkle st-mid-left-high" title="Sao giữa trái">✦</span>
-            <span class="night-sparkle st-mid-left-low" title="Sao góc dưới xa">★</span>
-            <span class="night-sparkle st-near-left" title="Sao gần trăng">✦</span>
-            <span class="night-sparkle st-near-moon" title="Sao trên cao">✧</span>
+            <span class="night-sparkle st-far-left">★</span>
+            <span class="night-sparkle st-mid-left-high">✦</span>
+            <span class="night-sparkle st-mid-left-low">★</span>
+            <span class="night-sparkle st-near-left">✦</span>
+            <span class="night-sparkle st-near-moon">✧</span>
           </div>`;
-        if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
+        if (label) label.innerText = customTip || stateObj.tip;
       }
     }
 
@@ -844,16 +860,16 @@
 
             if (code >= 51 && code <= 99) {
               currentWeatherIndex = 2;
-              renderWeatherIcon('rainy', `🌧️ Ngoài trời có mưa (${temp}°C)`);
+              renderWeatherIcon('rainy', null, 'Trời đang có mưa, em nhớ mang áo mưa nhé');
             } else if (!isDay) {
               currentWeatherIndex = 3;
-              renderWeatherIcon('night', `🌙 Đêm trong lành (${temp}°C)`);
-            } else if (code <= 1) {
+              renderWeatherIcon('night', null, 'Trời lạnh, em mặc thêm áo khoác nha....');
+            } else if (code <= 1 && temp >= 28) {
               currentWeatherIndex = 0;
-              renderWeatherIcon('sunny', `☀️ Ngoài trời nắng rực rỡ (${temp}°C)`);
+              renderWeatherIcon('sunny', null, `Ngoài trời nắng nóng (${temp}°C), em nhớ uống nước nhé !`);
             } else {
               currentWeatherIndex = 1;
-              renderWeatherIcon('fair', `🌤️ Bầu trời dịu mát (${temp}°C)`);
+              renderWeatherIcon('fair', null, 'Thời tiết dịu mát, chúc em một ngày tuyệt vời!');
             }
           } catch (_) { fallbackWeatherByHour(); }
         }, () => fallbackWeatherByHour(), { timeout: 7000 });
@@ -865,13 +881,13 @@
       if (hour >= 18 || hour < 5) currentWeatherIndex = 3;
       else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
       else currentWeatherIndex = 1;
-      renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type, null, weatherStates[currentWeatherIndex].tip);
     }
 
     function cycleWeatherDemo() {
       currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
-      renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
-      showToast(`Chế độ: ${weatherStates[currentWeatherIndex].label}`);
+      renderWeatherIcon(weatherStates[currentWeatherIndex].type, null, weatherStates[currentWeatherIndex].tip);
+      showToast(`Thời tiết: ${weatherStates[currentWeatherIndex].label}`);
     }
 
     function saveJournalEntry() {
@@ -887,12 +903,12 @@
       const now = new Date();
       journals.unshift({
         id: Date.now(),
-        title: title || 'Ghi chép công việc',
+        title: title || 'Ghi chép Ái Nhuy',
         content, category, journalDate, reminderTime,
-        images: [...currentJournalImages], done: false,
+        done: false,
         createdAt: now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN')
       });
-      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      localStorage.setItem('ainhuy_journals_v1', JSON.stringify(journals));
 
       document.getElementById('journalTitle').value = '';
       document.getElementById('journalContent').value = '';
@@ -926,7 +942,7 @@
         container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:0.85rem;">Không tìm thấy trang nhật ký nào.</div>`;
         return;
       }
-      const catMap = { 'viec-ngay': '📝 Thường nhật', 'ban-giao': '🤝 Bàn giao', 'su-co': '⚠️ Lưu ý', 'ghi-chu': '💡 Ghi nhớ' };
+      const catMap = { 'viec-ngay': '📝 Thường nhật', 'ban-giao': '🤝 Bàn giao', 'tinh-yeu': '💖 Tình yêu & Nỗi nhớ', 'su-co': '⚠️ Lưu ý', 'ghi-chu': '💡 Ghi nhớ' };
       listToRender.forEach(item => {
         const dateParts = item.journalDate ? item.journalDate.split('-') : [];
         const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : item.createdAt;
@@ -953,14 +969,14 @@
 
     function toggleDoneJournal(id) {
       journals = journals.map(j => j.id === id ? { ...j, done: !j.done } : j);
-      localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+      localStorage.setItem('ainhuy_journals_v1', JSON.stringify(journals));
       filterJournals(); updateDashboard();
     }
 
     function deleteJournal(id) {
       if (confirm('Xóa mục nhật ký này?')) {
         journals = journals.filter(j => j.id !== id);
-        localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
+        localStorage.setItem('ainhuy_journals_v1', JSON.stringify(journals));
         filterJournals(); updateDashboard();
       }
     }
@@ -968,173 +984,20 @@
     function copyJournalZalo(id) {
       const j = journals.find(x => x.id === id);
       if (!j) return;
-      const text = `📔 [NHẬT KÝ CA TRỰC - ${j.journalDate || ''}]\n📌 ${j.title}\n------------------\n${j.content}`;
+      const text = `💖 [NHẬT KÝ ÁI NHUY - ${j.journalDate || ''}]\n📌 ${j.title}\n------------------\n${j.content}`;
       navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép sang Zalo!'));
     }
 
     function switchView(tab) {
-      ['shifts', 'journal', 'issues', 'school'].forEach(t => {
+      ['shifts', 'journal', 'issues'].forEach(t => {
         const viewEl = document.getElementById(`view-${t}`);
         const btnEl = document.getElementById(`tabBtn-${t}`);
         if (viewEl) viewEl.style.display = (t === tab) ? 'block' : 'none';
         if (btnEl) {
-          btnEl.classList.remove('active', 'active-journal');
-          if (t === tab) {
-            if (t === 'journal') btnEl.classList.add('active-journal');
-            else btnEl.classList.add('active');
-          }
+          btnEl.classList.remove('active');
+          if (t === tab) btnEl.classList.add('active');
         }
       });
-    }
-
-    const daysOrder = [
-      { key: '1', label: 'Thứ 2' }, { key: '2', label: 'Thứ 3' },
-      { key: '3', label: 'Thứ 4' }, { key: '4', label: 'Thứ 5' },
-      { key: '5', label: 'Thứ 6' }, { key: '6', label: 'Thứ 7' },
-      { key: '0', label: 'Chủ Nhật' }
-    ];
-
-    function getSchoolData() {
-      try { return JSON.parse(localStorage.getItem('family_timetable_v1') || '{}'); } catch (_) { return {}; }
-    }
-
-    function renderSchoolTableGrid() {
-      const tbody = document.getElementById('schoolGridBody');
-      const headerRow = document.getElementById('schoolGridHeader');
-      if (!tbody || !headerRow) return;
-
-      const cls = document.getElementById('schoolClass').value;
-      const shift = document.getElementById('schoolShift').value;
-      const data = getSchoolData();
-      const todayDay = String(new Date().getDay());
-
-      headerRow.innerHTML = `<th class="tt-lesson-badge-cell" style="font-weight:800; font-size:0.75rem; color:#475569;">${shift === 'afternoon' ? 'Hàng' : 'Tiết'}</th>` + daysOrder.map(d => {
-        const isToday = (d.key === todayDay);
-        return `<th class="tt-hdr-day ${isToday ? 'today-col-hdr' : ''}">${d.label} ${isToday ? '●' : ''}</th>`;
-      }).join('');
-
-      tbody.innerHTML = '';
-
-      if (shift === 'afternoon') {
-        for (let rowIdx = 1; rowIdx <= 4; rowIdx++) {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td class="tt-lesson-badge-cell"><span class="tt-badge-pill afternoon-pill">Học ${rowIdx}</span></td>` + daysOrder.map(d => {
-            const isToday = (d.key === todayDay);
-            const cellKey = `${cls}_afternoon_${d.key}`;
-            const savedArr = data[cellKey] || [];
-            const rawVal = savedArr[rowIdx - 1] || '';
-
-            let subject = rawVal, timeStr = '';
-            if (rawVal.includes('|')) {
-              const parts = rawVal.split('|');
-              subject = parts[0].trim(); timeStr = parts[1].trim();
-            } else if (rawVal.includes('\n')) {
-              const parts = rawVal.split('\n');
-              subject = parts[0].trim(); timeStr = parts[1].trim();
-            }
-
-            return `
-              <td class="${isToday ? 'today-cell' : ''}">
-                <div class="tt-cell-afternoon-wrap">
-                  <input type="text" class="tt-input-subject" id="sub_${d.key}_${rowIdx}" value="${escapeHtml(subject)}">
-                  <input type="text" class="tt-input-time" id="time_${d.key}_${rowIdx}" value="${escapeHtml(timeStr)}">
-                </div>
-              </td>
-            `;
-          }).join('');
-          tbody.appendChild(tr);
-        }
-      } else {
-        for (let lesson = 1; lesson <= 5; lesson++) {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td class="tt-lesson-badge-cell"><span class="tt-badge-pill">Tiết ${lesson}</span></td>` + daysOrder.map(d => {
-            const isToday = (d.key === todayDay);
-            const cellKey = `${cls}_morning_${d.key}`;
-            const lessonsArr = data[cellKey] || ['', '', '', '', ''];
-            const val = lessonsArr[lesson - 1] || '';
-            return `
-              <td class="${isToday ? 'today-cell' : ''}">
-                <input type="text" class="tt-cell-input-morning" id="grid_cell_${d.key}_${lesson}" value="${escapeHtml(val)}">
-              </td>
-            `;
-          }).join('');
-          tbody.appendChild(tr);
-        }
-      }
-      renderSchoolTodaySummary();
-    }
-
-    function saveSchoolGridTimetable() {
-      const cls = document.getElementById('schoolClass').value;
-      const shift = document.getElementById('schoolShift').value;
-      const data = getSchoolData();
-
-      if (shift === 'afternoon') {
-        daysOrder.forEach(d => {
-          const cellKey = `${cls}_afternoon_${d.key}`;
-          data[cellKey] = [1, 2, 3, 4].map(r => {
-            const subInput = document.getElementById(`sub_${d.key}_${r}`);
-            const timeInput = document.getElementById(`time_${d.key}_${r}`);
-            const sub = subInput ? subInput.value.trim() : '';
-            const t = timeInput ? timeInput.value.trim() : '';
-            if (!sub && !t) return '';
-            return t ? `${sub} | ${t}` : sub;
-          });
-        });
-      } else {
-        daysOrder.forEach(d => {
-          const cellKey = `${cls}_morning_${d.key}`;
-          data[cellKey] = [1, 2, 3, 4, 5].map(l => {
-            const input = document.getElementById(`grid_cell_${d.key}_${l}`);
-            return input ? input.value.trim() : '';
-          });
-        });
-      }
-
-      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      showToast('Đã lưu thời khóa biểu!');
-      renderSchoolTodaySummary();
-    }
-
-    function clearSchoolGridTimetable() {
-      const shiftName = document.getElementById('schoolShift').value === 'morning' ? 'buổi sáng' : 'buổi chiều';
-      if (!confirm(`Xóa toàn bộ thời khóa biểu ${shiftName} của lớp này?`)) return;
-      const cls = document.getElementById('schoolClass').value;
-      const shift = document.getElementById('schoolShift').value;
-      const data = getSchoolData();
-      daysOrder.forEach(d => delete data[`${cls}_${shift}_${d.key}`]);
-      localStorage.setItem('family_timetable_v1', JSON.stringify(data));
-      renderSchoolTableGrid();
-      showToast('Đã xóa dữ liệu buổi này!');
-    }
-
-    function renderSchoolTodaySummary() {
-      const host = document.getElementById('schoolTodaySummary');
-      if (!host) return;
-      const data = getSchoolData(), day = new Date().getDay();
-      const schoolDaysFull = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-
-      function formatShiftRows(shiftArr, isAfternoon = false) {
-        if (!shiftArr || !shiftArr.some(x => x && x.trim() !== '')) return `<div style="color:var(--muted);font-style:italic;font-size:0.75rem;">Chưa có lịch</div>`;
-        return shiftArr.map((x, i) => {
-          if (!x || !x.trim()) return '';
-          let text = x;
-          if (isAfternoon && x.includes('|')) {
-            const [m, t] = x.split('|');
-            text = `<strong>${escapeHtml(m.trim())}</strong> <span style="color:#0284c7;font-size:0.75rem;">(${escapeHtml(t.trim())})</span>`;
-          } else { text = escapeHtml(text); }
-          return `<div class="lesson-row-item"><span class="lesson-badge">${isAfternoon ? 'Học ' + (i+1) : 'Tiết ' + (i+1)}</span> <span>${text}</span></div>`;
-        }).filter(Boolean).join('');
-      }
-
-      const rows = ['10','6'].map(cls => `
-        <div style="padding:10px;margin-bottom:8px;background:#f8fafc;border-radius:12px;border:1px solid var(--border)">
-          <div style="font-weight:800;font-size:0.88rem;color:var(--primary-dark);margin-bottom:4px;">🏫 Lớp ${cls}</div>
-          <div style="margin-bottom:6px;"><span style="font-size:0.75rem;font-weight:700;color:#c2410c;">🌅 Buổi Sáng:</span>${formatShiftRows(data[`${cls}_morning_${day}`] || [], false)}</div>
-          <div><span style="font-size:0.75rem;font-weight:700;color:#9d174d;">🌇 Buổi Chiều:</span>${formatShiftRows(data[`${cls}_afternoon_${day}`] || [], true)}</div>
-        </div>
-      `);
-      host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">Thứ ${schoolDaysFull[day]} hôm nay:</div>` + rows.join('');
     }
 
     function updateGreetingHeader() {
@@ -1158,6 +1021,8 @@
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
       document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '16:30';
       document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
+      document.getElementById('cfg_admin_in').value = shiftTimes.admin_in || '08:00';
+      document.getElementById('cfg_admin_out').value = shiftTimes.admin_out || '17:00';
     }
 
     function updateShiftTimeConfig() {
@@ -1165,7 +1030,9 @@
       shiftTimes.c1_out = document.getElementById('cfg_c1_out').value;
       shiftTimes.c2_in = document.getElementById('cfg_c2_in').value;
       shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
-      localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
+      shiftTimes.admin_in = document.getElementById('cfg_admin_in').value;
+      shiftTimes.admin_out = document.getElementById('cfg_admin_out').value;
+      localStorage.setItem('ainhuy_shift_times', JSON.stringify(shiftTimes));
       showToast('Đã lưu giờ ca trực!');
     }
 
@@ -1206,16 +1073,16 @@
 
     function getWeekStorageKey(wIdx) {
       const w = monthWeeksList[wIdx];
-      if (!w) return `shifts_w_${wIdx}`;
-      return `camp_shifts_${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
+      if (!w) return `ainhuy_shifts_w_${wIdx}`;
+      return `ainhuy_shifts_${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
     }
 
     function getShiftsForWeekIndex(wIdx) {
       const key = getWeekStorageKey(wIdx);
       const saved = localStorage.getItem(key);
       if (saved) return JSON.parse(saved);
-      return JSON.parse(localStorage.getItem('camp_weekly_shifts') || JSON.stringify({
-        2: "ca1", 3: "ca1", 4: "ca1", 5: "ca2", 6: "ca2", 7: "off", 8: "off"
+      return JSON.parse(localStorage.getItem('ainhuy_weekly_shifts') || JSON.stringify({
+        2: "admin", 3: "admin", 4: "admin", 5: "ca1", 6: "ca2", 7: "off", 8: "off"
       }));
     }
 
@@ -1271,6 +1138,7 @@
         let shiftClass = 'is-off';
         if (savedShift === 'ca1') shiftClass = 'is-ca1';
         else if (savedShift === 'ca2') shiftClass = 'is-ca2';
+        else if (savedShift === 'admin') shiftClass = 'is-admin';
 
         const col = document.createElement('div');
         col.className = `day-col ${isToday ? 'today' : ''} ${shiftClass}`;
@@ -1279,6 +1147,7 @@
           <div class="day-name">${d.label} ${isToday ? '●' : ''}</div>
           <span class="calendar-date">${dateLabel}</span>
           <select class="day-shift-select" onchange="updateShift(${d.key}, this.value)">
+            <option value="admin" ${savedShift === 'admin' ? 'selected' : ''}>H.Chính</option>
             <option value="ca1" ${savedShift === 'ca1' ? 'selected' : ''}>Ca 1</option>
             <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
             <option value="off" ${savedShift === 'off' ? 'selected' : ''}>Off</option>
@@ -1293,13 +1162,14 @@
       const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
       shiftsData[dayKey] = val;
       localStorage.setItem(key, JSON.stringify(shiftsData));
-      localStorage.setItem('camp_weekly_shifts', JSON.stringify(shiftsData));
+      localStorage.setItem('ainhuy_weekly_shifts', JSON.stringify(shiftsData));
 
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
-        col.classList.remove('is-off', 'is-ca1', 'is-ca2');
+        col.classList.remove('is-off', 'is-ca1', 'is-ca2', 'is-admin');
         if (val === 'ca1') col.classList.add('is-ca1');
         else if (val === 'ca2') col.classList.add('is-ca2');
+        else if (val === 'admin') col.classList.add('is-admin');
         else col.classList.add('is-off');
       }
       showToast('Đã lưu!');
@@ -1309,13 +1179,12 @@
       const curData = getShiftsForWeekIndex(currentWeekIndex);
       if (confirm(`Áp dụng lịch tuần này cho cả tháng?`)) {
         monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
-        localStorage.setItem('camp_weekly_shifts', JSON.stringify(curData));
+        localStorage.setItem('ainhuy_weekly_shifts', JSON.stringify(curData));
         renderWeekGrid();
         showToast('Đã áp dụng cả tháng!');
       }
     }
 
-    /* ĐỒNG BỘ LỊCH SANG ĐIỆN THOẠI CHUẨN UTC */
     function toggleSyncDropdown(e) {
       e.stopPropagation();
       document.getElementById('syncDropdownMenu').classList.toggle('show');
@@ -1406,12 +1275,12 @@
             count++;
             events.push([
               'BEGIN:VEVENT',
-              `UID:shift-off-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+              `UID:shift-off-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
               `DTSTAMP:${dtStamp}`,
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 Off (Nghỉ ca)`,
-              `DESCRIPTION:Hôm nay bạn nghỉ trực`,
+              `SUMMARY:🔴 Off (Nghỉ)`,
+              `DESCRIPTION:Hôm nay Ái Nhuy nghỉ`,
               `STATUS:CONFIRMED`,
               'TRANSP:TRANSPARENT',
               'END:VEVENT'
@@ -1419,31 +1288,41 @@
             continue;
           }
 
-          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
-          const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
+          let rawIn = shiftTimes.c1_in || '05:10';
+          let rawOut = shiftTimes.c1_out || '14:00';
+          let summaryTitle = '🔵 Ca 1';
+          let shiftLabel = 'Ca 1';
+
+          if (shift === 'ca2') {
+            rawIn = shiftTimes.c2_in || '16:30';
+            rawOut = shiftTimes.c2_out || '22:00';
+            summaryTitle = '🟡 Ca 2';
+            shiftLabel = 'Ca 2';
+          } else if (shift === 'admin') {
+            rawIn = shiftTimes.admin_in || '08:00';
+            rawOut = shiftTimes.admin_out || '17:00';
+            summaryTitle = '🟣 Hành chính';
+            shiftLabel = 'Hành chính';
+          }
 
           const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
           const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
           const outEndUTC = toUTCICSString(y, m, d, rawOut, 15);
 
-          const isCa1 = (shift === 'ca1');
-          const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
-          const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
-
           count++;
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${inTimeUTC}`,
             `DTEND:${outTimeUTC}`,
             `SUMMARY:${summaryTitle}`,
-            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.`,
+            `DESCRIPTION:Ca ${shiftLabel} từ ${rawIn} đến ${rawOut}.`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Báo thức: Đã đến giờ vào ${shiftLabel}!`,
+            `DESCRIPTION:Đến giờ vào ${shiftLabel}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1451,17 +1330,17 @@
           count++;
           events.push([
             'BEGIN:VEVENT',
-            `UID:shift-out-${shift}-${dateStr}-${dayKey}-${count}@tuantuan.shift`,
+            `UID:shift-out-${shift}-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${outTimeUTC}`,
             `DTEND:${outEndUTC}`,
             `SUMMARY:🏁 Tan ${shiftLabel}`,
-            `DESCRIPTION:Đã kết thúc ${shiftLabel} (${rawOut}). Tan ca!`,
+            `DESCRIPTION:Kết thúc ${shiftLabel} (${rawOut}).`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Báo thức: Hết giờ trực ${shiftLabel}!`,
+            `DESCRIPTION:Hết giờ trực ${shiftLabel}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
@@ -1470,18 +1349,18 @@
 
       const icsHeader = [
         'BEGIN:VCALENDAR',
-        'PRODID:-//TuanTuan//AlarmShiftPro//VI',
+        'PRODID:-//AiNhuy//AlarmShiftPro//VI',
         'VERSION:2.0',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        'X-WR-CALNAME:Lịch Ca Trực'
+        'X-WR-CALNAME:Lịch Ca Ái Nhuy'
       ].join('\r\n');
 
       const icsContent = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
       const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', 'lich_ca_truc.ics');
+      link.setAttribute('download', 'lich_ca_ainhuy.ics');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1501,7 +1380,7 @@
         id: Date.now(), title, content, priority, reminderDateTime, done: false,
         createdAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN')
       });
-      localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+      localStorage.setItem('ainhuy_issues_v1', JSON.stringify(issues));
 
       document.getElementById('issueTitle').value = '';
       document.getElementById('issueContent').value = '';
@@ -1514,7 +1393,7 @@
       const el = document.getElementById('issuesList');
       el.innerHTML = '';
       if (issues.length === 0) {
-        el.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:16px; font-size:0.85rem;">Không có việc cần làm.</div>`;
+        el.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:16px; font-size:0.85rem;">Không có việc cần nhớ.</div>`;
         return;
       }
       issues.forEach(item => {
@@ -1545,14 +1424,14 @@
 
     function toggleDoneIssue(id) {
       issues = issues.map(i => i.id === id ? { ...i, done: !i.done } : i);
-      localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+      localStorage.setItem('ainhuy_issues_v1', JSON.stringify(issues));
       renderIssues(); updateDashboard();
     }
 
     function deleteIssue(id) {
       if (confirm('Xóa công việc này?')) {
         issues = issues.filter(i => i.id !== id);
-        localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
+        localStorage.setItem('ainhuy_issues_v1', JSON.stringify(issues));
         renderIssues(); updateDashboard();
       }
     }
@@ -1560,7 +1439,7 @@
     function copyIssueZalo(id) {
       const i = issues.find(x => x.id === id);
       if (!i) return;
-      const text = `⚡ [VIỆC CẦN LÀM - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
+      const text = `⚡ [VIỆC CẦN NHỚ - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
       navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung!'));
     }
 
@@ -1576,7 +1455,7 @@
     async function requestWakeLock() {
       try {
         if ('wakeLock' in navigator) {
-          wakeLock = await navigator.wakeLock.request('screen');
+          await navigator.wakeLock.request('screen');
         }
       } catch (_) {}
     }
@@ -1644,7 +1523,7 @@
     async function triggerSystemNotification(title, body) {
       if (!("Notification" in window) || Notification.permission !== "granted") return;
       const notiOptions = {
-        body: body || 'Nhấn để mở ứng dụng Sổ Tay & Báo Ca',
+        body: body || 'Nhấn để mở Sổ tay Ái Nhuy',
         icon: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
         vibrate: [1000, 300, 1000, 300, 1500],
         requireInteraction: true,
@@ -1668,7 +1547,7 @@
       document.getElementById('alarmTitle').innerText = title;
       document.getElementById('alarmBanner').style.display = 'block';
 
-      triggerSystemNotification(title, 'Đến giờ trực ca của bạn!');
+      triggerSystemNotification(title, 'Đến giờ trực của bạn!');
 
       if (isAlarmPlaying) return;
       isAlarmPlaying = true;
@@ -1713,7 +1592,7 @@
       return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    let localNotiMockState = localStorage.getItem('camp_noti_mock_state') || 'default';
+    let localNotiMockState = localStorage.getItem('ainhuy_noti_mock_state') || 'default';
 
     function updateNotiButtonStatus() {
       const btn = document.getElementById('btnNotiStatus');
@@ -1748,11 +1627,11 @@
       if (!('Notification' in window)) {
         if (localNotiMockState === 'granted') {
           localNotiMockState = 'default';
-          localStorage.setItem('camp_noti_mock_state', 'default');
+          localStorage.setItem('ainhuy_noti_mock_state', 'default');
           showToast('Đã tắt báo!');
         } else {
           localNotiMockState = 'granted';
-          localStorage.setItem('camp_noti_mock_state', 'granted');
+          localStorage.setItem('ainhuy_noti_mock_state', 'granted');
           showToast('Đã bật báo!');
         }
         updateNotiButtonStatus();
@@ -1788,7 +1667,7 @@
     function handlePermissionResult(perm) {
       updateNotiButtonStatus();
       if (perm === 'granted') {
-        triggerSystemNotification('Sổ Tay Báo Ca', 'Báo ca trực đã sẵn sàng!');
+        triggerSystemNotification('Sổ Tay Ái Nhuy', 'Báo ca trực đã sẵn sàng!');
         showToast('Đã kích hoạt thông báo!');
       } else {
         showToast('Chưa cho phép thông báo.');
@@ -1840,6 +1719,17 @@
           startContinuousAlarm(`🏁 HẾT GIỜ CA 2 (${currentTime})`);
           return;
         }
+      } else if (todayShift === 'admin') {
+        if (shiftTimes.admin_in === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO HÀNH CHÍNH (${currentTime})`);
+          return;
+        }
+        if (shiftTimes.admin_out === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`🏁 HẾT GIỜ HÀNH CHÍNH (${currentTime})`);
+          return;
+        }
       }
 
       journals.forEach(j => {
@@ -1865,41 +1755,8 @@
       updateNotiButtonStatus();
     });
 
-    function exportData() {
-      let allWeeksData = {};
-      monthWeeksList.forEach(w => allWeeksData[getWeekStorageKey(w.index)] = getShiftsForWeekIndex(w.index));
-      const data = { allWeeksData, shiftTimes, journals, issues, familyTimetable: localStorage.getItem('family_timetable_v1') || '{}', backupDate: new Date().toISOString() };
-      const a = document.createElement('a');
-      a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
-      a.download = `so_tay_nhat_ky_${new Date().toISOString().slice(0,10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
-
-    function importData(e) {
-      const f = e.target.files[0];
-      if (!f) return;
-      const r = new FileReader();
-      r.onload = (evt) => {
-        try {
-          const d = JSON.parse(evt.target.result);
-          if (d.allWeeksData) Object.keys(d.allWeeksData).forEach(k => localStorage.setItem(k, JSON.stringify(d.allWeeksData[k])));
-          if (d.shiftTimes) shiftTimes = d.shiftTimes;
-          if (d.journals || d.reports) journals = d.journals || d.reports;
-          if (d.issues) issues = d.issues;
-          if (d.familyTimetable) localStorage.setItem('family_timetable_v1', typeof d.familyTimetable === 'string' ? d.familyTimetable : JSON.stringify(d.familyTimetable));
-          localStorage.setItem('camp_shift_times', JSON.stringify(shiftTimes));
-          localStorage.setItem('camp_journals_v1', JSON.stringify(journals));
-          localStorage.setItem('camp_issues_v2', JSON.stringify(issues));
-          initMonthWeeksDropdown(); renderWeekGrid(); loadShiftTimeConfigUI(); filterJournals(); renderIssues(); updateDashboard(); renderSchoolTableGrid();
-          alert('Khôi phục dữ liệu thành công!');
-        } catch(_) { alert('Tệp không hợp lệ!'); }
-      };
-      r.readAsText(f);
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
+      createRosePetals();
       updateGreetingHeader();
       initWeatherDetection();
       initMonthWeeksDropdown();
@@ -1908,7 +1765,6 @@
       filterJournals();
       renderIssues();
       updateDashboard();
-      renderSchoolTableGrid();
       updateNotiButtonStatus();
     });
 
