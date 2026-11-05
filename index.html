@@ -340,32 +340,33 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
+    /* CẬP NHẬT MÀU ĐỎ ĐẬM RÕ NÉT CHO NGÀY & THÁNG TRÊN LỊCH CA */
     .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
-    .day-col.is-off .day-name { color: #dc2626 !important; }
-    .day-col.is-off .calendar-date { color: #b91c1c !important; }
-    .day-col.is-off .day-shift-select { border-color: #f87171 !important; color: #991b1b !important; font-weight: 800; background: #fee2e2 !important; }
+    .day-col.is-off .day-name { color: #b91c1c !important; font-weight: 900; }
+    .day-col.is-off .calendar-date { color: #991b1b !important; font-weight: 900; }
+    .day-col.is-off .day-shift-select { border-color: #f87171 !important; color: #991b1b !important; font-weight: 900; background: #fee2e2 !important; }
 
     .day-col.is-ca1 { background: #bae6fd !important; border-color: #38bdf8 !important; }
-    .day-col.is-ca1 .day-name { color: #0284c7 !important; }
-    .day-col.is-ca1 .calendar-date { color: #0369a1 !important; }
-    .day-col.is-ca1 .day-shift-select { border-color: #0284c7 !important; color: #075985 !important; font-weight: 800; background: #e0f2fe !important; }
+    .day-col.is-ca1 .day-name { color: #0369a1 !important; font-weight: 900; }
+    .day-col.is-ca1 .calendar-date { color: #075985 !important; font-weight: 900; }
+    .day-col.is-ca1 .day-shift-select { border-color: #0284c7 !important; color: #075985 !important; font-weight: 900; background: #e0f2fe !important; }
 
     .day-col.is-ca2 { background: #fef08a !important; border-color: #facc15 !important; }
-    .day-col.is-ca2 .day-name { color: #ca8a04 !important; }
-    .day-col.is-ca2 .calendar-date { color: #a16207 !important; }
-    .day-col.is-ca2 .day-shift-select { border-color: #eab308 !important; color: #854d0e !important; font-weight: 800; background: #fefce8 !important; }
+    .day-col.is-ca2 .day-name { color: #a16207 !important; font-weight: 900; }
+    .day-col.is-ca2 .calendar-date { color: #854d0e !important; font-weight: 900; }
+    .day-col.is-ca2 .day-shift-select { border-color: #eab308 !important; color: #854d0e !important; font-weight: 900; background: #fefce8 !important; }
 
     .day-col.is-hanh-chinh { background: #e9d5ff !important; border-color: #c084fc !important; }
-    .day-col.is-hanh-chinh .day-name { color: #7e22ce !important; }
-    .day-col.is-hanh-chinh .calendar-date { color: #6b21a8 !important; }
-    .day-col.is-hanh-chinh .day-shift-select { border-color: #a855f7 !important; color: #581c87 !important; font-weight: 800; background: #f3e8ff !important; }
+    .day-col.is-hanh-chinh .day-name { color: #6b21a8 !important; font-weight: 900; }
+    .day-col.is-hanh-chinh .calendar-date { color: #581c87 !important; font-weight: 900; }
+    .day-col.is-hanh-chinh .day-shift-select { border-color: #a855f7 !important; color: #581c87 !important; font-weight: 900; background: #f3e8ff !important; }
 
-    .day-name { font-size: 0.66rem; font-weight: 800; color: var(--muted); line-height: 1.1; }
-    .calendar-date { display: block; font-size: .56rem; color: #881337; margin: 1px 0 3px; font-weight: 600; }
+    .day-name { font-size: 0.68rem; font-weight: 900; line-height: 1.1; }
+    .calendar-date { display: block; font-size: .60rem; margin: 1px 0 3px; font-weight: 900; }
     
     .day-shift-select {
       width: 98%; border: 1px solid var(--border); border-radius: 4px; font-size: 0.60rem;
-      padding: 3px 0; font-weight: 800; text-align: center; text-align-last: center; background: #fff;
+      padding: 3px 0; font-weight: 900; text-align: center; text-align-last: center; background: #fff;
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
@@ -1886,7 +1887,7 @@
       }
     }
 
-    // TỐI ƯU HÓA HỆ THỐNG KIỂM TRA BÁO THỨC CHÍNH XÁC KÝ HIỆU VÀ TỰ ĐỘNG ĐÁNH THỨC
+    // HỆ THỐNG KIỂM TRA BÁO THỨC CHÍNH XÁC TỪNG PHÚT VÀ TỰ ĐỘNG ĐÁNH THỨC KHI NGỦ ĐÔNG
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
@@ -1968,7 +1969,6 @@
       });
     }
 
-    // Kiểm tra liên tục mỗi 1 giây để đảm bảo bắt trọn mốc thời gian ngay khi màn hình vừa bật lên từ chế độ ngủ
     setInterval(checkScheduler, 1000);
 
     document.addEventListener('DOMContentLoaded', () => {
