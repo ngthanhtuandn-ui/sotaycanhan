@@ -64,7 +64,6 @@
       background: rgba(255, 255, 255, 0.96); padding: 28px 20px; border-radius: 28px;
       width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(190, 24, 93, 0.3); color: var(--text);
     }
-    /* CHỮ SỔ TAY ÁI NHUY BAY BỔNG, MỀM MẠI, NỮ TÍNH HƠN */
     .lock-brand-title {
       font-size: 1.45rem; font-weight: 800; font-family: 'Brush Script MT', 'Lucida Handwriting', cursive, sans-serif;
       background: linear-gradient(45deg, #be185d, #ec4899, #f43f5e, #7c3aed);
@@ -84,7 +83,6 @@
     }
     .key-btn:active { background: #f43f5e; color: #fff; transform: scale(0.95); }
 
-    /* HIỆU ỨNG BÔNG HOA XOAY TRÒN CHO ĐẸP */
     @keyframes flowerSpin {
       0% { transform: rotate(0deg) scale(1); }
       50% { transform: rotate(180deg) scale(1.15); }
@@ -96,7 +94,6 @@
       font-size: 1.1rem;
     }
 
-    /* HIỆU ỨNG CÁNH HOA HỒNG RƠI CHẬM, LÃNG MẠNG */
     .rose-petal {
       position: fixed; top: -10vh; z-index: 999; user-select: none; pointer-events: none;
       animation: fallPetal linear infinite;
@@ -272,7 +269,6 @@
     }
     .card-journal { background: var(--journal-bg); border: 1.5px solid var(--journal-border); }
     
-    /* THU GỌN LỊCH CA, MỞ RỘNG NHẬT KÝ VÀ CĂN CHỈNH TIÊU ĐỀ NẰM TRÊN MỘT HÀNG TRÊN ĐIỆN THOẠI */
     .journal-heading { 
       font-size: 0.75rem; font-weight: 800; color: var(--journal-text); margin-bottom: 10px; 
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center;
@@ -326,7 +322,6 @@
     .btn-zalo { background: #0068ff; color: white; border: none; }
     .btn-delete { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
 
-    /* THU GỌN KHUNG LỊCH CA CHO TỐI ƯU GIAO DIỆN */
     .week-table-card { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 8px; margin-bottom: 10px; }
     .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
     .week-dropdown-wrap { flex: 1; }
@@ -340,7 +335,6 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
-    /* MÀU SẮC LỊCH CA & FIX LỖI HIỂN THỊ MÀU ĐỎ CHO NGÀY OFF */
     .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
     .day-col.is-off .day-name { color: #dc2626 !important; }
     .day-col.is-off .calendar-date { color: #b91c1c !important; }
@@ -395,7 +389,6 @@
       white-space: nowrap; box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
     }
 
-    /* ĐỒNG BỘ MÀU SẮC TAB CÀI ĐẶT GIỜ BÁO CA HOÀN TOÀN TRÙNG KHỚP CÁC CA TRỰC */
     .shift-settings-box { background: #fdf2f8; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 8px; }
     .shift-settings-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
     .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -649,7 +642,7 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // --- BẢO MẬT & YÊU CẦU MÃ PIN KHI KHỞI ĐỘNG HOẶC ĐỂ CHẾ ĐỘ NGỦ / CHẠY NỀN ---
+    // --- BẢO MẬT & YÊU CẦU MÃ PIN KHI KHỞI ĐỘNG, ĐỂ CHẾ ĐỘ NGỦ HOẶC CHẠY NỀN ---
     let enteredPin = "";
     let wrongPinCount = 0;
 
@@ -657,11 +650,14 @@
       enteredPin = "";
       updatePinDots();
       document.getElementById('lockScreen').style.display = 'flex';
+      sessionStorage.setItem('isLocked', 'true');
     }
 
     function pressKey(val) {
       if (val === 'C') {
-        enteredPin = ""; // Xóa toàn bộ mã nhập sai để điền lại
+        // Xóa lùi từng ký tự khi bấm nút Xóa
+        enteredPin = enteredPin.slice(0, -1);
+        updatePinDots();
       } else {
         if (enteredPin.length < 6) {
           enteredPin += val;
@@ -677,6 +673,8 @@
       if (enteredPin === "131426") {
         document.getElementById('lockScreen').style.display = 'none';
         wrongPinCount = 0;
+        sessionStorage.setItem('isLocked', 'false');
+        sessionStorage.setItem('lastActiveTime', Date.now().toString());
         showToast('Mở khóa thành công! Chào Ái Nhuy 💕');
         unlockAudioContext();
       } else {
@@ -699,14 +697,15 @@
       }
     }
 
-    let lastActiveTimestamp = Date.now();
+    // NÂNG CAO BẢO MẬT: KIỂM TRA CHẾ ĐỘ NỀN & CHẾ ĐỘ NGỦ (VISIBILITY & FOCUS)
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        lastActiveTimestamp = Date.now();
+        sessionStorage.setItem('lastActiveTime', Date.now().toString());
       } else {
-        // Khi bật lại từ chế độ nền / ngủ -> Bắt buộc nhập lại mã bảo mật
-        const elapsed = Date.now() - lastActiveTimestamp;
-        if (elapsed > 1000) {
+        // Khi bật lại từ nền / màn hình ngủ -> bắt buộc khóa lại nếu rời đi quá 300ms
+        const lastTime = parseInt(sessionStorage.getItem('lastActiveTime') || '0', 10);
+        const elapsed = Date.now() - lastTime;
+        if (elapsed > 300 || sessionStorage.getItem('isLocked') === 'true') {
           lockAppScreen();
         } else {
           unlockAudioContext();
@@ -717,12 +716,13 @@
     });
 
     window.addEventListener('blur', () => {
-      lastActiveTimestamp = Date.now();
+      sessionStorage.setItem('lastActiveTime', Date.now().toString());
     });
 
     window.addEventListener('focus', () => {
-      const elapsed = Date.now() - lastActiveTimestamp;
-      if (elapsed > 1000) {
+      const lastTime = parseInt(sessionStorage.getItem('lastActiveTime') || '0', 10);
+      const elapsed = Date.now() - lastTime;
+      if (elapsed > 300) {
         lockAppScreen();
       } else {
         unlockAudioContext();
