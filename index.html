@@ -64,9 +64,15 @@
       background: rgba(255, 255, 255, 0.96); padding: 28px 20px; border-radius: 28px;
       width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(190, 24, 93, 0.3); color: var(--text);
     }
+    /* CHỮ SỔ TAY ÁI NHUY BAY BỔNG, MỀM MẠI, NỮ TÍNH HƠN */
     .lock-brand-title {
-      font-size: 1.25rem; font-weight: 700; font-family: 'Georgia', serif; font-style: italic;
-      color: #be185d; margin-bottom: 14px; letter-spacing: 0.5px;
+      font-size: 1.45rem; font-weight: 800; font-family: 'Brush Script MT', 'Lucida Handwriting', cursive, sans-serif;
+      background: linear-gradient(45deg, #be185d, #ec4899, #f43f5e, #7c3aed);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 5s ease infinite;
+      margin-bottom: 14px; letter-spacing: 0.8px;
     }
     .passcode-dots { display: flex; justify-content: center; gap: 12px; margin-bottom: 22px; }
     .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #f43f5e; background: #fff; transition: all 0.2s; }
@@ -77,6 +83,18 @@
       color: #be185d; padding: 12px 0; border-radius: 12px; cursor: pointer; transition: 0.15s;
     }
     .key-btn:active { background: #f43f5e; color: #fff; transform: scale(0.95); }
+
+    /* HIỆU ỨNG BÔNG HOA XOAY TRÒN CHO ĐẸP */
+    @keyframes flowerSpin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.15); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    .flower-icon-spin {
+      display: inline-block;
+      animation: flowerSpin 6s linear infinite;
+      font-size: 1.1rem;
+    }
 
     /* HIỆU ỨNG CÁNH HOA HỒNG RƠI CHẬM, LÃNG MẠNG */
     .rose-petal {
@@ -254,10 +272,10 @@
     }
     .card-journal { background: var(--journal-bg); border: 1.5px solid var(--journal-border); }
     
-    /* GOM TIÊU ĐỀ NHẬT KÝ NẰM TRÊN MỘT DÒNG CHO ĐIỆN THOẠI */
+    /* THU GỌN LỊCH CA, MỞ RỘNG NHẬT KÝ VÀ CĂN CHỈNH TIÊU ĐỀ NẰM TRÊN MỘT HÀNG TRÊN ĐIỆN THOẠI */
     .journal-heading { 
-      font-size: 0.82rem; font-weight: 800; color: var(--journal-text); margin-bottom: 10px; 
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
+      font-size: 0.75rem; font-weight: 800; color: var(--journal-text); margin-bottom: 10px; 
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center;
     }
     .btn-journal-submit { background: linear-gradient(135deg, #f43f5e 0%, #be185d 100%); color: white; }
 
@@ -308,18 +326,19 @@
     .btn-zalo { background: #0068ff; color: white; border: none; }
     .btn-delete { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
 
-    .week-table-card { background: white; border-radius: 18px; border: 1px solid var(--border); padding: 10px; margin-bottom: 12px; }
-    .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+    /* THU GỌN KHUNG LỊCH CA CHO TỐI ƯU GIAO DIỆN */
+    .week-table-card { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 8px; margin-bottom: 10px; }
+    .week-control-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
     .week-dropdown-wrap { flex: 1; }
-    .week-select-menu { width: 100%; background: #fff1f2; border: 1.5px solid var(--primary); color: var(--primary-dark); font-weight: 700; font-size: 0.8rem; padding: 8px 10px; border-radius: 10px; }
-    .btn-copy-month { background: #fdf2f8; border: 1px solid #fbcfe8; color: #be185d; font-size: 0.72rem; font-weight: 700; padding: 8px 10px; border-radius: 10px; cursor: pointer; }
+    .week-select-menu { width: 100%; background: #fff1f2; border: 1.5px solid var(--primary); color: var(--primary-dark); font-weight: 700; font-size: 0.75rem; padding: 6px 8px; border-radius: 8px; }
+    .btn-copy-month { background: #fdf2f8; border: 1px solid #fbcfe8; color: #be185d; font-size: 0.68rem; font-weight: 700; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
 
-    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; margin-bottom: 10px; }
+    .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; margin-bottom: 8px; }
     .day-col {
-      border: 1px solid var(--border); border-radius: 8px; padding: 5px 1px; background: #fafafa;
+      border: 1px solid var(--border); border-radius: 6px; padding: 4px 1px; background: #fafafa;
       display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-width: 0;
     }
-    .day-col.today { border-color: var(--primary); outline: 2px solid #fbcfe8; }
+    .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
     /* MÀU SẮC LỊCH CA & FIX LỖI HIỂN THỊ MÀU ĐỎ CHO NGÀY OFF */
     .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
@@ -342,61 +361,61 @@
     .day-col.is-hanh-chinh .calendar-date { color: #6b21a8 !important; }
     .day-col.is-hanh-chinh .day-shift-select { border-color: #a855f7 !important; color: #581c87 !important; font-weight: 800; background: #f3e8ff !important; }
 
-    .day-name { font-size: 0.72rem; font-weight: 800; color: var(--muted); line-height: 1.1; }
-    .calendar-date { display: block; font-size: .60rem; color: #881337; margin: 2px 0 4px; font-weight: 600; }
+    .day-name { font-size: 0.66rem; font-weight: 800; color: var(--muted); line-height: 1.1; }
+    .calendar-date { display: block; font-size: .56rem; color: #881337; margin: 1px 0 3px; font-weight: 600; }
     
     .day-shift-select {
-      width: 96%; border: 1px solid var(--border); border-radius: 6px; font-size: 0.68rem;
-      padding: 4px 0; font-weight: 800; text-align: center; text-align-last: center; background: #fff;
+      width: 98%; border: 1px solid var(--border); border-radius: 4px; font-size: 0.60rem;
+      padding: 3px 0; font-weight: 800; text-align: center; text-align-last: center; background: #fff;
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
-    .sync-calendar-panel { background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 12px; padding: 10px; margin-top: 10px; }
-    .sync-row { display: flex; gap: 8px; align-items: center; }
+    .sync-calendar-panel { background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 10px; padding: 8px; margin-top: 8px; }
+    .sync-row { display: flex; gap: 6px; align-items: center; }
     .custom-multiselect { flex: 1.3; position: relative; }
     .multiselect-toggle-btn {
       width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 8px;
-      font-size: 0.76rem; font-weight: 700; padding: 8px; color: #334155; text-align: left;
+      font-size: 0.72rem; font-weight: 700; padding: 7px; color: #334155; text-align: left;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center;
     }
     .multiselect-dropdown {
       display: none; position: absolute; bottom: calc(100% + 4px); left: 0; right: 0; background: #fff;
       border: 1.5px solid var(--primary); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      z-index: 200; padding: 4px 0; max-height: 220px; overflow-y: auto;
+      z-index: 200; padding: 4px 0; max-height: 200px; overflow-y: auto;
     }
     .multiselect-dropdown.show { display: block; }
-    .multiselect-item { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+    .multiselect-item { display: flex; justify-content: space-between; padding: 7px 10px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
     .multiselect-item.selected { background: #ffe4e6; color: var(--primary-dark); font-weight: 700; }
-    .multiselect-check { font-size: 0.85rem; color: var(--primary); display: none; }
+    .multiselect-check { font-size: 0.8rem; color: var(--primary); display: none; }
     .multiselect-item.selected .multiselect-check { display: inline-block; }
 
     .btn-sync-submit {
       flex: 1.2; background: linear-gradient(135deg, #f43f5e, #be185d); color: white; border: none;
-      padding: 9px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
+      padding: 8px 10px; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer;
       white-space: nowrap; box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
     }
 
     /* ĐỒNG BỘ MÀU SẮC TAB CÀI ĐẶT GIỜ BÁO CA HOÀN TOÀN TRÙNG KHỚP CÁC CA TRỰC */
-    .shift-settings-box { background: #fdf2f8; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
-    .shift-settings-title { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .shift-settings-box { background: #fdf2f8; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 8px; }
+    .shift-settings-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
     .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
     
-    .shift-config-card { background: white; padding: 8px 6px; border-radius: 10px; border: 1px solid var(--border); }
+    .shift-config-card { background: white; padding: 6px 4px; border-radius: 8px; border: 1px solid var(--border); }
     .shift-config-card.card-hc { background: #e9d5ff !important; border-color: #c084fc !important; }
     .shift-config-card.card-c1 { background: #bae6fd !important; border-color: #38bdf8 !important; }
     .shift-config-card.card-c2 { background: #fef08a !important; border-color: #facc15 !important; }
 
-    .shift-config-card h4 { font-size: 0.72rem; margin-bottom: 6px; text-align: center; font-weight: 800; }
+    .shift-config-card h4 { font-size: 0.68rem; margin-bottom: 4px; text-align: center; font-weight: 800; }
     .card-hc h4 { color: #7e22ce !important; }
     .card-c1 h4 { color: #0284c7 !important; }
     .card-c2 h4 { color: #ca8a04 !important; }
 
-    .time-input-row { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 4px; font-size: 0.68rem; font-weight: 700; }
+    .time-input-row { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 3px; font-size: 0.64rem; font-weight: 700; }
     .card-hc .time-input-row { color: #6b21a8 !important; }
     .card-c1 .time-input-row { color: #0369a1 !important; }
     .card-c2 .time-input-row { color: #a16207 !important; }
 
-    .time-input-row input { padding: 4px; font-size: 0.72rem; border-radius: 6px; text-align: center; font-weight: 700; background: #ffffff !important; }
+    .time-input-row input { padding: 3px; font-size: 0.68rem; border-radius: 4px; text-align: center; font-weight: 700; background: #ffffff !important; }
     .card-hc .time-input-row input { border-color: #c084fc !important; color: #581c87 !important; }
     .card-c1 .time-input-row input { border-color: #38bdf8 !important; color: #075985 !important; }
     .card-c2 .time-input-row input { border-color: #facc15 !important; color: #854d0e !important; }
@@ -410,7 +429,7 @@
     @media(max-width:560px) {
       header h1 { font-size:.88rem; }
       .header-btns button { padding:6px 7px; font-size:.68rem; }
-      .day-shift-select { font-size: 0.62rem; padding: 3px 0; }
+      .day-shift-select { font-size: 0.58rem; padding: 2px 0; }
     }
   </style>
 </head>
@@ -440,7 +459,7 @@
         <button class="key-btn" onclick="pressKey('9')">9</button>
         <button class="key-btn" onclick="pressKey('C')" style="font-size:0.85rem; color:#ef4444;">Xóa</button>
         <button class="key-btn" onclick="pressKey('0')">0</button>
-        <button class="key-btn" onclick="pressKey('OK')" style="font-size:0.85rem; color:#7c3aed;">?</button>
+        <button class="key-btn" title="Bông hoa yêu thương"><span class="flower-icon-spin">🌸</span></button>
       </div>
     </div>
   </div>
@@ -523,7 +542,7 @@
         <div class="shift-settings-box">
           <div class="shift-settings-title">
             <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
-            <span style="font-size:0.7rem; font-weight:bold; color:#10b981;">● Hoạt động</span>
+            <span style="font-size:0.68rem; font-weight:bold; color:#10b981;">● Hoạt động</span>
           </div>
           <div class="shift-config-grid">
             <div class="shift-config-card card-hc">
@@ -630,7 +649,7 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // --- BẢO MẬT & YÊU CẦU MÃ PIN KHI KHỞI ĐỘNG HOẶC ĐỂ CHẾ ĐỘ NGỦ ---
+    // --- BẢO MẬT & YÊU CẦU MÃ PIN KHI KHỞI ĐỘNG HOẶC ĐỂ CHẾ ĐỘ NGỦ / CHẠY NỀN ---
     let enteredPin = "";
     let wrongPinCount = 0;
 
@@ -642,9 +661,7 @@
 
     function pressKey(val) {
       if (val === 'C') {
-        enteredPin = "";
-      } else if (val === 'OK') {
-        checkPinAndUnlock();
+        enteredPin = ""; // Xóa toàn bộ mã nhập sai để điền lại
       } else {
         if (enteredPin.length < 6) {
           enteredPin += val;
@@ -687,8 +704,9 @@
       if (document.hidden) {
         lastActiveTimestamp = Date.now();
       } else {
+        // Khi bật lại từ chế độ nền / ngủ -> Bắt buộc nhập lại mã bảo mật
         const elapsed = Date.now() - lastActiveTimestamp;
-        if (elapsed > 120000) {
+        if (elapsed > 1000) {
           lockAppScreen();
         } else {
           unlockAudioContext();
@@ -698,10 +716,19 @@
       }
     });
 
+    window.addEventListener('blur', () => {
+      lastActiveTimestamp = Date.now();
+    });
+
     window.addEventListener('focus', () => {
-      unlockAudioContext();
-      checkScheduler();
-      updateNotiButtonStatus();
+      const elapsed = Date.now() - lastActiveTimestamp;
+      if (elapsed > 1000) {
+        lockAppScreen();
+      } else {
+        unlockAudioContext();
+        checkScheduler();
+        updateNotiButtonStatus();
+      }
     });
 
     // --- HIỆU ỨNG CÁNH HOA HỒNG RƠI CHẬM, NHẸ NHÀNG ---
@@ -843,7 +870,7 @@
       { title: "Nhẹ nhàng và như ý! 🌸", quote: "Chúc tình yêu của anh hôm nay không phải mệt mỏi, mọi việc đều trôi qua thật nhẹ nhàng và như ý." },
       { title: "Bứt phá hết mình nhé! 💫", quote: "Một ngày mới tuyệt vời đang chờ đón em phía trước. Bứt phá hết mình nhé, cô gái chăm chỉ của anh!" },
       { title: "Cà phê buổi sáng! ☕", quote: "Chúc em buổi sáng tốt lành! Hãy nhớ uống cà phê/sữa đầy đủ và làm việc thật năng suất nha." },
-      { title: "Trôi nhanh và vui vẻ! ⏱️", quote: "Mong rằng ngày hôm hôm hôm nay của em sẽ trôi thật nhanh và mang lại cho em thật nhiều niềm vui trong công việc." },
+      { title: "Trôi nhanh và vui vẻ! ⏱️", quote: "Mong rằng ngày hôm nay của em sẽ trôi thật nhanh và mang lại cho em thật nhiều niềm vui trong công việc." },
       { title: "Sức sống ngập tràn! 🔥", quote: "Chúc em yêu ngày mới tràn đầy sức sống, mọi dự định đều hoàn thành xuất sắc." },
       { title: "Năng suất gấp đôi! 📈", quote: "Gửi ngàn lời chúc ngọt ngào nhất đến Ái Nhuy. Chúc em một ngày làm việc hiệu quả gấp đôi bình thường!" },
       { title: "Thuận buồm xuôi gió! ⛵", quote: "Chúc em ngày mới thuận buồm xuôi gió, giải quyết mọi việc đâu ra đó thật gọn gàng." },
