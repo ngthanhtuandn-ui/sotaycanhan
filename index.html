@@ -65,8 +65,8 @@
       width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(190, 24, 93, 0.3); color: var(--text);
     }
     .lock-brand-title {
-      font-size: 1.45rem; font-weight: 800; font-family: 'Brush Script MT', 'Lucida Handwriting', cursive, sans-serif;
-      background: linear-gradient(45deg, #be185d, #ec4899, #f43f5e, #7c3aed);
+      font-size: 1.55rem; font-weight: 800; font-family: "Times New Roman", Times, serif; font-style: italic;
+      background: linear-gradient(45deg, #be185d, #ec4899, #f43f5e, #7c3aed, #db2777);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -94,15 +94,15 @@
       font-size: 1.1rem;
     }
 
-    /* HIỆU ỨNG LÁ HỒNG NHẸ NHÀNG, RƠI CHẬM */
-    .rose-petal {
+    /* HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI */
+    .falling-leaf {
       position: fixed; top: -10vh; z-index: 999; user-select: none; pointer-events: none;
-      animation: fallPetal linear infinite;
+      animation: fallLeaf linear infinite;
     }
-    @keyframes fallPetal {
-      0% { transform: translateY(0vh) translateX(0vw) rotate(0deg); opacity: 0.9; }
-      50% { transform: translateY(55vh) translateX(8vw) rotate(180deg); opacity: 0.7; }
-      100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.1; }
+    @keyframes fallLeaf {
+      0% { transform: translateY(0vh) translateX(0vw) rotate(0deg); opacity: 0.95; }
+      50% { transform: translateY(55vh) translateX(12vw) rotate(180deg); opacity: 0.75; }
+      100% { transform: translateY(110vh) translateX(-8vw) rotate(360deg); opacity: 0.1; }
     }
 
     header {
@@ -112,8 +112,8 @@
     }
     
     .header-title-name {
-      font-size: 1.35rem; font-weight: 900; font-family: 'Brush Script MT', 'Lucida Handwriting', cursive, sans-serif;
-      background: linear-gradient(45deg, #ffffff, #fde047, #fbcfe8, #ffffff);
+      font-size: 1.45rem; font-weight: 900; font-family: "Times New Roman", Times, serif; font-style: italic;
+      background: linear-gradient(45deg, #ffffff, #fde047, #fbcfe8, #ffffff, #fed7aa);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -140,7 +140,7 @@
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
 
-    . greeting-banner {
+    .greeting-banner {
       background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
       border: 1px solid #fbcfe8; border-radius: 20px; padding: 14px 16px; margin-bottom: 12px;
       box-shadow: 0 8px 24px rgba(244,63,94,.08); display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -263,7 +263,6 @@
       background: var(--primary); color: white; border-color: var(--primary);
       box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
     }
-    /* TÁCH DÒNG NHẬT KÍ VÀ TÌNH YÊU CHO CÁC TAB NÚT BẤM */
     .nav-tab-btn-two-lines {
       display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2;
     }
@@ -507,7 +506,6 @@
 
     <div class="nav-tabs">
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
-      <!-- TÁCH DÒNG NHẬT KÍ VÀ TÌNH YÊU NHÌN CHO ĐỀU, ĐẸP -->
       <button class="nav-tab-btn nav-tab-btn-two-lines" id="tabBtn-journal" onclick="switchView('journal')">
         <span>💌 Nhật kí</span>
         <span>Tình yêu</span>
@@ -554,7 +552,6 @@
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_hc_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_hc_out" onchange="updateShiftTimeConfig()"></div>
             </div>
-            <!-- BỔ SUNG TÍNH NĂNG BÁO TRƯỚC CHO CA 1 VÀ CA 2 -->
             <div class="shift-config-card card-c1">
               <h4>Ca 1 (Sáng)</h4>
               <div class="time-input-row"><span>Báo Trước:</span><input type="time" id="cfg_c1_pre" onchange="updateShiftTimeConfig()"></div>
@@ -740,22 +737,22 @@
       }
     });
 
-    // --- HIỆU ỨNG LÁ HỒNG NHẸ NHÀNG, RƠI CHẬM ---
-    function createRosePetals() {
-      const petalChars = ['🌸', '🍃', '💮', '🌹', '✨'];
+    // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI ---
+    function createFallingLeaves() {
+      const leafChars = ['🍁', '🍂', '🍃', '🌿', '✨'];
       setInterval(() => {
-        const petal = document.createElement('div');
-        petal.className = 'rose-petal';
-        petal.innerText = petalChars[Math.floor(Math.random() * petalChars.length)];
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.fontSize = (Math.random() * 8 + 10) + 'px';
-        const duration = Math.random() * 5 + 8; // Rơi chậm hơn, nhẹ nhàng hơn
-        petal.style.animationDuration = duration + 's';
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), duration * 1000);
-      }, 950);
+        const leaf = document.createElement('div');
+        leaf.className = 'falling-leaf';
+        leaf.innerText = leafChars[Math.floor(Math.random() * leafChars.length)];
+        leaf.style.left = Math.random() * 100 + 'vw';
+        leaf.style.fontSize = (Math.random() * 10 + 12) + 'px';
+        const duration = Math.random() * 5 + 8; // Rơi chậm rãi, lãng mạn
+        leaf.style.animationDuration = duration + 's';
+        document.body.appendChild(leaf);
+        setTimeout(() => leaf.remove(), duration * 1000);
+      }, 900);
     }
-    createRosePetals();
+    createFallingLeaves();
 
     let journals = JSON.parse(localStorage.getItem('ainhuy_journals_v1') || '[]');
     let issues = JSON.parse(localStorage.getItem('ainhuy_issues_v1') || '[]');
@@ -895,7 +892,7 @@
       { title: "Năng suất & Thoải mái! 💼", quote: "Chúc em một ngày làm việc với năng suất cao nhất và tâm trạng thoải mái nhất." },
       { title: "Nụ cười rạng rỡ! 😊", quote: "Chúc em yêu buổi sáng tốt lành, nụ cười luôn nở trên môi và thành công ở mọi mặt trận." },
       { title: "Không stress, chỉ may mắn! 🌟", quote: "Chúc em hôm nay không gặp stress, chỉ gặp may mắn và những tin vui trong công việc thôi nhé." },
-      { title: "Đền đáp xứng đáng! 🏆", quote: "Mong mọi nỗ lực và sự chăm chỉ của em trong ngày hôm hôm nay sẽ được đền đáp xứng đáng." },
+      { title: "Đền đáp xứng đáng! 🏆", quote: "Mong mọi nỗ lực và sự chăm chỉ của em trong ngày hôm nay sẽ được đền đáp xứng đáng." },
       { title: "Tối nay hẹn hò nha! 💖", quote: "Chúc em ngày mới làm việc thật tốt để tối nay chúng mình tha hồ hẹn hò bù nha." },
       { title: "Tỏa sáng rực rỡ! ✨", quote: "Chúc Ái Nhuy của anh một ngày mới tràn đầy nhiệt huyết, tỏa sáng rực rỡ ở nơi làm việc!" },
       { title: "Cảm ơn cuộc đời! 🌹", quote: "Cảm ơn cuộc đời đã mang em đến bên anh. Yub yêu Ái Nhuy rất nhiều và mãi mãi chỉ hướng về em." },
