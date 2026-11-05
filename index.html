@@ -704,7 +704,6 @@
       }
     }
 
-    // SIÊU TỐC KHÓA KHI CHUYỂN ỨNG DỤNG HOẶC ĐỂ CHẾ ĐỘ NỀN / NGỦ
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         sessionStorage.setItem('lastActiveTime', Date.now().toString());
@@ -746,7 +745,7 @@
         leaf.innerText = leafChars[Math.floor(Math.random() * leafChars.length)];
         leaf.style.left = Math.random() * 100 + 'vw';
         leaf.style.fontSize = (Math.random() * 10 + 12) + 'px';
-        const duration = Math.random() * 5 + 8; // Rơi chậm rãi, lãng mạn
+        const duration = Math.random() * 5 + 8;
         leaf.style.animationDuration = duration + 's';
         document.body.appendChild(leaf);
         setTimeout(() => leaf.remove(), duration * 1000);
@@ -1887,6 +1886,7 @@
       }
     }
 
+    // TỐI ƯU HÓA HỆ THỐNG KIỂM TRA BÁO THỨC CHÍNH XÁC KÝ HIỆU VÀ TỰ ĐỘNG ĐÁNH THỨC
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
@@ -1968,7 +1968,8 @@
       });
     }
 
-    setInterval(checkScheduler, 2000);
+    // Kiểm tra liên tục mỗi 1 giây để đảm bảo bắt trọn mốc thời gian ngay khi màn hình vừa bật lên từ chế độ ngủ
+    setInterval(checkScheduler, 1000);
 
     document.addEventListener('DOMContentLoaded', () => {
       lockAppScreen();
