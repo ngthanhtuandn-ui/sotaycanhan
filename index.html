@@ -94,13 +94,15 @@
       font-size: 1.1rem;
     }
 
+    /* HIỆU ỨNG LÁ HỒNG NHẸ NHÀNG, RƠI CHẬM */
     .rose-petal {
       position: fixed; top: -10vh; z-index: 999; user-select: none; pointer-events: none;
       animation: fallPetal linear infinite;
     }
     @keyframes fallPetal {
-      0% { transform: translateY(0vh) translateX(0vw) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(110vh) translateX(15vw) rotate(360deg); opacity: 0.2; }
+      0% { transform: translateY(0vh) translateX(0vw) rotate(0deg); opacity: 0.9; }
+      50% { transform: translateY(55vh) translateX(8vw) rotate(180deg); opacity: 0.7; }
+      100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.1; }
     }
 
     header {
@@ -138,7 +140,7 @@
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
 
-    .greeting-banner {
+    . greeting-banner {
       background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
       border: 1px solid #fbcfe8; border-radius: 20px; padding: 14px 16px; margin-bottom: 12px;
       box-shadow: 0 8px 24px rgba(244,63,94,.08); display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -260,6 +262,10 @@
     .nav-tab-btn.active {
       background: var(--primary); color: white; border-color: var(--primary);
       box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
+    }
+    /* TÁCH DÒNG NHẬT KÍ VÀ TÌNH YÊU CHO CÁC TAB NÚT BẤM */
+    .nav-tab-btn-two-lines {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2;
     }
     .nav-tab-btn.active-journal { background: #ffe4e6 !important; color: #be185d !important; border-color: #f43f5e !important; }
 
@@ -501,7 +507,11 @@
 
     <div class="nav-tabs">
       <button class="nav-tab-btn active" id="tabBtn-shifts" onclick="switchView('shifts')">📅 Lịch Ca</button>
-      <button class="nav-tab-btn" id="tabBtn-journal" onclick="switchView('journal')">💌 Nhật Ký Tình Yêu</button>
+      <!-- TÁCH DÒNG NHẬT KÍ VÀ TÌNH YÊU NHÌN CHO ĐỀU, ĐẸP -->
+      <button class="nav-tab-btn nav-tab-btn-two-lines" id="tabBtn-journal" onclick="switchView('journal')">
+        <span>💌 Nhật kí</span>
+        <span>Tình yêu</span>
+      </button>
       <button class="nav-tab-btn" id="tabBtn-issues" onclick="switchView('issues')">⚡ Việc Cần Làm</button>
     </div>
 
@@ -544,15 +554,16 @@
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_hc_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_hc_out" onchange="updateShiftTimeConfig()"></div>
             </div>
+            <!-- BỔ SUNG TÍNH NĂNG BÁO TRƯỚC CHO CA 1 VÀ CA 2 -->
             <div class="shift-config-card card-c1">
               <h4>Ca 1 (Sáng)</h4>
-              <div class="time-input-row" style="opacity:0;"><span>-</span><input type="time" disabled style="visibility:hidden;"></div>
+              <div class="time-input-row"><span>Báo Trước:</span><input type="time" id="cfg_c1_pre" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
             </div>
             <div class="shift-config-card card-c2">
               <h4>Ca 2 (Chiều)</h4>
-              <div class="time-input-row" style="opacity:0;"><span>-</span><input type="time" disabled style="visibility:hidden;"></div>
+              <div class="time-input-row"><span>Báo Trước:</span><input type="time" id="cfg_c2_pre" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
             </div>
@@ -642,7 +653,7 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // --- BẢO MẬT & YÊU CẦU MÃ PIN KHI KHỞI ĐỘNG, ĐỂ CHẾ ĐỘ NGỦ HOẶC CHẠY NỀN ---
+    // --- BẢO MẬT & KHÓA APP SIÊU TỐC KHI CHUYỂN NỀN / CHẾ ĐỘ NGỦ ---
     let enteredPin = "";
     let wrongPinCount = 0;
 
@@ -655,7 +666,6 @@
 
     function pressKey(val) {
       if (val === 'C') {
-        // Xóa lùi từng ký tự khi bấm nút Xóa
         enteredPin = enteredPin.slice(0, -1);
         updatePinDots();
       } else {
@@ -697,15 +707,14 @@
       }
     }
 
-    // NÂNG CAO BẢO MẬT: KIỂM TRA CHẾ ĐỘ NỀN & CHẾ ĐỘ NGỦ (VISIBILITY & FOCUS)
+    // SIÊU TỐC KHÓA KHI CHUYỂN ỨNG DỤNG HOẶC ĐỂ CHẾ ĐỘ NỀN / NGỦ
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         sessionStorage.setItem('lastActiveTime', Date.now().toString());
       } else {
-        // Khi bật lại từ nền / màn hình ngủ -> bắt buộc khóa lại nếu rời đi quá 300ms
         const lastTime = parseInt(sessionStorage.getItem('lastActiveTime') || '0', 10);
         const elapsed = Date.now() - lastTime;
-        if (elapsed > 300 || sessionStorage.getItem('isLocked') === 'true') {
+        if (elapsed > 150 || sessionStorage.getItem('isLocked') === 'true') {
           lockAppScreen();
         } else {
           unlockAudioContext();
@@ -722,7 +731,7 @@
     window.addEventListener('focus', () => {
       const lastTime = parseInt(sessionStorage.getItem('lastActiveTime') || '0', 10);
       const elapsed = Date.now() - lastTime;
-      if (elapsed > 300) {
+      if (elapsed > 150) {
         lockAppScreen();
       } else {
         unlockAudioContext();
@@ -731,27 +740,29 @@
       }
     });
 
-    // --- HIỆU ỨNG CÁNH HOA HỒNG RƠI CHẬM, NHẸ NHÀNG ---
+    // --- HIỆU ỨNG LÁ HỒNG NHẸ NHÀNG, RƠI CHẬM ---
     function createRosePetals() {
-      const petalChars = ['🌸', '🌹', '❤️', '💮', '✨'];
+      const petalChars = ['🌸', '🍃', '💮', '🌹', '✨'];
       setInterval(() => {
         const petal = document.createElement('div');
         petal.className = 'rose-petal';
         petal.innerText = petalChars[Math.floor(Math.random() * petalChars.length)];
         petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.fontSize = (Math.random() * 10 + 12) + 'px';
-        const duration = Math.random() * 4 + 7;
+        petal.style.fontSize = (Math.random() * 8 + 10) + 'px';
+        const duration = Math.random() * 5 + 8; // Rơi chậm hơn, nhẹ nhàng hơn
         petal.style.animationDuration = duration + 's';
         document.body.appendChild(petal);
         setTimeout(() => petal.remove(), duration * 1000);
-      }, 800);
+      }, 950);
     }
     createRosePetals();
 
     let journals = JSON.parse(localStorage.getItem('ainhuy_journals_v1') || '[]');
     let issues = JSON.parse(localStorage.getItem('ainhuy_issues_v1') || '[]');
     let shiftTimes = JSON.parse(localStorage.getItem('ainhuy_shift_times') || JSON.stringify({
-      hc_pre: '07:15', hc_in: '07:30', hc_out: '17:00', c1_in: '05:10', c1_out: '14:00', c2_in: '16:30', c2_out: '22:00'
+      hc_pre: '07:15', hc_in: '07:30', hc_out: '17:00', 
+      c1_pre: '04:55', c1_in: '05:10', c1_out: '14:00', 
+      c2_pre: '16:15', c2_in: '16:30', c2_out: '22:00'
     }));
 
     let monthWeeksList = [];
@@ -884,7 +895,7 @@
       { title: "Năng suất & Thoải mái! 💼", quote: "Chúc em một ngày làm việc với năng suất cao nhất và tâm trạng thoải mái nhất." },
       { title: "Nụ cười rạng rỡ! 😊", quote: "Chúc em yêu buổi sáng tốt lành, nụ cười luôn nở trên môi và thành công ở mọi mặt trận." },
       { title: "Không stress, chỉ may mắn! 🌟", quote: "Chúc em hôm nay không gặp stress, chỉ gặp may mắn và những tin vui trong công việc thôi nhé." },
-      { title: "Đền đáp xứng đáng! 🏆", quote: "Mong mọi nỗ lực và sự chăm chỉ của em trong ngày hôm nay sẽ được đền đáp xứng đáng." },
+      { title: "Đền đáp xứng đáng! 🏆", quote: "Mong mọi nỗ lực và sự chăm chỉ của em trong ngày hôm hôm nay sẽ được đền đáp xứng đáng." },
       { title: "Tối nay hẹn hò nha! 💖", quote: "Chúc em ngày mới làm việc thật tốt để tối nay chúng mình tha hồ hẹn hò bù nha." },
       { title: "Tỏa sáng rực rỡ! ✨", quote: "Chúc Ái Nhuy của anh một ngày mới tràn đầy nhiệt huyết, tỏa sáng rực rỡ ở nơi làm việc!" },
       { title: "Cảm ơn cuộc đời! 🌹", quote: "Cảm ơn cuộc đời đã mang em đến bên anh. Yub yêu Ái Nhuy rất nhiều và mãi mãi chỉ hướng về em." },
@@ -1205,8 +1216,12 @@
       document.getElementById('cfg_hc_pre').value = shiftTimes.hc_pre || '07:15';
       document.getElementById('cfg_hc_in').value = shiftTimes.hc_in || '07:30';
       document.getElementById('cfg_hc_out').value = shiftTimes.hc_out || '17:00';
+      
+      document.getElementById('cfg_c1_pre').value = shiftTimes.c1_pre || '04:55';
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:10';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
+
+      document.getElementById('cfg_c2_pre').value = shiftTimes.c2_pre || '16:15';
       document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '16:30';
       document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
     }
@@ -1215,10 +1230,15 @@
       shiftTimes.hc_pre = document.getElementById('cfg_hc_pre').value;
       shiftTimes.hc_in = document.getElementById('cfg_hc_in').value;
       shiftTimes.hc_out = document.getElementById('cfg_hc_out').value;
+      
+      shiftTimes.c1_pre = document.getElementById('cfg_c1_pre').value;
       shiftTimes.c1_in = document.getElementById('cfg_c1_in').value;
       shiftTimes.c1_out = document.getElementById('cfg_c1_out').value;
+
+      shiftTimes.c2_pre = document.getElementById('cfg_c2_pre').value;
       shiftTimes.c2_in = document.getElementById('cfg_c2_in').value;
       shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
+
       localStorage.setItem('ainhuy_shift_times', JSON.stringify(shiftTimes));
       showToast('Đã lưu giờ ca trực!');
     }
@@ -1495,15 +1515,35 @@
             continue;
           }
 
+          const rawPre = (shift === 'ca1' ? (shiftTimes.c1_pre || '04:55') : (shiftTimes.c2_pre || '16:15'));
           const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
           const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
 
+          const preTimeUTC = toUTCICSString(y, m, d, rawPre, 0);
           const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
           const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
 
           const isCa1 = (shift === 'ca1');
           const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
           const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
+
+          count++;
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:shift-${shift}-pre-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${preTimeUTC}`,
+            `DTEND:${inTimeUTC}`,
+            `SUMMARY:⏰ Báo giờ ${shiftLabel}`,
+            `DESCRIPTION:Chuẩn bị vào ca ${shiftLabel} lúc ${rawIn}`,
+            `STATUS:CONFIRMED`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:Báo thức: Sắp đến giờ làm việc ${shiftLabel}!`,
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
 
           count++;
           events.push([
@@ -1890,23 +1930,33 @@
           return;
         }
       } else if (todayShift === 'ca1') {
-        if (shiftTimes.c1_in === currentTime) {
+        if ((shiftTimes.c1_pre || '04:55') === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
+          startContinuousAlarm(`⏰ BÁO GIỜ CA 1 (${currentTime})`);
           return;
         }
-        if (shiftTimes.c1_out === currentTime) {
+        if ((shiftTimes.c1_in || '05:10') === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`🔵 ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
+          return;
+        }
+        if ((shiftTimes.c1_out || '14:00') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 1 (${currentTime})`);
           return;
         }
       } else if (todayShift === 'ca2') {
-        if (shiftTimes.c2_in === currentTime) {
+        if ((shiftTimes.c2_pre || '16:15') === currentTime) {
           lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
+          startContinuousAlarm(`⏰ BÁO GIỜ CA 2 (${currentTime})`);
           return;
         }
-        if (shiftTimes.c2_out === currentTime) {
+        if ((shiftTimes.c2_in || '16:30') === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`🟡 ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
+          return;
+        }
+        if ((shiftTimes.c2_out || '22:00') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 2 (${currentTime})`);
           return;
