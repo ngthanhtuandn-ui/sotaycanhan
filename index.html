@@ -340,7 +340,7 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
-    /* CẬP NHẬT MÀU ĐỎ ĐẬM RÕ NÉT CHO NGÀY & THÁNG TRÊN LỊCH CA */
+    /* MÀU SẮC TRÊN LỊCH CA (HỖ TRỢ HIỂN THỊ ĐẦY ĐỦ ICON 🔴 CHO OFF) */
     .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; font-weight: 900; }
     .day-col.is-off .calendar-date { color: #991b1b !important; font-weight: 900; }
@@ -705,36 +705,21 @@
       }
     }
 
+    // Xử lý khi màn hình bật sáng trở lại: quét bù giờ ngay lập tức để không bỏ lỡ mốc in/out
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         sessionStorage.setItem('lastActiveTime', Date.now().toString());
       } else {
-        const lastTime = parseInt(sessionStorage.getItem('lastActiveTime') || '0', 10);
-        const elapsed = Date.now() - lastTime;
-        if (elapsed > 150 || sessionStorage.getItem('isLocked') === 'true') {
-          lockAppScreen();
-        } else {
-          unlockAudioContext();
-          checkScheduler();
-          updateNotiButtonStatus();
-        }
+        unlockAudioContext();
+        checkScheduler(); // Quét bù ngay khi mở lại màn hình
+        updateNotiButtonStatus();
       }
-    });
-
-    window.addEventListener('blur', () => {
-      sessionStorage.setItem('lastActiveTime', Date.now().toString());
     });
 
     window.addEventListener('focus', () => {
-      const lastTime = parseInt(sessionStorage.getItem('lastActiveTime') || '0', 10);
-      const elapsed = Date.now() - lastTime;
-      if (elapsed > 150) {
-        lockAppScreen();
-      } else {
-        unlockAudioContext();
-        checkScheduler();
-        updateNotiButtonStatus();
-      }
+      unlockAudioContext();
+      checkScheduler(); // Quét bù ngay khi focus
+      updateNotiButtonStatus();
     });
 
     // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI ---
@@ -1868,6 +1853,7 @@
       }
     }
 
+    // --- HỆ THỐNG KIỂM TRA BÁO THỨC (CÓ CƠ CHẾ QUÉT BÙ MỚI NHẤT KHI MỞ MÀN HÌNH) ---
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
