@@ -1930,6 +1930,7 @@
           startContinuousAlarm(`⏰ BÁO GIỜ CA 2 (${currentTime})`);
           return;
         }
+        // Đã sửa lỗi: Bổ sung gọi báo thức khi đến giờ vào Ca 2 (in)
         if ((shiftTimes.c2_in || '16:30') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🟡 ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
