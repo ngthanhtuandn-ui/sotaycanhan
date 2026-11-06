@@ -12,24 +12,49 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
+  <!-- CHỐNG SAO CHÉP VÀ BÔI ĐEN TOÀN DIỆN -->
+  <style>
+    * {
+      -webkit-user-select: none !important;
+      -moz-user-select: none !important;
+      -ms-user-select: none !important;
+      user-select: none !important;
+      -webkit-touch-callout: none !important;
+    }
+    input, textarea {
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      user-select: text !important;
+    }
+  </style>
+
   <script>
+    // Chống mở F12, Inspect Element, View Source
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('copy', e => {
+      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (
+        e.keyCode === 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+        (e.ctrlKey && e.keyCode === 85) ||
+        (e.ctrlKey && e.keyCode === 67 && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA')
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, '', window.location.href);
       window.onpopstate = function () {
         window.history.go(1);
       };
     }
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => {
-      if (
-        e.keyCode === 123 || 
-        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-        (e.ctrlKey && e.keyCode === 85)
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    });
   </script>
 
   <style>
@@ -50,7 +75,7 @@
       --journal-text: #9f1239;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: radial-gradient(ellipse at top,#ffe4e6 0%,#fff1f2 50%,#ffe4e6 100%); color: var(--text); padding-bottom: 90px; }
 
     /* MÀN HÌNH KHÓA BẢO MẬT TUYỆT ĐỐI */
@@ -61,25 +86,25 @@
       padding: 20px; color: white; text-align: center;
     }
     .lock-box {
-      background: rgba(255, 255, 255, 0.96); padding: 28px 20px; border-radius: 28px;
+      background: rgba(255, 255, 255, 0.96); padding: 24px 20px; border-radius: 28px;
       width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(190, 24, 93, 0.3); color: var(--text);
     }
     .lock-brand-title {
-      font-size: 1.55rem; font-weight: 800; font-family: "Times New Roman", Times, serif; font-style: italic;
+      font-size: 1.45rem; font-weight: 800; font-family: "Times New Roman", Times, serif; font-style: italic;
       background: linear-gradient(45deg, #be185d, #ec4899, #f43f5e, #7c3aed, #db2777);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: gradientShift 5s ease infinite;
-      margin-bottom: 14px; letter-spacing: 0.8px;
+      margin-bottom: 10px; letter-spacing: 0.8px;
     }
-    .passcode-dots { display: flex; justify-content: center; gap: 12px; margin-bottom: 22px; }
+    .passcode-dots { display: flex; justify-content: center; gap: 12px; margin-bottom: 18px; }
     .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #f43f5e; background: #fff; transition: all 0.2s; }
     .dot.filled { background: #f43f5e; }
-    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .key-btn {
-      background: #fff1f2; border: 1px solid #fbcfe8; font-size: 1.15rem; font-weight: 800;
-      color: #be185d; padding: 12px 0; border-radius: 12px; cursor: pointer; transition: 0.15s;
+      background: #fff1f2; border: 1px solid #fbcfe8; font-size: 1.1rem; font-weight: 800;
+      color: #be185d; padding: 10px 0; border-radius: 12px; cursor: pointer; transition: 0.15s;
     }
     .key-btn:active { background: #f43f5e; color: #fff; transform: scale(0.95); }
 
@@ -88,15 +113,11 @@
       50% { transform: rotate(180deg) scale(1.15); }
       100% { transform: rotate(360deg) scale(1); }
     }
-    .flower-icon-spin {
-      display: inline-block;
-      animation: flowerSpin 6s linear infinite;
-      font-size: 1.1rem;
-    }
+    .flower-icon-spin { display: inline-block; animation: flowerSpin 6s linear infinite; font-size: 1.1rem; }
 
-    /* HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI */
+    /* HIỆU ỨNG LÁ RƠI */
     .falling-leaf {
-      position: fixed; top: -10vh; z-index: 999; user-select: none; pointer-events: none;
+      position: fixed; top: -10vh; z-index: 999; pointer-events: none;
       animation: fallLeaf linear infinite;
     }
     @keyframes fallLeaf {
@@ -153,7 +174,7 @@
 
     .weather-widget {
       position: relative; width: 86px; height: 68px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; flex-shrink: 0; user-select: none;
+      cursor: pointer; flex-shrink: 0;
     }
 
     .sunny-animated-box { position: relative; width: 68px; height: 68px; display: flex; align-items: center; justify-content: center; }
@@ -205,7 +226,7 @@
       filter: drop-shadow(0 0 14px rgba(250, 204, 21, 0.9));
       animation: moonGlow 3.2s ease-in-out infinite alternate; z-index: 2;
     }
-    .night-sparkle { position: absolute; line-height: 1; user-select: none; animation: starTwinkle 2.5s ease-in-out infinite alternate; z-index: 1; }
+    .night-sparkle { position: absolute; line-height: 1; animation: starTwinkle 2.5s ease-in-out infinite alternate; z-index: 1; }
     .night-sparkle.st-far-left { top: 6px; left: 2px; font-size: 13px; color: #fef08a; }
     .night-sparkle.st-mid-left-high { top: 22px; left: 24px; font-size: 11px; color: #38bdf8; }
     .night-sparkle.st-mid-left-low { bottom: 8px; left: 10px; font-size: 14px; color: #fde047; }
@@ -340,7 +361,7 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
-    /* MÀU SẮC TRÊN LỊCH CA (HỖ TRỢ HIỂN THỊ ĐẦY ĐỦ ICON 🔴 CHO OFF) */
+    /* MÀU SẮC LỊCH CA & HIỂN THỊ ĐẦY ĐỦ ICON 🔴 CHO OFF */
     .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; font-weight: 900; }
     .day-col.is-off .calendar-date { color: #991b1b !important; font-weight: 900; }
@@ -651,15 +672,16 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // --- BẢO MẬT & KHÓA APP SIÊU TỐC KHI CHUYỂN NỀN / CHẾ ĐỘ NGỦ ---
+    // --- TỰ ĐỘNG XÓA DỮ LIỆU TẠM & KHÓA KHI THOÁT APP ---
     let enteredPin = "";
     let wrongPinCount = 0;
 
     function lockAppScreen() {
       enteredPin = "";
       updatePinDots();
-      document.getElementById('lockScreen').style.display = 'flex';
-      sessionStorage.setItem('isLocked', 'true');
+      const lockEl = document.getElementById('lockScreen');
+      if (lockEl) lockEl.style.display = 'flex';
+      sessionStorage.clear();
     }
 
     function pressKey(val) {
@@ -679,10 +701,9 @@
 
     function checkPinAndUnlock() {
       if (enteredPin === "131426") {
-        document.getElementById('lockScreen').style.display = 'none';
+        const lockEl = document.getElementById('lockScreen');
+        if (lockEl) lockEl.style.display = 'none';
         wrongPinCount = 0;
-        sessionStorage.setItem('isLocked', 'false');
-        sessionStorage.setItem('lastActiveTime', Date.now().toString());
         showToast('Mở khóa thành công! Chào Ái Nhuy 💕');
         unlockAudioContext();
       } else {
@@ -700,29 +721,30 @@
     function updatePinDots() {
       for (let i = 0; i < 6; i++) {
         const dot = document.getElementById(`dot-${i}`);
-        if (i < enteredPin.length) dot.classList.add('filled');
-        else dot.classList.remove('filled');
+        if (dot) {
+          if (i < enteredPin.length) dot.classList.add('filled');
+          else dot.classList.remove('filled');
+        }
       }
     }
 
-    // Xử lý khi màn hình bật sáng trở lại: quét bù giờ ngay lập tức để không bỏ lỡ mốc in/out
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        sessionStorage.setItem('lastActiveTime', Date.now().toString());
+        lockAppScreen();
       } else {
-        unlockAudioContext();
-        checkScheduler(); // Quét bù ngay khi mở lại màn hình
-        updateNotiButtonStatus();
+        lockAppScreen();
       }
     });
 
-    window.addEventListener('focus', () => {
-      unlockAudioContext();
-      checkScheduler(); // Quét bù ngay khi focus
-      updateNotiButtonStatus();
+    window.addEventListener('blur', () => {
+      lockAppScreen();
     });
 
-    // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI ---
+    window.addEventListener('pagehide', () => {
+      sessionStorage.clear();
+    });
+
+    // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG ---
     function createFallingLeaves() {
       const leafChars = ['🍁', '🍂', '🍃', '🌿', '✨'];
       setInterval(() => {
@@ -848,64 +870,15 @@
     let alarmAudioBlobUrl = null;
     let warningAudioBlobUrl = null;
 
-    // --- KHO TÀNG CÂU CHÚC PHÂN LOẠI THEO THỜI GIAN (SÁNG / TRƯA / TỐI) ---
     const morningWishPool = [
       { title: "Chào buổi sáng tình yêu! ☀️", quote: "Chào buổi sáng tình yêu của anh! Chúc em một ngày mới ngập tràn năng lượng, làm việc hiệu quả và gặp nhiều may mắn nhé. 💕" },
-      { title: "Ái Nhuy ơi, dậy thôi nào! 🌸", quote: "Ái Nhuy ơi, dậy thôi nào! Chúc em ngày mới rạng rỡ, hoàn thành xuất sắc mọi công việc được giao nha." },
-      { title: "Năng lượng dồi dào nhé em! 💪", quote: "Gửi đến em ngàn nụ hôn và nguồn năng lượng dồi dào cho ngày hôm nay. Cố gắng lên cô gái của anh!" },
-      { title: "Khởi đầu rực rỡ nhé em! 🌟", quote: "Khởi đầu ngày mới thật rực rỡ nhé em! Mong mọi khó khăn đều nhường đường cho sự suôn sẻ của em hôm nay." },
-      { title: "Buổi sáng bình yên! 🍃", quote: "Chúc em một buổi sáng bình yên, một ngày làm việc hăng say và một buổi chiều tràn ngập niềm vui." },
-      { title: "200% năng lượng hôm nay! 🚀", quote: "Ái Nhuy tuyệt vời nhất của anh ơi, hãy tự tin bước vào ngày mới với 200% năng lượng nhé!" },
-      { title: "Thuận lợi và may mắn! 🍀", quote: "Chúc em hôm nay làm việc gì cũng thuận lợi, đồng nghiệp yêu quý, sếp khen ngợi nha." },
-      { title: "Cảm hứng ngập tràn! ☀️", quote: "Nắng sớm đã lên rồi, chúc em ngày mới ngập tràn cảm hứng và gặt hái thật nhiều thành quả tốt đẹp." },
-      { title: "Nắng ấm và tình yêu! ❤️", quote: "Gửi nắng ấm và tình yêu của anh đến em. Chúc em ngày mới làm việc thật hiệu quả và luôn vui vẻ." },
-      { title: "Nhẹ nhàng và như ý! 🌸", quote: "Chúc tình yêu của anh hôm nay không phải mệt mỏi, mọi việc đều trôi qua thật nhẹ nhàng và như ý." },
-      { title: "Cà phê buổi sáng! ☕", quote: "Chúc em buổi sáng tốt lành! Hãy nhớ uống cà phê/sữa đầy đủ và làm việc thật năng suất nha." },
-      { title: "Sức sống ngập tràn! 🔥", quote: "Chúc em yêu ngày mới tràn đầy sức sống, mọi dự định đều hoàn thành xuất sắc." },
-      { title: "Tinh thần lạc quan! ✨", quote: "Chúc tình yêu của anh luôn giữ được tinh thần lạc quan, yêu đời và năng lượng ngập tràn suốt cả ngày." },
-      { title: "Công việc hanh thông! 😉", quote: "Chúc em buổi sáng an lành, công việc hanh thông, tiền vào như nước, tình duyên phơi phới." },
-      { title: "Công chúa chăm chỉ! 👑", quote: "Chúc cô công chúa của anh ngày mới làm việc thật hăng say, chiều về rủng rỉnh niềm vui." }
+      { title: "Ái Nhuy ơi, dậy thôi nào! 🌸", quote: "Ái Nhuy ơi, dậy thôi nào! Chúc em ngày mới rạng rỡ, hoàn thành xuất sắc mọi công việc được giao nha." }
     ];
-
     const daytimeWishPool = [
-      { title: "Ngày làm việc suôn sẻ nhé! ✨", quote: "Chúc tình yêu của anh một ngày làm việc suôn sẻ, hanh thông và luôn giữ được nụ cười xinh đẹp trên môi." },
-      { title: "Bứt phá hết mình nhé! 💫", quote: "Một ngày mới tuyệt vời đang chờ đón em phía trước. Bứt phá hết mình nhé, cô gái chăm chỉ của anh!" },
-      { title: "Trôi nhanh và vui vẻ! ⏱️", quote: "Mong rằng ngày hôm nay của em sẽ trôi thật nhanh và mang lại cho em thật nhiều niềm vui trong công việc." },
-      { title: "Năng suất gấp đôi! 📈", quote: "Gửi ngàn lời chúc ngọt ngào nhất đến Ái Nhuy. Chúc em một ngày làm việc hiệu quả gấp đôi bình thường!" },
-      { title: "Thuận buồm xuôi gió! ⛵", quote: "Chúc em ngày mới thuận buồm xuôi gió, giải quyết mọi việc đâu ra đó thật gọn gàng." },
-      { title: "Tin vào em! 🌟", quote: "Hôm nay chắc chắn sẽ là một ngày làm việc cực kỳ thành công của em. Anh tin là vậy!" },
-      { title: "Bất ngờ thú vị! 🎁", quote: "Chúc em một ngày mới ngập tràn những điều bất ngờ thú vị và niềm vui trong công việc." },
-      { title: "Toàn chuyện vui nhé! 🎉", quote: "Mong em hôm nay gặp toàn chuyện vui, làm việc gì cũng được trót lọt, mượt mà." },
-      { title: "Đánh bay mệt mỏi! ⚡", quote: "Gửi đến em nguồn năng lượng tích cực nhất để đánh bay mọi mệt mỏi của ngày mới." },
-      { title: "Năng suất & Thoải mái! 💼", quote: "Chúc em một ngày làm việc với năng suất cao nhất và tâm trạng thoải mái nhất." },
-      { title: "Nụ cười rạng rỡ! 😊", quote: "Chúc em yêu buổi sáng tốt lành, nụ cười luôn nở trên môi và thành công ở mọi mặt trận." },
-      { title: "Không stress, chỉ may mắn! 🌟", quote: "Chúc em hôm nay không gặp stress, chỉ gặp may mắn và những tin vui trong công việc thôi nhé." },
-      { title: "Đền đáp xứng đáng! 🏆", quote: "Mong mọi nỗ lực và sự chăm chỉ của em trong ngày hôm nay sẽ được đền đáp xứng đáng." },
-      { title: "Tối nay hẹn hò nha! 💖", quote: "Chúc em ngày mới làm việc thật tốt để tối nay chúng mình tha hồ hẹn hò bù nha." },
-      { title: "Tỏa sáng rực rỡ! ✨", quote: "Chúc Ái Nhuy của anh một ngày mới tràn đầy nhiệt huyết, tỏa sáng rực rỡ ở nơi làm việc!" }
+      { title: "Ngày làm việc suôn sẻ nhé! ✨", quote: "Chúc tình yêu của anh một ngày làm việc suôn sẻ, hanh thông và luôn giữ được nụ cười xinh đẹp trên môi." }
     ];
-
     const eveningWishPool = [
-      { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé." },
-      { title: "Đắp chăn thật kỹ! 🛏️", quote: "Đắp chăn thật kỹ và chìm vào giấc ngủ sâu nha em. Ngày mai thức dậy anh lại nhắn tin cho em nhé." },
-      { title: "Gặp anh trong mơ! ✨", quote: "Chúc Ái Nhuy ngủ ngon! Mong em mơ thấy anh trong giấc mơ ngọt ngào nhất đêm nay." },
-      { title: "Nạp đầy năng lượng! ⚡", quote: "Khép lại một ngày dài mệt mỏi, chúc em có một giấc ngủ thật sâu để nạp đầy năng lượng." },
-      { title: "Cô gái ngoan của anh! 💤", quote: "Gửi ngàn lời chúc ngủ ngon đến cô gái ngoan của anh. Ngủ ngoan nhé tình yêu!" },
-      { title: "Sảng khoái đón ngày mới! 🌅", quote: "Chúc em ngủ ngon giấc, không mộng mị, sáng mai thức dậy với tâm trạng thật sảng khoái." },
-      { title: "Giấc ngủ êm đềm! 🕊️", quote: "Chúc tình yêu của anh có một giấc ngủ êm đềm như chính nụ cười của em vậy." },
-      { title: "Đừng thức khuya nữa! ⚠️", quote: "Đêm khuya rồi, đừng thức khuya nữa em nhé. Chúc em ngủ ngon và có giấc mơ thật đẹp." },
-      { title: "Mang hình bóng anh! ❤️", quote: "Chúc em yêu ngủ ngon, mang theo cả hình bóng anh vào trong giấc mơ nhé." },
-      { title: "Công chúa ngủ ngon! 👑", quote: "Ngủ thật ngon nha công chúa của anh, ngày mai lại là một ngày tuyệt vời đang chờ em đấy." },
-      { title: "Giấc ngủ bình yên! 🌌", quote: "Chúc em một giấc ngủ thật bình yên sau một ngày dài nỗ lực làm việc." },
-      { title: "Đêm se lạnh! 🧥", quote: "Đắp chăn ấm áp vào em nhé, ngoài trời đêm nay se lạnh lắm đấy." },
-      { title: "Hạnh phúc & Ngọt ngào! 🍬", quote: "Chúc em yêu ngủ ngon, mơ thấy những điều hạnh phúc và ngọt ngào nhất." },
-      { title: "Hôn gió qua màn hình! 💋", quote: "Gửi ngàn chiếc hôn gió qua màn hình để chúc em ngủ ngon giấc đêm nay." },
-      { title: "Xua tan mệt mỏi! 🍃", quote: "Mong rằng giấc ngủ của em sẽ thật nhẹ nhàng, xua tan mọi lo toan, mệt mỏi trong ngày." },
-      { title: "Thức dậy mỉm cười! 😊", quote: "Chúc Ái Nhuy của anh có một đêm ngon giấc, sáng mai thức dậy sẽ mỉm cười thật tươi." },
-      { title: "Giữ gìn sức khỏe! 💪", quote: "Đêm nay anh không ở cạnh, em nhớ ngủ sớm và giữ gìn sức khỏe nha." },
-      { title: "Dạo chơi trong mơ! 🌠", quote: "Chúc em ngủ ngon, \"gặp\" anh trong mơ và cùng nhau dạo chơi ở một nơi thật đẹp nhé." },
-      { title: "Yêu em nhiều lắm! 💕", quote: "Khép mi lại và chìm vào giấc ngủ êm đềm thôi nào, yêu em nhiều lắm." },
-      { title: "Hẹn gặp em ngày mai! 📅", quote: "Chúc tình yêu của anh ngủ thật ngon, có một giấc mơ trọn vẹn và hẹn gặp em vào ngày mai!" }
+      { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé." }
     ];
 
     let currentActivePool = morningWishPool;
@@ -913,13 +886,9 @@
 
     function initGreetingPool() {
       const hour = new Date().getHours();
-      if (hour >= 4 && hour < 11) {
-        currentActivePool = morningWishPool;
-      } else if (hour >= 11 && hour < 18) {
-        currentActivePool = daytimeWishPool;
-      } else {
-        currentActivePool = eveningWishPool;
-      }
+      if (hour >= 4 && hour < 11) currentActivePool = morningWishPool;
+      else if (hour >= 11 && hour < 18) currentActivePool = daytimeWishPool;
+      else currentActivePool = eveningWishPool;
       currentGreetingIdx = Math.floor(Math.random() * currentActivePool.length);
       displayCurrentGreeting();
     }
@@ -1399,6 +1368,10 @@
         return localDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       }
 
+      function toICADateString(year, month, day) {
+        return `${year}${String(month).padStart(2,'0')}${String(day).padStart(2,'0')}`;
+      }
+
       let count = 0;
 
       weekIndices.forEach(wIdx => {
@@ -1416,18 +1389,21 @@
           const m = dayDate.getMonth() + 1;
           const d = dayDate.getDate();
 
-          const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+          const dateStr = toICADateString(y, m, d);
 
+          // Xử lý Ngày Off: Dùng DTSTART/DTEND dạng DATE để ẩn hoàn toàn chữ giờ (8AM)
           if (shift === 'off') {
             count++;
-            const offStartUTC = toUTCICSString(y, m, d, '08:00', 0);
-            const offEndUTC = toUTCICSString(y, m, d, '17:00', 0);
+            const nextDayDate = new Date(dayDate);
+            nextDayDate.setDate(dayDate.getDate() + 1);
+            const nextDateStr = toICADateString(nextDayDate.getFullYear(), nextDayDate.getMonth() + 1, nextDayDate.getDate());
+
             events.push([
               'BEGIN:VEVENT',
               `UID:shift-off-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
               `DTSTAMP:${dtStamp}`,
-              `DTSTART:${offStartUTC}`,
-              `DTEND:${offEndUTC}`,
+              `DTSTART;VALUE=DATE:${dateStr}`,
+              `DTEND;VALUE=DATE:${nextDateStr}`,
               `SUMMARY:🔴 Off`,
               `DESCRIPTION:Hôm nay Ái Nhuy Off nghỉ ngơi nhé!`,
               `STATUS:CONFIRMED`,
@@ -1436,60 +1412,33 @@
             continue;
           }
 
+          // Xử lý Lịch Ca (Hành chính / Ca 1 / Ca 2)
+          let rawPre, rawIn, rawOut, summaryTitle, shiftLabel;
           if (shift === 'hanh-chinh') {
-            const rawPre = shiftTimes.hc_pre || '07:15';
-            const rawIn = shiftTimes.hc_in || '07:30';
-            const rawOut = shiftTimes.hc_out || '17:00';
-
-            const preTimeUTC = toUTCICSString(y, m, d, rawPre, 0);
-            const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
-            const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
-
-            count++;
-            events.push([
-              'BEGIN:VEVENT',
-              `UID:shift-hc-pre-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-              `DTSTAMP:${dtStamp}`,
-              `DTSTART:${preTimeUTC}`,
-              `DTEND:${inTimeUTC}`,
-              `SUMMARY:⏰ Báo giờ ca hành chính`,
-              `DESCRIPTION:Chuẩn bị vào ca hành chính lúc ${rawIn}`,
-              `STATUS:CONFIRMED`,
-              'BEGIN:VALARM',
-              'TRIGGER:-PT0M',
-              'ACTION:DISPLAY',
-              `DESCRIPTION:Báo thức: Sắp đến giờ làm việc hành chính!`,
-              'END:VALARM',
-              'END:VEVENT'
-            ].join('\r\n'));
-
-            count++;
-            events.push([
-              'BEGIN:VEVENT',
-              `UID:shift-hc-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-              `DTSTAMP:${dtStamp}`,
-              `DTSTART:${inTimeUTC}`,
-              `DTEND:${outTimeUTC}`,
-              `SUMMARY:💜 Ca Hành Chính`,
-              `DESCRIPTION:Ca làm việc hành chính từ ${rawIn} đến ${rawOut}.`,
-              `STATUS:CONFIRMED`,
-              'END:VEVENT'
-            ].join('\r\n'));
-            continue;
+            rawPre = shiftTimes.hc_pre || '07:15';
+            rawIn = shiftTimes.hc_in || '07:30';
+            rawOut = shiftTimes.hc_out || '17:00';
+            summaryTitle = '💜 Ca Hành Chính';
+            shiftLabel = 'ca hành chính';
+          } else if (shift === 'ca1') {
+            rawPre = shiftTimes.c1_pre || '04:55';
+            rawIn = shiftTimes.c1_in || '05:10';
+            rawOut = shiftTimes.c1_out || '14:00';
+            summaryTitle = '🔵 Ca 1';
+            shiftLabel = 'Ca 1';
+          } else {
+            rawPre = shiftTimes.c2_pre || '16:15';
+            rawIn = shiftTimes.c2_in || '16:30';
+            rawOut = shiftTimes.c2_out || '22:00';
+            summaryTitle = '🟡 Ca 2';
+            shiftLabel = 'Ca 2';
           }
-
-          const rawPre = (shift === 'ca1' ? (shiftTimes.c1_pre || '04:55') : (shiftTimes.c2_pre || '16:15'));
-          const rawIn = (shift === 'ca1' ? (shiftTimes.c1_in || '05:10') : (shiftTimes.c2_in || '16:30'));
-          const rawOut = (shift === 'ca1' ? (shiftTimes.c1_out || '14:00') : (shiftTimes.c2_out || '22:00'));
 
           const preTimeUTC = toUTCICSString(y, m, d, rawPre, 0);
           const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
           const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
 
-          const isCa1 = (shift === 'ca1');
-          const summaryTitle = isCa1 ? '🔵 Ca 1' : '🟡 Ca 2';
-          const shiftLabel = isCa1 ? 'Ca 1' : 'Ca 2';
-
+          // 1. Sự kiện 1: Báo trước (có chuông báo VALARM)
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1508,6 +1457,45 @@
             'END:VEVENT'
           ].join('\r\n'));
 
+          // 2. Sự kiện 2: Vào ca (có chuông báo VALARM chủ động)
+          count++;
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${inTimeUTC}`,
+            `DTEND:${toUTCICSString(y, m, d, rawIn, 15)}`,
+            `SUMMARY:🔔 Vào ca ${shiftLabel} (${rawIn})`,
+            `DESCRIPTION:Đã đến giờ vào ca làm việc ${shiftLabel}.`,
+            `STATUS:CONFIRMED`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:Đến giờ vào ca ${shiftLabel}!`,
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          // 3. Sự kiện 3: Tan ca (có chuông báo VALARM chủ động)
+          count++;
+          events.push([
+            'BEGIN:VEVENT',
+            `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${outTimeUTC}`,
+            `DTEND:${toUTCICSString(y, m, d, rawOut, 15)}`,
+            `SUMMARY:🏁 Tan ca ${shiftLabel} (${rawOut})`,
+            `DESCRIPTION:Đã hết giờ làm việc ca ${shiftLabel}.`,
+            `STATUS:CONFIRMED`,
+            'BEGIN:VALARM',
+            'TRIGGER:-PT0M',
+            'ACTION:DISPLAY',
+            `DESCRIPTION:Đã đến giờ tan ca ${shiftLabel}!`,
+            'END:VALARM',
+            'END:VEVENT'
+          ].join('\r\n'));
+
+          // 4. Sự kiện 4: Khung thời gian diễn ra ca trực trên lịch
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1853,7 +1841,6 @@
       }
     }
 
-    // --- HỆ THỐNG KIỂM TRA BÁO THỨC (CÓ CƠ CHẾ QUÉT BÙ MỚI NHẤT KHI MỞ MÀN HÌNH) ---
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
