@@ -30,7 +30,6 @@
   </style>
 
   <script>
-    // Chống mở F12, Inspect Element, View Source
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('copy', e => {
       if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
@@ -672,7 +671,6 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // --- TỰ ĐỘNG XÓA DỮ LIỆU TẠM & KHÓA KHI THOÁT APP ---
     let enteredPin = "";
     let wrongPinCount = 0;
 
@@ -744,7 +742,6 @@
       sessionStorage.clear();
     });
 
-    // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG ---
     function createFallingLeaves() {
       const leafChars = ['🍁', '🍂', '🍃', '🌿', '✨'];
       setInterval(() => {
@@ -1357,6 +1354,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
+    // XUẤT ICS ĐÃ SỬA: CHỈ NẠP DUY NHẤT MỐC CỦA CA ĐÓ TRONG NGÀY ĐÓ, KHÔNG BỊ LẪN LỘN
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1391,7 +1389,6 @@
 
           const dateStr = toICADateString(y, m, d);
 
-          // Xử lý Ngày Off: Dùng DTSTART/DTEND dạng DATE để ẩn hoàn toàn chữ giờ (8AM)
           if (shift === 'off') {
             count++;
             const nextDayDate = new Date(dayDate);
@@ -1412,14 +1409,13 @@
             continue;
           }
 
-          // Xử lý Lịch Ca (Hành chính / Ca 1 / Ca 2)
           let rawPre, rawIn, rawOut, summaryTitle, shiftLabel;
           if (shift === 'hanh-chinh') {
             rawPre = shiftTimes.hc_pre || '07:15';
             rawIn = shiftTimes.hc_in || '07:30';
             rawOut = shiftTimes.hc_out || '17:00';
             summaryTitle = '💜 Ca Hành Chính';
-            shiftLabel = 'ca hành chính';
+            shiftLabel = 'Ca Hành Chính';
           } else if (shift === 'ca1') {
             rawPre = shiftTimes.c1_pre || '04:55';
             rawIn = shiftTimes.c1_in || '05:10';
@@ -1438,16 +1434,16 @@
           const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
           const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
 
-          // 1. Sự kiện 1: Báo trước (có chuông báo VALARM)
+          // 1. Chỉ tạo Báo trước cho đúng ca đó
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-pre-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${preTimeUTC}`,
-            `DTEND:${inTimeUTC}`,
+            `DTEND:${toUTCICSString(y, m, d, rawPre, 10)}`,
             `SUMMARY:⏰ Báo giờ ${shiftLabel}`,
-            `DESCRIPTION:Chuẩn bị vào ca ${shiftLabel} lúc ${rawIn}`,
+            `DESCRIPTION:Chuẩn bị vào ${shiftLabel} lúc ${rawIn}`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1457,45 +1453,45 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 2. Sự kiện 2: Vào ca (có chuông báo VALARM chủ động)
+          // 2. Chỉ tạo Vào ca cho đúng ca đó
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${inTimeUTC}`,
-            `DTEND:${toUTCICSString(y, m, d, rawIn, 15)}`,
-            `SUMMARY:🔔 Vào ca ${shiftLabel} (${rawIn})`,
-            `DESCRIPTION:Đã đến giờ vào ca làm việc ${shiftLabel}.`,
+            `DTEND:${toUTCICSString(y, m, d, rawIn, 10)}`,
+            `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
+            `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đến giờ vào ca ${shiftLabel}!`,
+            `DESCRIPTION:Đến giờ vào ${shiftLabel}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 3. Sự kiện 3: Tan ca (có chuông báo VALARM chủ động)
+          // 3. Chỉ tạo Tan ca cho đúng ca đó
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${outTimeUTC}`,
-            `DTEND:${toUTCICSString(y, m, d, rawOut, 15)}`,
-            `SUMMARY:🏁 Tan ca ${shiftLabel} (${rawOut})`,
-            `DESCRIPTION:Đã hết giờ làm việc ca ${shiftLabel}.`,
+            `DTEND:${toUTCICSString(y, m, d, rawOut, 10)}`,
+            `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
+            `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
             'ACTION:DISPLAY',
-            `DESCRIPTION:Đã đến giờ tan ca ${shiftLabel}!`,
+            `DESCRIPTION:Đã đến giờ tan ${shiftLabel}!`,
             'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 4. Sự kiện 4: Khung thời gian diễn ra ca trực trên lịch
+          // 4. Khung thời gian ca trực trên lịch
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1528,7 +1524,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất ${count} mốc ca làm việc sang Lịch điện thoại!`);
+      showToast(`Đã xuất ${count} mốc ca làm việc chính xác!`);
     }
 
     function saveIssue() {
@@ -1640,8 +1636,31 @@
       requestWakeLock();
     }
 
+    // TẠO ÂM THANH BẰNG OSCILLATOR KHI TẮT MÀN HÌNH ĐỂ ĐẢM BẢO REO VANG
+    function playOscillatorAlarmTone() {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!audioCtx && Ctx) audioCtx = new Ctx();
+        if (audioCtx) {
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nốt D5
+          osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15); // Nốt A5
+          gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.6);
+        }
+      } catch (_) {}
+    }
+
     function playGentleChime() {
       unlockAudioContext();
+      playOscillatorAlarmTone();
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) {
@@ -1653,6 +1672,7 @@
 
     function playWarningChime() {
       unlockAudioContext();
+      playOscillatorAlarmTone();
       try {
         const warnEl = document.getElementById('warningAudioElement');
         if (warnEl) {
