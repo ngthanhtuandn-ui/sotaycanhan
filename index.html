@@ -20,15 +20,11 @@
       };
     }
     document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('copy', e => e.preventDefault());
-    document.addEventListener('cut', e => e.preventDefault());
-    document.addEventListener('selectstart', e => e.preventDefault());
     document.addEventListener('keydown', e => {
       if (
         e.keyCode === 123 || 
         (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-        (e.ctrlKey && e.keyCode === 85) ||
-        (e.ctrlKey && e.keyCode === 67)
+        (e.ctrlKey && e.keyCode === 85)
       ) {
         e.preventDefault();
         return false;
@@ -54,7 +50,7 @@
       --journal-text: #9f1239;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
     body { background: radial-gradient(ellipse at top,#ffe4e6 0%,#fff1f2 50%,#ffe4e6 100%); color: var(--text); padding-bottom: 90px; }
 
     /* MÀN HÌNH KHÓA BẢO MẬT TUYỆT ĐỐI */
@@ -98,7 +94,7 @@
       font-size: 1.1rem;
     }
 
-    /* HIỆU ỨNG LÁ RƠI LÃNG MẠNG */
+    /* HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI */
     .falling-leaf {
       position: fixed; top: -10vh; z-index: 999; user-select: none; pointer-events: none;
       animation: fallLeaf linear infinite;
@@ -139,7 +135,7 @@
     }
     .header-btns button:active { background: rgba(255,255,255,0.4); transform: scale(0.96); }
 
-    #btnNotiStatus.noti-granted { background: #10b981 !important; border-color: #34d399 !important; color: #ffffff !important; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+    #btnNotiStatus.noti-granted { background: #10b981 !important; border-color: #34d399 !important; color: #ffffff !important; }
     #btnNotiStatus.noti-denied { background: #ef4444 !important; border-color: #f87171 !important; color: #ffffff !important; }
 
     .container { max-width: 760px; margin: auto; padding: 12px; }
@@ -344,11 +340,11 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
-    /* MÀU ĐỎ ĐẬM RÕ NÉT CHO NGÀY OFF */
-    .day-col.is-off { background: #fee2e2 !important; border-color: #ef4444 !important; }
-    .day-col.is-off .day-name { color: #dc2626 !important; font-weight: 900; }
-    .day-col.is-off .calendar-date { color: #b91c1c !important; font-weight: 900; }
-    .day-col.is-off .day-shift-select { border-color: #ef4444 !important; color: #991b1b !important; font-weight: 900; background: #fef2f2 !important; }
+    /* CẬP NHẬT MÀU ĐỎ ĐẬM RÕ NÉT CHO NGÀY & THÁNG TRÊN LỊCH CA */
+    .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
+    .day-col.is-off .day-name { color: #b91c1c !important; font-weight: 900; }
+    .day-col.is-off .calendar-date { color: #991b1b !important; font-weight: 900; }
+    .day-col.is-off .day-shift-select { border-color: #f87171 !important; color: #991b1b !important; font-weight: 900; background: #fee2e2 !important; }
 
     .day-col.is-ca1 { background: #bae6fd !important; border-color: #38bdf8 !important; }
     .day-col.is-ca1 .day-name { color: #0369a1 !important; font-weight: 900; }
@@ -655,7 +651,7 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // --- BẢO MẬT & KHÓA APP CHỐNG SAO CHÉP & KHÔNG LƯU VẾT ---
+    // --- BẢO MẬT & KHÓA APP SIÊU TỐC KHI CHUYỂN NỀN / CHẾ ĐỘ NGỦ ---
     let enteredPin = "";
     let wrongPinCount = 0;
 
@@ -741,7 +737,7 @@
       }
     });
 
-    // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG ---
+    // --- HIỆU ỨNG LÁ RƠI LÃNG MẠNG, ĐẸP, CHẬM RÃI ---
     function createFallingLeaves() {
       const leafChars = ['🍁', '🍂', '🍃', '🌿', '✨'];
       setInterval(() => {
@@ -1179,27 +1175,7 @@
       const j = journals.find(x => x.id === id);
       if (!j) return;
       const text = `💌 [NHẬT KÝ ÁI NHUY - ${j.journalDate || ''}]\n📌 ${j.title}\n------------------\n${j.content}`;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép sang Zalo!')).catch(() => fallbackCopyText(text));
-      } else {
-        fallbackCopyText(text);
-      }
-    }
-
-    function fallbackCopyText(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        showToast('Đã sao chép nội dung!');
-      } catch (err) {
-        showToast('Không thể sao chép.');
-      }
-      document.body.removeChild(textArea);
+      navigator.clipboard.writeText(text).then(() => showToast('Đã sao chép sang Zalo!'));
     }
 
     function switchView(tab) {
@@ -1492,29 +1468,7 @@
 
           const dateStr = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
 
-          // XUẤT SỰ KIỆN OFF CẢ NGÀY: CÓ CHỮ 🔴 Off DỄ NHẬN DIỆN
-          if (shift === 'off') {
-            count++;
-            const nextDayDate = new Date(dayDate);
-            nextDayDate.setDate(dayDate.getDate() + 1);
-            const ny = nextDayDate.getFullYear();
-            const nm = nextDayDate.getMonth() + 1;
-            const nd = nextDayDate.getDate();
-            const nextDateStr = `${ny}${String(nm).padStart(2,'0')}${String(nd).padStart(2,'0')}`;
-
-            events.push([
-              'BEGIN:VEVENT',
-              `UID:shift-off-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-              `DTSTAMP:${dtStamp}`,
-              `DTSTART;VALUE=DATE:${dateStr}`,
-              `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 Off`,
-              `DESCRIPTION:Ngày nghỉ ngơi và thư giãn.`,
-              `STATUS:CONFIRMED`,
-              'END:VEVENT'
-            ].join('\r\n'));
-            continue;
-          }
+          if (shift === 'off') continue;
 
           if (shift === 'hanh-chinh') {
             const rawPre = shiftTimes.hc_pre || '07:15';
@@ -1620,7 +1574,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất ${count} mốc lịch sang Lịch điện thoại!`);
+      showToast(`Đã xuất ${count} mốc ca làm việc sang Lịch điện thoại!`);
     }
 
     function saveIssue() {
@@ -1696,11 +1650,7 @@
       const i = issues.find(x => x.id === id);
       if (!i) return;
       const text = `⚡ [VIỆC CẦN LÀM - ${i.priority.toUpperCase()}]\n📌 ${i.title}\n⏰ ${i.createdAt}\n------------------\n${i.content}`;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung!')).catch(() => fallbackCopyText(text));
-      } else {
-        fallbackCopyText(text);
-      }
+      navigator.clipboard.writeText(text).then(() => showToast('Đã copy nội dung!'));
     }
 
     function updateDashboard() {
@@ -1937,7 +1887,7 @@
       }
     }
 
-    // --- HỆ THỐNG KIỂM TRA BÁO THỨC CHUẨN XÁC, BỀN BỈ KHI Ở CHẾ ĐỘ NGỦ ---
+    // HỆ THỐNG KIỂM TRA BÁO THỨC CHÍNH XÁC TỪNG PHÚT VÀ TỰ ĐỘNG ĐÁNH THỨC KHI NGỦ ĐÔNG
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
@@ -2020,11 +1970,6 @@
     }
 
     setInterval(checkScheduler, 1000);
-    
-    window.addEventListener('focus', () => {
-      unlockAudioContext();
-      checkScheduler();
-    });
 
     document.addEventListener('DOMContentLoaded', () => {
       lockAppScreen();
