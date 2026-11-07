@@ -360,7 +360,6 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
-    /* MÀU SẮC LỊCH CA & HIỂN THỊ ĐẦY ĐỦ ICON 🔴 CHO OFF */
     .day-col.is-off { background: #fee2e2 !important; border-color: #f87171 !important; }
     .day-col.is-off .day-name { color: #b91c1c !important; font-weight: 900; }
     .day-col.is-off .calendar-date { color: #991b1b !important; font-weight: 900; }
@@ -709,7 +708,8 @@
         if (wrongPinCount >= 4) {
           startWarningAlarm('🚨 CẢNH BÁO: NHẬP SAI MÃ QUÁ 4 LẦN!');
         } else {
-          alert(`Mã khóa không đúng! Bạn còn ${4 - wrongPinCount} lần thử.`);
+          // THAY THẾ HOÀN TOÀN HỘP THOẠI ALERT BẰNG TOAST NHẸ NHÀNG, KHÔNG CÒN HIỆN HỘP ĐEN CỦA TRÌNH DUYỆT
+          showToast('❌ Sai mật khẩu!');
         }
         enteredPin = "";
         updatePinDots();
@@ -1354,7 +1354,6 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // XUẤT ICS ĐÃ SỬA: CHỈ NẠP DUY NHẤT MỐC CỦA CA ĐÓ TRONG NGÀY ĐÓ, KHÔNG BỊ LẪN LỘN
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1434,7 +1433,6 @@
           const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
           const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
 
-          // 1. Chỉ tạo Báo trước cho đúng ca đó
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1453,7 +1451,6 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 2. Chỉ tạo Vào ca cho đúng ca đó
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1472,7 +1469,6 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 3. Chỉ tạo Tan ca cho đúng ca đó
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1491,7 +1487,6 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 4. Khung thời gian ca trực trên lịch
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1636,7 +1631,6 @@
       requestWakeLock();
     }
 
-    // TẠO ÂM THANH BẰNG OSCILLATOR KHI TẮT MÀN HÌNH ĐỂ ĐẢM BẢO REO VANG
     function playOscillatorAlarmTone() {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -1646,8 +1640,8 @@
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nốt D5
-          osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15); // Nốt A5
+          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+          osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15);
           gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
           osc.connect(gain);
@@ -1878,7 +1872,7 @@
         const todayTime = now.getTime();
         let activeWIdx = 0;
         monthWeeksList.forEach((w, idx) => {
-          if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) activeWIdx = idx;
+          if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getToken()) activeWIdx = idx;
         });
         const shiftsData = getShiftsForWeekIndex(activeWIdx);
         todayShift = shiftsData[dayKey] || 'off';
