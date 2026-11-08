@@ -872,96 +872,21 @@
     let alarmAudioBlobUrl = null;
     let warningAudioBlobUrl = null;
 
-    // KHO HƠN 100 CÂU CHÚC ĐA DẠNG THEO MỌI CHỦ ĐỀ
     const allWishesPool = [
-      // 1. Chào buổi sáng, ngày mới nhiều năng lượng, làm việc tốt
       { title: "Chào buổi sáng tình yêu! ☀️", quote: "Chào buổi sáng tình yêu của anh! Chúc em một ngày mới ngập tràn năng lượng, làm việc hiệu quả và gặp nhiều may mắn nhé. 💕" },
       { title: "Ái Nhuy ơi, dậy thôi nào! 🌸", quote: "Ái Nhuy ơi, dậy thôi nào! Chúc em ngày mới rạng rỡ, hoàn thành xuất sắc mọi công việc được giao nha." },
       { title: "Năng lượng tràn đầy nhé! ⚡", quote: "Bắt đầu ngày mới với nụ cười rạng rỡ và nguồn năng lượng tích cực nhất em nhé. Chúc em một ngày làm việc thật sung sức!" },
       { title: "Khởi đầu mới suôn sẻ! 🌅", quote: "Chúc tình yêu của anh buổi sáng tốt lành, mọi việc trong ngày hôm nay sẽ diễn ra thật thuận lợi và suôn sẻ." },
       { title: "Ngày mới tuyệt vời nhé! 🌻", quote: "Mặt trời lên rồi, chúc em một ngày mới bình an, làm việc gì cũng hanh thông và gặp toàn điều may mắn." },
       { title: "Tỏa sáng rực rỡ nha! ✨", quote: "Hôm nay em hãy tự tin tỏa sáng nhé, cô gái tài giỏi của anh chắc chắn sẽ hoàn thành tốt mọi nhiệm vụ." },
-      { title: "Nụ cười đầu ngày! 😊", quote: "Gửi đến em ngàn nụ cười cho buổi sáng tươi vui. Chúc em một ngày làm việc tràn đầy hứng khởi và niềm vui." },
-      { title: "Sức sống dồi dào! 🌿", quote: "Chúc em có một ngày mới tràn ngập sức sống, giải quyết mọi công việc nhanh gọn và chuẩn xác." },
-      { title: "Cố lên cô gái của anh! 💪", quote: "Một ngày mới lại bắt đầu, chúc em luôn giữ vững phong độ, làm việc thật hăng say và hiệu quả." },
-      { title: "Bình minh hạnh phúc! 🌤️", quote: "Chúc Ái Nhuy một buổi sáng ngọt ngào, bước chân ra đường gặp toàn niềm vui và may mắn." },
-
-      // 2. Nỗi nhớ mong, tình yêu đẹp, lãng mạn
       { title: "Nhớ em nhiều lắm! 💖", quote: "Dù bận rộn đến đâu thì hình bóng của em vẫn luôn ngự trị trong tim anh. Nhớ và thương Ái Nhuy vô cùng!" },
       { title: "Tình yêu tuyệt vời! 🌹", quote: "Cảm ơn em đã đến bên anh, mang theo ánh sáng và sưởi ấm trái tim anh mỗi ngày. Yêu em mãi mãi." },
       { title: "Mãi bên nhau em nhé! 💞", quote: "Cuộc sống này thật đẹp vì có em. Chúc cho tình yêu chúng ta luôn ngọt ngào và bền chặt theo năm tháng." },
-      { title: "Nhớ nụ cười em! 😍", quote: "Chỉ cần nghĩ đến nụ cười của em thôi là anh lại có thêm động lực để vượt qua mọi thử thách rồi." },
-      { title: "Khoảng cách không xa! ✈️", quote: "Dù đôi khi chúng ta bận rộn với công việc, nhưng trái tim anh và em lúc nào cũng hướng về nhau." },
-      { title: "Bồng bềnh yêu thương! ☁️", quote: "Tình yêu anh dành cho em như biển rộng sông dài, mãi mãi không bao giờ cạn vơi." },
-      { title: "Nắng ấm của anh! ☀️", quote: "Em chính là ánh nắng ấm áp nhất xua tan đi mọi mệt mỏi trong cuộc sống của anh." },
-      { title: "Bản tình ca ngọt ngào! 🎶", quote: "Cùng em đi qua mỗi mùa nắng gió là điều hạnh phúc nhất cuộc đời anh." },
-      { title: "Món quà vô giá! 🎁", quote: "Em là món quà tuyệt vời nhất mà ông trời đã ban tặng cho cuộc đời anh." },
-      { title: "Yêu em từng khoảnh khắc! ⏳", quote: "Mỗi giây phút ở bên em đều là những ký ức tuyệt vời và lãng mạn nhất trong anh." },
-      { title: "Trái tim chung nhịp! 💓", quote: "Dù ở đâu, làm gì, hai trái tim chúng ta vẫn luôn chung một nhịp đập yêu thương." },
-      { title: "Bình yên là em! 🏡", quote: "Nơi nào có em, nơi đó chính là bình yên trọn vẹn nhất đối với anh." },
-      { title: "Nguyện cùng em... 💍", quote: "Nguyện cùng em đi đến tận cùng thế giới, nắm tay nhau qua mọi giông bão cuộc đời." },
-      { title: "Ánh mắt long lanh! ✨", quote: "Anh say đắm ánh mắt và nụ cười dịu dàng của em từ cái nhìn đầu tiên." },
-      { title: "Nhớ nhung đong đầy! 💌", quote: "Hôm nay trời đẹp thế này, tự nhiên anh lại thấy nhớ em đến cồn cào." },
-
-      // 3. Ngày mới làm việc suôn sẻ, hoàn thành tốt công việc, cẩn thận
       { title: "Làm việc thật cẩn thận nhé! 📋", quote: "Hôm nay làm việc em nhớ cẩn thận từng chi tiết nhỏ nha, kiểm tra kỹ lưỡng mọi thứ để không có chút sai sót nào." },
       { title: "Hoàn thành xuất sắc nhiệm vụ! 🎯", quote: "Chúc em hôm nay xử lý công việc cực kỳ mượt mà, suôn sẻ và đạt kết quả cao nhất." },
-      { title: "Bình tĩnh và tự tin! 🧘‍♀️", quote: "Dù công việc có nhiều áp dụng, em cứ bình tĩnh giải quyết từng việc một, chắc chắn em sẽ làm rất tốt." },
-      { title: "Mọi việc hanh thông! 🚀", quote: "Chúc mọi kế hoạch và dự định trong ngày của em đều diễn ra suôn sẻ và thành công rực rỡ." },
-      { title: "Cẩn trọng trong từng thao tác! 🔍", quote: "Làm việc cẩn thận là chìa khóa của thành công. Chúc em hôm nay thật tập trung và tỉ mỉ nhé." },
-      { title: "Vượt qua mọi thử thách! 🧗‍♀️", quote: "Dù có khó khăn nào xuất hiện, anh tin với sự thông minh của em, mọi chuyện sẽ được giải quyết ổn thỏa." },
-      { title: "Giữ tinh thần thép! 🛡️", quote: "Đối mặt với công việc áp lực, em hãy luôn giữ cái đầu lạnh và trái tim nóng nhé." },
-      { title: "Gặt hái thành công! 🏆", quote: "Chúc em một ngày làm việc hiệu quả cao, sếp khen ngợi và đồng nghiệp yêu quý." },
-      { title: "Sự nghiệp thăng hoa! 📈", quote: "Mong rằng mỗi ngày đi làm của em đều là một ngày vui và tích lũy thêm nhiều kinh nghiệm quý giá." },
-      { title: "Giải quyết gọn gàng! 📝", quote: "Chúc em hoàn thành xuất sắc mọi danh sách việc cần làm trong ngày một cách nhanh chóng." },
-
-      // 4. Nỗ lực học tập nâng cao trình độ
-      { title: "Không ngừng học hỏi! 📚", quote: "Học tập là con đường ngắn nhất dẫn đến thành công. Chúc em luôn kiên trì trau dồi tri thức và kỹ năng." },
-      { title: "Nâng tầm bản thân! 💡", quote: "Mỗi ngày giỏi hơn một chút chính là bí quyết để em trở nên tỏa sáng và xuất sắc hơn." },
-      { title: "Tri thức là sức mạnh! 🧠", quote: "Chúc em đọc được nhiều sách hay, học được nhiều điều mới mẻ để phát triển sự nghiệp." },
-      { title: "Kiên trì theo đuổi ước mơ! 🌟", quote: "Đường dài phía trước, hãy cố gắng học tập và rèn luyện mỗi ngày để chạm tới ước mơ em nhé." },
-      { title: "Tư duy sáng tạo! 💡", quote: "Chúc em luôn giữ được sự tò mò ham học hỏi và tư duy nhạy bén trong mọi tình huống." },
-      { title: "Vượt qua giới hạn! 🚀", quote: "Đừng ngại thử sức với những kiến thức mới khó nhằn, em hoàn toàn có thể chinh phục được chúng." },
-      { title: "Đầu tư cho tương lai! 💎", quote: "Kiến thức em tích lũy hôm nay chính là tài sản quý giá nhất cho ngày mai." },
-      { title: "Chăm chỉ và tập trung! 🎯", quote: "Chúc em có những giờ phút tự học và nâng cao trình độ thật hiệu quả và năng suất." },
-      { title: "Tương lai rộng mở! 🌈", quote: "Với sự nỗ lực không ngừng nghỉ, tương lai rực rỡ chắc chắn đang chờ đón em phía trước." },
-      { title: "Nâng cao giá trị bản thân! 🎓", quote: "Mỗi chứng chỉ, mỗi kỹ năng mới em học được sẽ là vũ khí sắc bén giúp em thành công." },
-
-      // 5. Giữ gìn sức khỏe, ăn uống đều độ
       { title: "Ăn uống đầy đủ nhé! 🍲", quote: "Dù bận rộn đến đâu em cũng nhớ ăn uống đúng giờ và đủ chất nha, không được bỏ bữa đâu đấy!" },
       { title: "Giữ gìn sức khỏe nha! 🍎", quote: "Sức khỏe là vốn quý nhất. Em nhớ mặc ấm khi trời lạnh và uống đủ nước mỗi ngày nhé." },
-      { title: "Đừng làm việc quá sức! 🛑", quote: "Làm việc chăm chỉ nhưng cũng phải biết nghỉ ngơi hợp lý, thương em lắm đó." },
-      { title: "Giấc ngủ trọn vẹn! 🛌", quote: "Tranh thủ nghỉ ngơi chợp mắt một chút để lấy lại năng lượng cho ca trực tiếp theo em nhé." },
-      { title: "Vitamin C đầy đủ! 🍊", quote: "Nhớ ăn nhiều trái cây và bổ sung vitamin để cơ thể luôn khỏe mạnh và tràn đầy sức sống." },
-      { title: "Giữ ấm cơ thể! 🧥", quote: "Thời tiết thay đổi thất thường, ra đường nhớ mặc áo ấm và mang theo ô cẩn thận nha." },
-      { title: "Uống đủ nước em nhé! 💧", quote: "Nước rất quan trọng cho cơ thể và làn da, em nhớ uống đủ nước trong suốt ca làm việc nhé." },
-      { title: "Lắng nghe cơ thể! 🩺", quote: "Nếu thấy mệt mỏi quá thì hãy dừng lại nghỉ ngơi một chút, đừng gồng gánh quá sức em nhé." },
-      { title: "Sức khỏe là số 1! 🥇", quote: "Có sức khỏe là có tất cả. Em phải luôn hứa với anh là sẽ chăm sóc bản thân thật tốt đấy." },
-      { title: "Nụ cười và sức sống! 🌺", quote: "Nhìn em khỏe mạnh, vui tươi chính là niềm hạnh phúc lớn nhất của anh rồi." },
-
-      // 6. Kết thúc ngày làm việc hiệu quả
-      { title: "Kết thúc ngày rực rỡ! 🎉", quote: "Một ngày làm việc vất vả đã khép lại thật suôn sẻ. Giờ là lúc em tự thưởng cho mình sự thư giãn tuyệt đối nhé." },
-      { title: "Xả hơi thôi nào! 🛋️", quote: "Đã hoàn thành xuất sắc nhiệm vụ rồi, hãy gác lại mọi lo toan công việc để tận hưởng buổi tối bình yên nha." },
-      { title: "Tự hào về em! 🌟", quote: "Hôm nay em đã làm việc rất chăm chỉ và vất vả rồi. Nghỉ ngơi thật tốt nhé cô gái ngoan." },
-      { title: "Thành quả ngọt ngào! 🍇", quote: "Những nỗ lực trong ngày hôm nay của em hoàn toàn xứng đáng với kết quả tuyệt vời nhận được." },
-      { title: "Bình yên cuối ngày! 🌆", quote: "Hoàng hôn buông xuống, chúc em có những phút giây thư giãn nhẹ nhàng bên gia đình và người thân." },
-      { title: "Khép lại muộn phiền! 🚪", quote: "Mọi áp lực công việc hãy để lại sau cánh cửa. Buổi tối nay chỉ dành cho sự nghỉ ngơi thôi em nhé." },
-      { title: "Hoàn thành nhiệm vụ! ✅", quote: "Một ngày làm việc hiệu quả khép lại, em hãy tự hào vì bản thân đã rất nỗ lực." },
-      { title: "Thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
-      { title: "Gác lại lo toan! 🍃", quote: "Khép lại một ngày dài, chúc em thả lỏng cơ thể và tận hưởng sự yên bình." },
-      { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
-
-      // 7. Chúc ngủ ngon, mơ đẹp
-      { title: "Ng ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
-      { title: "Chúc mơ thấy anh! 💭", quote: "Đắp chăn ấm áp và ngủ thật sâu em nha, trong giấc mơ đêm nay nhớ ghé sang thăm anh đấy." },
-      { title: "Giấc ngủ bình yên! 🌌", quote: "Chúc em có một đêm ngon giấc, xua tan mọi mỏi mệt để sáng mai thức dậy thật tươi trẻ." },
-      { title: "Ôm em vào mộng! 🤗", quote: "Gửi ngàn cái ôm ngọt ngào qua màn hình, chúc Ái Nhuy ngủ ngon và có giấc mộng thật đẹp." },
-      { title: "Đêm nay thật êm đềm! 🌠", quote: "Ánh trăng ngoài kia đang dịu dàng ôm lấy giấc ngủ của em. Ngủ ngon nha công chúa của anh." },
-      { title: "Sáng mai bình minh! 🌅", quote: "Chúc em chìm vào giấc ngủ trong sự an yên, sáng mai thức dậy với một tâm hồn thật vui vẻ." },
-      { title: "Êm đềm hơi thở! 💤", quote: "Ngủ ngoan nha em, mọi lo âu cứ để ngày mai tính, đêm nay hãy tận hưởng giấc ngủ thật sâu." },
-      { title: "Bồng bềnh giấc tiên! 🧚‍♀️", quote: "Chúc em có một đêm dài ngủ thật ngon giấc, không giật mình và mơ thấy toàn điều hạnh phúc." },
-      { title: "Tạm biệt ngày cũ! 👋", quote: "Khép đôi mi lại và chìm vào giấc ngủ ngọt ngào thôi nào. Chúc em ngủ ngon!" },
-      { title: "Yêu em đến trong mơ! 💖", quote: "Ngay cả trong giấc mơ, anh cũng chỉ muốn được nhìn thấy nụ cười của em. Ngủ ngon nhé em yêu!" }
+      { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" }
     ];
 
     let currentGreetingIdx = 0;
@@ -1450,7 +1375,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // HÀM XUẤT FILE .ICS CHUẨN MÚI GIỜ - CHỈ CÒN VÀO CA VÀ TAN CA
+    // HÀM XUẤT FILE .ICS CHUẨN ALARM MỐC THỜI GIAN (DTSTART = DTEND ĐỂ BÁO CHUÔNG CHUẨN XÁC KHI NGỦ)
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1551,14 +1476,14 @@
           const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
           const outTimeUTC = toICSLocalDateTime(y, m, d, rawOut, 0);
 
-          // 1. Vào ca chính thức
+          // 1. Vào ca (DTSTART = DTEND để điện thoại kích hoạt báo thức đúng mốc giờ chính xác)
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${inTimeUTC}`,
-            `DTEND:${toICSLocalDateTime(y, m, d, rawIn, 10)}`,
+            `DTEND:${inTimeUTC}`,
             `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
             `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1570,14 +1495,14 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 2. Tan ca
+          // 2. Tan ca (DTSTART = DTEND đúng mốc giờ tan ca)
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${outTimeUTC}`,
-            `DTEND:${toICSLocalDateTime(y, m, d, rawOut, 10)}`,
+            `DTEND:${outTimeUTC}`,
             `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
             `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1589,7 +1514,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 3. Khung ca trực tổng
+          // 3. Khung ca trực tổng (Hiển thị dải màu kéo dài suốt ca)
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1623,7 +1548,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics tối ưu cho điện thoại!`);
+      showToast(`Đã xuất file .ics báo thức chính xác!`);
     }
 
     function saveIssue() {
