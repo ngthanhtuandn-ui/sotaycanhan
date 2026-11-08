@@ -942,7 +942,7 @@
       { title: "Thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
       { title: "Gác lại lo toan! 🍃", quote: "Khép lại một ngày dài, chúc em thả lỏng cơ thể và tận hưởng sự yên bình." },
       { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
-      { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
+      { title: "Ng ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
       { title: "Chúc mơ thấy anh! 💭", quote: "Đắp chăn ấm áp và ngủ thật sâu em nha, trong giấc mơ đêm nay nhớ ghé sang thăm anh đấy." },
       { title: "Giấc ngủ bình yên! 🌌", quote: "Chúc em có một đêm ngon giấc, xua tan mọi mỏi mệt để sáng mai thức dậy thật tươi trẻ." },
       { title: "Ôm em vào mộng! 🤗", quote: "Gửi ngàn cái ôm ngọt ngào qua màn hình, chúc Ái Nhuy ngủ ngon và có giấc mộng thật đẹp." },
@@ -1446,7 +1446,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // HÀM XUẤT FILE .ICS ĐÃ SỬA CHUẨN MÚI GIỜ (KHẮC PHỤC LỖI KHÔNG GỌI VÀO CA/TAN CA)
+    // HÀM XUẤT FILE .ICS ĐÃ BỔ SUNG ĐẦY ĐỦ CƠ CHẾ VALARM CHUẨN ĐỂ ĐIỆN THOẠI BÁO CHUÔNG CẢ 3 MỐC
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1642,7 +1642,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics đầy đủ các mốc giờ!`);
+      showToast(`Đã xuất file .ics đầy đủ chuông báo cho tất cả các mốc!`);
     }
 
     function saveIssue() {
