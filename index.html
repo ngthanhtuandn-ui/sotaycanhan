@@ -571,25 +571,22 @@
 
         <div class="shift-settings-box">
           <div class="shift-settings-title">
-            <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
+            <span>⚙️ Cài Đặt Giờ Vào/Tan Ca (Tự động báo)</span>
             <span style="font-size:0.68rem; font-weight:bold; color:#10b981;">● Hoạt động</span>
           </div>
           <div class="shift-config-grid">
             <div class="shift-config-card card-hc">
               <h4>Hành Chính</h4>
-              <div class="time-input-row"><span>Báo Trước:</span><input type="time" id="cfg_hc_pre" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_hc_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_hc_out" onchange="updateShiftTimeConfig()"></div>
             </div>
             <div class="shift-config-card card-c1">
               <h4>Ca 1 (Sáng)</h4>
-              <div class="time-input-row"><span>Báo Trước:</span><input type="time" id="cfg_c1_pre" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
             </div>
             <div class="shift-config-card card-c2">
               <h4>Ca 2 (Chiều)</h4>
-              <div class="time-input-row"><span>Báo Trước:</span><input type="time" id="cfg_c2_pre" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
               <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
             </div>
@@ -769,9 +766,9 @@
     let journals = JSON.parse(localStorage.getItem('ainhuy_journals_v1') || '[]');
     let issues = JSON.parse(localStorage.getItem('ainhuy_issues_v1') || '[]');
     let shiftTimes = JSON.parse(localStorage.getItem('ainhuy_shift_times') || JSON.stringify({
-      hc_pre: '07:15', hc_in: '07:30', hc_out: '17:00', 
-      c1_pre: '04:55', c1_in: '05:10', c1_out: '14:00', 
-      c2_pre: '16:15', c2_in: '16:30', c2_out: '22:00'
+      hc_in: '07:30', hc_out: '17:00', 
+      c1_in: '05:10', c1_out: '14:00', 
+      c2_in: '16:30', c2_out: '22:00'
     }));
 
     let monthWeeksList = [];
@@ -875,7 +872,7 @@
     let alarmAudioBlobUrl = null;
     let warningAudioBlobUrl = null;
 
-    // KHO HƠN 100 CÂU CHÚC ĐA DẠNG THEO MỌI CHỦ ĐỀ YÊU CẦU
+    // KHO HƠN 100 CÂU CHÚC ĐA DẠNG THEO MỌI CHỦ ĐỀ
     const allWishesPool = [
       // 1. Chào buổi sáng, ngày mới nhiều năng lượng, làm việc tốt
       { title: "Chào buổi sáng tình yêu! ☀️", quote: "Chào buổi sáng tình yêu của anh! Chúc em một ngày mới ngập tràn năng lượng, làm việc hiệu quả và gặp nhiều may mắn nhé. 💕" },
@@ -955,7 +952,7 @@
       { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
 
       // 7. Chúc ngủ ngon, mơ đẹp
-      { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
+      { title: "Ng ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
       { title: "Chúc mơ thấy anh! 💭", quote: "Đắp chăn ấm áp và ngủ thật sâu em nha, trong giấc mơ đêm nay nhớ ghé sang thăm anh đấy." },
       { title: "Giấc ngủ bình yên! 🌌", quote: "Chúc em có một đêm ngon giấc, xua tan mọi mỏi mệt để sáng mai thức dậy thật tươi trẻ." },
       { title: "Ôm em vào mộng! 🤗", quote: "Gửi ngàn cái ôm ngọt ngào qua màn hình, chúc Ái Nhuy ngủ ngon và có giấc mộng thật đẹp." },
@@ -1210,34 +1207,28 @@
     }
 
     function loadShiftTimeConfigUI() {
-      document.getElementById('cfg_hc_pre').value = shiftTimes.hc_pre || '07:15';
       document.getElementById('cfg_hc_in').value = shiftTimes.hc_in || '07:30';
       document.getElementById('cfg_hc_out').value = shiftTimes.hc_out || '17:00';
       
-      document.getElementById('cfg_c1_pre').value = shiftTimes.c1_pre || '04:55';
       document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:10';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
 
-      document.getElementById('cfg_c2_pre').value = shiftTimes.c2_pre || '16:15';
       document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '16:30';
       document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
     }
 
     function updateShiftTimeConfig() {
-      shiftTimes.hc_pre = document.getElementById('cfg_hc_pre').value;
       shiftTimes.hc_in = document.getElementById('cfg_hc_in').value;
       shiftTimes.hc_out = document.getElementById('cfg_hc_out').value;
       
-      shiftTimes.c1_pre = document.getElementById('cfg_c1_pre').value;
       shiftTimes.c1_in = document.getElementById('cfg_c1_in').value;
       shiftTimes.c1_out = document.getElementById('cfg_c1_out').value;
 
-      shiftTimes.c2_pre = document.getElementById('cfg_c2_pre').value;
       shiftTimes.c2_in = document.getElementById('cfg_c2_in').value;
       shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
 
       localStorage.setItem('ainhuy_shift_times', JSON.stringify(shiftTimes));
-      showToast('Đã lưu giờ ca trực!');
+      showToast('Đã lưu giờ vào/tan ca!');
     }
 
     function buildMonthWeeksList() {
@@ -1459,7 +1450,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // HÀM XUẤT FILE .ICS CHUẨN MÚI GIỜ & CHỈ XUẤT ĐÚNG 1 CA THỰC TẾ TRONG NGÀY
+    // HÀM XUẤT FILE .ICS CHUẨN MÚI GIỜ - CHỈ CÒN VÀO CA VÀ TAN CA
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1539,51 +1530,28 @@
             continue;
           }
 
-          let rawPre, rawIn, rawOut, summaryTitle, shiftLabel;
+          let rawIn, rawOut, summaryTitle, shiftLabel;
           if (shift === 'hanh-chinh') {
-            rawPre = shiftTimes.hc_pre || '07:15';
             rawIn = shiftTimes.hc_in || '07:30';
             rawOut = shiftTimes.hc_out || '17:00';
             summaryTitle = '💜 Ca Hành Chính';
             shiftLabel = 'Ca Hành Chính';
           } else if (shift === 'ca1') {
-            rawPre = shiftTimes.c1_pre || '04:55';
             rawIn = shiftTimes.c1_in || '05:10';
             rawOut = shiftTimes.c1_out || '14:00';
             summaryTitle = '🔵 Ca 1';
             shiftLabel = 'Ca 1';
           } else {
-            rawPre = shiftTimes.c2_pre || '16:15';
             rawIn = shiftTimes.c2_in || '16:30';
             rawOut = shiftTimes.c2_out || '22:00';
             summaryTitle = '🟡 Ca 2';
             shiftLabel = 'Ca 2';
           }
 
-          const preTimeUTC = toICSLocalDateTime(y, m, d, rawPre, 0);
           const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
           const outTimeUTC = toICSLocalDateTime(y, m, d, rawOut, 0);
 
-          // 1. Báo trước chuẩn bị
-          count++;
-          events.push([
-            'BEGIN:VEVENT',
-            `UID:shift-${shift}-pre-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-            `DTSTAMP:${dtStamp}`,
-            `DTSTART:${preTimeUTC}`,
-            `DTEND:${toICSLocalDateTime(y, m, d, rawPre, 10)}`,
-            `SUMMARY:⏰ Báo giờ ${shiftLabel}`,
-            `DESCRIPTION:Chuẩn bị vào ${shiftLabel} lúc ${rawIn}.${dayNote}`,
-            `STATUS:CONFIRMED`,
-            'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Báo thức: Sắp đến giờ làm việc ${shiftLabel}!`,
-            'END:VALARM',
-            'END:VEVENT'
-          ].join('\r\n'));
-
-          // 2. Vào ca chính thức
+          // 1. Vào ca chính thức
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1602,7 +1570,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 3. Tan ca
+          // 2. Tan ca
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1621,7 +1589,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 4. Khung ca trực tổng
+          // 3. Khung ca trực tổng
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1655,7 +1623,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics chuẩn xác không bị trùng ca!`);
+      showToast(`Đã xuất file .ics tối ưu cho điện thoại!`);
     }
 
     function saveIssue() {
@@ -2015,11 +1983,6 @@
       }
 
       if (todayShift === 'hanh-chinh') {
-        if ((shiftTimes.hc_pre || '07:15') === currentTime) {
-          lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ BÁO GIỜ CA HÀNH CHÍNH (${currentTime})`);
-          return;
-        }
         if ((shiftTimes.hc_in || '07:30') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`💜 ĐẾN GIỜ VÀO CA HÀNH CHÍNH (${currentTime})`);
@@ -2031,11 +1994,6 @@
           return;
         }
       } else if (todayShift === 'ca1') {
-        if ((shiftTimes.c1_pre || '04:55') === currentTime) {
-          lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ BÁO GIỜ CA 1 (${currentTime})`);
-          return;
-        }
         if ((shiftTimes.c1_in || '05:10') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🔵 ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
@@ -2047,11 +2005,6 @@
           return;
         }
       } else if (todayShift === 'ca2') {
-        if ((shiftTimes.c2_pre || '16:15') === currentTime) {
-          lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`⏰ BÁO GIỜ CA 2 (${currentTime})`);
-          return;
-        }
         if ((shiftTimes.c2_in || '16:30') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🟡 ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
