@@ -1516,6 +1516,7 @@
       const now = new Date();
       const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
+      // SỬA LỖI: SỬ DỤNG CHUẨN GIỜ ĐỊA PHƯƠNG (KHÔNG DÙNG HẬU TỐ Z) ĐỂ ĐIỆN THOẠI NHẬN DIỆN ĐÚNG GIỜ TUYỆT ĐỐI
       function toICSLocalDateTime(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         let totalMins = h * 60 + m + addMinutes;
@@ -1533,16 +1534,8 @@
 
         const th = Math.floor(totalMins / 60);
         const tm = totalMins % 60;
-
-        let utcHour = th - 7;
-        let utcDay = targetDay;
-        if (utcHour < 0) {
-          utcHour += 24;
-          utcDay -= 1;
-        }
-
         const pad = (n) => String(n).padStart(2, '0');
-        return `${targetYear}${pad(targetMonth)}${pad(utcDay)}T${pad(utcHour)}${pad(tm)}00Z`;
+        return `${targetYear}${pad(targetMonth)}${pad(targetDay)}T${pad(th)}${pad(tm)}00`;
       }
 
       function toICADateString(year, month, day) {
@@ -1608,16 +1601,16 @@
             shiftLabel = 'H.Chính';
           }
 
-          const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
-          const outTimeUTC = toICSLocalDateTime(y, m, d, rawOut, 0);
+          const inTimeLocal = toICSLocalDateTime(y, m, d, rawIn, 0);
+          const outTimeLocal = toICSLocalDateTime(y, m, d, rawOut, 0);
 
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
-            `DTSTART:${inTimeUTC}`,
-            `DTEND:${inTimeUTC}`,
+            `DTSTART:${inTimeLocal}`,
+            `DTEND:${inTimeLocal}`,
             `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
             `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1629,14 +1622,13 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // SỬA LỖI: DÙNG CHÍNH XÁC `outTimeUTC` CHO CẢ DTSTART VÀ DTEND CỦA SỰ KIỆN TAN CA
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
-            `DTSTART:${outTimeUTC}`,
-            `DTEND:${outTimeUTC}`,
+            `DTSTART:${outTimeLocal}`,
+            `DTEND:${outTimeLocal}`,
             `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
             `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1653,8 +1645,8 @@
             'BEGIN:VEVENT',
             `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
-            `DTSTART:${inTimeUTC}`,
-            `DTEND:${outTimeUTC}`,
+            `DTSTART:${inTimeLocal}`,
+            `DTEND:${outTimeLocal}`,
             `SUMMARY:${summaryTitle}`,
             `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1681,7 +1673,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics báo thức chính xác!`);
+      showToast(`Đã xuất file .ics chuẩn giờ cho điện thoại!`);
     }
 
     function saveIssue() {
