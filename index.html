@@ -375,11 +375,16 @@
     .day-col.is-ca2 .calendar-date { color: #854d0e !important; font-weight: 900; }
     .day-col.is-ca2 .day-shift-select { border-color: #eab308 !important; color: #854d0e !important; font-weight: 900; background: #fefce8 !important; }
 
+    .day-col.is-hch { background: #dcfce7 !important; border-color: #4ade80 !important; }
+    .day-col.is-hch .day-name { color: #15803d !important; font-weight: 900; }
+    .day-col.is-hch .calendar-date { color: #166534 !important; font-weight: 900; }
+    .day-col.is-hch .day-shift-select { border-color: #22c55e !important; color: #166534 !important; font-weight: 900; background: #f0fdf4 !important; }
+
     .day-name { font-size: 0.68rem; font-weight: 900; line-height: 1.1; }
     .calendar-date { display: block; font-size: .60rem; margin: 1px 0 3px; font-weight: 900; }
     
     .day-shift-select {
-      width: 98%; border: 1px solid var(--border); border-radius: 4px; font-size: 0.60rem;
+      width: 98%; border: 1px solid var(--border); border-radius: 4px; font-size: 0.58rem;
       padding: 3px 0; font-weight: 900; text-align: center; text-align-last: center; background: #fff;
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
       margin-bottom: 3px;
@@ -417,36 +422,36 @@
       white-space: nowrap; box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
     }
 
-    /* KHUNG CÀI ĐẶT GIỜ CA ĐƯỜNG NÉT TINH CHỈNH ĐỒNG ĐỀU HOÀN HẢO */
+    /* KHUNG CÀI ĐẶT GIỜ CA ĐƯỢC THIẾT KẾ CÂN ĐỐI 3 CỘT ĐỒNG ĐỀU */
     .shift-settings-box { background: #fdf2f8; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 8px; }
     .shift-settings-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-    .shift-config-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
     
-    .shift-config-card { background: white; padding: 10px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+    .shift-config-card { background: white; padding: 8px 6px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
     .shift-config-card.card-c1 { background: #e0f2fe !important; border-color: #38bdf8 !important; }
     .shift-config-card.card-c2 { background: #fefce8 !important; border-color: #facc15 !important; }
+    .shift-config-card.card-hch { background: #f0fdf4 !important; border-color: #4ade80 !important; }
 
-    .shift-config-card h4 { font-size: 0.75rem; margin-bottom: 2px; text-align: center; font-weight: 800; }
+    .shift-config-card h4 { font-size: 0.68rem; margin-bottom: 2px; text-align: center; font-weight: 800; }
     .card-c1 h4 { color: #0284c7 !important; }
     .card-c2 h4 { color: #ca8a04 !important; }
+    .card-hch h4 { color: #15803d !important; }
 
-    .time-input-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 0.72rem; font-weight: 700; }
+    .time-input-row { display: flex; flex-direction: column; gap: 2px; font-size: 0.65rem; font-weight: 700; }
     .card-c1 .time-input-row { color: #0369a1 !important; }
     .card-c2 .time-input-row { color: #a16207 !important; }
+    .card-hch .time-input-row { color: #166534 !important; }
 
-    .time-input-wrap { position: relative; flex: 1; }
+    .time-input-wrap { position: relative; width: 100%; }
     .time-input-wrap input {
-      width: 100%; padding: 6px 10px; font-size: 0.75rem; border-radius: 6px; text-align: left; font-weight: 700; background: #ffffff !important; border: 1px solid var(--border);
+      width: 100%; padding: 5px 6px; font-size: 0.7rem; border-radius: 6px; text-align: center; font-weight: 700; background: #ffffff !important; border: 1px solid var(--border);
       -webkit-appearance: none; appearance: none;
     }
-    /* ẨN HOÀN TOÀN ICON ĐỒNG HỒ MẶC ĐỊNH CỦA TRÌNH DUYỆT TRÊN INPUT[TYPE="TIME"] */
-    .time-input-wrap input::-webkit-calendar-picker-indicator {
-      display: none;
-      -webkit-appearance: none;
-    }
+    .time-input-wrap input::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
 
     .card-c1 .time-input-wrap input { border-color: #38bdf8 !important; color: #075985 !important; }
     .card-c2 .time-input-wrap input { border-color: #facc15 !important; color: #854d0e !important; }
+    .card-hch .time-input-wrap input { border-color: #4ade80 !important; color: #166534 !important; }
 
     #toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(76, 5, 25, 0.94);
@@ -457,7 +462,7 @@
     @media(max-width:560px) {
       header h1 { font-size:.88rem; }
       .header-btns button { padding:6px 7px; font-size:.68rem; }
-      .day-shift-select { font-size: 0.58rem; padding: 2px 0; }
+      .day-shift-select { font-size: 0.55rem; padding: 2px 0; }
     }
   </style>
 </head>
@@ -570,7 +575,7 @@
           </div>
         </div>
 
-        <!-- CÀI ĐẶT GIỜ BÁO CA (ĐÃ TINH CHỈNH ĐỒNG ĐỀU) -->
+        <!-- CÀI ĐẶT GIỜ BÁO CA (CÓ ĐỦ CA 1, CA 2, CA HÀNH CHÍNH) -->
         <div class="shift-settings-box">
           <div class="shift-settings-title">
             <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
@@ -580,23 +585,34 @@
             <div class="shift-config-card card-c1">
               <h4>Ca 1 (Sáng)</h4>
               <div class="time-input-row">
-                <span>Báo In:</span>
+                <span>Vào:</span>
                 <div class="time-input-wrap"><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
               </div>
               <div class="time-input-row">
-                <span>Báo Out:</span>
+                <span>Ra:</span>
                 <div class="time-input-wrap"><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
               </div>
             </div>
             <div class="shift-config-card card-c2">
               <h4>Ca 2 (Chiều)</h4>
               <div class="time-input-row">
-                <span>Báo In:</span>
+                <span>Vào:</span>
                 <div class="time-input-wrap"><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
               </div>
               <div class="time-input-row">
-                <span>Báo Out:</span>
+                <span>Ra:</span>
                 <div class="time-input-wrap"><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+              </div>
+            </div>
+            <div class="shift-config-card card-hch">
+              <h4>Hành Chính</h4>
+              <div class="time-input-row">
+                <span>Vào:</span>
+                <div class="time-input-wrap"><input type="time" id="cfg_hch_in" onchange="updateShiftTimeConfig()"></div>
+              </div>
+              <div class="time-input-row">
+                <span>Ra:</span>
+                <div class="time-input-wrap"><input type="time" id="cfg_hch_out" onchange="updateShiftTimeConfig()"></div>
               </div>
             </div>
           </div>
@@ -776,7 +792,8 @@
     let issues = JSON.parse(localStorage.getItem('ainhuy_issues_v1') || '[]');
     let shiftTimes = JSON.parse(localStorage.getItem('ainhuy_shift_times') || JSON.stringify({
       c1_in: '05:30', c1_out: '14:00', 
-      c2_in: '16:30', c2_out: '22:00'
+      c2_in: '16:30', c2_out: '22:00',
+      hch_in: '08:00', hch_out: '17:00'
     }));
 
     let monthWeeksList = [];
@@ -954,7 +971,7 @@
         { title: "Bình yên cuối ngày! 🌆", quote: "Hoàng hôn buông xuống, chúc em có những phút giây thư giãn nhẹ nhàng bên gia đình và người thân." },
         { title: "Khép lại muộn phiền! 🚪", quote: "Mọi áp lực công việc hãy để lại sau cánh cửa. Buổi tối nay chỉ dành cho sự nghỉ ngơi thôi em nhé." },
         { title: "Nỗ lực bản thân! ✅", quote: "Một ngày làm việc hiệu quả khép lại, em hãy tự hào vì bản thân đã rất nỗ lực." },
-        { title: "Thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
+        { title: "Th thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
         { title: "Gác lại lo toan! 🍃", quote: "Khép lại một ngày dài, chúc em thả lỏng cơ thể và tận hưởng sự yên bình." },
         { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
         { title: "Buổi tối ấm áp! 🏡", quote: "Buổi tối ấm áp bên gia đình nhé em. Mong mọi điều bình an sẽ đến với em vào buổi tối nay." },
@@ -1254,6 +1271,9 @@
 
       document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '16:30';
       document.getElementById('cfg_c2_out').value = shiftTimes.c2_out || '22:00';
+
+      document.getElementById('cfg_hch_in').value = shiftTimes.hch_in || '08:00';
+      document.getElementById('cfg_hch_out').value = shiftTimes.hch_out || '17:00';
     }
 
     function updateShiftTimeConfig() {
@@ -1262,6 +1282,9 @@
 
       shiftTimes.c2_in = document.getElementById('cfg_c2_in').value;
       shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
+
+      shiftTimes.hch_in = document.getElementById('cfg_hch_in').value;
+      shiftTimes.hch_out = document.getElementById('cfg_hch_out').value;
 
       localStorage.setItem('ainhuy_shift_times', JSON.stringify(shiftTimes));
       showToast('Đã lưu giờ báo ca!');
@@ -1378,6 +1401,7 @@
         let shiftClass = 'is-off';
         if (savedShift === 'ca1') shiftClass = 'is-ca1';
         else if (savedShift === 'ca2') shiftClass = 'is-ca2';
+        else if (savedShift === 'hch') shiftClass = 'is-hch';
 
         const col = document.createElement('div');
         col.className = `day-col ${isToday ? 'today' : ''} ${shiftClass}`;
@@ -1388,6 +1412,7 @@
           <select class="day-shift-select" onchange="updateShift(${d.key}, this.value)">
             <option value="ca1" ${savedShift === 'ca1' ? 'selected' : ''}>Ca 1</option>
             <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
+            <option value="hch" ${savedShift === 'hch' ? 'selected' : ''}>H.Chính</option>
             <option value="off" ${savedShift === 'off' ? 'selected' : ''}>🔴 Off</option>
           </select>
           <textarea class="day-note-input" placeholder="Ghi chú..." oninput="updateDayNote(${d.key}, this.value)">${escapeHtml(savedNote)}</textarea>
@@ -1405,9 +1430,10 @@
 
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
-        col.classList.remove('is-off', 'is-ca1', 'is-ca2');
+        col.classList.remove('is-off', 'is-ca1', 'is-ca2', 'is-hch');
         if (val === 'ca1') col.classList.add('is-ca1');
         else if (val === 'ca2') col.classList.add('is-ca2');
+        else if (val === 'hch') col.classList.add('is-hch');
         else col.classList.add('is-off');
       }
       showToast('Đã lưu lịch ca!');
@@ -1568,11 +1594,16 @@
             rawOut = shiftTimes.c1_out || '14:00';
             summaryTitle = '🔵 Ca 1 (Sáng)';
             shiftLabel = 'Ca 1';
-          } else {
+          } else if (shift === 'ca2') {
             rawIn = shiftTimes.c2_in || '16:30';
             rawOut = shiftTimes.c2_out || '22:00';
             summaryTitle = '🟡 Ca 2 (Chiều)';
             shiftLabel = 'Ca 2';
+          } else {
+            rawIn = shiftTimes.hch_in || '08:00';
+            rawOut = shiftTimes.hch_out || '17:00';
+            summaryTitle = '🟢 Ca Hành Chính';
+            shiftLabel = 'H.Chính';
           }
 
           const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
@@ -2026,6 +2057,17 @@
         if ((shiftTimes.c2_out || '22:00') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 2 (${currentTime})`);
+          return;
+        }
+      } else if (todayShift === 'hch') {
+        if ((shiftTimes.hch_in || '08:00') === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`🟢 ĐẾN GIỜ VÀO HÀNH CHÍNH (${currentTime})`);
+          return;
+        }
+        if ((shiftTimes.hch_out || '17:00') === currentTime) {
+          lastTriggeredMinute = minuteKey;
+          startContinuousAlarm(`🏁 HẾT GIỜ HÀNH CHÍNH (${currentTime})`);
           return;
         }
       }
