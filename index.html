@@ -1383,16 +1383,39 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // ĐÃ SỬA LỖI: Chỉ cào duy nhất đúng sự kiện của ca đang được chọn (shift) cho ngày đó
+    // HÀM XUẤT FILE .ICS ĐÃ SỬA CHUẨN MÚI GIỜ & CHỈ CÁO ĐÚNG 1 CA THỰC TẾ
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
       const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
-      function toUTCICSString(year, month, day, timeStr, addMinutes = 0) {
+      function toICSLocalDateTime(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
-        const localDate = new Date(year, month - 1, day, h, m + addMinutes, 0);
-        return localDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        let totalMins = h * 60 + m + addMinutes;
+        let targetDay = day;
+        let targetMonth = month;
+        let targetYear = year;
+
+        if (totalMins >= 1440) {
+          totalMins -= 1440;
+          targetDay += 1;
+        } else if (totalMins < 0) {
+          totalMins += 1440;
+          targetDay -= 1;
+        }
+
+        const th = Math.floor(totalMins / 60);
+        const tm = totalMins % 60;
+
+        let utcHour = th - 7;
+        let utcDay = targetDay;
+        if (utcHour < 0) {
+          utcHour += 24;
+          utcDay -= 1;
+        }
+
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${targetYear}${pad(targetMonth)}${pad(utcDay)}T${pad(utcHour)}${pad(tm)}00Z`;
       }
 
       function toICADateString(year, month, day) {
@@ -1420,7 +1443,6 @@
 
           const dateStr = toICADateString(y, m, d);
 
-          // Nếu là Off thì chỉ tạo sự kiện Off độc lập duy nhất
           if (shift === 'off') {
             count++;
             const nextDayDate = new Date(dayDate);
@@ -1441,7 +1463,6 @@
             continue;
           }
 
-          // CHỈ LẤY ĐÚNG THỜI GIAN CỦA CA ĐANG CHỌN (Hành Chính, Ca 1 hoặc Ca 2)
           let rawPre, rawIn, rawOut, summaryTitle, shiftLabel;
           if (shift === 'hanh-chinh') {
             rawPre = shiftTimes.hc_pre || '07:15';
@@ -1463,18 +1484,18 @@
             shiftLabel = 'Ca 2';
           }
 
-          const preTimeUTC = toUTCICSString(y, m, d, rawPre, 0);
-          const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
-          const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
+          const preTimeUTC = toICSLocalDateTime(y, m, d, rawPre, 0);
+          const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
+          const outTimeUTC = toICSLocalDateTime(y, m, d, rawOut, 0);
 
-          // 1. Sự kiện Báo trước chuẩn bị
+          // 1. Báo trước chuẩn bị
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-pre-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${preTimeUTC}`,
-            `DTEND:${toUTCICSString(y, m, d, rawPre, 10)}`,
+            `DTEND:${toICSLocalDateTime(y, m, d, rawPre, 10)}`,
             `SUMMARY:⏰ Báo giờ ${shiftLabel}`,
             `DESCRIPTION:Chuẩn bị vào ${shiftLabel} lúc ${rawIn}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1486,14 +1507,14 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 2. Sự kiện Vào ca chính thức
+          // 2. Vào ca chính thức
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${inTimeUTC}`,
-            `DTEND:${toUTCICSString(y, m, d, rawIn, 10)}`,
+            `DTEND:${toICSLocalDateTime(y, m, d, rawIn, 10)}`,
             `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
             `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1505,14 +1526,14 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 3. Sự kiện Tan ca
+          // 3. Tan ca
           count++;
           events.push([
             'BEGIN:VEVENT',
             `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${outTimeUTC}`,
-            `DTEND:${toUTCICSString(y, m, d, rawOut, 10)}`,
+            `DTEND:${toICSLocalDateTime(y, m, d, rawOut, 10)}`,
             `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
             `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1524,7 +1545,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 4. Khung thời gian trọn ca trực
+          // 4. Khung ca trực tổng
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1558,7 +1579,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất ${count} mốc lịch chuẩn xác không bị trùng ca!`);
+      showToast(`Đã xuất file .ics chuẩn xác không bị trùng ca!`);
     }
 
     function saveIssue() {
