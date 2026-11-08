@@ -423,29 +423,28 @@
       white-space: nowrap; box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
     }
 
+    /* GIAO DIỆN CÀI ĐẶT GIỜ CA GIỐNG MẪU THAM KHẢO */
     .shift-settings-box { background: #fdf2f8; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 8px; }
-    .shift-settings-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
-    .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .shift-settings-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .shift-config-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     
-    .shift-config-card { background: white; padding: 6px 4px; border-radius: 8px; border: 1px solid var(--border); }
-    .shift-config-card.card-hc { background: #e9d5ff !important; border-color: #c084fc !important; }
-    .shift-config-card.card-c1 { background: #bae6fd !important; border-color: #38bdf8 !important; }
-    .shift-config-card.card-c2 { background: #fef08a !important; border-color: #facc15 !important; }
+    .shift-config-card { background: white; padding: 8px; border-radius: 10px; border: 1px solid var(--border); }
+    .shift-config-card.card-c1 { background: #e0f2fe !important; border-color: #38bdf8 !important; }
+    .shift-config-card.card-c2 { background: #fefce8 !important; border-color: #facc15 !important; }
 
-    .shift-config-card h4 { font-size: 0.68rem; margin-bottom: 4px; text-align: center; font-weight: 800; }
-    .card-hc h4 { color: #7e22ce !important; }
+    .shift-config-card h4 { font-size: 0.72rem; margin-bottom: 6px; text-align: center; font-weight: 800; }
     .card-c1 h4 { color: #0284c7 !important; }
     .card-c2 h4 { color: #ca8a04 !important; }
 
-    .time-input-row { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 3px; font-size: 0.64rem; font-weight: 700; }
-    .card-hc .time-input-row { color: #6b21a8 !important; }
+    .time-input-row { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 5px; font-size: 0.7rem; font-weight: 700; }
     .card-c1 .time-input-row { color: #0369a1 !important; }
     .card-c2 .time-input-row { color: #a16207 !important; }
 
-    .time-input-row input { padding: 3px; font-size: 0.68rem; border-radius: 4px; text-align: center; font-weight: 700; background: #ffffff !important; }
-    .card-hc .time-input-row input { border-color: #c084fc !important; color: #581c87 !important; }
-    .card-c1 .time-input-row input { border-color: #38bdf8 !important; color: #075985 !important; }
-    .card-c2 .time-input-row input { border-color: #facc15 !important; color: #854d0e !important; }
+    .time-input-wrap { position: relative; flex: 1; }
+    .time-input-wrap input { width: 100%; padding: 5px 24px 5px 8px; font-size: 0.72rem; border-radius: 6px; text-align: left; font-weight: 700; background: #ffffff !important; border: 1px solid var(--border); }
+    .card-c1 .time-input-wrap input { border-color: #38bdf8 !important; color: #075985 !important; }
+    .card-c2 .time-input-wrap input { border-color: #facc15 !important; color: #854d0e !important; }
+    .time-input-wrap span { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; pointer-events: none; color: #64748b; }
 
     #toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(76, 5, 25, 0.94);
@@ -569,26 +568,34 @@
           </div>
         </div>
 
+        <!-- CÀI ĐẶT GIỜ BÁO CA (ĐƠN GIẢN & TRỰC QUAN NHƯ MẪU) -->
         <div class="shift-settings-box">
           <div class="shift-settings-title">
-            <span>⚙️ Cài Đặt Giờ Vào/Tan Ca (Tự động báo)</span>
-            <span style="font-size:0.68rem; font-weight:bold; color:#10b981;">● Hoạt động</span>
+            <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
+            <span style="font-size:0.68rem; font-weight:bold; color:#10b981;">● Báo thức kích hoạt</span>
           </div>
           <div class="shift-config-grid">
-            <div class="shift-config-card card-hc">
-              <h4>Hành Chính</h4>
-              <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_hc_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_hc_out" onchange="updateShiftTimeConfig()"></div>
-            </div>
             <div class="shift-config-card card-c1">
               <h4>Ca 1 (Sáng)</h4>
-              <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row">
+                <span>Báo In:</span>
+                <div class="time-input-wrap"><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"><span>🕒</span></div>
+              </div>
+              <div class="time-input-row">
+                <span>Báo Out:</span>
+                <div class="time-input-wrap"><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"><span>🕒</span></div>
+              </div>
             </div>
             <div class="shift-config-card card-c2">
               <h4>Ca 2 (Chiều)</h4>
-              <div class="time-input-row"><span>Vào Ca:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Tan Ca:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row">
+                <span>Báo In:</span>
+                <div class="time-input-wrap"><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"><span>🕒</span></div>
+              </div>
+              <div class="time-input-row">
+                <span>Báo Out:</span>
+                <div class="time-input-wrap"><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"><span>🕒</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -766,8 +773,7 @@
     let journals = JSON.parse(localStorage.getItem('ainhuy_journals_v1') || '[]');
     let issues = JSON.parse(localStorage.getItem('ainhuy_issues_v1') || '[]');
     let shiftTimes = JSON.parse(localStorage.getItem('ainhuy_shift_times') || JSON.stringify({
-      hc_in: '07:30', hc_out: '17:00', 
-      c1_in: '05:10', c1_out: '14:00', 
+      c1_in: '05:30', c1_out: '14:00', 
       c2_in: '16:30', c2_out: '22:00'
     }));
 
@@ -872,6 +878,7 @@
     let alarmAudioBlobUrl = null;
     let warningAudioBlobUrl = null;
 
+    // KHO HƠN 100 CÂU CHÚC ĐA DẠNG THEO MỌI CHỦ ĐỀ
     const allWishesPool = [
       { title: "Chào buổi sáng tình yêu! ☀️", quote: "Chào buổi sáng tình yêu của anh! Chúc em một ngày mới ngập tràn năng lượng, làm việc hiệu quả và gặp nhiều may mắn nhé. 💕" },
       { title: "Ái Nhuy ơi, dậy thôi nào! 🌸", quote: "Ái Nhuy ơi, dậy thôi nào! Chúc em ngày mới rạng rỡ, hoàn thành xuất sắc mọi công việc được giao nha." },
@@ -879,14 +886,75 @@
       { title: "Khởi đầu mới suôn sẻ! 🌅", quote: "Chúc tình yêu của anh buổi sáng tốt lành, mọi việc trong ngày hôm nay sẽ diễn ra thật thuận lợi và suôn sẻ." },
       { title: "Ngày mới tuyệt vời nhé! 🌻", quote: "Mặt trời lên rồi, chúc em một ngày mới bình an, làm việc gì cũng hanh thông và gặp toàn điều may mắn." },
       { title: "Tỏa sáng rực rỡ nha! ✨", quote: "Hôm nay em hãy tự tin tỏa sáng nhé, cô gái tài giỏi của anh chắc chắn sẽ hoàn thành tốt mọi nhiệm vụ." },
+      { title: "Nụ cười đầu ngày! 😊", quote: "Gửi đến em ngàn nụ cười cho buổi sáng tươi vui. Chúc em một ngày làm việc tràn đầy hứng khởi và niềm vui." },
+      { title: "Sức sống dồi dào! 🌿", quote: "Chúc em có một ngày mới tràn ngập sức sống, giải quyết mọi công việc nhanh gọn và chuẩn xác." },
+      { title: "Cố lên cô gái của anh! 💪", quote: "Một ngày mới lại bắt đầu, chúc em luôn giữ vững phong độ, làm việc thật hăng say và hiệu quả." },
+      { title: "Bình minh hạnh phúc! 🌤️", quote: "Chúc Ái Nhuy một buổi sáng ngọt ngào, bước chân ra đường gặp toàn niềm vui và may mắn." },
       { title: "Nhớ em nhiều lắm! 💖", quote: "Dù bận rộn đến đâu thì hình bóng của em vẫn luôn ngự trị trong tim anh. Nhớ và thương Ái Nhuy vô cùng!" },
       { title: "Tình yêu tuyệt vời! 🌹", quote: "Cảm ơn em đã đến bên anh, mang theo ánh sáng và sưởi ấm trái tim anh mỗi ngày. Yêu em mãi mãi." },
       { title: "Mãi bên nhau em nhé! 💞", quote: "Cuộc sống này thật đẹp vì có em. Chúc cho tình yêu chúng ta luôn ngọt ngào và bền chặt theo năm tháng." },
+      { title: "Nhớ nụ cười em! 😍", quote: "Chỉ cần nghĩ đến nụ cười của em thôi là anh lại có thêm động lực để vượt qua mọi thử thách rồi." },
+      { title: "Khoảng cách không xa! ✈️", quote: "Dù đôi khi chúng ta bận rộn với công việc, nhưng trái tim anh và em lúc nào cũng hướng về nhau." },
+      { title: "Bồng bềnh yêu thương! ☁️", quote: "Tình yêu anh dành cho em như biển rộng sông dài, mãi mãi không bao giờ cạn vơi." },
+      { title: "Nắng ấm của anh! ☀️", quote: "Em chính là ánh nắng ấm áp nhất xua tan đi mọi mệt mỏi trong cuộc sống của anh." },
+      { title: "Bản tình ca ngọt ngào! 🎶", quote: "Cùng em đi qua mỗi mùa nắng gió là điều hạnh phúc nhất cuộc đời anh." },
+      { title: "Món quà vô giá! 🎁", quote: "Em là món quà tuyệt vời nhất mà ông trời đã ban tặng cho cuộc đời anh." },
+      { title: "Yêu em từng khoảnh khắc! ⏳", quote: "Mỗi giây phút ở bên em đều là những ký ức tuyệt vời và lãng mạn nhất trong anh." },
+      { title: "Trái tim chung nhịp! 💓", quote: "Dù ở đâu, làm gì, hai trái tim chúng ta vẫn luôn chung một nhịp đập yêu thương." },
+      { title: "Bình yên là em! 🏡", quote: "Nơi nào có em, nơi đó chính là bình yên trọn vẹn nhất đối với anh." },
+      { title: "Nguyện cùng em... 💍", quote: "Nguyện cùng em đi đến tận cùng thế giới, nắm tay nhau qua mọi giông bão cuộc đời." },
+      { title: "Ánh mắt long lanh! ✨", quote: "Anh say đắm ánh mắt và nụ cười dịu dàng của em từ cái nhìn đầu tiên." },
+      { title: "Nhớ nhung đong đầy! 💌", quote: "Hôm nay trời đẹp thế này, tự nhiên anh lại thấy nhớ em đến cồn cào." },
       { title: "Làm việc thật cẩn thận nhé! 📋", quote: "Hôm nay làm việc em nhớ cẩn thận từng chi tiết nhỏ nha, kiểm tra kỹ lưỡng mọi thứ để không có chút sai sót nào." },
       { title: "Hoàn thành xuất sắc nhiệm vụ! 🎯", quote: "Chúc em hôm nay xử lý công việc cực kỳ mượt mà, suôn sẻ và đạt kết quả cao nhất." },
+      { title: "Bình tĩnh và tự tin! 🧘‍♀️", quote: "Dù công việc có nhiều áp dụng, em cứ bình tĩnh giải quyết từng việc một, chắc chắn em sẽ làm rất tốt." },
+      { title: "Mọi việc hanh thông! 🚀", quote: "Chúc mọi kế hoạch và dự định trong ngày của em đều diễn ra suôn sẻ và thành công rực rỡ." },
+      { title: "Cẩn trọng trong từng thao tác! 🔍", quote: "Làm việc cẩn thận là chìa khóa của thành công. Chúc em hôm nay thật tập trung và tỉ mỉ nhé." },
+      { title: "Vượt qua mọi thử thách! 🧗‍♀️", quote: "Dù có khó khăn nào xuất hiện, anh tin với sự thông minh của em, mọi chuyện sẽ được giải quyết ổn thỏa." },
+      { title: "Giữ tinh thần thép! 🛡️", quote: "Đối mặt với công việc áp lực, em hãy luôn giữ cái đầu lạnh và trái tim nóng nhé." },
+      { title: "Gặt hái thành công! 🏆", quote: "Chúc em một ngày làm việc hiệu quả cao, sếp khen ngợi và đồng nghiệp yêu quý." },
+      { title: "Sự nghiệp thăng hoa! 📈", quote: "Mong rằng mỗi ngày đi làm của em đều là một ngày vui và tích lũy thêm nhiều kinh nghiệm quý giá." },
+      { title: "Giải quyết gọn gàng! 📝", quote: "Chúc em hoàn thành xuất sắc mọi danh sách việc cần làm trong ngày một cách nhanh chóng." },
+      { title: "Không ngừng học hỏi! 📚", quote: "Học tập là con đường ngắn nhất dẫn đến thành công. Chúc em luôn kiên trì trau dồi tri thức và kỹ năng." },
+      { title: "Nâng tầm bản thân! 💡", quote: "Mỗi ngày giỏi hơn một chút chính là bí quyết để em trở nên tỏa sáng và xuất sắc hơn." },
+      { title: "Tri thức là sức mạnh! 🧠", quote: "Chúc em đọc được nhiều sách hay, học được nhiều điều mới mẻ để phát triển sự nghiệp." },
+      { title: "Kiên trì theo đuổi ước mơ! 🌟", quote: "Đường dài phía trước, hãy cố gắng học tập và rèn luyện mỗi ngày để chạm tới ước mơ em nhé." },
+      { title: "Tư duy sáng tạo! 💡", quote: "Chúc em luôn giữ được sự tò mò ham học hỏi và tư duy nhạy bén trong mọi tình huống." },
+      { title: "Vượt qua giới hạn! 🚀", quote: "Đừng ngại thử sức với những kiến thức mới khó nhằn, em hoàn toàn có thể chinh phục được chúng." },
+      { title: "Đầu tư cho tương lai! 💎", quote: "Kiến thức em tích lũy hôm nay chính là tài sản quý giá nhất cho ngày mai." },
+      { title: "Chăm chỉ và tập trung! 🎯", quote: "Chúc em có những giờ phút tự học và nâng cao trình độ thật hiệu quả và năng suất." },
+      { title: "Tương lai rộng mở! 🌈", quote: "Với sự nỗ lực không ngừng nghỉ, tương lai rực rỡ chắc chắn đang chờ đón em phía trước." },
+      { title: "Nâng cao giá trị bản thân! 🎓", quote: "Mỗi chứng chỉ, mỗi kỹ năng mới em học được sẽ là vũ khí sắc bén giúp em thành công." },
       { title: "Ăn uống đầy đủ nhé! 🍲", quote: "Dù bận rộn đến đâu em cũng nhớ ăn uống đúng giờ và đủ chất nha, không được bỏ bữa đâu đấy!" },
       { title: "Giữ gìn sức khỏe nha! 🍎", quote: "Sức khỏe là vốn quý nhất. Em nhớ mặc ấm khi trời lạnh và uống đủ nước mỗi ngày nhé." },
-      { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" }
+      { title: "Đừng làm việc quá sức! 🛑", quote: "Làm việc chăm chỉ nhưng cũng phải biết nghỉ ngơi hợp lý, thương em lắm đó." },
+      { title: "Giấc ngủ trọn vẹn! 🛌", quote: "Tranh thủ nghỉ ngơi chợp mắt một chút để lấy lại năng lượng cho ca trực tiếp theo em nhé." },
+      { title: "Vitamin C đầy đủ! 🍊", quote: "Nhớ ăn nhiều trái cây và bổ sung vitamin để cơ thể luôn khỏe mạnh và tràn đầy sức sống." },
+      { title: "Giữ ấm cơ thể! 🧥", quote: "Thời tiết thay đổi thất thường, ra đường nhớ mặc áo ấm và mang theo ô cẩn thận nha." },
+      { title: "Uống đủ nước em nhé! 💧", quote: "Nước rất quan trọng cho cơ thể và làn da, em nhớ uống đủ nước trong suốt ca làm việc nhé." },
+      { title: "Lắng nghe cơ thể! 🩺", quote: "Nếu thấy mệt mỏi quá thì hãy dừng lại nghỉ ngơi một chút, đừng gồng gánh quá sức em nhé." },
+      { title: "Sức khỏe là số 1! 🥇", quote: "Có sức khỏe là có tất cả. Em phải luôn hứa với anh là sẽ chăm sóc bản thân thật tốt đấy." },
+      { title: "Nụ cười và sức sống! 🌺", quote: "Nhìn em khỏe mạnh, vui tươi chính là niềm hạnh phúc lớn nhất của anh rồi." },
+      { title: "Kết thúc ngày rực rỡ! 🎉", quote: "Một ngày làm việc vất vả đã khép lại thật suôn sẻ. Giờ là lúc em tự thưởng cho mình sự thư giãn tuyệt đối nhé." },
+      { title: "Xả hơi thôi nào! 🛋️", quote: "Đã hoàn thành xuất sắc nhiệm vụ rồi, hãy gác lại mọi lo toan công việc để tận hưởng buổi tối bình yên nha." },
+      { title: "Tự hào về em! 🌟", quote: "Hôm nay em đã làm việc rất chăm chỉ và vất vả rồi. Nghỉ ngơi thật tốt nhé cô gái ngoan." },
+      { title: "Thành quả ngọt ngào! 🍇", quote: "Những nỗ lực trong ngày hôm nay của em hoàn toàn xứng đáng với kết quả tuyệt vời nhận được." },
+      { title: "Bình yên cuối ngày! 🌆", quote: "Hoàng hôn buông xuống, chúc em có những phút giây thư giãn nhẹ nhàng bên gia đình và người thân." },
+      { title: "Khép lại muộn phiền! 🚪", quote: "Mọi áp lực công việc hãy để lại sau cánh cửa. Buổi tối nay chỉ dành cho sự nghỉ ngơi thôi em nhé." },
+      { title: "Hoàn thành nhiệm vụ! ✅", quote: "Một ngày làm việc hiệu quả khép lại, em hãy tự hào vì bản thân đã rất nỗ lực." },
+      { title: "Thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
+      { title: "Gác lại lo toan! 🍃", quote: "Khép lại một ngày dài, chúc em thả lỏng cơ thể và tận hưởng sự yên bình." },
+      { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
+      { title: "Ng ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
+      { title: "Chúc mơ thấy anh! 💭", quote: "Đắp chăn ấm áp và ngủ thật sâu em nha, trong giấc mơ đêm nay nhớ ghé sang thăm anh đấy." },
+      { title: "Giấc ngủ bình yên! 🌌", quote: "Chúc em có một đêm ngon giấc, xua tan mọi mỏi mệt để sáng mai thức dậy thật tươi trẻ." },
+      { title: "Ôm em vào mộng! 🤗", quote: "Gửi ngàn cái ôm ngọt ngào qua màn hình, chúc Ái Nhuy ngủ ngon và có giấc mộng thật đẹp." },
+      { title: "Đêm nay thật êm đềm! 🌠", quote: "Ánh trăng ngoài kia đang dịu dàng ôm lấy giấc ngủ của em. Ngủ ngon nha công chúa của anh." },
+      { title: "Sáng mai bình minh! 🌅", quote: "Chúc em chìm vào giấc ngủ trong sự an yên, sáng mai thức dậy với một tâm hồn thật vui vẻ." },
+      { title: "Êm đềm hơi thở! 💤", quote: "Ngủ ngoan nha em, mọi lo âu cứ để ngày mai tính, đêm nay hãy tận hưởng giấc ngủ thật sâu." },
+      { title: "Bồng bềnh giấc tiên! 🧚‍♀️", quote: "Chúc em có một đêm dài ngủ thật ngon giấc, không giật mình và mơ thấy toàn điều hạnh phúc." },
+      { title: "Tạm biệt ngày cũ! 👋", quote: "Khép đôi mi lại và chìm vào giấc ngủ ngọt ngào thôi nào. Chúc em ngủ ngon!" },
+      { title: "Yêu em đến trong mơ! 💖", quote: "Ngay cả trong giấc mơ, anh cũng chỉ muốn được nhìn thấy nụ cười của em. Ngủ ngon nhé em yêu!" }
     ];
 
     let currentGreetingIdx = 0;
@@ -1132,10 +1200,7 @@
     }
 
     function loadShiftTimeConfigUI() {
-      document.getElementById('cfg_hc_in').value = shiftTimes.hc_in || '07:30';
-      document.getElementById('cfg_hc_out').value = shiftTimes.hc_out || '17:00';
-      
-      document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:10';
+      document.getElementById('cfg_c1_in').value = shiftTimes.c1_in || '05:30';
       document.getElementById('cfg_c1_out').value = shiftTimes.c1_out || '14:00';
 
       document.getElementById('cfg_c2_in').value = shiftTimes.c2_in || '16:30';
@@ -1143,9 +1208,6 @@
     }
 
     function updateShiftTimeConfig() {
-      shiftTimes.hc_in = document.getElementById('cfg_hc_in').value;
-      shiftTimes.hc_out = document.getElementById('cfg_hc_out').value;
-      
       shiftTimes.c1_in = document.getElementById('cfg_c1_in').value;
       shiftTimes.c1_out = document.getElementById('cfg_c1_out').value;
 
@@ -1153,7 +1215,7 @@
       shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
 
       localStorage.setItem('ainhuy_shift_times', JSON.stringify(shiftTimes));
-      showToast('Đã lưu giờ vào/tan ca!');
+      showToast('Đã lưu giờ báo ca!');
     }
 
     function buildMonthWeeksList() {
@@ -1202,7 +1264,7 @@
       const saved = localStorage.getItem(key);
       if (saved) return JSON.parse(saved);
       return JSON.parse(localStorage.getItem('ainhuy_weekly_shifts') || JSON.stringify({
-        2: "hanh-chinh", 3: "hanh-chinh", 4: "hanh-chinh", 5: "hanh-chinh", 6: "hanh-chinh", 7: "off", 8: "off"
+        2: "ca1", 3: "ca1", 4: "ca1", 5: "ca1", 6: "ca1", 7: "off", 8: "off"
       }));
     }
 
@@ -1265,8 +1327,7 @@
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
         let shiftClass = 'is-off';
-        if (savedShift === 'hanh-chinh') shiftClass = 'is-hanh-chinh';
-        else if (savedShift === 'ca1') shiftClass = 'is-ca1';
+        if (savedShift === 'ca1') shiftClass = 'is-ca1';
         else if (savedShift === 'ca2') shiftClass = 'is-ca2';
 
         const col = document.createElement('div');
@@ -1276,7 +1337,6 @@
           <div class="day-name">${d.label} ${isToday ? '●' : ''}</div>
           <span class="calendar-date">${dateLabel}</span>
           <select class="day-shift-select" onchange="updateShift(${d.key}, this.value)">
-            <option value="hanh-chinh" ${savedShift === 'hanh-chinh' ? 'selected' : ''}>H.Chính</option>
             <option value="ca1" ${savedShift === 'ca1' ? 'selected' : ''}>Ca 1</option>
             <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
             <option value="off" ${savedShift === 'off' ? 'selected' : ''}>🔴 Off</option>
@@ -1296,9 +1356,8 @@
 
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
-        col.classList.remove('is-off', 'is-hanh-chinh', 'is-ca1', 'is-ca2');
-        if (val === 'hanh-chinh') col.classList.add('is-hanh-chinh');
-        else if (val === 'ca1') col.classList.add('is-ca1');
+        col.classList.remove('is-off', 'is-ca1', 'is-ca2');
+        if (val === 'ca1') col.classList.add('is-ca1');
         else if (val === 'ca2') col.classList.add('is-ca2');
         else col.classList.add('is-off');
       }
@@ -1375,7 +1434,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
-    // HÀM XUẤT FILE .ICS CHUẨN ALARM MỐC THỜI GIAN (DTSTART = DTEND ĐỂ BÁO CHUÔNG CHUẨN XÁC KHI NGỦ)
+    // HÀM XUẤT FILE .ICS CHUẨN ĐIỂM MỐC THỜI GIAN ĐỂ REO CHUÔNG CHÍNH XÁC KHI NGỦ
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1456,27 +1515,22 @@
           }
 
           let rawIn, rawOut, summaryTitle, shiftLabel;
-          if (shift === 'hanh-chinh') {
-            rawIn = shiftTimes.hc_in || '07:30';
-            rawOut = shiftTimes.hc_out || '17:00';
-            summaryTitle = '💜 Ca Hành Chính';
-            shiftLabel = 'Ca Hành Chính';
-          } else if (shift === 'ca1') {
-            rawIn = shiftTimes.c1_in || '05:10';
+          if (shift === 'ca1') {
+            rawIn = shiftTimes.c1_in || '05:30';
             rawOut = shiftTimes.c1_out || '14:00';
-            summaryTitle = '🔵 Ca 1';
+            summaryTitle = '🔵 Ca 1 (Sáng)';
             shiftLabel = 'Ca 1';
           } else {
             rawIn = shiftTimes.c2_in || '16:30';
             rawOut = shiftTimes.c2_out || '22:00';
-            summaryTitle = '🟡 Ca 2';
+            summaryTitle = '🟡 Ca 2 (Chiều)';
             shiftLabel = 'Ca 2';
           }
 
           const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
           const outTimeUTC = toICSLocalDateTime(y, m, d, rawOut, 0);
 
-          // 1. Vào ca (DTSTART = DTEND để điện thoại kích hoạt báo thức đúng mốc giờ chính xác)
+          // 1. Mốc báo Vào ca (DTSTART = DTEND đúng thời điểm để kích hoạt báo thức)
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1495,7 +1549,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 2. Tan ca (DTSTART = DTEND đúng mốc giờ tan ca)
+          // 2. Mốc báo Tan ca (DTSTART = DTEND đúng thời điểm tan ca)
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1514,7 +1568,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
-          // 3. Khung ca trực tổng (Hiển thị dải màu kéo dài suốt ca)
+          // 3. Khung ca trực tổng (Hiển thị dải màu kéo dài suốt ca trên lịch)
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1907,19 +1961,8 @@
         todayShift = shiftsData[dayKey] || 'off';
       }
 
-      if (todayShift === 'hanh-chinh') {
-        if ((shiftTimes.hc_in || '07:30') === currentTime) {
-          lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`💜 ĐẾN GIỜ VÀO CA HÀNH CHÍNH (${currentTime})`);
-          return;
-        }
-        if ((shiftTimes.hc_out || '17:00') === currentTime) {
-          lastTriggeredMinute = minuteKey;
-          startContinuousAlarm(`🏁 HẾT GIỜ CA HÀNH CHÍNH (${currentTime})`);
-          return;
-        }
-      } else if (todayShift === 'ca1') {
-        if ((shiftTimes.c1_in || '05:10') === currentTime) {
+      if (todayShift === 'ca1') {
+        if ((shiftTimes.c1_in || '05:30') === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🔵 ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
           return;
