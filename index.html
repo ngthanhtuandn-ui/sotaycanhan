@@ -21,7 +21,7 @@
       user-select: none !important;
       -webkit-touch-callout: none !important;
     }
-    input, textarea {
+    input, textarea, .day-note-input {
       -webkit-user-select: text !important;
       -moz-user-select: text !important;
       -ms-user-select: text !important;
@@ -387,7 +387,16 @@
       width: 98%; border: 1px solid var(--border); border-radius: 4px; font-size: 0.60rem;
       padding: 3px 0; font-weight: 900; text-align: center; text-align-last: center; background: #fff;
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
+      margin-bottom: 3px;
     }
+
+    /* Ô ghi chú riêng cho từng ngày */
+    .day-note-input {
+      width: 98%; border: 1px solid var(--border); border-radius: 4px; font-size: 0.55rem;
+      padding: 3px 2px; text-align: center; background: #ffffff; color: var(--text); outline: none;
+      resize: none; height: 26px; line-height: 1.1;
+    }
+    .day-note-input:focus { border-color: var(--primary); background: #fff; }
 
     .sync-calendar-panel { background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 10px; padding: 8px; margin-top: 8px; }
     .sync-row { display: flex; gap: 6px; align-items: center; }
@@ -708,7 +717,6 @@
         if (wrongPinCount >= 4) {
           startWarningAlarm('🚨 CẢNH BÁO: NHẬP SAI MÃ QUÁ 4 LẦN!');
         } else {
-          // THAY THẾ HOÀN TOÀN HỘP THOẠI ALERT BẰNG TOAST NHẸ NHÀNG, KHÔNG CÒN HIỆN HỘP ĐEN CỦA TRÌNH DUYỆT
           showToast('❌ Sai mật khẩu!');
         }
         enteredPin = "";
@@ -1206,6 +1214,14 @@
       }));
     }
 
+    // Lấy thông tin ghi chú từng ngày trong tuần
+    function getWeekNotesData(wIdx) {
+      const key = getWeekStorageKey(wIdx) + '_notes';
+      const saved = localStorage.getItem(key);
+      if (saved) return JSON.parse(saved);
+      return {}; // { 2: "Ghi chú T2", ... }
+    }
+
     function initMonthWeeksDropdown() {
       buildMonthWeeksList();
       const select = document.getElementById('weekDropdownSelect');
@@ -1243,6 +1259,7 @@
       if (!currentWeekObj) return;
 
       const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
+      const notesData = getWeekNotesData(currentWeekIndex);
 
       dayLabels.forEach((d, idx) => {
         const dayDate = new Date(currentWeekObj.monday);
@@ -1253,6 +1270,7 @@
                          dayDate.getFullYear() === now.getFullYear());
 
         const savedShift = shiftsData[d.key] || 'off';
+        const savedNote = notesData[d.key] || '';
         const dateLabel = `${String(dayDate.getDate()).padStart(2,'0')}/${String(dayDate.getMonth()+1).padStart(2,'0')}`;
 
         let shiftClass = 'is-off';
@@ -1272,6 +1290,7 @@
             <option value="ca2" ${savedShift === 'ca2' ? 'selected' : ''}>Ca 2</option>
             <option value="off" ${savedShift === 'off' ? 'selected' : ''}>🔴 Off</option>
           </select>
+          <textarea class="day-note-input" placeholder="Ghi chú..." oninput="updateDayNote(${d.key}, this.value)">${escapeHtml(savedNote)}</textarea>
         `;
         container.appendChild(col);
       });
@@ -1295,10 +1314,21 @@
       showToast('Đã lưu lịch ca!');
     }
 
+    function updateDayNote(dayKey, val) {
+      const key = getWeekStorageKey(currentWeekIndex) + '_notes';
+      const notesData = getWeekNotesData(currentWeekIndex);
+      notesData[dayKey] = val;
+      localStorage.setItem(key, JSON.stringify(notesData));
+    }
+
     function copyCurrentWeekToAll() {
       const curData = getShiftsForWeekIndex(currentWeekIndex);
-      if (confirm(`Áp dụng lịch tuần này cho cả tháng?`)) {
-        monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
+      const curNotes = getWeekNotesData(currentWeekIndex);
+      if (confirm(`Áp dụng lịch và ghi chú tuần này cho cả tháng?`)) {
+        monthWeeksList.forEach(w => {
+          localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData));
+          localStorage.setItem(getWeekStorageKey(w.index) + '_notes', JSON.stringify(curNotes));
+        });
         localStorage.setItem('ainhuy_weekly_shifts', JSON.stringify(curData));
         renderWeekGrid();
         showToast('Đã áp dụng cả tháng!');
@@ -1375,10 +1405,12 @@
         const wObj = monthWeeksList[wIdx];
         if (!wObj) return;
         const shiftsData = getShiftsForWeekIndex(wIdx);
+        const notesData = getWeekNotesData(wIdx);
 
         for (let i = 0; i < 7; i++) {
           const dayKey = i === 6 ? 8 : i + 2;
           const shift = shiftsData[dayKey] || 'off';
+          const dayNote = notesData[dayKey] ? `\nGhi chú: ${notesData[dayKey]}` : '';
 
           const dayDate = new Date(wObj.monday);
           dayDate.setDate(wObj.monday.getDate() + i);
@@ -1401,7 +1433,7 @@
               `DTSTART;VALUE=DATE:${dateStr}`,
               `DTEND;VALUE=DATE:${nextDateStr}`,
               `SUMMARY:🔴 Off`,
-              `DESCRIPTION:Hôm nay Ái Nhuy Off nghỉ ngơi nhé!`,
+              `DESCRIPTION:Hôm nay Ái Nhuy Off nghỉ ngơi nhé!${dayNote}`,
               `STATUS:CONFIRMED`,
               'END:VEVENT'
             ].join('\r\n'));
@@ -1441,7 +1473,7 @@
             `DTSTART:${preTimeUTC}`,
             `DTEND:${toUTCICSString(y, m, d, rawPre, 10)}`,
             `SUMMARY:⏰ Báo giờ ${shiftLabel}`,
-            `DESCRIPTION:Chuẩn bị vào ${shiftLabel} lúc ${rawIn}`,
+            `DESCRIPTION:Chuẩn bị vào ${shiftLabel} lúc ${rawIn}.${dayNote}`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1459,7 +1491,7 @@
             `DTSTART:${inTimeUTC}`,
             `DTEND:${toUTCICSString(y, m, d, rawIn, 10)}`,
             `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
-            `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.`,
+            `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1477,7 +1509,7 @@
             `DTSTART:${outTimeUTC}`,
             `DTEND:${toUTCICSString(y, m, d, rawOut, 10)}`,
             `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
-            `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.`,
+            `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
             'BEGIN:VALARM',
             'TRIGGER:-PT0M',
@@ -1495,7 +1527,7 @@
             `DTSTART:${inTimeUTC}`,
             `DTEND:${outTimeUTC}`,
             `SUMMARY:${summaryTitle}`,
-            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.`,
+            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.${dayNote}`,
             `STATUS:CONFIRMED`,
             'END:VEVENT'
           ].join('\r\n'));
@@ -1508,7 +1540,8 @@
         'VERSION:2.0',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
-        'X-WR-CALNAME:Lịch Ca Ái Nhuy'
+        'X-WR-CALNAME:Lịch Ca Ái Nhuy',
+        'X-WR-TIMEZONE:Asia/Ho_Chi_Minh'
       ].join('\r\n');
 
       const icsContent = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
@@ -1519,7 +1552,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất ${count} mốc ca làm việc chính xác!`);
+      showToast(`Đã xuất ${count} mốc lịch kèm ghi chú thành công!`);
     }
 
     function saveIssue() {
@@ -1794,7 +1827,7 @@
         btn.innerText = '🟢 Đã Bật Báo';
         btn.className = 'noti-granted';
       } else if (Notification.permission === 'denied') {
-        btn.innerText = '🔴 Bị Chặn';
+        btn.innerText = '🔴 B bị Chặn';
         btn.className = 'noti-denied';
       } else {
         btn.innerText = '🔔 Bật Báo';
@@ -1872,7 +1905,7 @@
         const todayTime = now.getTime();
         let activeWIdx = 0;
         monthWeeksList.forEach((w, idx) => {
-          if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getToken()) activeWIdx = idx;
+          if (todayTime >= w.monday.getTime() && todayTime <= w.sunday.getTime()) activeWIdx = idx;
         });
         const shiftsData = getShiftsForWeekIndex(activeWIdx);
         todayShift = shiftsData[dayKey] || 'off';
