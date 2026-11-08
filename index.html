@@ -360,7 +360,6 @@
     }
     .day-col.today { border-color: var(--primary); outline: 1.5px solid #fbcfe8; }
 
-    /* MÀU SẮC ĐẬM HƠN, RÕ NÉT VÀ ĐỒNG NHẤT VỚI CÁC TAB CÀI ĐẶT */
     .day-col.is-off { background: #fecaca !important; border-color: #ef4444 !important; }
     .day-col.is-off .day-name { color: #991b1b !important; font-weight: 900; }
     .day-col.is-off .calendar-date { color: #7f1d1d !important; font-weight: 900; }
@@ -376,7 +375,6 @@
     .day-col.is-ca2 .calendar-date { color: #422006 !important; font-weight: 900; }
     .day-col.is-ca2 .day-shift-select { border-color: #ca8a04 !important; color: #422006 !important; font-weight: 900; background: #fef08a !important; }
 
-    /* CA HÀNH CHÍNH: MÀU TÍM ĐẬM ĐỂ PHÂN BIỆT RÕ VỚI CA 1 & CA 2 */
     .day-col.is-hch { background: #d8b4fe !important; border-color: #9333ea !important; }
     .day-col.is-hch .day-name { color: #581c87 !important; font-weight: 900; }
     .day-col.is-hch .calendar-date { color: #3b0764 !important; font-weight: 900; }
@@ -424,7 +422,6 @@
       white-space: nowrap; box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
     }
 
-    /* KHUNG CÀI ĐẶT GIỜ CA 3 CỘT ĐỒNG BỘ VÀ ĐẬM MÀU RÕ RỆT */
     .shift-settings-box { background: #fdf2f8; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-top: 8px; }
     .shift-settings-title { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
     .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -577,7 +574,6 @@
           </div>
         </div>
 
-        <!-- CÀI ĐẶT GIỜ BÁO CA (CÓ ĐỦ CA 1, CA 2, CA HÀNH CHÍNH TÍM ĐẬM) -->
         <div class="shift-settings-box">
           <div class="shift-settings-title">
             <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
@@ -899,9 +895,8 @@
     let alarmAudioBlobUrl = null;
     let warningAudioBlobUrl = null;
 
-    // KHO 100 CÂU CHÚC PHÂN BỔ CHUẨN XÁC THEO 4 KHUNG GIỜ
     const wishesByTime = {
-      morning: [ // 04:00 - 10:59 (30 câu)
+      morning: [
         { title: "Chào buổi sáng tình yêu! ☀️", quote: "Chào buổi sáng tình yêu của anh! Chúc em một ngày mới ngập tràn năng lượng, làm việc hiệu quả và gặp nhiều may mắn nhé. 💕" },
         { title: "Ái Nhuy ơi, dậy thôi nào! 🌸", quote: "Ái Nhuy ơi, dậy thôi nào! Chúc em ngày mới rạng rỡ, hoàn thành xuất sắc mọi công việc được giao nha." },
         { title: "Năng lượng tràn đầy nhé! ⚡", quote: "Bắt đầu ngày mới với nụ cười rạng rỡ và nguồn năng lượng tích cực nhất em nhé. Chúc em một ngày làm việc thật sung sức!" },
@@ -933,7 +928,7 @@
         { title: "Hoàn thành xuất sắc! 🎯", quote: "Chúc em một ngày làm việc suôn sẻ, hoàn thành xuất sắc mọi chỉ tiêu và nhiệm vụ được giao." },
         { title: "Tự tin bước ra ngoài! 🚶‍♀️", quote: "Chào buổi sáng! Hãy tự tin bước ra ngoài và chinh phục thế giới bằng nụ cười tỏa nắng của em nhé." }
       ],
-      afternoon: [ // 11:00 - 17:59 (30 câu)
+      afternoon: [
         { title: "Nhớ em nhiều lắm! 💖", quote: "Dù bận rộn đến đâu thì hình bóng của em vẫn luôn ngự trị trong tim anh. Nhớ và thương Ái Nhuy vô cùng!" },
         { title: "Tình yêu tuyệt vời! 🌹", quote: "Cảm ơn em đã đến bên anh, mang theo ánh sáng và sưởi ấm trái tim anh mỗi ngày. Yêu em mãi mãi." },
         { title: "Cuộc sống ngọt ngào! 💞", quote: "Cuộc sống này thật đẹp vì có em. Chúc cho tình yêu chúng ta luôn ngọt ngào và bền chặt theo năm tháng." },
@@ -965,7 +960,7 @@
         { title: "Niềm hạnh phúc lớn! 🌺", quote: "Nhìn em khỏe mạnh, vui tươi chính là niềm hạnh phúc lớn nhất của anh rồi." },
         { title: "Hành động yêu thương! 💞", quote: "Yêu em không chỉ bằng lời nói mà bằng cả hành động. Chúc em buổi chiều làm việc thật hiệu quả!" }
       ],
-      evening: [ // 18:00 - 21:59 (20 câu)
+      evening: [
         { title: "Kết thúc ngày rực rỡ! 🎉", quote: "Một ngày làm việc vất vả đã khép lại thật suôn sẻ. Giờ là lúc em tự thưởng cho mình sự thư giãn tuyệt đối nhé." },
         { title: "Xả hơi thôi nào! 🛋️", quote: "Đã hoàn thành xuất sắc nhiệm vụ rồi, hãy gác lại mọi lo toan công việc để tận hưởng buổi tối bình yên nha." },
         { title: "Tự hào về em! 🌟", quote: "Hôm nay em đã làm việc rất chăm chỉ và vất vả rồi. Nghỉ ngơi thật tốt nhé cô gái ngoan." },
@@ -987,8 +982,8 @@
         { title: "Khoảnh khắc hạnh phúc! 🌸", quote: "Anh luôn mong mỗi buổi tối của em đều là những khoảnh khắc nhẹ nhàng và hạnh phúc nhất." },
         { title: "Tâm thế thoải mái! 🌙", quote: "Kết thúc một ngày tuyệt vời, chúc em chuẩn bị một tâm thế thật thoải mái để đón chờ giấc ngủ ngon." }
       ],
-      night: [ // 22:00 - 03:59 (20 câu)
-        { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
+      night: [
+        { title: "Ng ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
         { title: "Chúc mơ thấy anh! 💭", quote: "Đắp chăn ấm áp và ngủ thật sâu em nha, trong giấc mơ đêm nay nhớ ghé sang thăm anh đấy." },
         { title: "Giấc ngủ bình yên! 🌌", quote: "Chúc em có một đêm ngon giấc, xua tan mọi mỏi mệt để sáng mai thức dậy thật tươi trẻ." },
         { title: "Ôm em vào mộng! 🤗", quote: "Gửi ngàn cái ôm ngọt ngào qua màn hình, chúc Ái Nhuy ngủ ngon và có giấc mộng thật đẹp." },
@@ -1516,7 +1511,6 @@
       const now = new Date();
       const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
-      // SỬA LỖI: TẠO CHUẨN MÚI GIỜ CHÍNH XÁC KÈM ĐỊNH DANH TZID ĐỂ ĐIỆN THOẠI NHẬN DIỆN VÀ HIỆN CA HOÀN HẢO
       function toICSLocalDateTime(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         let totalMins = h * 60 + m + addMinutes;
@@ -1604,6 +1598,15 @@
           const inTimeLocal = toICSLocalDateTime(y, m, d, rawIn, 0);
           const outTimeLocal = toICSLocalDateTime(y, m, d, rawOut, 0);
 
+          // BỔ SUNG KHỐI VALARM ĐỂ ĐIỆN THOẠI ĐỔ CHUÔNG BÁO CA CHÍNH XÁC
+          const alarmBlock = [
+            'BEGIN:VALARM',
+            'TRIGGER:PT0M',
+            'ACTION:DISPLAY',
+            'DESCRIPTION:Đến giờ báo ca trực!',
+            'END:VALARM'
+          ].join('\r\n');
+
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1614,6 +1617,7 @@
             `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
             `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
+            alarmBlock,
             'END:VEVENT'
           ].join('\r\n'));
 
@@ -1627,6 +1631,7 @@
             `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
             `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
+            alarmBlock,
             'END:VEVENT'
           ].join('\r\n'));
 
@@ -1671,7 +1676,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics tương thích tuyệt đối cho điện thoại!`);
+      showToast(`Đã xuất file .ics tích hợp chuông báo chuẩn xác!`);
     }
 
     function saveIssue() {
