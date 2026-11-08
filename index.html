@@ -1214,12 +1214,11 @@
       }));
     }
 
-    // Lấy thông tin ghi chú từng ngày trong tuần
     function getWeekNotesData(wIdx) {
       const key = getWeekStorageKey(wIdx) + '_notes';
       const saved = localStorage.getItem(key);
       if (saved) return JSON.parse(saved);
-      return {}; // { 2: "Ghi chú T2", ... }
+      return {};
     }
 
     function initMonthWeeksDropdown() {
@@ -1384,6 +1383,7 @@
       exportToICSCalendarList(Array.from(selectedSyncWeeks).sort((a, b) => a - b));
     }
 
+    // ĐÃ SỬA LỖI: Chỉ cào duy nhất đúng sự kiện của ca đang được chọn (shift) cho ngày đó
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
@@ -1420,6 +1420,7 @@
 
           const dateStr = toICADateString(y, m, d);
 
+          // Nếu là Off thì chỉ tạo sự kiện Off độc lập duy nhất
           if (shift === 'off') {
             count++;
             const nextDayDate = new Date(dayDate);
@@ -1440,6 +1441,7 @@
             continue;
           }
 
+          // CHỈ LẤY ĐÚNG THỜI GIAN CỦA CA ĐANG CHỌN (Hành Chính, Ca 1 hoặc Ca 2)
           let rawPre, rawIn, rawOut, summaryTitle, shiftLabel;
           if (shift === 'hanh-chinh') {
             rawPre = shiftTimes.hc_pre || '07:15';
@@ -1465,6 +1467,7 @@
           const inTimeUTC = toUTCICSString(y, m, d, rawIn, 0);
           const outTimeUTC = toUTCICSString(y, m, d, rawOut, 0);
 
+          // 1. Sự kiện Báo trước chuẩn bị
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1483,6 +1486,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
+          // 2. Sự kiện Vào ca chính thức
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1501,6 +1505,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
+          // 3. Sự kiện Tan ca
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1519,6 +1524,7 @@
             'END:VEVENT'
           ].join('\r\n'));
 
+          // 4. Khung thời gian trọn ca trực
           count++;
           events.push([
             'BEGIN:VEVENT',
@@ -1552,7 +1558,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất ${count} mốc lịch kèm ghi chú thành công!`);
+      showToast(`Đã xuất ${count} mốc lịch chuẩn xác không bị trùng ca!`);
     }
 
     function saveIssue() {
