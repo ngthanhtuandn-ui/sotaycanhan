@@ -564,15 +564,16 @@
               <div class="multiselect-dropdown" id="syncDropdownMenu"></div>
             </div>
             <button class="btn-sync-submit" onclick="executeSelectedSync()">
-              📲 Nạp Vào Lịch ĐT
+              📥 Tải ICS cài Lịch ĐT
             </button>
           </div>
+          <div style="font-size:0.68rem;line-height:1.4;color:#7c2d12;margin-top:7px;">File ICS gồm báo chuẩn bị, vào ca và tan ca. Sau khi tải, mở file bằng ứng dụng Lịch và kiểm tra thông báo của từng sự kiện. Trình duyệt không thể tự bảo đảm phát chuông khi điện thoại ngủ.</div>
         </div>
 
         <div class="shift-settings-box">
           <div class="shift-settings-title">
             <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
-            <span style="font-size:0.68rem; font-weight:bold; color:#10b981;">● Hoạt động</span>
+            <span style="font-size:0.66rem; font-weight:bold; color:#b45309;">● Báo nền: dùng Lịch điện thoại</span>
           </div>
           <div class="shift-config-grid">
             <div class="shift-config-card card-hc">
@@ -1447,187 +1448,212 @@
     }
 
     // HÀM XUẤT FILE .ICS ĐÃ BỔ SUNG ĐẦY ĐỦ CƠ CHẾ VALARM CHUẨN ĐỂ ĐIỆN THOẠI BÁO CHUÔNG CẢ 3 MỐC
+    // Xuất iCalendar theo giờ Việt Nam (UTC+7), có 3 sự kiện báo độc lập:
+    // báo chuẩn bị, vào ca và tan ca. Báo thức được giao cho ứng dụng Lịch của điện thoại.
     function exportToICSCalendarList(weekIndices) {
-      let events = [];
-      const now = new Date();
-      const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      const events = [];
+      const dtStamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
 
+      // Chuyển giờ Việt Nam sang UTC bằng phép tính lịch UTC; xử lý đúng đổi ngày/tháng/năm.
       function toICSLocalDateTime(year, month, day, timeStr, addMinutes = 0) {
-        const [h, m] = timeStr.split(':').map(Number);
-        let totalMins = h * 60 + m + addMinutes;
-        let targetDay = day;
-        let targetMonth = month;
-        let targetYear = year;
-
-        if (totalMins >= 1440) {
-          totalMins -= 1440;
-          targetDay += 1;
-        } else if (totalMins < 0) {
-          totalMins += 1440;
-          targetDay -= 1;
+        const parts = String(timeStr || '').split(':').map(Number);
+        const h = parts[0], min = parts[1];
+        if (!Number.isInteger(h) || !Number.isInteger(min) || h < 0 || h > 23 || min < 0 || min > 59) {
+          throw new Error('Giờ ca không hợp lệ: ' + timeStr);
         }
-
-        const th = Math.floor(totalMins / 60);
-        const tm = totalMins % 60;
-
-        let utcHour = th - 7;
-        let utcDay = targetDay;
-        if (utcHour < 0) {
-          utcHour += 24;
-          utcDay -= 1;
-        }
-
-        const pad = (n) => String(n).padStart(2, '0');
-        return `${targetYear}${pad(targetMonth)}${pad(utcDay)}T${pad(utcHour)}${pad(tm)}00Z`;
+        const utcMillis = Date.UTC(year, month - 1, day, h, min + addMinutes) - 7 * 60 * 60 * 1000;
+        const d = new Date(utcMillis);
+        const pad = n => String(n).padStart(2, '0');
+        return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`;
       }
 
-      function toICADateString(year, month, day) {
-        return `${year}${String(month).padStart(2,'0')}${String(day).padStart(2,'0')}`;
+      function icsDate(year, month, day) {
+        return `${year}${String(month).padStart(2, '0')}${String(day).padStart(2, '0')}`;
       }
 
-      let count = 0;
+      // Escape nội dung theo RFC 5545 để ghi chú không làm hỏng cấu trúc file.
+      function icsEscape(value) {
+        return String(value == null ? '' : value)
+          .replace(/\\/g, '\\\\')
+          .replace(/\r\n|\r|\n/g, '\\n')
+          .replace(/,/g, '\\,')
+          .replace(/;/g, '\\;');
+      }
 
-      weekIndices.forEach(wIdx => {
+      // Gấp dòng theo giới hạn 75 octet của iCalendar (không cắt đôi ký tự UTF-8).
+      function foldLine(line) {
+        const chars = Array.from(String(line));
+        const lines = [];
+        let current = '', bytes = 0;
+        for (const ch of chars) {
+          const size = new TextEncoder().encode(ch).length;
+          if (bytes + size > 75 && current) {
+            lines.push(current);
+            current = ' ' + ch;
+            bytes = 1 + size;
+          } else {
+            current += ch;
+            bytes += size;
+          }
+        }
+        lines.push(current);
+        return lines.join('\r\n');
+      }
+
+      function addAlarmEvent({uid, start, end, summary, description, alarmDescription}) {
+        const lines = [
+          'BEGIN:VEVENT',
+          `UID:${uid}`,
+          `DTSTAMP:${dtStamp}`,
+          `DTSTART:${start}`,
+          `DTEND:${end}`,
+          `SUMMARY:${icsEscape(summary)}`,
+          `DESCRIPTION:${icsEscape(description)}`,
+          'STATUS:CONFIRMED',
+          'BEGIN:VALARM',
+          'ACTION:DISPLAY',
+          'TRIGGER:PT0S',
+          `DESCRIPTION:${icsEscape(alarmDescription)}`,
+          'END:VALARM',
+          'END:VEVENT'
+        ];
+        events.push(lines.map(foldLine).join('\r\n'));
+      }
+
+      function addShiftBlock({uid, start, end, summary, description}) {
+        events.push([
+          'BEGIN:VEVENT',
+          `UID:${uid}`,
+          `DTSTAMP:${dtStamp}`,
+          `DTSTART:${start}`,
+          `DTEND:${end}`,
+          `SUMMARY:${icsEscape(summary)}`,
+          `DESCRIPTION:${icsEscape(description)}`,
+          'STATUS:CONFIRMED',
+          'END:VEVENT'
+        ].map(foldLine).join('\r\n'));
+      }
+
+      let eventCount = 0;
+      const uniqueWeeks = [...new Set(weekIndices)].sort((a, b) => a - b);
+
+      uniqueWeeks.forEach(wIdx => {
         const wObj = monthWeeksList[wIdx];
         if (!wObj) return;
+
         const shiftsData = getShiftsForWeekIndex(wIdx);
         const notesData = getWeekNotesData(wIdx);
 
         for (let i = 0; i < 7; i++) {
           const dayKey = i === 6 ? 8 : i + 2;
           const shift = shiftsData[dayKey] || 'off';
-          const dayNote = notesData[dayKey] ? `\nGhi chú: ${notesData[dayKey]}` : '';
-
           const dayDate = new Date(wObj.monday);
           dayDate.setDate(wObj.monday.getDate() + i);
+
           const y = dayDate.getFullYear();
           const m = dayDate.getMonth() + 1;
           const d = dayDate.getDate();
-
-          const dateStr = toICADateString(y, m, d);
+          const dateStr = icsDate(y, m, d);
+          const note = notesData[dayKey] ? ` Ghi chú: ${notesData[dayKey]}` : '';
 
           if (shift === 'off') {
-            count++;
-            const nextDayDate = new Date(dayDate);
-            nextDayDate.setDate(dayDate.getDate() + 1);
-            const nextDateStr = toICADateString(nextDayDate.getFullYear(), nextDayDate.getMonth() + 1, nextDayDate.getDate());
-
+            const nextDate = new Date(y, m - 1, d + 1);
             events.push([
               'BEGIN:VEVENT',
-              `UID:shift-off-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
+              `UID:shift-off-${dateStr}-${dayKey}@ainhuy.shift`,
               `DTSTAMP:${dtStamp}`,
               `DTSTART;VALUE=DATE:${dateStr}`,
-              `DTEND;VALUE=DATE:${nextDateStr}`,
-              `SUMMARY:🔴 Off`,
-              `DESCRIPTION:Hôm nay Ái Nhuy Off nghỉ ngơi nhé!${dayNote}`,
-              `STATUS:CONFIRMED`,
+              `DTEND;VALUE=DATE:${icsDate(nextDate.getFullYear(), nextDate.getMonth() + 1, nextDate.getDate())}`,
+              'SUMMARY:🔴 Off',
+              `DESCRIPTION:${icsEscape('Hôm nay Ái Nhuy Off nghỉ ngơi nhé!' + note)}`,
+              'STATUS:CONFIRMED',
               'END:VEVENT'
-            ].join('\r\n'));
+            ].map(foldLine).join('\r\n'));
+            eventCount++;
             continue;
           }
 
-          let rawPre, rawIn, rawOut, summaryTitle, shiftLabel;
+          let rawPre, rawIn, rawOut, summaryTitle, shiftLabel, shiftCode;
           if (shift === 'hanh-chinh') {
             rawPre = shiftTimes.hc_pre || '07:15';
             rawIn = shiftTimes.hc_in || '07:30';
             rawOut = shiftTimes.hc_out || '17:00';
             summaryTitle = '💜 Ca Hành Chính';
             shiftLabel = 'Ca Hành Chính';
+            shiftCode = 'hc';
           } else if (shift === 'ca1') {
             rawPre = shiftTimes.c1_pre || '04:55';
             rawIn = shiftTimes.c1_in || '05:10';
             rawOut = shiftTimes.c1_out || '14:00';
             summaryTitle = '🔵 Ca 1';
             shiftLabel = 'Ca 1';
-          } else {
+            shiftCode = 'c1';
+          } else if (shift === 'ca2') {
             rawPre = shiftTimes.c2_pre || '16:15';
             rawIn = shiftTimes.c2_in || '16:30';
             rawOut = shiftTimes.c2_out || '22:00';
             summaryTitle = '🟡 Ca 2';
             shiftLabel = 'Ca 2';
+            shiftCode = 'c2';
+          } else {
+            continue;
           }
 
-          const preTimeUTC = toICSLocalDateTime(y, m, d, rawPre, 0);
-          const inTimeUTC = toICSLocalDateTime(y, m, d, rawIn, 0);
-          const outTimeUTC = toICSLocalDateTime(y, m, d, rawOut, 0);
+          const preStart = toICSLocalDateTime(y, m, d, rawPre);
+          const inStart = toICSLocalDateTime(y, m, d, rawIn);
+          const outStart = toICSLocalDateTime(y, m, d, rawOut);
 
-          // 1. Báo trước chuẩn bị
-          count++;
-          events.push([
-            'BEGIN:VEVENT',
-            `UID:shift-${shift}-pre-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-            `DTSTAMP:${dtStamp}`,
-            `DTSTART:${preTimeUTC}`,
-            `DTEND:${toICSLocalDateTime(y, m, d, rawPre, 10)}`,
-            `SUMMARY:⏰ Báo giờ ${shiftLabel}`,
-            `DESCRIPTION:Chuẩn bị vào ${shiftLabel} lúc ${rawIn}.${dayNote}`,
-            `STATUS:CONFIRMED`,
-            'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Báo thức: Sắp đến giờ làm việc ${shiftLabel}!`,
-            'END:VALARM',
-            'END:VEVENT'
-          ].join('\r\n'));
+          // 1) Báo trước: thời điểm rawPre do người dùng cài trong phần Cài đặt giờ ca.
+          addAlarmEvent({
+            uid: `shift-${shiftCode}-pre-${dateStr}-${dayKey}@ainhuy.shift`,
+            start: preStart,
+            end: toICSLocalDateTime(y, m, d, rawPre, 5),
+            summary: `⏰ Báo chuẩn bị ${shiftLabel} (${rawPre})`,
+            description: `Chuẩn bị vào ${shiftLabel} lúc ${rawIn}.${note}`,
+            alarmDescription: `Đến giờ chuẩn bị ${shiftLabel}!`
+          });
 
-          // 2. Vào ca chính thức
-          count++;
-          events.push([
-            'BEGIN:VEVENT',
-            `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-            `DTSTAMP:${dtStamp}`,
-            `DTSTART:${inTimeUTC}`,
-            `DTEND:${toICSLocalDateTime(y, m, d, rawIn, 10)}`,
-            `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
-            `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
-            `STATUS:CONFIRMED`,
-            'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Đến giờ vào ${shiftLabel}!`,
-            'END:VALARM',
-            'END:VEVENT'
-          ].join('\r\n'));
+          // 2) Báo vào ca.
+          addAlarmEvent({
+            uid: `shift-${shiftCode}-in-${dateStr}-${dayKey}@ainhuy.shift`,
+            start: inStart,
+            end: toICSLocalDateTime(y, m, d, rawIn, 5),
+            summary: `🔔 Vào ${shiftLabel} (${rawIn})`,
+            description: `Đã đến giờ vào làm việc ${shiftLabel}.${note}`,
+            alarmDescription: `Đã đến giờ vào ${shiftLabel}!`
+          });
 
-          // 3. Tan ca
-          count++;
-          events.push([
-            'BEGIN:VEVENT',
-            `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-            `DTSTAMP:${dtStamp}`,
-            `DTSTART:${outTimeUTC}`,
-            `DTEND:${toICSLocalDateTime(y, m, d, rawOut, 10)}`,
-            `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
-            `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
-            `STATUS:CONFIRMED`,
-            'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Đã đến giờ tan ${shiftLabel}!`,
-            'END:VALARM',
-            'END:VEVENT'
-          ].join('\r\n'));
+          // 3) Báo tan ca.
+          addAlarmEvent({
+            uid: `shift-${shiftCode}-out-${dateStr}-${dayKey}@ainhuy.shift`,
+            start: outStart,
+            end: toICSLocalDateTime(y, m, d, rawOut, 5),
+            summary: `🏁 Tan ${shiftLabel} (${rawOut})`,
+            description: `Đã hết giờ làm việc ${shiftLabel}.${note}`,
+            alarmDescription: `Đã đến giờ tan ${shiftLabel}!`
+          });
 
-          // 4. Khung ca trực tổng
-          count++;
-          events.push([
-            'BEGIN:VEVENT',
-            `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
-            `DTSTAMP:${dtStamp}`,
-            `DTSTART:${inTimeUTC}`,
-            `DTEND:${outTimeUTC}`,
-            `SUMMARY:${summaryTitle}`,
-            `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.${dayNote}`,
-            `STATUS:CONFIRMED`,
-            'END:VEVENT'
-          ].join('\r\n'));
+          // Khung thời gian ca làm để dễ nhìn trên lịch, không tạo thêm chuông.
+          addShiftBlock({
+            uid: `shift-session-${shiftCode}-${dateStr}-${dayKey}@ainhuy.shift`,
+            start: inStart,
+            end: outStart,
+            summary: summaryTitle,
+            description: `Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.${note}`
+          });
+          eventCount += 4;
         }
       });
 
+      if (!events.length) {
+        alert('Không có ngày làm việc hoặc ngày nghỉ nào trong tuần đã chọn để xuất lịch.');
+        return;
+      }
+
       const icsHeader = [
         'BEGIN:VCALENDAR',
-        'PRODID:-//AiNhuy//AlarmShiftPro//VI',
         'VERSION:2.0',
+        'PRODID:-//AiNhuy//ShiftCalendar//VI',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         'X-WR-CALNAME:Lịch Ca Ái Nhuy',
@@ -1636,16 +1662,19 @@
 
       const icsContent = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
       const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', 'lich_ca_ai_nhuy.ics');
+      link.href = url;
+      link.download = 'lich_ca_ai_nhuy.ics';
+      link.style.display = 'none';
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-      showToast(`Đã xuất file .ics đầy đủ chuông báo cho tất cả các mốc!`);
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 30000);
+      showToast(`Đã tạo lịch ICS gồm ${eventCount} mục. Hãy mở file và nhập vào ứng dụng Lịch trên điện thoại.`);
     }
 
-    function saveIssue() {
+        function saveIssue() {
       const title = document.getElementById('issueTitle').value.trim();
       const content = document.getElementById('issueContent').value.trim();
       const priority = document.getElementById('issuePriority').value;
@@ -1903,13 +1932,9 @@
       if (!btn) return;
 
       if (!('Notification' in window)) {
-        if (localNotiMockState === 'granted') {
-          btn.innerText = '🟢 Đã Bật Báo';
-          btn.className = 'noti-granted';
-        } else {
-          btn.innerText = '🔔 Bật Báo';
-          btn.className = '';
-        }
+        btn.innerText = '⚠️ Không hỗ trợ';
+        btn.className = 'noti-denied';
+        btn.title = 'Thông báo web không được trình duyệt này hỗ trợ; hãy dùng ứng dụng Lịch điện thoại với file ICS.';
         return;
       }
 
