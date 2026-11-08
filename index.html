@@ -973,7 +973,7 @@
         { title: "Bình yên cuối ngày! 🌆", quote: "Hoàng hôn buông xuống, chúc em có những phút giây thư giãn nhẹ nhàng bên gia đình và người thân." },
         { title: "Khép lại muộn phiền! 🚪", quote: "Mọi áp lực công việc hãy để lại sau cánh cửa. Buổi tối nay chỉ dành cho sự nghỉ ngơi thôi em nhé." },
         { title: "Nỗ lực bản thân! ✅", quote: "Một ngày làm việc hiệu quả khép lại, em hãy tự hào vì bản thân đã rất nỗ lực." },
-        { title: "Thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
+        { title: "Th thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
         { title: "Gác lại lo toan! 🍃", quote: "Khép lại một ngày dài, chúc em thả lỏng cơ thể và tận hưởng sự yên bình." },
         { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
         { title: "Buổi tối ấm áp! 🏡", quote: "Buổi tối ấm áp bên gia đình nhé em. Mong mọi điều bình an sẽ đến với em vào buổi tối nay." },
@@ -1516,7 +1516,7 @@
       const now = new Date();
       const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
-      // SỬA LỖI: SỬ DỤNG CHUẨN GIỜ ĐỊA PHƯƠNG (KHÔNG DÙNG HẬU TỐ Z) ĐỂ ĐIỆN THOẠI NHẬN DIỆN ĐÚNG GIỜ TUYỆT ĐỐI
+      // SỬA LỖI: TẠO CHUẨN MÚI GIỜ CHÍNH XÁC KÈM ĐỊNH DANH TZID ĐỂ ĐIỆN THOẠI NHẬN DIỆN VÀ HIỆN CA HOÀN HẢO
       function toICSLocalDateTime(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         let totalMins = h * 60 + m + addMinutes;
@@ -1609,16 +1609,11 @@
             'BEGIN:VEVENT',
             `UID:shift-${shift}-in-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
-            `DTSTART:${inTimeLocal}`,
-            `DTEND:${inTimeLocal}`,
+            `DTSTART;TZID=Asia/Ho_Chi_Minh:${inTimeLocal}`,
+            `DTEND;TZID=Asia/Ho_Chi_Minh:${inTimeLocal}`,
             `SUMMARY:🔔 Vào ${shiftLabel} (${rawIn})`,
             `DESCRIPTION:Đã đến giờ vào làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
-            'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Đến giờ vào ${shiftLabel}!`,
-            'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
@@ -1627,16 +1622,11 @@
             'BEGIN:VEVENT',
             `UID:shift-${shift}-out-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
-            `DTSTART:${outTimeLocal}`,
-            `DTEND:${outTimeLocal}`,
+            `DTSTART;TZID=Asia/Ho_Chi_Minh:${outTimeLocal}`,
+            `DTEND;TZID=Asia/Ho_Chi_Minh:${outTimeLocal}`,
             `SUMMARY:🏁 Tan ${shiftLabel} (${rawOut})`,
             `DESCRIPTION:Đã hết giờ làm việc ${shiftLabel}.${dayNote}`,
             `STATUS:CONFIRMED`,
-            'BEGIN:VALARM',
-            'TRIGGER:-PT0M',
-            'ACTION:DISPLAY',
-            `DESCRIPTION:Đã đến giờ tan ${shiftLabel}!`,
-            'END:VALARM',
             'END:VEVENT'
           ].join('\r\n'));
 
@@ -1645,8 +1635,8 @@
             'BEGIN:VEVENT',
             `UID:shift-session-${shift}-${dateStr}-${dayKey}-${count}@ainhuy.shift`,
             `DTSTAMP:${dtStamp}`,
-            `DTSTART:${inTimeLocal}`,
-            `DTEND:${outTimeLocal}`,
+            `DTSTART;TZID=Asia/Ho_Chi_Minh:${inTimeLocal}`,
+            `DTEND;TZID=Asia/Ho_Chi_Minh:${outTimeLocal}`,
             `SUMMARY:${summaryTitle}`,
             `DESCRIPTION:Ca trực ${shiftLabel} từ ${rawIn} đến ${rawOut}.${dayNote}`,
             `STATUS:CONFIRMED`,
@@ -1662,7 +1652,15 @@
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         'X-WR-CALNAME:Lịch Ca Ái Nhuy',
-        'X-WR-TIMEZONE:Asia/Ho_Chi_Minh'
+        'X-WR-TIMEZONE:Asia/Ho_Chi_Minh',
+        'BEGIN:VTIMEZONE',
+        'TZID:Asia/Ho_Chi_Minh',
+        'BEGIN:STANDARD',
+        'DTSTART:19700101T000000',
+        'TZOFFSETFROM:+0700',
+        'TZOFFSETTO:+0700',
+        'END:STANDARD',
+        'END:VTIMEZONE'
       ].join('\r\n');
 
       const icsContent = `${icsHeader}\r\n${events.join('\r\n')}\r\nEND:VCALENDAR\r\n`;
@@ -1673,7 +1671,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics chuẩn giờ cho điện thoại!`);
+      showToast(`Đã xuất file .ics tương thích tuyệt đối cho điện thoại!`);
     }
 
     function saveIssue() {
