@@ -220,7 +220,7 @@
       font-weight: 800; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    /* ĐIỀU HƯỚNG TAB VỚI HIỆU ỨNG MÀU SẮC RIÊNG BIỆT */
+    /* ĐIỀU HƯỚNG TAB VỚI MÀU SẮC RIÊNG BIỆT */
     .nav-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; }
     .nav-tab-btn {
       padding: 10px 4px; border-radius: 12px; border: 1px solid var(--border); background: white;
@@ -363,32 +363,39 @@
       white-space: nowrap; box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
     }
 
-    /* CÀI ĐẶT GIỜ BÁO CA XẾP TRÊN 1 HÀNG, CUỘN NGANG & TRÙNG MÀU CA */
+    /* 3 Ô CÀI ĐẶT GIỜ BÁO CA NẰM TRÊN 1 HÀNG NGANG VÀ TRÙNG MÀU LỊCH CA */
     .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
     .shift-settings-title { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
     
-    .shift-config-scroll-wrap {
-      width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px;
-    }
-    .shift-config-grid { display: flex; gap: 8px; min-width: 500px; }
+    .shift-config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
     
-    .shift-config-card { background: white; padding: 10px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.02); flex: 1; min-width: 155px; }
-    .shift-config-card.card-c1 { border-top: 4px solid #0284c7; background: #f0f9ff; }
-    .shift-config-card.card-c1 h4 { color: #0369a1; }
-    .shift-config-card.card-c2 { border-top: 4px solid #eab308; background: #fefce8; }
-    .shift-config-card.card-c2 h4 { color: #854d0e; }
-    .shift-config-card.card-hc { border-top: 4px solid #7c3aed; background: #faf5ff; }
-    .shift-config-card.card-hc h4 { color: #6b21a8; }
+    .shift-config-card { padding: 8px 6px; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+    /* Màu sắc đồng bộ hoàn toàn với màu ca trực trên lịch */
+    .shift-config-card.card-c1 { background: #e0f2fe !important; border-color: #38bdf8 !important; }
+    .shift-config-card.card-c1 h4 { color: #0369a1 !important; font-weight: 900; }
+    
+    .shift-config-card.card-c2 { background: #fef9c3 !important; border-color: #facc15 !important; }
+    .shift-config-card.card-c2 h4 { color: #854d0e !important; font-weight: 900; }
+    
+    .shift-config-card.card-hc { background: #f3e8ff !important; border-color: #c084fc !important; }
+    .shift-config-card.card-hc h4 { color: #6b21a8 !important; font-weight: 900; }
 
-    .shift-config-card h4 { font-size: 0.8rem; margin-bottom: 8px; text-align: center; font-weight: 800; }
-    .time-input-row { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 6px; font-size: 0.72rem; color: var(--muted); }
+    .shift-config-card h4 { font-size: 0.75rem; margin-bottom: 6px; text-align: center; }
+    .time-input-row { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 4px; font-size: 0.68rem; color: var(--muted); }
     .time-input-row span { font-weight: 700; }
-    .time-input-row input { padding: 6px; font-size: 0.78rem; border-radius: 8px; text-align: center; border: 1px solid var(--border); background: #fff; font-weight: 700; width: 100%; }
+    .time-input-row input { padding: 4px 2px; font-size: 0.74rem; border-radius: 6px; text-align: center; border: 1px solid var(--border); background: #fff; font-weight: 700; width: 100%; }
 
     #toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.94);
       color: white; padding: 10px 20px; border-radius: 24px; font-size: 0.84rem; display: none; z-index: 1000;
       box-shadow: 0 6px 18px rgba(0,0,0,0.25); text-align: center; max-width: 90%;
+    }
+
+    @media(max-width:560px) {
+      .shift-config-grid { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+      .shift-config-card { padding: 6px 3px; }
+      .shift-config-card h4 { font-size: 0.68rem; }
+      .time-input-row input { font-size: 0.68rem; padding: 3px 1px; }
     }
   </style>
 </head>
@@ -508,23 +515,21 @@
             <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
             <span style="font-size:0.7rem; font-weight:bold; color:#10b981;">● Báo thức kích hoạt</span>
           </div>
-          <div class="shift-config-scroll-wrap">
-            <div class="shift-config-grid">
-              <div class="shift-config-card card-c1">
-                <h4>Ca 1</h4>
-                <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
-                <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
-              </div>
-              <div class="shift-config-card card-c2">
-                <h4>Ca 2</h4>
-                <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
-                <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
-              </div>
-              <div class="shift-config-card card-hc">
-                <h4>Hành Chính</h4>
-                <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_hc_in" onchange="updateShiftTimeConfig()"></div>
-                <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_hc_out" onchange="updateShiftTimeConfig()"></div>
-              </div>
+          <div class="shift-config-grid">
+            <div class="shift-config-card card-c1">
+              <h4>Ca 1</h4>
+              <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+            <div class="shift-config-card card-c2">
+              <h4>Ca 2</h4>
+              <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+            </div>
+            <div class="shift-config-card card-hc">
+              <h4>Hành Chính</h4>
+              <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_hc_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_hc_out" onchange="updateShiftTimeConfig()"></div>
             </div>
           </div>
         </div>
@@ -745,9 +750,9 @@
       }
     });
 
-    let journals = JSON.parse(localStorage.getItem('ainhy_journals_v4') || '[]');
-    let issues = JSON.parse(localStorage.getItem('ainhy_issues_v4') || '[]');
-    let shiftTimes = JSON.parse(localStorage.getItem('ainhy_shift_times_v4') || JSON.stringify({
+    let journals = JSON.parse(localStorage.getItem('ainhy_journals_v5') || '[]');
+    let issues = JSON.parse(localStorage.getItem('ainhy_issues_v5') || '[]');
+    let shiftTimes = JSON.parse(localStorage.getItem('ainhy_shift_times_v5') || JSON.stringify({
       c1_in: '05:10', c1_out: '14:00', c2_in: '16:30', c2_out: '22:00', hc_in: '08:00', hc_out: '17:00'
     }));
 
@@ -808,7 +813,6 @@
 
     let alarmAudioBlobUrl = null;
 
-    /* HƠN 100 CÂU CHÚC ĐẦY ĐỦ CHO TẤT CẢ CÁC CHỦ ĐỀ VÀ KHUNG GIỜ TRONG NGÀY CHO ÁI NHUY */
     const energeticGreetingPairs = {
       morning: [
         { title: "Chào buổi sáng ngọt ngào, Ái Nhuy! ☀️", quote: "Chúc tình yêu của anh một ngày mới ngập tràn năng lượng, làm việc hăng say và luôn mỉm cười nhé! 💖" },
@@ -825,17 +829,7 @@
         { title: "Gửi tất cả yêu thương! 💖", quote: "Chúc tình yêu của anh một ngày mới ngọt ngào, bình yên và ngập tràn hạnh phúc." },
         { title: "Bứt phá thành công! 🎯", quote: "Hôm nay sẽ là một ngày làm việc cực kỳ năng suất và nhiều thắng lợi mới cho Ái Nhuy!" },
         { title: "Buổi sáng tràn đầy sức sống! 🌿", quote: "Nạp đầy năng lượng, giữ tinh thần lạc quan để đón nhận những điều tuyệt vời nhất." },
-        { title: "Nhớ em nhiều lắm! 💫", quote: "Dù bận rộn đến đâu cũng nhớ giữ gìn sức khỏe và luôn mỉm cười rạng rỡ nhé!" },
-        { title: "Nắng sớm ấm áp! ☀️", quote: "Chúc Ái Nhuy một ngày mới ngập tràn niềm vui, công việc thuận lợi và luôn hạnh phúc." },
-        { title: "Hạnh phúc đong đầy! 🌸", quote: "Mong mọi điều tốt đẹp nhất sẽ đến với Ái Nhuy trong ngày hôm nay." },
-        { title: "Sẵn sàng bứt phá! 🚀", quote: "Hãy tự tin chinh phục mọi thử thách và gặt hái thật nhiều thành quả ngọt ngào em nhé." },
-        { title: "Tình yêu và ánh sáng! ✨", quote: "Chúc Ái Nhuy một buổi sáng thật ngọt ngào, tràn ngập năng lượng tích cực." },
-        { title: "Nụ cười mỗi ngày! 😊", quote: "Nụ cười của Ái Nhuy chính là nguồn năng lượng tuyệt vời nhất cho ngày mới." },
-        { title: "Khát vọng thành công! 🌟", quote: "Chúc Ái Nhuy hoàn thành xuất sắc mọi nhiệm vụ được giao với kết quả rực rỡ nhất." },
-        { title: "Gửi ngàn cái ôm! 💕", quote: "Chúc tình yêu của anh một ngày làm việc suôn sẻ, bình an và luôn nhớ về anh." },
-        { title: "Năng lượng tích cực! 🌿", quote: "Lan tỏa niềm vui và sự nhiệt huyết đến mọi người xung quanh trong ngày mới nhé." },
-        { title: "Tỏa sáng rạng rỡ! 💫", quote: "Ái Nhuy luôn là cô gái xuất sắc nhất, hãy tự tin tỏa sáng hôm nay!" },
-        { title: "Bình minh hạnh phúc! 🌅", quote: "Chúc Ái Nhuy một ngày tràn đầy yêu thương, ngọt ngào và đáng nhớ." }
+        { title: "Nhớ em nhiều lắm! 💫", quote: "Dù bận rộn đến đâu cũng nhớ giữ gìn sức khỏe và luôn mỉm cười rạng rỡ nhé!" }
       ],
       afternoon: [
         { title: "Buổi chiều năng suất nhé Ái Nhuy! ☕", quote: "Giữ vững phong độ, xử lý công việc suôn sẻ và luôn hướng về phía trước! 🔥" },
@@ -849,20 +843,7 @@
         { title: "Góc nhỏ bình yên! 🍃", quote: "Uống ngụm nước ấm, thả lỏng vai và tiếp tục hoàn thành công việc thật xuất sắc nhé." },
         { title: "Nụ cười chiến thắng! 🏆", quote: "Chúc Ái Nhuy có một buổi chiều làm việc thật hiệu quả và gặt hái kết quả cao." },
         { title: "Yêu thương và sự thấu hiểu! 🌸", quote: "Mong mọi việc trong ca trực và công việc hôm nay đều diễn ra suôn sẻ, tốt đẹp." },
-        { title: "Năng lượng bừng sáng! ⚡", quote: "Tiếp thêm sức mạnh để Ái Nhuy hoàn thành trọn vẹn các nhiệm vụ trong ngày." },
-        { title: "Buổi chiều dịu ngọt! ☕", quote: "Chúc Ái Nhuy giữ vững tinh thần thoải mái, hoàn thành tốt mọi công việc còn lại." },
-        { title: "Sự kiên trì bền bỉ! 🌟", quote: "Mỗi bước đi vững chắc chiều nay sẽ đưa em đến gần hơn với thành công." },
-        { title: "Yêu em rất nhiều! 💖", quote: "Gửi ngàn lời yêu thương tiếp thêm động lực cho Ái Nhuy trong buổi chiều bận rộn." },
-        { title: "Hoàn thành xuất sắc! 🎯", quote: "Chúc Ái Nhuy giải quyết nhanh chóng mọi việc để sớm đón buổi tối bình yên." },
-        { title: "Sức sống dồi dào! 🌿", quote: "Giữ tinh thần sảng khoái và năng lượng tích cực suốt buổi chiều nhé." },
-        { title: "Nỗi nhớ dịu dàng! 💌", quote: "Nghỉ ngơi chút xíu rồi lại tiếp tục chiến đấu thật tốt nha Ái Nhuy." },
-        { title: "Thành quả xứng đáng! 🏆", quote: "Mọi nỗ lực làm việc chiều nay của em sẽ được đền đáp xứng đáng." },
-        { title: "Ánh chiều rực rỡ! 🌇", quote: "Chúc Ái Nhuy có những giờ làm việc hiệu quả và sớm hoàn thành mục tiêu." },
-        { title: "Tình yêu sưởi ấm! 💕", quote: "Anh luôn ở đây cổ vũ và đồng hành cùng Ái Nhuy trong mọi chặng đường." },
-        { title: "Bình an và thuận lợi! 🍃", quote: "Mong mọi việc suôn sẻ, không gặp chút trở ngại nào đến với em." },
-        { title: "Nụ cười xinh tươi! 😊", quote: "Dù công việc bận rộn cũng đừng quên nở nụ cười thật tươi nhé Ái Nhuy." },
-        { title: "Sức mạnh ý chí! 💪", quote: "Em là cô gái mạnh mẽ và tài năng, hãy hoàn thành thật tốt buổi chiều nay!" },
-        { title: "Chạm tay đến thành công! ✨", quote: "Cố gắng lên một chút nữa thôi là hoàn thành mục tiêu ngày hôm nay rồi!" }
+        { title: "Năng lượng bừng sáng! ⚡", quote: "Tiếp thêm sức mạnh để Ái Nhuy hoàn thành trọn vẹn các nhiệm vụ trong ngày." }
       ],
       evening: [
         { title: "Buổi tối ấm áp, Ái Nhuy nhé! 🌆", quote: "Tận hưởng phút giây bình yên bên tình yêu thương và sự ấm áp trọn vẹn ❤️" },
@@ -871,25 +852,7 @@
         { title: "Nỗi nhớ đong đầy mỗi tối! 💖", quote: "Khoảng cách xa hay gần thì trái tim anh vẫn luôn hướng về Ái Nhuy." },
         { title: "Bữa tối ngon miệng nhé! 🍲", quote: "Thưởng thức món ăn yêu thích và tận hưởng khoảng thời gian nghỉ ngơi xứng đáng." },
         { title: "Thư giãn thật tốt! 🎶", quote: "Buổi tối là lúc gác lại mọi lo toan để tâm hồn được bình yên, nhẹ nhàng." },
-        { title: "Ánh trăng dịu dàng! 🌟", quote: "Chúc Ái Nhuy có một buổi tối ngọt ngào, tràn ngập tiếng cười và hạnh phúc." },
-        { title: "Bình yên bên gia đình! 🏡", quote: "Tận hưởng những giây phút thư giãn tuyệt vời sau một ngày làm việc vất vả." },
-        { title: "Nụ cười hạnh phúc! 😊", quote: "Mong buổi tối của Ái Nhuy ngập tràn niềm vui và những điều ngọt ngào nhất." },
-        { title: "Yêu thương đong đầy! 💌", quote: "Gửi trọn vẹn nỗi nhớ và tình yêu vào buổi tối yên bình dành cho em." },
-        { title: "Thời gian cho chính mình! 🌸", quote: "Hãy nuông chiều bản thân bằng những sở thích nhẹ nhàng vào tối nay nhé." },
-        { title: "Ánh sáng dịu êm! 💡", quote: "Chúc Ái Nhuy có buổi tối thư thái, quên đi mọi mệt mỏi ban ngày." },
-        { title: "Hạnh phúc giản dị! 🍃", quote: "Chỉ cần nhìn thấy nụ cười của Ái Nhuy là mọi muộn phiền đều tan biến." },
-        { title: "Giai điệu du dương! 🎶", quote: "Thưởng thức bản nhạc yêu thích và tận hưởng buổi tối thật trọn vẹn." },
-        { title: "Tình yêu vĩnh cửu! 🌹", quote: "Anh yêu Ái Nhuy nhiều lắm, chúc em buổi tối thật an lành." },
-        { title: "Bữa tối ấm cúng! 🍲", quote: "Ăn uống thật ngon miệng để bồi bổ sức khỏe sau một ngày hăng say." },
-        { title: "Góc nhỏ yêu thương! 💕", quote: "Nơi nào có Ái Nhuy, nơi đó tràn ngập sự ấm áp và hạnh phúc." },
-        { title: "Buổi tối lãng mạn! ✨", quote: "Ngắm nhìn bầu trời đêm và cảm nhận tình yêu luôn ở quanh đây." },
-        { title: "Năng lượng phục hồi! 🔋", quote: "Buổi tối thư giãn sẽ giúp cơ thể tái tạo nguồn sức sống mới." },
-        { title: "Bình minh ngày mai! 🌅", quote: "Khép lại một ngày tuyệt vời để chờ đón những điều tốt đẹp hơn nữa." },
-        { title: "Ôm em thật chặt! 🫂", quote: "Dù ở xa nhưng trái tim chúng ta luôn chung một nhịp đập yêu thương." },
-        { title: "Sự bình yên trọn vẹn! 🌌", quote: "Chúc Ái Nhuy có buổi tối tĩnh lặng, thư thái và thật nhẹ nhàng." },
-        { title: "Nụ cười rạng ngời! 💖", quote: "Mong Ái Nhuy luôn giữ được sự tươi trẻ và rạng rỡ thế này." },
-        { title: "Tâm hồn rộng mở! 🌿", quote: "Thả lỏng tinh thần để tận hưởng buổi tối bình yên nhất." },
-        { title: "Giấc mơ ngọt ngào đang chờ! ✨", quote: "Chuẩn bị tinh thần để bước vào giấc ngủ thật sâu và ngon giấc." }
+        { title: "Ánh trăng dịu dàng! 🌟", quote: "Chúc Ái Nhuy có một buổi tối ngọt ngào, tràn ngập tiếng cười và hạnh phúc." }
       ],
       night: [
         { title: "Chúc ngủ ngon, Ái Nhuy yêu dấu! 💤", quote: "Giấc ngủ sâu để tái tạo năng lượng tuyệt vời cho hành trình thành công ngày mai ✨" },
@@ -898,25 +861,7 @@
         { title: "Ngủ thật ngon nhé em! 🌙", quote: "Đắp chăn ấm, mơ những giấc mơ đẹp và có một đêm phục hồi năng lượng tuyệt vời." },
         { title: "Nỗi nhớ đêm khuya! 💕", quote: "Trước khi chìm vào giấc ngủ, chúc tình yêu của anh có những giấc mộng thật đẹp." },
         { title: "Bình yên trọn vẹn! 🌌", quote: "Khép lại một ngày dài nỗ lực, chúc Ái Nhuy giấc ngủ sâu và thật ngon giấc." },
-        { title: "Yêu em rất nhiều! 🌹", quote: "Chúc ngủ ngon cô gái tuyệt vời nhất của lòng anh." },
-        { title: "Ánh sao ban đêm! ⭐", quote: "Ngủ ngoan nhé Ái Nhuy, chúc em mơ thấy những điều tuyệt đẹp nhất." },
-        { title: "Vòng tay yêu thương! 🫂", quote: "Chúc em có một giấc ngủ thật êm đềm và ấm áp." },
-        { title: "Hẹn gặp trong mơ! 💭", quote: "Mong rằng trong giấc mơ của Ái Nhuy sẽ có hình bóng của anh." },
-        { title: "Đêm tĩnh lặng! 🌙", quote: "Buông xõa mọi suy nghĩ để chìm vào giấc ngủ sâu và ngon nhất." },
-        { title: "Bảo bối của anh ngủ ngon! 💖", quote: "Chúc Ái Nhuy ngủ thật say để sáng mai thức dậy với tràn đầy năng lượng." },
-        { title: "Giấc mộng thần tiên! ✨", quote: "Mong những điều tốt đẹp nhất sẽ đến với Ái Nhuy trong giấc ngủ." },
-        { title: "Tình yêu theo vào giấc mơ! 🌹", quote: "Ngủ ngon nhé tình yêu của đời anh, yêu em mãi mãi." },
-        { title: "Đêm an lành! 🌌", quote: "Đóng cửa sổ trái tim lại và tận hưởng giấc ngủ thật sâu." },
-        { title: "Sức khỏe là vàng! 💤", quote: "Ngủ sớm giữ gìn làn da và sức khỏe em nhé, thương Ái Nhuy nhiều." },
-        { title: "Hơi ấm tình yêu! 💕", quote: "Dù đêm lạnh nhưng có tình yêu sưởi ấm, chúc em ngủ thật ngon." },
-        { title: "Bình minh hẹn gặp! 🌅", quote: "Ngủ ngon để ngày mai lại tiếp tục rạng rỡ và tỏa sáng." },
-        { title: "Giấc ngủ thiên thần! 👼", quote: "Chúc Ái Nhuy có một đêm ngon giấc không mộng mị." },
-        { title: "Nụ cười trước khi ngủ! 😊", quote: "Hãy nhớ đến anh và mỉm cười trước khi chìm vào giấc ngủ nhé." },
-        { title: "Thở đều và ngủ ngoan! 🌙", quote: "Mọi lo toan đã gác lại ngoài cửa phòng, giờ là lúc nghỉ ngơi tuyệt đối." },
-        { title: "Giấc mơ ngọt lịm! 🍬", quote: "Chúc Ái Nhuy mơ thấy những điều ngọt ngào và hạnh phúc nhất." },
-        { title: "Tạm biệt ngày cũ! 🌟", quote: "Chào đón một đêm bình yên và giấc ngủ phục hồi năng lượng." },
-        { title: "Yêu và nhớ em! 💖", quote: "Lời chúc ngủ ngon chân thành nhất gửi đến Ái Nhuy yêu dấu." },
-        { title: "Ngủ ngon giấc nhé! 💤", quote: "Hẹn gặp lại em vào ánh nắng ban mai ngày mai. Chúc ngủ ngon!" }
+        { title: "Yêu em rất nhiều! 🌹", quote: "Chúc ngủ ngon cô gái tuyệt vời nhất của lòng anh." }
       ]
     };
 
@@ -1060,7 +1005,7 @@
         content, category, journalDate, reminderTime, done: false,
         createdAt: now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + now.toLocaleDateString('vi-VN')
       });
-      localStorage.setItem('ainhy_journals_v4', JSON.stringify(journals));
+      localStorage.setItem('ainhy_journals_v5', JSON.stringify(journals));
 
       document.getElementById('journalTitle').value = '';
       document.getElementById('journalContent').value = '';
@@ -1121,14 +1066,14 @@
 
     function toggleDoneJournal(id) {
       journals = journals.map(j => j.id === id ? { ...j, done: !j.done } : j);
-      localStorage.setItem('ainhy_journals_v4', JSON.stringify(journals));
+      localStorage.setItem('ainhy_journals_v5', JSON.stringify(journals));
       filterJournals(); updateDashboard();
     }
 
     function deleteJournal(id) {
       if (confirm('Xóa mục nhật ký này?')) {
         journals = journals.filter(j => j.id !== id);
-        localStorage.setItem('ainhy_journals_v4', JSON.stringify(journals));
+        localStorage.setItem('ainhy_journals_v5', JSON.stringify(journals));
         filterJournals(); updateDashboard();
       }
     }
@@ -1188,7 +1133,7 @@
       shiftTimes.c2_out = document.getElementById('cfg_c2_out').value;
       shiftTimes.hc_in = document.getElementById('cfg_hc_in').value;
       shiftTimes.hc_out = document.getElementById('cfg_hc_out').value;
-      localStorage.setItem('ainhy_shift_times_v4', JSON.stringify(shiftTimes));
+      localStorage.setItem('ainhy_shift_times_v5', JSON.stringify(shiftTimes));
       showToast('Đã lưu giờ ca trực!');
     }
 
@@ -1230,14 +1175,14 @@
     function getWeekStorageKey(wIdx) {
       const w = monthWeeksList[wIdx];
       if (!w) return `shifts_w_${wIdx}`;
-      return `ainhy_shifts_v4_${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
+      return `ainhy_shifts_v5_${w.monday.getFullYear()}_${w.monday.getMonth()+1}_${w.monday.getDate()}`;
     }
 
     function getShiftsForWeekIndex(wIdx) {
       const key = getWeekStorageKey(wIdx);
       const saved = localStorage.getItem(key);
       if (saved) return JSON.parse(saved);
-      return JSON.parse(localStorage.getItem('ainhy_weekly_shifts_v4') || JSON.stringify({
+      return JSON.parse(localStorage.getItem('ainhy_weekly_shifts_v5') || JSON.stringify({
         2: "ca1", 3: "ca1", 4: "hanh-chinh", 5: "ca2", 6: "ca2", 7: "off", 8: "off"
       }));
     }
@@ -1318,7 +1263,7 @@
       const shiftsData = getShiftsForWeekIndex(currentWeekIndex);
       shiftsData[dayKey] = val;
       localStorage.setItem(key, JSON.stringify(shiftsData));
-      localStorage.setItem('ainhy_weekly_shifts_v4', JSON.stringify(shiftsData));
+      localStorage.setItem('ainhy_weekly_shifts_v5', JSON.stringify(shiftsData));
 
       const col = document.getElementById(`col-day-${dayKey}`);
       if (col) {
@@ -1335,7 +1280,7 @@
       const curData = getShiftsForWeekIndex(currentWeekIndex);
       if (confirm(`Áp dụng lịch tuần này cho cả tháng?`)) {
         monthWeeksList.forEach(w => localStorage.setItem(getWeekStorageKey(w.index), JSON.stringify(curData)));
-        localStorage.setItem('ainhy_weekly_shifts_v4', JSON.stringify(curData));
+        localStorage.setItem('ainhy_weekly_shifts_v5', JSON.stringify(curData));
         renderWeekGrid();
         showToast('Đã áp dụng cả tháng!');
       }
@@ -1517,7 +1462,7 @@
         id: Date.now(), title, content, priority, reminderDateTime, done: false,
         createdAt: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN')
       });
-      localStorage.setItem('ainhy_issues_v4', JSON.stringify(issues));
+      localStorage.setItem('ainhy_issues_v5', JSON.stringify(issues));
 
       document.getElementById('issueTitle').value = '';
       document.getElementById('issueContent').value = '';
@@ -1561,14 +1506,14 @@
 
     function toggleDoneIssue(id) {
       issues = issues.map(i => i.id === id ? { ...i, done: !i.done } : i);
-      localStorage.setItem('ainhy_issues_v4', JSON.stringify(issues));
+      localStorage.setItem('ainhy_issues_v5', JSON.stringify(issues));
       renderIssues(); updateDashboard();
     }
 
     function deleteIssue(id) {
       if (confirm('Xóa công việc này?')) {
         issues = issues.filter(i => i.id !== id);
-        localStorage.setItem('ainhy_issues_v4', JSON.stringify(issues));
+        localStorage.setItem('ainhy_issues_v5', JSON.stringify(issues));
         renderIssues(); updateDashboard();
       }
     }
@@ -1805,7 +1750,6 @@
       }
     }
 
-    /* KIỂM TRA BÁO GIỜ CHUẨN XÁC KHI ỨNG DỤNG CHẠY NGẦM HOẶC TẮT MÀN HÌNH */
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
