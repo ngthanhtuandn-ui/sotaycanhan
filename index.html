@@ -114,7 +114,7 @@
     }
     .flower-icon-spin { display: inline-block; animation: flowerSpin 6s linear infinite; font-size: 1.1rem; }
 
-    /* OVERLAY HIỆN CHỮ BÍ MẬT & STICKER (5 GIÂY) */
+    /* OVERLAY HIỆN CHỮ BÍ MẬT (5 GIÂY) */
     #secretOverlay {
       position: fixed; inset: 0; z-index: 100000; display: none;
       align-items: center; justify-content: center; pointer-events: none;
@@ -128,7 +128,7 @@
       100% { opacity: 0; transform: scale(1.15); display: none; }
     }
     .secret-text-box {
-      font-size: 2.2rem; font-weight: 900; text-align: center; padding: 28px;
+      font-size: 2.6rem; font-weight: 900; text-align: center; padding: 28px;
       font-family: "Times New Roman", Times, serif; font-style: italic;
       background: linear-gradient(45deg, #ffffff, #ffe4e6, #f43f5e, #fde047, #ffffff);
       background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -141,7 +141,7 @@
       100% { transform: scale(1.12); letter-spacing: 3px; }
     }
 
-    /* HIỆU ỨNG TRÁI TIM LUNG LINH */
+    /* HIỆU ỨNG MÃ 222222: TRÁI TIM HỒNG SIÊU LÃNG MẠN, LUNG LINH TO DẦN TỪ NHỎ (5 GIÂY) */
     .heart-expanding-container {
       position: fixed; inset: 0; z-index: 100000; display: none;
       align-items: center; justify-content: center; pointer-events: none;
@@ -518,7 +518,7 @@
 </head>
 <body>
 
-  <!-- MÀN HÌNH KHÓA BẢO MẬT (MẬT KHẨU GỐC 131426, HỖ TRỢ CÁC MÃ 5 SỐ TỪ 00000 - 99999 KÈM PHÍM BÔNG HOA 🌸) -->
+  <!-- MÀN HÌNH KHÓA BẢO MẬT (MẬT KHẨU GỐC 131426, HỖ TRỢ CÁC MÃ BÍ MẬT TỪ 111111 ĐẾN 999999) -->
   <div id="lockScreen">
     <div class="lock-box">
       <div class="lock-brand-title">Sổ Tay Ái Nhuy</div>
@@ -542,17 +542,17 @@
         <button class="key-btn" onclick="pressKey('9')">9</button>
         <button class="key-btn" onclick="pressKey('C')" style="font-size:0.85rem; color:#ef4444;">Xóa</button>
         <button class="key-btn" onclick="pressKey('0')">0</button>
-        <button class="key-btn" title="Bông hoa yêu thương" onclick="pressKey('FLOWER')"><span class="flower-icon-spin">🌸</span></button>
+        <button class="key-btn" title="Bông hoa yêu thương"><span class="flower-icon-spin">🌸</span></button>
       </div>
     </div>
   </div>
 
-  <!-- OVERLAY HIỂN THỊ CHỮ BÍ MẬT & STICKER -->
+  <!-- OVERLAY HIỂN THỊ CHỮ BÍ MẬT (5 GIÂY) -->
   <div id="secretOverlay">
     <div class="secret-text-box" id="secretTextBox"></div>
   </div>
 
-  <!-- OVERLAY HIỆN TRÁI TIM LUNG LINH -->
+  <!-- OVERLAY HIỆN TRÁI TIM LUNG LINH (MÃ 222222 - 5 GIÂY) -->
   <div id="heartOverlay" class="heart-expanding-container">
     <div class="heart-epic-glow">💖</div>
   </div>
@@ -775,111 +775,73 @@
       if (val === 'C') {
         enteredPin = enteredPin.slice(0, -1);
         updatePinDots();
-      } else if (val === 'FLOWER') {
-        // Kiểm tra xem chuỗi nhập vào có đủ 5 số hay là mã mở khóa chính 6 số 131426 hay không
-        if (enteredPin === "131426") {
-          checkPinAndUnlock(enteredPin);
-        } else if (enteredPin.length === 5) {
-          checkPinAndUnlock(enteredPin);
-        } else {
-          showToast('❌ Vui lòng nhập đúng 5 chữ số rồi ấn 🌸!');
-          enteredPin = "";
-          updatePinDots();
-        }
       } else {
         if (enteredPin.length < 6) {
           enteredPin += val;
           updatePinDots();
-          // Hỗ trợ tự động nhận diện ngay nếu người dùng gõ đủ 6 số mật khẩu chính
-          if (enteredPin === "131426") {
-            setTimeout(() => checkPinAndUnlock("131426"), 150);
+          if (enteredPin.length === 6) {
+            setTimeout(checkPinAndUnlock, 150);
           }
         }
       }
     }
 
-    // Kho tàng 50+ thông điệp, câu thơ, sticker lãng mạn ngẫu nhiên cho dãy số 5 chữ số (00000 -> 99999) + 🌸
-    const secretMessagesPool = [
-      "🌸 Xin chào Ái Nhuy xinh đẹp tuyệt trần! Chúc em ngày mới ngập tràn hoa thơm và nụ cười ngọt ngào 💕",
-      "💖 00000: Thế giới của anh rực rỡ hơn mỗi khi nhìn thấy em cười! Yêu Ái Nhuy vô bờ bến ✨",
-      "🌹 11111: Tình yêu chúng ta mãi đong đầy, ngọt ngào và bền chặt như thuở ban đầu 🥰",
-      "🔥 22222: Trái tim anh chỉ đập vì một mình Ái Nhuy thôi! Mãi bên nhau em nhé 💖",
-      "💫 33333: Nhớ em cồn cào trong từng nhịp thở. Chúc tình yêu của anh luôn vui vẻ và hạnh phúc 💌",
-      "🌟 44444: Em chính là món quà tuyệt vời nhất mà cuộc đời đã ban tặng cho anh 👑",
-      "🌻 55555: Nụ cười của em là ánh nắng sưởi ấm toàn bộ không gian lạnh giá quanh anh ☀️",
-      "🦋 66666: Cùng anh đi qua muôn vàn giông bão, bình yên nhất vẫn là nắm tay em 🌿",
-      "💎 77777: Em là định mệnh, là báu vật vô giá trong tim anh đến vạn thuở kiếp sau 💍",
-      "🌺 88888: Nguyện làm chiếc bóng nhỏ theo chân Ái Nhuy đến tận cùng thế giới ⛵",
-      "✨ 99999: Yêu em không cần lý do, giống như hoa hướng dương luôn hướng về mặt trời 🌻",
-      "💘 Mật mã yêu thương: Chúc Ái Nhuy ca trực suôn sẻ, luôn xinh đẹp và gặp toàn điều may mắn! 🌸",
-      "🥰 Ôm em vào lòng qua từng câu chữ: Anh nhớ em nhiều lắm công chúa nhỏ của anh ơi! 💕",
-      "🌙 Đêm nay trăng thanh gió mát, chúc tình yêu ngủ ngon và mơ thấy anh nhé 💤",
-      "☕ Sáng sớm thức dậy, điều đầu tiên anh nghĩ đến chính là nụ cười rạng rỡ của em ☀️",
-      "🌷 Chúc cô gái ngoan của anh luôn kiên cường, tỏa sáng và hoàn thành xuất sắc mọi mục tiêu! 🎯",
-      "🍓 Ngọt ngào như viên kẹo dâu, tình cảm anh dành cho em chưa từng phai nhạt 🍬",
-      "🍀 Gặp được em là điều may mắn nhất trong thanh xuân của anh. Cảm ơn em vì tất cả! 💚",
-      "🌊 Biển rộng sông dài, tình anh hướng về Ái Nhuy mãi mãi không bao giờ cạn vơi 💙",
-      "🍂 Mùa thu sang mang theo hơi ấm tình yêu chúng ta. Mãi yêu em, cô gái dịu dàng! 🍁",
-      "👑 Chào nữ hoàng của lòng anh! Chúc em hôm nay vạn sự hanh thông, sếp quý đồng nghiệp thương 🏆",
-      "🕊️ Bình yên là khi được ở cạnh em, nghe em kể chuyện và cùng nhau ăn những món ngon 🍲",
-      "🎈 Cuộc sống bận rộn đến đâu, chỉ cần nghĩ đến em là mọi mệt mỏi đều tan biến hết ✨",
-      "💖 Yêu em bằng cả trái tim chân thành và sự trân trọng tuyệt đối nhất! 💕",
-      "🌹 Hoa hồng đỏ thắm thay cho lời tỏ tình ngọt ngào gửi đến Ái Nhuy yêu dấu 🌹",
-      "🌟 Ánh sao đêm nay sáng rực rỡ cũng không đẹp bằng đôi mắt long lanh của em ✨",
-      "🍉 Mùa hè rực rỡ hay mùa đông se lạnh, cạnh anh lúc nào cũng có em là đủ ấm áp 🥰",
-      "🌸 Chúc em một ngày làm việc hiệu quả, năng lượng tràn đầy và luôn mỉm cười hạnh phúc! 🌻",
-      "💌 Thư tình gửi gió bay đi, chúc Ái Nhuy đọc được sẽ nhớ anh thật nhiều nha 💌",
-      "💞 Trái tim hòa chung nhịp đập, hai ta mãi hướng về một tương lai hạnh phúc 🏡",
-      "💫 Chúc em vạn sự như ý, tỷ sự như mơ, làm việc gì cũng mượt mà suôn sẻ 🚀",
-      "🎀 Cô gái nhỏ bé nhưng luôn mạnh mẽ kiên cường của anh, hãy luôn tự tin lên nhé! 💪",
-      "🌿 Hít hà hương thơm cỏ cây, chúc em ngày mới bình an và tràn đầy cảm hứng 🎨",
-      "🎯 Mục tiêu hôm nay là chinh phục mọi khó khăn và nở nụ cười thật tươi em nhé! 😁",
-      "🧸 Tặng em chú gấu bông bự để ôm những lúc anh không ở cạnh nha 🤗",
-      "🔮 Tương lai phía trước dù thế nào, anh vẫn luôn ở đây đồng hành cùng Ái Nhuy 🤝",
-      "🎆 Pháo hoa rực rỡ bầu trời đêm nay dành riêng cho tình yêu ngọt ngào của chúng ta 🎇",
-      "⚡ Năng lượng tích cực lan tỏa khắp nơi, chúc em hoàn thành xuất sắc ca trực hôm nay ⚡",
-      "🌷 Cánh hoa xuân hé nở chào đón em, chúc Ái Nhuy một đời bình an và hạnh phúc! 💕",
-      "🌻 Chúc em một ngày mới ngập tràn niềm vui, vạn sự hanh thông và luôn rạng rỡ ✨",
-      "💕 Yêu em hôm nay, ngày mai và trọn vẹn cả cuộc đời này! 💖"
-    ];
+    function checkPinAndUnlock() {
+      // CÁC MÃ BÍ MẬT LÃNG MẠN TẶNG ÁI NHUY
+      if (enteredPin === "111111") {
+        triggerSecretTextEffect("Xin chào Ái Nhuy xinh đẹp 💕");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "222222") {
+        triggerEpicHeartEffect();
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "333333") {
+        triggerSecretTextEffect("Anh nhớ em rất nhiều ❤️");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "444444") {
+        triggerSecretTextEffect("✨ Thế giới của anh chính là em ✨");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "555555") {
+        triggerSecretTextEffect("🌸 Hạnh phúc nhất là khi có em 🌸");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "666666") {
+        triggerSecretTextEffect("💖 Mãi bên nhau em nhé 💖");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "777777") {
+        triggerSecretTextEffect("👑 Em là định mệnh của đời anh 👑");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "888888") {
+        triggerSecretTextEffect("🌹 Cùng em đi đến cuối con đường 🌹");
+        enteredPin = ""; updatePinDots(); return;
+      }
+      if (enteredPin === "999999") {
+        triggerSecretTextEffect("💫 Yêu Ái Nhuy đến vạn thuở kiếp sau 💫");
+        enteredPin = ""; updatePinDots(); return;
+      }
 
-    function checkPinAndUnlock(pinCode) {
-      // MẬT KHẨU MỞ KHÓA CHÍNH THỨC: 131426
-      if (pinCode === "131426") {
+      // MÃ MỞ KHÓA CHÍNH THỨC
+      if (enteredPin === "131426") {
         const lockEl = document.getElementById('lockScreen');
         if (lockEl) lockEl.style.display = 'none';
         wrongPinCount = 0;
         showToast('Mở khóa thành công! Chào Ái Nhuy 💕');
         unlockAudioContext();
-        enteredPin = "";
-        updatePinDots();
-        return;
-      }
-
-      // XỬ LÝ CÁC MÃ ẨN 5 SỐ (00000 -> 99999) KÈM BÔNG HOA 🌸
-      if (/^\d{5}$/.test(pinCode)) {
-        const randomIndex = Math.floor(Math.random() * secretMessagesPool.length);
-        const selectedMessage = secretMessagesPool[randomIndex];
-        
-        if (pinCode === "22222") {
-          triggerEpicHeartEffect();
-        } else {
-          triggerSecretTextEffect(selectedMessage);
-        }
-        
-        enteredPin = "";
-        updatePinDots();
-        return;
-      }
-
-      wrongPinCount++;
-      if (wrongPinCount >= 4) {
-        startWarningAlarm('🚨 CẢNH BÁO: NHẬP SAI MÃ QUÁ 4 LẦN!');
       } else {
-        showToast('❌ Sai mật khẩu!');
+        wrongPinCount++;
+        if (wrongPinCount >= 4) {
+          startWarningAlarm('🚨 CẢNH BÁO: NHẬP SAI MÃ QUÁ 4 LẦN!');
+        } else {
+          showToast('❌ Sai mật khẩu!');
+        }
+        enteredPin = "";
+        updatePinDots();
       }
-      enteredPin = "";
-      updatePinDots();
     }
 
     function triggerSecretTextEffect(messageText) {
@@ -937,7 +899,7 @@
     });
 
     function createFallingLeaves() {
-      const leafChars = ['🍁', '🍂', '🍃', '🌿', '✨', '🌸', '💖'];
+      const leafChars = ['🍁', '🍂', '🍃', '🌿', '✨'];
       setInterval(() => {
         const leaf = document.createElement('div');
         leaf.className = 'falling-leaf';
@@ -1072,19 +1034,59 @@
         { title: "Nụ cười đầu ngày! 😊", quote: "Gửi đến em ngàn nụ cười cho buổi sáng tươi vui. Chúc em một ngày làm việc tràn đầy hứng khởi và niềm vui." },
         { title: "Sức sống dồi dào! 🌿", quote: "Chúc em có một ngày mới tràn ngập sức sống, giải quyết mọi công việc nhanh gọn và chuẩn xác." },
         { title: "Cố lên cô gái của anh! 💪", quote: "Một ngày mới lại bắt đầu, chúc em luôn giữ vững phong độ, làm việc thật hăng say và hiệu quả." },
-        { title: "Bình minh hạnh phúc! 🌤️", quote: "Chúc Ái Nhuy một buổi sáng ngọt ngào, bước chân ra đường gặp toàn niềm vui và may mắn." }
+        { title: "Bình minh hạnh phúc! 🌤️", quote: "Chúc Ái Nhuy một buổi sáng ngọt ngào, bước chân ra đường gặp toàn niềm vui và may mắn." },
+        { title: "Nắng sớm mai ấm áp! ☀️", quote: "Nắng sớm mai chiếu vào phòng, chúc tình yêu của anh một ngày làm việc suôn sẻ và gặp nhiều điều tốt lành." },
+        { title: "Tinh thần sảng khoái! ☕", quote: "Chúc em buổi sáng tràn ngập niềm vui, tinh thần sảng khoái để chinh phục mọi mục tiêu trong ngày." },
+        { title: "Công chúa thức giấc! 👑", quote: "Dậy đi cô công chúa của anh ơi! Chúc em một ngày mới ngập tràn tiếng cười và niềm hạnh phúc." },
+        { title: "Ngày mới bình an! 🕊️", quote: "Chúc em ngày mới bình an, mọi khó khăn đều lùi bước, nhường chỗ cho may mắn và thành công." },
+        { title: "Nụ hôn buổi sáng! 😘", quote: "Gửi ngàn cái hôn gió cho em vào buổi sáng. Chúc em một ngày làm việc thật tuyệt vời!" },
+        { title: "Bữa sáng ngon miệng! 🥐", quote: "Chúc em bữa sáng ngon miệng và có một khởi đầu ngày mới thật trọn vẹn, nhiều năng lượng." },
+        { title: "Cô gái ngoan của anh! 💖", quote: "Hôm nay chắc chắn sẽ là một ngày tuyệt vời của em. Cố lên nhé cô gái ngoan của anh!" },
+        { title: "Hăng say sáng tạo! 💡", quote: "Chúc em một ngày làm việc hăng say, sáng tạo và luôn giữ được tinh thần lạc quan yêu đời." },
+        { title: "Ánh nắng ban mai! 🌅", quote: "Ánh nắng ban mai ấm áp như tình yêu của anh dành cho em vậy. Chúc em buổi sáng ngập tràn yêu thương." },
+        { title: "Thuận buồm xuôi gió! ⛵", quote: "Chúc em ngày mới suôn sẻ, mọi dự định và kế hoạch đều đạt kết quả cao nhất nhé." },
+        { title: "Cảm hứng bất tận! 🎨", quote: "Chúc cô gái của anh một buổi sáng tràn đầy cảm hứng, làm việc gì cũng thuận buồm xuôi gió." },
+        { title: "Hoa hướng dương! 🌻", quote: "Chúc em ngày mới rực rỡ như những bông hoa hướng dương luôn hướng về phía mặt trời." },
+        { title: "Tâm hồn đẹp! 🌿", quote: "Thức dậy với một tâm hồn đẹp và một cơ thể khỏe mạnh nhé em. Chúc buổi sáng tốt lành!" },
+        { title: "Nhiệt huyết cháy bỏng! 🔥", quote: "Chúc em ngày mới không mệt mỏi, luôn tràn đầy nhiệt huyết và năng lượng tích cực." },
+        { title: "Sếp quý đồng nghiệp thương! 🏆", quote: "Chúc Ái Nhuy yêu dấu của anh một ngày làm việc hiệu quả, sếp quý đồng nghiệp thương." },
+        { title: "Cổ vũ tinh thần! 📣", quote: "Khởi đầu ngày mới thật năng suất nhé em. Anh luôn ở bên và cổ vũ cho em!" },
+        { title: "Điều tốt đẹp nhất! ✨", quote: "Chúc em buổi sáng an lành, mọi điều tốt đẹp nhất sẽ đến với em trong ngày hôm nay." },
+        { title: "Nụ cười tỏa nắng! 😁", quote: "Nụ cười của em là nguồn năng lượng của anh. Chúc em hôm nay luôn tươi cười rạng rỡ nhé." },
+        { title: "Hoàn thành xuất sắc! 🎯", quote: "Chúc em một ngày làm việc suôn sẻ, hoàn thành xuất sắc mọi chỉ tiêu và nhiệm vụ được giao." },
+        { title: "Tự tin bước ra ngoài! 🚶‍♀️", quote: "Chào buổi sáng! Hãy tự tin bước ra ngoài và chinh phục thế giới bằng nụ cười tỏa nắng của em nhé." }
       ],
       afternoon: [
         { title: "Nhớ em nhiều lắm! 💖", quote: "Dù bận rộn đến đâu thì hình bóng của em vẫn luôn ngự trị trong tim anh. Nhớ và thương Ái Nhuy vô cùng!" },
         { title: "Tình yêu tuyệt vời! 🌹", quote: "Cảm ơn em đã đến bên anh, mang theo ánh sáng và sưởi ấm trái tim anh mỗi ngày. Yêu em mãi mãi." },
         { title: "Cuộc sống ngọt ngào! 💞", quote: "Cuộc sống này thật đẹp vì có em. Chúc cho tình yêu chúng ta luôn ngọt ngào và bền chặt theo năm tháng." },
-        { title: "Nhớ nụ cười em! 😍", quote: "Chỉ cần nghĩ đến nụ cười của em thôi là anh lại có thêm động lực để vượt qua mọi thách thức rồi." },
+        { title: "Nhớ nụ cười em! 😍", quote: "Chỉ cần nghĩ đến nụ cười của em thôi là anh lại có thêm động lực để vượt qua mọi thử thách rồi." },
         { title: "Trái tim chung nhịp! 💓", quote: "Dù ở đâu, làm gì, hai trái tim chúng ta vẫn luôn chung một nhịp đập yêu thương." },
         { title: "Ăn uống đầy đủ nhé! 🍲", quote: "Dù bận rộn đến đâu em cũng nhớ ăn uống đúng giờ và đủ chất nha, không được bỏ bữa đâu đấy!" },
         { title: "Giữ gìn sức khỏe nha! 🍎", quote: "Sức khỏe là vốn quý nhất. Em nhớ uống đủ nước và giữ tinh thần thoải mái trong ca làm nhé." },
         { title: "Làm việc cẩn thận nhé! 📋", quote: "Hôm nay làm việc em nhớ cẩn thận từng chi tiết nhỏ nha, kiểm tra kỹ lưỡng mọi thứ để không có chút sai sót nào." },
         { title: "Ca chiều suôn sẻ! 🚀", quote: "Chúc em xử lý công việc ca chiều cực kỳ mượt mà, suôn sẻ và đạt kết quả cao nhất." },
-        { title: "Nắng ấm của anh! ☀️", quote: "Em chính là ánh nắng ấm áp nhất xua tan đi mọi mệt mỏi trong cuộc sống của anh." }
+        { title: "Nắng ấm của anh! ☀️", quote: "Em chính là ánh nắng ấm áp nhất xua tan đi mọi mệt mỏi trong cuộc sống của anh." },
+        { title: "Khoảng cách không xa! ✈️", quote: "Dù đôi khi chúng ta bận rộn với công việc, nhưng trái tim anh và em lúc nào cũng hướng về nhau." },
+        { title: "Biển rộng sông dài! 🌊", quote: "Tình yêu anh dành cho em như biển rộng sông dài, mãi mãi không bao giờ cạn vơi." },
+        { title: "Mùa nắng gió! 🍃", quote: "Cùng em đi qua mỗi mùa nắng gió là điều hạnh phúc nhất cuộc đời anh." },
+        { title: "Món quà vô giá! 🎁", quote: "Em là món quà tuyệt vời nhất mà ông trời đã ban tặng cho cuộc đời anh." },
+        { title: "Khoảnh khắc tuyệt vời! ⏳", quote: "Mỗi giây phút ở bên em đều là những ký ức tuyệt vời và lãng mạn nhất trong anh." },
+        { title: "Bình yên trọn vẹn! 🏡", quote: "Nơi nào có em, nơi đó chính là bình yên trọn vẹn nhất đối với anh." },
+        { title: "Nguyện cùng em... 💍", quote: "Nguyện cùng em đi đến tận cùng thế giới, nắm tay nhau qua mọi giông bão cuộc đời." },
+        { title: "Ánh mắt long lanh! 👀", quote: "Anh say đắm ánh mắt và nụ cười dịu dàng của em từ cái nhìn đầu tiên." },
+        { title: "Nhớ em cồn cào! 💌", quote: "Hôm nay trời đẹp thế này, tự nhiên anh lại thấy nhớ em đến cồn cào." },
+        { title: "Kiên trì trau dồi! 📚", quote: "Học tập và làm việc là chìa khóa thành công. Chúc em luôn kiên trì trau dồi tri thức mỗi ngày." },
+        { title: "Giỏi hơn một chút! 💡", quote: "Mỗi ngày giỏi hơn một chút chính là bí quyết để em trở nên tỏa sáng và xuất sắc hơn." },
+        { title: "Chinh phục tri thức! 🧠", quote: "Đừng ngại thử sức với những kiến thức mới khó nhằn, em hoàn toàn có thể chinh phục được chúng." },
+        { title: "Tài sản quý giá! 💎", quote: "Kiến thức em tích lũy hôm nay chính là tài sản quý giá nhất cho tương lai của chúng ta." },
+        { title: "Tranh thủ nghỉ trưa! 🛌", quote: "Trưa nay nhớ tranh thủ chợp mắt nghỉ ngơi một chút để lấy lại sức khỏe cho ca chiều nhé em." },
+        { title: "Mang theo ô cửa! ☂️", quote: "Thời tiết thay đổi thất thường, ra đường nhớ mặc áo ấm và mang theo ô cẩn thận nha em." },
+        { title: "Uống đủ nước! 💧", quote: "Nước rất quan trọng cho cơ thể và làn da, em nhớ uống đủ nước trong suốt ca làm việc nhé." },
+        { title: "Đừng gồng gánh quá sức! 🛑", quote: "Nếu thấy mệt mỏi quá thì hãy dừng lại nghỉ ngơi một chút, đừng gồng gánh quá sức em nhé." },
+        { title: "Chăm sóc bản thân! 🩺", quote: "Có sức khỏe là số một. Em phải luôn hứa với anh là sẽ chăm sóc bản thân thật tốt đấy." },
+        { title: "Niềm hạnh phúc lớn! 🌺", quote: "Nhìn em khỏe mạnh, vui tươi chính là niềm hạnh phúc lớn nhất của anh rồi." },
+        { title: "Hành động yêu thương! 💞", quote: "Yêu em không chỉ bằng lời nói mà bằng cả hành động. Chúc em buổi chiều làm việc thật hiệu quả!" }
       ],
       evening: [
         { title: "Kết thúc ngày rực rỡ! 🎉", quote: "Một ngày làm việc vất vả đã khép lại thật suôn sẻ. Giờ là lúc em tự thưởng cho mình sự thư giãn tuyệt đối nhé." },
@@ -1096,7 +1098,17 @@
         { title: "Nỗ lực bản thân! ✅", quote: "Một ngày làm việc hiệu quả khép lại, em hãy tự hào vì bản thân đã rất nỗ lực." },
         { title: "Thư giãn đầu óc! 🎧", quote: "Nghe một bản nhạc nhẹ nhàng, uống một ly nước ấm và tận hưởng buổi tối thật trọn vẹn em nhé." },
         { title: "Gác lại lo toan! 🍃", quote: "Khép lại một ngày dài, chúc em thả lỏng cơ thể và tận hưởng sự yên bình." },
-        { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." }
+        { title: "Năng lượng phục hồi! 🔋", quote: "Tối nay hãy ngủ sớm để sạc đầy năng lượng cho một ngày mới tuyệt vời hơn nữa." },
+        { title: "Buổi tối ấm áp! 🏡", quote: "Buổi tối ấm áp bên gia đình nhé em. Mong mọi điều bình an sẽ đến với em vào buổi tối nay." },
+        { title: "Ăn tối ngon miệng! 🍲", quote: "Ăn tối thật ngon miệng nha em. Nhớ đừng ăn quá muộn không lại đau dạ dày đấy nhé." },
+        { title: "Yêu thương bản thân! 💖", quote: "Buổi tối là lúc để yêu thương bản thân nhiều hơn. Hãy làm những gì em thích nhé." },
+        { title: "Trái tim nghỉ ngơi! ☕", quote: "Khép lại những bộn bề ngoài kia, tối nay hãy để trái tim được nghỉ ngơi và thư giãn trọn vẹn." },
+        { title: "Buổi tối dịu dàng! ✨", quote: "Chúc em có một buổi tối thật dịu dàng, ngọt ngào và tràn ngập những tiếng cười vui vẻ." },
+        { title: "Đường về nhà an toàn! 🛵", quote: "Đèn phố đã lên rồi, chúc em trên đường về nhà thật an toàn và bình yên nhé." },
+        { title: "Xua tan mệt mỏi! 🍲", quote: "Bữa tối ấm cúng sẽ xua tan đi mọi mệt mỏi sau một ngày dài làm việc căng thẳng." },
+        { title: "Xem phim đọc sách! 📖", quote: "Chúc em buổi tối thư thái, xem một bộ phim hay hoặc đọc một cuốn sách yêu thích nha." },
+        { title: "Khoảnh khắc hạnh phúc! 🌸", quote: "Anh luôn mong mỗi buổi tối của em đều là những khoảnh khắc nhẹ nhàng và hạnh phúc nhất." },
+        { title: "Tâm thế thoải mái! 🌙", quote: "Kết thúc một ngày tuyệt vời, chúc em chuẩn bị một tâm thế thật thoải mái để đón chờ giấc ngủ ngon." }
       ],
       night: [
         { title: "Ngủ ngon nhé tình yêu! 🌙", quote: "Đã đến giờ đi ngủ rồi, chúc tình yêu của anh ngủ thật ngon và có những giấc mơ thật đẹp nhé. 💕" },
@@ -1108,7 +1120,17 @@
         { title: "Êm đềm hơi thở! 💤", quote: "Ngủ ngoan nha em, mọi lo âu cứ để ngày mai tính, đêm nay hãy tận hưởng giấc ngủ thật sâu." },
         { title: "Giấc tiên ngọt ngào! 🧚‍♀️", quote: "Chúc em có một đêm dài ngủ thật ngon giấc, không giật mình và mơ thấy toàn điều hạnh phúc." },
         { title: "Tạm biệt ngày cũ! 👋", quote: "Khép đôi mi lại và chìm vào giấc ngủ ngọt ngào thôi nào. Chúc em ngủ ngon!" },
-        { title: "Yêu em đến trong mơ! 💖", quote: "Ngay cả trong giấc mơ, anh cũng chỉ muốn được nhìn thấy nụ cười của em. Ngủ ngon nhé em yêu!" }
+        { title: "Yêu em đến trong mơ! 💖", quote: "Ngay cả trong giấc mơ, anh cũng chỉ muốn được nhìn thấy nụ cười của em. Ngủ ngon nhé em yêu!" },
+        { title: "Sạc đầy năng lượng! 🔋", quote: "Đêm đã khuya rồi, chúc em có một giấc ngủ thật sâu để sạc đầy năng lượng cho ngày mai." },
+        { title: "Mơ điều tuyệt vời! ✨", quote: "Chúc em ngủ ngon, mơ thấy những điều tuyệt vời nhất mà em ao ước." },
+        { title: "Hơi ấm tình yêu! 🔥", quote: "Hơi ấm từ tình yêu của chúng ta sẽ sưởi ấm giấc ngủ của em đêm nay. Ngủ ngon nhé!" },
+        { title: "Công chúa rạng rỡ! 👑", quote: "Chúc công chúa của anh có một giấc ngủ êm đềm, không mộng mị, sáng mai thức dậy thật rạng rỡ." },
+        { title: "Đêm se lạnh! 🧥", quote: "Đêm nay trời se lạnh, em nhớ đắp chăn thật kỹ và ngủ ngoan nha." },
+        { title: "Lời chúc yêu thương! 💌", quote: "Gửi ngàn lời chúc yêu thương vào giấc ngủ của em. Ngủ thật ngon em nhé!" },
+        { title: "Bình yên tuyệt đối! 🕊️", quote: "Chúc em có một đêm bình yên tuyệt đối, trôi qua trong những giấc mơ ngọt ngào nhất." },
+        { title: "Khép lại ngày cũ! 📖", quote: "Khép lại ngày cũ bằng một giấc ngủ thật sâu. Ngủ ngon và bình an nhé tình yêu của anh." },
+        { title: "Đón chờ ngày mới! 🌻", quote: "Ngủ thật ngon và đón chờ một ngày mai thật nhiều niềm vui đang chờ em phía trước." },
+        { title: "Yêu em rất nhiều! 💕", quote: "Chúc em yêu ngủ ngon, giấc mơ đẹp và luôn nhớ rằng anh rất yêu em! 💕" }
       ]
     };
 
@@ -1781,7 +1803,7 @@
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast(`Đã xuất file .ics báo thức lịch chuẩn xác!`);
+      showToast(`Đã xuất file .ics báo thức chính xác!`);
     }
 
     function saveIssue() {
