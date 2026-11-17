@@ -149,7 +149,6 @@
     @keyframes floatCloud1 { 0% { transform: translateX(0); } 100% { transform: translateX(7px); } }
     @keyframes floatCloud2 { 0% { transform: translateX(0); } 100% { transform: translateX(-6px); } }
 
-    /* MẶT TRĂNG CAO & SAO HUYỀN BÍ TRẢI DÀI */
     .night-animated-box { position: relative; width: 86px; height: 68px; }
     .night-moon {
       position: absolute; top: -4px; right: 4px; width: 38px; height: 38px; border-radius: 50%;
@@ -163,31 +162,11 @@
       animation: starTwinkle 2.5s ease-in-out infinite alternate;
       z-index: 1;
     }
-    .night-sparkle.st-far-left {
-      top: 6px; left: 2px; font-size: 13px; color: #fef08a;
-      text-shadow: 0 0 8px rgba(250, 204, 21, 0.9);
-      animation-duration: 2.1s; animation-delay: 0.1s;
-    }
-    .night-sparkle.st-mid-left-high {
-      top: 22px; left: 24px; font-size: 11px; color: #38bdf8;
-      text-shadow: 0 0 6px rgba(56, 189, 248, 0.8);
-      animation-duration: 3.1s; animation-delay: 0.8s;
-    }
-    .night-sparkle.st-mid-left-low {
-      bottom: 8px; left: 10px; font-size: 14px; color: #fde047;
-      text-shadow: 0 0 8px rgba(253, 224, 71, 0.9);
-      animation-duration: 2.6s; animation-delay: 1.4s;
-    }
-    .night-sparkle.st-near-left {
-      bottom: 16px; left: 42px; font-size: 10px; color: #93c5fd;
-      text-shadow: 0 0 6px rgba(147, 197, 253, 0.8);
-      animation-duration: 1.9s; animation-delay: 0.4s;
-    }
-    .night-sparkle.st-near-moon {
-      top: 4px; left: 34px; font-size: 12px; color: #ffffff;
-      text-shadow: 0 0 7px rgba(255, 255, 255, 0.9);
-      animation-duration: 2.8s; animation-delay: 1.1s;
-    }
+    .night-sparkle.st-far-left { top: 6px; left: 2px; font-size: 13px; color: #fef08a; text-shadow: 0 0 8px rgba(250, 204, 21, 0.9); animation-duration: 2.1s; }
+    .night-sparkle.st-mid-left-high { top: 22px; left: 24px; font-size: 11px; color: #38bdf8; text-shadow: 0 0 6px rgba(56, 189, 248, 0.8); animation-duration: 3.1s; }
+    .night-sparkle.st-mid-left-low { bottom: 8px; left: 10px; font-size: 14px; color: #fde047; text-shadow: 0 0 8px rgba(253, 224, 71, 0.9); animation-duration: 2.6s; }
+    .night-sparkle.st-near-left { bottom: 16px; left: 42px; font-size: 10px; color: #93c5fd; text-shadow: 0 0 6px rgba(147, 197, 253, 0.8); animation-duration: 1.9s; }
+    .night-sparkle.st-near-moon { top: 4px; left: 34px; font-size: 12px; color: #ffffff; text-shadow: 0 0 7px rgba(255, 255, 255, 0.9); animation-duration: 2.8s; }
 
     @keyframes moonGlow {
       0% { filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5)); transform: rotate(-18deg) scale(0.97); }
@@ -334,7 +313,6 @@
       -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; cursor: pointer;
     }
 
-    /* KHU VỰC ĐỒNG BỘ LỊCH ĐIỆN THOẠI ĐƯỢC THIẾT KẾ GỌN GÀNG, CHUYÊN NGHIỆP */
     .sync-calendar-panel { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 10px; margin-top: 10px; }
     .sync-row { display: flex; gap: 8px; align-items: center; }
     .custom-multiselect { flex: 1.3; position: relative; }
@@ -369,7 +347,6 @@
     .time-input-row span { width: 50px; font-weight: 600; }
     .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
-    /* THỜI KHÓA BIỂU */
     .table-scroll-wrap {
       width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 2px solid #a5b4fc;
       border-radius: 18px; margin: 12px 0 10px; background: #ffffff; box-shadow: 0 6px 20px rgba(99,102,241,0.08);
@@ -501,7 +478,6 @@
         
         <div class="week-grid" id="weekGridContainer"></div>
 
-        <!-- KHU VỰC ĐỒNG BỘ LỊCH SANG ĐIỆN THOẠI TIỆN LỢI & SANG TRỌNG -->
         <div class="sync-calendar-panel">
           <div class="sync-row">
             <div class="custom-multiselect">
@@ -724,6 +700,7 @@
 
     let alarmAudioBlobUrl = null;
 
+    // HƠN 100 CÂU CHÚC ĐẦY ĐỦ TÌNH YÊU, NGÀY MỚI, NĂNG LƯỢNG, LÀM VIỆC TỐT, NGỦ NGON...
     const energeticGreetingPairs = {
       morning: [
         { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày làm việc năng suất, tràn đầy nhiệt huyết và hoàn thành xuất sắc mọi mục tiêu! ✨" },
@@ -731,23 +708,111 @@
         { title: "Tuấn Tuấn tuyệt vời! 💖", quote: "Chúc bạn ngập tràn tình yêu thương, năng lượng tích cực và may mắn cả ngày!" },
         { title: "Ngày mới tốt lành! 📚", quote: "Cùng nỗ lực học tập, làm việc hết mình để gặt hái những thành tựu rực rỡ nhất!" },
         { title: "Chào ngày mới năng lượng! 🌟", quote: "Làm việc bằng cả đam mê, học tập với tất cả sự quyết tâm bạn nhé!" },
-        { title: "Năng lượng ngập tràn! 💼", quote: "Chúc bạn một ngày làm việc cực tốt, xử lý mọi việc suôn sẻ và hanh thông!" }
+        { title: "Năng lượng ngập tràn! 💼", quote: "Chúc bạn một ngày làm việc cực tốt, xử lý mọi việc suôn sẻ và hanh thông!" },
+        { title: "Buổi sáng an lành nhé! ☕", quote: "Cà phê buổi sáng thơm ngon, chúc bạn một ngày tràn ngập niềm vui và tiếng cười." },
+        { title: "Gửi ngàn yêu thương buổi sáng! ❤️", quote: "Mong mọi điều tốt đẹp nhất sẽ đến với Tuấn Tuấn trong ngày hôm nay!" },
+        { title: "Bắt đầu ngày mới thật tuyệt! 🌸", quote: "Tự tin bước đi và chinh phục mọi thử thách trong ngày hôm nay nhé!" },
+        { title: "Nụ cười rạng rỡ mỗi sớm mai! 😁", quote: "Hãy luôn giữ tinh thần lạc quan, yêu đời và năng lượng căng tràn." },
+        { title: "Sức sống mới, cơ hội mới! 🎯", quote: "Chúc bạn nắm bắt mọi cơ hội để thành công rực rỡ hôm nay!" },
+        { title: "Chào ngày mới bình an! 🌿", quote: "Mọi việc thuận buồm xuôi gió, làm việc gì cũng hanh thông, suôn sẻ." },
+        { title: "Tuấn Tuấn là giỏi nhất! 🥇", quote: "Tin tưởng vào bản thân và tạo nên một ngày làm việc vô cùng đáng nhớ." },
+        { title: "Năng lượng tích cực lan tỏa! ⚡", quote: "Chúc bạn một ngày làm việc hiệu suất cao và tràn đầy cảm hứng sáng tạo." },
+        { title: "Buổi sáng tràn ngập hồng ân! 🌷", quote: "Mong bạn luôn được che chở, bình an và gặp nhiều may mắn." },
+        { title: "Khát khao và thành công! 🔥", quote: "Đừng ngại khó khăn, hôm nay sẽ là một ngày bứt phá ngoạn mục." },
+        { title: "Yêu đời, yêu người! 💕", quote: "Chúc Tuấn Tuấn có một buổi sáng tuyệt vời bên những người thân yêu." },
+        { title: "Bình minh tươi đẹp! 🌅", quote: "Mở cửa sổ đón nắng mới và tận hưởng một ngày trọn vẹn niềm vui." },
+        { title: "Tâm hồn thanh thản! 🕊️", quote: "Bắt đầu ngày mới với một tâm trạng thư thái và nhẹ nhàng nhất." },
+        { title: "Chăm chỉ và thành công! 📖", quote: "Mỗi ngày trôi qua là một bước tiến gần hơn đến ước mơ của bạn." },
+        { title: "Năng lượng 200%! 🔋", quote: "Đánh thức mọi tiềm năng bên trong bạn để tỏa sáng rực rỡ hôm nay." },
+        { title: "Gửi lời chúc ngọt ngào nhất! 🍬", quote: "Chúc Tuấn Tuấn một ngày mới ngập tràn niềm vui và ngọt ngào." },
+        { title: "Vững bước tương lai! 🛤️", quote: "Kiên định với mục tiêu đã chọn, thành công chắc chắn sẽ đến." },
+        { title: "Hạnh phúc quanh ta! 🌻", quote: "Hãy trân trọng từng khoảnh khắc đẹp đẽ trong ngày hôm nay." },
+        { title: "Sáng nay thật tuyệt! 🌤️", quote: "Thời tiết đẹp, tâm trạng tốt, chúc bạn một ngày làm việc siêu đỉnh." },
+        { title: "Tỏa sáng cùng ánh dương! ☀️", quote: "Bạn chính là mặt trời nhỏ mang lại ấm áp cho mọi người xung quanh." }
       ],
       afternoon: [
         { title: "Buổi chiều năng suất nhé Tuấn Tuấn! ☕", quote: "Giữ vững phong độ, xử lý công việc suôn sẻ và gặt hái nhiều kết quả tốt đẹp!" },
         { title: "Nhiệt huyết buổi chiều! 🔥", quote: "Tập trung cao độ, làm việc hiệu quả và lan tỏa năng lượng tích cực đến mọi người!" },
         { title: "Tình yêu và công việc! 💖", quote: "Mỗi khoảnh khắc làm việc và học tập đều là cơ hội để khẳng định bản thân." },
         { title: "Cố lên Tuấn Tuấn ơi! 🌟", quote: "Nỗ lực học tập và làm việc chăm chỉ sẽ mang lại thành công xứng đáng!" },
-        { title: "Làm việc thật tốt nhé! 🎯", quote: "Buổi chiều bứt phá, hoàn thành xuất sắc các nhiệm vụ đề ra!" }
+        { title: "Làm việc thật tốt nhé! 🎯", quote: "Buổi chiều bứt phá, hoàn thành xuất sắc các nhiệm vụ đề ra!" },
+        { title: "Buổi chiều an lành! 🍃", quote: "Thả lỏng đôi vai chút xíu, uống ngụm nước ấm và tiếp tục chiến đấu nào." },
+        { title: "Năng lượng buổi chiều! ⚡", quote: "Đừng chùn bước trước bất kỳ khó khăn nào, bạn luôn có sức mạnh vượt qua." },
+        { title: "Hoàn thành mục tiêu! 📋", quote: "Cố gắng giải quyết gọn gàng các công việc còn lại trong chiều nay nhé." },
+        { title: "Gửi chút ngọt ngào chiều hôm! 🍰", quote: "Mong buổi chiều của bạn trôi qua thật nhẹ nhàng và hiệu quả." },
+        { title: "Sức bền tuyệt vời! 🏃‍♂️", quote: "Bạn đang làm rất tốt, hãy giữ vững tinh thần này đến cuối ngày." },
+        { title: "Bình yên buổi xế chiều! 🌇", quote: "Ngắm nhìn trời chiều một chút để lấy lại cảm hứng và sự tập trung." },
+        { title: "Thành quả sắp đến gần! 🏆", quote: "Chỉ còn vài tiếng nữa là hoàn thành ca làm, cố lên nào Tuấn Tuấn!" },
+        { title: "Ý chí kiên cường! 💪", quote: "Sự quyết tâm của bạn hôm nay chính là chìa khóa của thành công ngày mai." },
+        { title: "Tươi cười chiều nay! 😊", quote: "Nụ cười giúp xua tan mọi mệt mỏi và áp lực công việc." },
+        { title: "Hăng hái và tập trung! 🎯", quote: "Giải quyết đâu ra đấy từng việc một, bạn rất giỏi trong việc này." },
+        { title: "Tình yêu sưởi ấm buổi chiều! 💕", quote: "Nhớ ăn uống điều độ và giữ gìn sức khỏe thật tốt nha." },
+        { title: "Chiều nay thật suôn sẻ! 🕊️", quote: "Chúc mọi việc diễn ra đúng như mong đợi và kế hoạch của bạn." },
+        { title: "Năng lượng bền bỉ! 🔋", quote: "Tiếp thêm lửa cho buổi chiều làm việc thật bùng nổ và hiệu quả." },
+        { title: "Sáng tạo không ngừng! 💡", quote: "Luôn tìm ra những giải pháp thông minh và tối ưu nhất cho công việc." },
+        { title: "Chăm chỉ đáng tự hào! 🌟", quote: "Sự nỗ lực của Tuấn Tuấn luôn được ghi nhận và đền đáp xứng đáng." },
+        { title: "Buổi chiều đầy cảm hứng! 🎨", quote: "Mong bạn có những phút giây làm việc hào hứng và nhiều niềm vui." },
+        { title: "Vượt mọi chướng ngại! 🚀", quote: "Không gì có thể làm khó được một người bản lĩnh như bạn." },
+        { title: "Thư thái buổi xế! 🍵", quote: "Dành 5 phút nghỉ ngơi thư giãn để nạp lại tinh thần sảng khoái." },
+        { title: "Năng suất vượt trội! 📈", quote: "Hôm nay sẽ là một ngày làm việc đạt hiệu quả cao nhất của bạn." },
+        { title: "Yêu thương và quan tâm! 🌹", quote: "Luôn có người quan tâm và đồng hành cùng bạn trên mọi nẻo đường." },
+        { title: "Bứt phá về đích! 🏁", quote: "Tăng tốc nhẹ nhàng để khép lại buổi chiều thật trọn vẹn." }
       ],
       evening: [
         { title: "Buổi tối ấm áp, Tuấn Tuấn nhé! 🌆", quote: "Tận hưởng phút giây bình yên bên gia đình và tình yêu thương trọn vẹn ❤️" },
         { title: "Khép lại ngày dài năng suất! ✨", quote: "Tự hào vì hôm nay bạn đã làm việc hết mình và nỗ lực không ngừng nghỉ!" },
-        { title: "Yêu thương ngập tràn! 🌙", quote: "Chúc buổi tối an lành, thư giãn và nạp đầy năng lượng cho ngày mai." }
+        { title: "Yêu thương ngập tràn! 🌙", quote: "Chúc buổi tối an lành, thư giãn và nạp đầy năng lượng cho ngày mai." },
+        { title: "Bình yên bên gia đình! 🏡", quote: "Buổi tối là lúc quây quần, chia sẻ những câu chuyện vui vẻ và ấm cúng." },
+        { title: "Thư giãn tuyệt đối! 🛋️", quote: "Gác lại mọi lo toan công việc ngoài kia để tận hưởng sự thoải mái." },
+        { title: "Bữa tối ngon miệng! 🍜", quote: "Chúc Tuấn Tuấn có bữa tối thật ngon miệng và ấm cúng bên người thân." },
+        { title: "Đêm về tĩnh lặng! 🌌", quote: "Tâm hồn bình yên, nhẹ nhàng thả lỏng sau một ngày làm việc miệt mài." },
+        { title: "Tình yêu ngọt ngào! 💞", quote: "Gửi ngàn lời yêu thương đến Tuấn Tuấn vào buổi tối tuyệt vời này." },
+        { title: "Xứng đáng nghỉ ngơi! 🌟", quote: "Hôm nay bạn đã vất vả nhiều rồi, giờ là lúc tự thưởng cho bản thân." },
+        { title: "Nụ cười trọn vẹn! 😁", quote: "Kết thúc một ngày bằng những kỷ niệm đẹp và nụ cười rạng rỡ." },
+        { title: "Ánh nến lung linh! 🕯️", quote: "Chúc buổi tối lãng mạn, nhẹ nhàng và tràn đầy cảm xúc yêu thương." },
+        { title: "Hạnh phúc giản dị! 🌸", quote: "Hạnh phúc đôi khi chỉ là buổi tối được thảnh thơi đọc sách, nghe nhạc." },
+        { title: "Góc nhỏ bình yên! 🍃", quote: "Tận hưởng không gian riêng tư thật thoải mái và ấm áp." },
+        { title: "Tâm tình buổi tối! 💬", quote: "Mong mọi mệt mỏi sẽ tan biến theo màn đêm buông xuống." },
+        { title: "Sự quan tâm chân thành! 💖", quote: "Nhớ giữ ấm cơ thể và chăm sóc sức khỏe thật tốt nha bạn ơi." },
+        { title: "Buổi tối tràn ngập niềm vui! 🎉", quote: "Xem một bộ phim hay hoặc nghe bản nhạc yêu thích để thư giãn nào." },
+        { title: "Hoàng hôn lãng mạn! 🌇", quote: "Tạm biệt ánh hoàng hôn để chào đón một buổi tối thật dịu êm." },
+        { title: "Năng lượng hồi phục! 🔋", quote: "Cơ thể đang được tái tạo lại nguồn năng lượng mới cho ngày mai." },
+        { title: "Giấc mơ ngọt ngào đang chờ! 🌠", quote: "Chuẩn bị một tâm thế thật thoải mái để đón chào giấc ngủ ngon." },
+        { title: "Tình cảm đong đầy! 💌", quote: "Cảm ơn vì bạn luôn là người mang lại năng lượng tích cực cho mọi người." },
+        { title: "Buổi tối an lành nhất! 🕊️", quote: "Chúc bạn có những giờ phút nghỉ ngơi thật sâu giấc và trọn vẹn." },
+        { title: "Thanh thản tâm hồn! 🌊", quote: "Buổi tối nhẹ nhàng trôi qua mang theo những điều tốt lành nhất." },
+        { title: "Yêu thương đong đầy! 🌷", quote: "Mong rằng giấc ngủ tối nay sẽ mang đến cho bạn những điều kỳ diệu." },
+        { title: "Bình minh ngày mai đang chờ! 🌅", quote: "Khép lại hôm nay thật hoàn hảo để sẵn sàng bứt phá vào ngày mai." },
+        { title: "Ôm ấp yêu thương! 🤗", quote: "Gửi đến Tuấn Tuấn cái ôm thật ấm áp qua dòng chữ này." },
+        { title: "Chúc tối nay thật vui! 🎶", quote: "Tận hưởng trọn vẹn từng phút giây thư giãn về đêm nhé." }
       ],
       night: [
         { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Giấc ngủ sâu để tái tạo năng lượng tuyệt vời cho hành trình thành công ngày mai ✨" },
-        { title: "Đêm bình yên! 🌟", quote: "Mang theo những thành quả hôm nay vào giấc mơ đẹp và sẵn sàng bứt phá!" }
+        { title: "Đêm bình yên! 🌟", quote: "Mang theo những thành quả hôm nay vào giấc mơ đẹp và sẵn sàng bứt phá!" },
+        { title: "Giấc mộng lành! 🌙", quote: "Ngủ thật ngon, mơ thật đẹp và sáng mai thức dậy với nụ cười rạng ngời." },
+        { title: "Đêm khuya thanh vắng! 🦉", quote: "Đắp chăn thật ấm, nhắm mắt lại và chìm vào giấc ngủ thật sâu nhé." },
+        { title: "Bình yên trong giấc ngủ! 🛌", quote: "Mọi mệt mỏi đã qua đi, giờ là lúc cưng chiều bản thân trong giấc ngủ." },
+        { title: "Gửi lời chúc ngủ ngon ngọt ngào! 🍬", quote: "Mong những giấc mơ đẹp nhất sẽ đến với Tuấn Tuấn đêm nay." },
+        { title: "Ngôi sao hộ mệnh! ⭐", quote: "Chúc các vì sao trên cao sẽ bảo vệ và mang lại giấc ngủ bình an cho bạn." },
+        { title: "Tái tạo năng lượng hoàn hảo! 🔋", quote: "Giấc ngủ sâu là liều thuốc quý giá nhất để sạc đầy 100% pin cho ngày mới." },
+        { title: "Thả lỏng cơ thể! 🌸", quote: "Thả lỏng từng cơ bắp, hít thở sâu và chìm vào cõi mộng êm đềm." },
+        { title: "Đêm nay thật đẹp! 🌌", quote: "Trăng sao ngoài kia đang hát ru cho giấc ngủ của bạn thêm trọn vẹn." },
+        { title: "Tình yêu theo vào giấc ngủ! 💕", quote: "Mong rằng hình bóng yêu thương sẽ hiện diện trong giấc mơ ngọt ngào của bạn." },
+        { title: "Tạm biệt ngày cũ! 🌙", quote: "Khép lại một ngày chăm chỉ bằng một giấc ngủ ngon lành, sâu giấc." },
+        { title: "Hẹn gặp vào sáng mai! ☀️", quote: "Chúc bạn ngủ ngon và có một khởi đầu tuyệt vời vào ngày mai." },
+        { title: "Bình yên trọn vẹn! 🕊️", quote: "Không gian tĩnh lặng, chúc Tuấn Tuấn chìm vào giấc ngủ thật nhẹ nhàng." },
+        { title: "Sức khỏe là vàng! 💎", quote: "Ngủ đủ giấc và đúng giờ để cơ thể luôn khỏe mạnh, tươi tắn." },
+        { title: "Giấc mơ thần tiên! 🧚‍♂️", quote: "Chúc bạn bước vào thế giới cổ tích với những điều tuyệt diệu nhất đêm nay." },
+        { title: "Ôm giấc ngủ êm đềm! 🧸", quote: "Chúc chiếc giường ấm áp sẽ mang lại cho bạn những phút giây thư giãn tuyệt vời." },
+        { title: "Đêm nay ấm áp! 🔥", quote: "Dù trời có lạnh thế nào, chúc bạn luôn có giấc ngủ ấm áp và an lành." },
+        { title: "Tâm hồn an nhiên! 🌿", quote: "Buông bỏ mọi suy nghĩ vẩn vơ để tận hưởng giấc ngủ sâu tuyệt đối." },
+        { title: "Ngủ ngoan nhé! 👼", quote: "Chúc Tuấn Tuấn có một đêm ngon giấc không mộng mị." },
+        { title: "Hạnh phúc trong giấc mơ! 💖", quote: "Mơ thấy những điều làm bạn mỉm cười hạnh phúc nhất nhé." },
+        { title: "Đêm nay thật yên bình! 🌃", quote: "Màn đêm che chở cho giấc ngủ của bạn thêm phần sâu lắng." },
+        { title: "Nạp đầy pin cho ngày mai! ⚡", quote: "Sáng mai thức dậy bạn lại là một chiến binh năng suất và rực rỡ." },
+        { title: "Lời ru của gió! 🍃", quote: "Chúc cơn gió đêm ru bạn vào giấc ngủ êm đềm và sâu giấc nhất." },
+        { title: "Yêu thương gửi trọn đêm nay! 💌", quote: "Ngủ thật ngon và đón chờ những điều bất ngờ tốt đẹp vào ngày mai nha!" },
+        { title: "Ngủ ngon giấc nhé Tuấn Tuấn! 🌟", quote: "Chúc bạn có một đêm ngon giấc và một tương lai ngập tràn rực rỡ." }
       ]
     };
 
@@ -762,7 +827,7 @@
       else if (h >= 17 && h < 21) pool = energeticGreetingPairs.evening;
       else pool = energeticGreetingPairs.night;
 
-      greetingListForToday = [...pool, ...energeticGreetingPairs.morning, ...energeticGreetingPairs.evening];
+      greetingListForToday = [...pool, ...energeticGreetingPairs.morning, ...energeticGreetingPairs.afternoon, ...energeticGreetingPairs.evening, ...energeticGreetingPairs.night];
       currentGreetingIdx = Math.floor(Math.random() * pool.length);
       displayCurrentGreeting();
     }
@@ -780,7 +845,7 @@
     function cycleGreetingText() {
       currentGreetingIdx = (currentGreetingIdx + 1) % greetingListForToday.length;
       displayCurrentGreeting();
-      showToast('Đã đổi câu chúc năng lượng ✨');
+      showToast('Đã đổi câu chúc tràn đầy năng lượng & yêu thương ✨');
     }
 
     const weatherStates = [
@@ -809,11 +874,11 @@
         widget.innerHTML = `
           <div class="night-animated-box">
             <div class="night-moon"></div>
-            <span class="night-sparkle st-far-left" title="Sao xa góc trái">★</span>
-            <span class="night-sparkle st-mid-left-high" title="Sao giữa trái">✦</span>
-            <span class="night-sparkle st-mid-left-low" title="Sao góc dưới xa">★</span>
-            <span class="night-sparkle st-near-left" title="Sao gần trăng">✦</span>
-            <span class="night-sparkle st-near-moon" title="Sao trên cao">✧</span>
+            <span class="night-sparkle st-far-left">★</span>
+            <span class="night-sparkle st-mid-left-high">✦</span>
+            <span class="night-sparkle st-mid-left-low">★</span>
+            <span class="night-sparkle st-near-left">✦</span>
+            <span class="night-sparkle st-near-moon">✧</span>
           </div>`;
         if (label) label.innerText = customLabel || '🌙 Trời đêm quang đãng';
       }
@@ -827,45 +892,6 @@
       else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
       else currentWeatherIndex = 1;
       renderWeatherIcon(weatherStates[currentWeatherIndex].type);
-
-      if ("geolocation" in navigator) {
-        if (label) label.innerText = 'Đang nhận diện vị trí GPS...';
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-          try {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m,is_day&timezone=auto`);
-            if (!res.ok) throw new Error();
-            const data = await res.json();
-            const cur = data.current;
-            const code = cur.weather_code;
-            const temp = Math.round(cur.temperature_2m);
-            const isDay = cur.is_day === 1;
-
-            if (code >= 51 && code <= 99) {
-              currentWeatherIndex = 2;
-              renderWeatherIcon('rainy', `🌧️ Ngoài trời có mưa (${temp}°C)`);
-            } else if (!isDay) {
-              currentWeatherIndex = 3;
-              renderWeatherIcon('night', `🌙 Đêm trong lành (${temp}°C)`);
-            } else if (code <= 1) {
-              currentWeatherIndex = 0;
-              renderWeatherIcon('sunny', `☀️ Ngoài trời nắng rực rỡ (${temp}°C)`);
-            } else {
-              currentWeatherIndex = 1;
-              renderWeatherIcon('fair', `🌤️ Bầu trời dịu mát (${temp}°C)`);
-            }
-          } catch (_) { fallbackWeatherByHour(); }
-        }, () => fallbackWeatherByHour(), { timeout: 7000 });
-      } else { fallbackWeatherByHour(); }
-    }
-
-    function fallbackWeatherByHour() {
-      const hour = new Date().getHours();
-      if (hour >= 18 || hour < 5) currentWeatherIndex = 3;
-      else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
-      else currentWeatherIndex = 1;
-      renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
     }
 
     function cycleWeatherDemo() {
@@ -1315,7 +1341,6 @@
       }
     }
 
-    /* ĐỒNG BỘ LỊCH SANG ĐIỆN THOẠI CHUẨN UTC */
     function toggleSyncDropdown(e) {
       e.stopPropagation();
       document.getElementById('syncDropdownMenu').classList.toggle('show');
