@@ -338,67 +338,14 @@
       white-space: nowrap; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
     }
 
-    /* Thiết kế mới cho Cài Đặt Giờ Báo Ca: Tươi sáng, sinh động và hiện đại hơn */
-    .shift-settings-box {
-      background: linear-gradient(145deg, #f8fafc 0%, #edf4fc 100%);
-      border: 1.5px solid #cbd5e1;
-      border-radius: 16px;
-      padding: 14px;
-      margin-top: 12px;
-      box-shadow: inset 0 1px 3px rgba(255,255,255,0.8), 0 4px 12px rgba(15,23,42,0.03);
-    }
-    .shift-settings-title {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px dashed #cbd5e1;
-      padding-bottom: 8px;
-    }
-    .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .shift-config-card {
-      background: white;
-      padding: 10px;
-      border-radius: 14px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-      transition: all 0.2s ease;
-    }
-    .shift-config-card:hover { border-color: #93c5fd; box-shadow: 0 4px 12px rgba(2,132,199,0.08); }
-    .shift-config-card h4 {
-      font-size: 0.8rem;
-      margin-bottom: 8px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .shift-config-card:nth-child(1) h4 { color: #0284c7; }
-    .shift-config-card:nth-child(2) h4 { color: #d97706; }
-
-    .time-input-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 6px;
-      font-size: 0.74rem;
-      color: var(--muted);
-    }
-    .time-input-row span { width: 52px; font-weight: 700; color: #475569; }
-    .time-input-row input {
-      padding: 6px 8px;
-      font-size: 0.78rem;
-      border-radius: 8px;
-      border: 1.5px solid #cbd5e1;
-      font-weight: 700;
-      color: #1e293b;
-      background: #f8fafc;
-      transition: all 0.2s;
-    }
-    .time-input-row input:focus { border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 3px rgba(2,132,199,0.15); }
+    .shift-settings-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 12px; margin-top: 10px; }
+    .shift-settings-title { font-size: 0.82rem; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .shift-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .shift-config-card { background: white; padding: 8px; border-radius: 10px; border: 1px solid var(--border); }
+    .shift-config-card h4 { font-size: 0.78rem; margin-bottom: 6px; color: #334155; }
+    .time-input-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 0.72rem; color: var(--muted); }
+    .time-input-row span { width: 50px; font-weight: 600; }
+    .time-input-row input { padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; }
 
     .table-scroll-wrap {
       width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 2px solid #a5b4fc;
@@ -546,22 +493,21 @@
           </div>
         </div>
 
-        <!-- Khối Cài Đặt Giờ Báo Ca mới: trực quan, sinh động và đẹp mắt hơn -->
         <div class="shift-settings-box">
           <div class="shift-settings-title">
-            <span>⚙️ Cài Đặt Giờ Báo Ca Tự Động</span>
-            <span style="font-size:0.72rem; font-weight:800; color:#10b981; background:#dcfce7; padding:2px 8px; border-radius:8px;">● Hoạt động</span>
+            <span>⚙️ Cài Đặt Giờ Báo Ca (Tự động báo)</span>
+            <span style="font-size:0.7rem; font-weight:bold; color:#10b981;">● Báo thức kích hoạt</span>
           </div>
           <div class="shift-config-grid">
             <div class="shift-config-card">
-              <h4>🔵 Ca 1 (Sáng)</h4>
-              <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
+              <h4>Ca 1 (Sáng)</h4>
+              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c1_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c1_out" onchange="updateShiftTimeConfig()"></div>
             </div>
             <div class="shift-config-card">
-              <h4>🟡 Ca 2 (Chiều)</h4>
-              <div class="time-input-row"><span>Vào:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
-              <div class="time-input-row"><span>Ra:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
+              <h4>Ca 2 (Chiều)</h4>
+              <div class="time-input-row"><span>Báo In:</span><input type="time" id="cfg_c2_in" onchange="updateShiftTimeConfig()"></div>
+              <div class="time-input-row"><span>Báo Out:</span><input type="time" id="cfg_c2_out" onchange="updateShiftTimeConfig()"></div>
             </div>
           </div>
         </div>
@@ -708,14 +654,16 @@
     let lastTriggeredMinute = "";
 
     function generateGentleAlarmWav() {
-      const sampleRate = 22050;
-      const duration = 1.2;
+      const sampleRate = 16000;
+      const duration = 0.8;
       const numSamples = Math.floor(sampleRate * duration);
       const buffer = new ArrayBuffer(44 + numSamples * 2);
       const view = new DataView(buffer);
+
       function writeString(view, offset, string) {
         for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
       }
+
       writeString(view, 0, 'RIFF');
       view.setUint32(4, 36 + numSamples * 2, true);
       writeString(view, 8, 'WAVE');
@@ -729,17 +677,25 @@
       view.setUint16(34, 16, true);
       writeString(view, 36, 'data');
       view.setUint32(40, numSamples * 2, true);
+
+      const notes = [523.25, 659.25, 783.99, 1046.5];
       for (let i = 0; i < numSamples; i++) {
         const t = i / sampleRate;
-        const phase = t % 0.6;
-        const freq = phase < 0.3 ? 880 : 660;
-        const envelope = Math.max(0, Math.min(1, phase / 0.012, (0.3 - phase) / 0.012));
-        const tone = Math.sin(2 * Math.PI * freq * t);
-        const harmonic = Math.sin(2 * Math.PI * freq * 2 * t) * 0.18;
-        const sample = Math.max(-1, Math.min(1, (tone + harmonic) * 0.78 * envelope));
+        let sample = 0;
+        notes.forEach((freq, idx) => {
+          const noteStart = idx * 0.15;
+          if (t >= noteStart) {
+            const dt = t - noteStart;
+            const decay = Math.exp(-dt * 3.5);
+            sample += (Math.sin(2 * Math.PI * freq * dt) * 0.6 + Math.sin(2 * Math.PI * (freq * 2) * dt) * 0.2) * decay;
+          }
+        });
+        sample = Math.max(-1, Math.min(1, sample * 0.8));
         view.setInt16(44 + i * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
       }
-      return URL.createObjectURL(new Blob([buffer], { type: 'audio/wav' }));
+
+      const blob = new Blob([buffer], { type: 'audio/wav' });
+      return URL.createObjectURL(blob);
     }
 
     let alarmAudioBlobUrl = null;
@@ -748,8 +704,7 @@
       morning: [
         { title: "Chào buổi sáng, Tuấn Tuấn! ☀️", quote: "Chúc một ngày làm việc năng suất, tràn đầy nhiệt huyết và hoàn thành xuất sắc mọi mục tiêu! ✨" },
         { title: "Khởi đầu rực rỡ, Tuấn Tuấn ơi! 🚀", quote: "Năng lượng tràn đầy cho một ngày làm việc hiệu quả và học tập hăng say!" },
-        { title: "Tuấn Tuấn tuyệt vời! 💖", quote: "Chúc bạn ngập tràn tình yêu thương, năng lượng tích cực và may mắn cả ngày!" },
-        { title: "Ngày mới tốt lành! 📚", quote: "Cùng nỗ lực học tập, làm việc hết mình để gặt hái những thành tựu rực rỡ nhất!" }
+        { title: "Tuấn Tuấn tuyệt vời! 💖", quote: "Chúc bạn ngập tràn tình yêu thương, năng lượng tích cực và may mắn cả ngày!" }
       ],
       afternoon: [
         { title: "Buổi chiều năng suất nhé Tuấn Tuấn! ☕", quote: "Giữ vững phong độ, xử lý công việc suôn sẻ và gặt hái nhiều kết quả tốt đẹp!" },
@@ -760,7 +715,8 @@
         { title: "Khép lại ngày dài năng suất! ✨", quote: "Tự hào vì hôm nay bạn đã làm việc hết mình và nỗ lực không ngừng nghỉ!" }
       ],
       night: [
-        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Giấc ngủ sâu để tái tạo năng lượng tuyệt vời cho hành trình thành công ngày mai ✨" }
+        { title: "Chúc ngủ ngon, Tuấn Tuấn! 💤", quote: "Giấc ngủ sâu để tái tạo năng lượng tuyệt vời cho hành trình thành công ngày mai ✨" },
+        { title: "Đêm bình yên! 🌟", quote: "Mang theo những thành quả hôm nay vào giấc mơ đẹp và sẵn sàng bứt phá!" }
       ]
     };
 
@@ -1577,21 +1533,21 @@
       if (audioCtx) {
         try {
           const now = audioCtx.currentTime;
-          const notes = [523.25, 659.25, 783.99];
+          const notes = [523.25, 659.25, 783.99, 1046.5];
           notes.forEach((freq, idx) => {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, now + idx * 0.16);
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.15);
 
-            gain.gain.setValueAtTime(0.001, now + idx * 0.16);
-            gain.gain.exponentialRampToValueAtTime(0.78, now + idx * 0.16 + 0.04);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.16 + 0.65);
+            gain.gain.setValueAtTime(0.001, now + idx * 0.15);
+            gain.gain.exponentialRampToValueAtTime(0.6, now + idx * 0.15 + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.15 + 0.8);
 
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            osc.start(now + idx * 0.16);
-            osc.stop(now + idx * 0.16 + 0.7);
+            osc.start(now + idx * 0.15);
+            osc.stop(now + idx * 0.15 + 0.85);
           });
         } catch (_) {}
       }
@@ -1599,8 +1555,8 @@
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) {
-          audioEl.volume = 1;
-          if (audioEl.paused) audioEl.play().catch(() => {});
+          audioEl.currentTime = 0;
+          audioEl.play().catch(() => {});
         }
       } catch (_) {}
     }
@@ -1608,7 +1564,7 @@
     function triggerDeviceVibration() {
       if ("vibrate" in navigator) {
         try {
-          navigator.vibrate([1000, 300, 1000, 300, 1500, 300, 2000]);
+          navigator.vibrate([1000, 200, 1000, 200, 1500, 300, 2000]);
         } catch (_) {}
       }
     }
@@ -1650,7 +1606,7 @@
       alarmInterval = setInterval(() => {
         playGentleChime();
         triggerDeviceVibration();
-      }, 1500);
+      }, 1200);
     }
 
     function stopAlarm() {
@@ -1685,18 +1641,25 @@
       return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
+    let localNotiMockState = localStorage.getItem('camp_noti_mock_state') || 'default';
+
     function updateNotiButtonStatus() {
       const btn = document.getElementById('btnNotiStatus');
       if (!btn) return;
 
       if (!('Notification' in window)) {
-        btn.innerText = '⚠️ Không hỗ trợ';
-        btn.className = 'noti-denied';
+        if (localNotiMockState === 'granted') {
+          btn.innerText = '🟢 Đã Bật Báo';
+          btn.className = 'noti-granted';
+        } else {
+          btn.innerText = '🔔 Bật Báo';
+          btn.className = '';
+        }
         return;
       }
 
       if (Notification.permission === 'granted') {
-        btn.innerText = '🟢 Có quyền báo';
+        btn.innerText = '🟢 Đã Bật Báo';
         btn.className = 'noti-granted';
       } else if (Notification.permission === 'denied') {
         btn.innerText = '🔴 Bị Chặn';
@@ -1709,22 +1672,42 @@
 
     async function toggleNotificationSetting() {
       unlockAudioContext();
+
       if (!('Notification' in window)) {
-        showToast('Trình duyệt không hỗ trợ thông báo hệ thống.');
+        if (localNotiMockState === 'granted') {
+          localNotiMockState = 'default';
+          localStorage.setItem('camp_noti_mock_state', 'default');
+          showToast('Đã tắt báo!');
+        } else {
+          localNotiMockState = 'granted';
+          localStorage.setItem('camp_noti_mock_state', 'granted');
+          showToast('Đã bật báo!');
+        }
         updateNotiButtonStatus();
         return;
       }
+
       if (Notification.permission === 'granted') {
-        showToast('Đã có quyền thông báo.');
+        showToast('Báo thức đang HOẠT ĐỘNG!');
         return;
       }
+
       if (Notification.permission === 'denied') {
-        alert('Thông báo bị chặn. Bạn vào Cài đặt trình duyệt để mở cấp quyền.');
+        alert('Thông báo bị chặn. Bạn vào Cài đặt trình duyệt trên điện thoại để mở cấp quyền thông báo.');
         return;
       }
+
       try {
-        const perm = await Notification.requestPermission();
-        handlePermissionResult(perm);
+        const requestPromise = Notification.requestPermission();
+        if (requestPromise && typeof requestPromise.then === 'function') {
+          requestPromise.then(permission => {
+            handlePermissionResult(permission);
+          }).catch(() => {
+            updateNotiButtonStatus();
+          });
+        } else {
+          Notification.requestPermission(handlePermissionResult);
+        }
       } catch (e) {
         showToast('Không thể yêu cầu quyền.');
       }
@@ -1738,21 +1721,6 @@
       } else {
         showToast('Chưa cho phép thông báo.');
       }
-    }
-
-    function isAlarmTimeDue(timeValue, now, eventKey) {
-      if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(String(timeValue || ''))) return false;
-      const [hh, mm] = timeValue.split(':').map(Number);
-      const target = new Date(now);
-      target.setHours(hh, mm, 0, 0);
-      const delta = now.getTime() - target.getTime();
-      if (delta < 0 || delta > 5 * 60 * 1000) return false;
-      const dateKey = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') +
-        String(now.getDate()).padStart(2, '0');
-      const storageKey = 'camp_alarm_fired_' + eventKey + '_' + timeValue + '_' + dateKey;
-      if (localStorage.getItem(storageKey) === '1') return false;
-      localStorage.setItem(storageKey, '1');
-      return true;
     }
 
     function checkScheduler() {
@@ -1779,23 +1747,23 @@
       }
 
       if (todayShift === 'ca1') {
-        if (isAlarmTimeDue(shiftTimes.c1_in, now, 'ca1_in')) {
+        if (shiftTimes.c1_in === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
           return;
         }
-        if (isAlarmTimeDue(shiftTimes.c1_out, now, 'ca1_out')) {
+        if (shiftTimes.c1_out === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 1 (${currentTime})`);
           return;
         }
       } else if (todayShift === 'ca2') {
-        if (isAlarmTimeDue(shiftTimes.c2_in, now, 'ca2_in')) {
+        if (shiftTimes.c2_in === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
           return;
         }
-        if (isAlarmTimeDue(shiftTimes.c2_out, now, 'ca2_out')) {
+        if (shiftTimes.c2_out === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 2 (${currentTime})`);
           return;
@@ -1803,14 +1771,14 @@
       }
 
       journals.forEach(j => {
-        if (!j.done && isAlarmTimeDue(j.reminderTime, now, 'journal_' + (j.id || j.title))) {
+        if (!j.done && j.reminderTime === currentTime) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`);
         }
       });
     }
 
-    setInterval(checkScheduler, 2000);
+    setInterval(checkScheduler, 1000);
 
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) {
