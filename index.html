@@ -511,6 +511,10 @@
             </div>
           </div>
         </div>
+        <div id="alarmReliabilityNote" style="margin-top:10px;padding:11px 12px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:.76rem;line-height:1.55;">
+          <b>⚠️ Lưu ý về báo thức khi ngủ sâu</b><br>
+          Bản HTML có thể phát chuông khi trang đang chạy; Android/Xiaomi có thể đóng băng trình duyệt khi ngủ sâu. Nút “Đã bật báo” chỉ xác nhận quyền thông báo, không bảo đảm đánh thức máy. Muốn báo đúng giờ khi tắt màn hình/đóng trình duyệt, cần ứng dụng Android dùng báo thức hệ thống.
+        </div>
       </div>
     </div>
 
@@ -654,16 +658,15 @@
     let lastTriggeredMinute = "";
 
     function generateGentleAlarmWav() {
-      const sampleRate = 16000;
-      const duration = 0.8;
+      // Chuông hai tông rõ và lớn hơn; âm lượng thực tế vẫn phụ thuộc cài đặt máy.
+      const sampleRate = 22050;
+      const duration = 1.2;
       const numSamples = Math.floor(sampleRate * duration);
       const buffer = new ArrayBuffer(44 + numSamples * 2);
       const view = new DataView(buffer);
-
       function writeString(view, offset, string) {
         for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i));
       }
-
       writeString(view, 0, 'RIFF');
       view.setUint32(4, 36 + numSamples * 2, true);
       writeString(view, 8, 'WAVE');
@@ -677,25 +680,17 @@
       view.setUint16(34, 16, true);
       writeString(view, 36, 'data');
       view.setUint32(40, numSamples * 2, true);
-
-      const notes = [523.25, 659.25, 783.99];
       for (let i = 0; i < numSamples; i++) {
         const t = i / sampleRate;
-        let sample = 0;
-        notes.forEach((freq, idx) => {
-          const noteStart = idx * 0.18;
-          if (t >= noteStart) {
-            const dt = t - noteStart;
-            const decay = Math.exp(-dt * 4.5);
-            sample += (Math.sin(2 * Math.PI * freq * dt) * 0.5 + Math.sin(2 * Math.PI * (freq * 2) * dt) * 0.15) * decay;
-          }
-        });
-        sample = Math.max(-1, Math.min(1, sample * 0.7));
+        const phase = t % 0.6;
+        const freq = phase < 0.3 ? 880 : 660;
+        const envelope = Math.max(0, Math.min(1, phase / 0.012, (0.3 - phase) / 0.012));
+        const tone = Math.sin(2 * Math.PI * freq * t);
+        const harmonic = Math.sin(2 * Math.PI * freq * 2 * t) * 0.18;
+        const sample = Math.max(-1, Math.min(1, (tone + harmonic) * 0.78 * envelope));
         view.setInt16(44 + i * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
       }
-
-      const blob = new Blob([buffer], { type: 'audio/wav' });
-      return URL.createObjectURL(blob);
+      return URL.createObjectURL(new Blob([buffer], { type: 'audio/wav' }));
     }
 
     let alarmAudioBlobUrl = null;
@@ -1638,7 +1633,7 @@
             osc.frequency.setValueAtTime(freq, now + idx * 0.16);
 
             gain.gain.setValueAtTime(0.001, now + idx * 0.16);
-            gain.gain.exponentialRampToValueAtTime(0.4, now + idx * 0.16 + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.78, now + idx * 0.16 + 0.04);
             gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.16 + 0.65);
 
             osc.connect(gain);
@@ -1652,8 +1647,8 @@
       try {
         const audioEl = document.getElementById('alarmAudioElement');
         if (audioEl) {
-          audioEl.currentTime = 0;
-          audioEl.play().catch(() => {});
+          audioEl.volume = 1;
+          if (audioEl.paused) audioEl.play().catch(() => {});
         }
       } catch (_) {}
     }
@@ -1745,18 +1740,14 @@
       if (!btn) return;
 
       if (!('Notification' in window)) {
-        if (localNotiMockState === 'granted') {
-          btn.innerText = '🟢 Đã Bật Báo';
-          btn.className = 'noti-granted';
-        } else {
-          btn.innerText = '🔔 Bật Báo';
-          btn.className = '';
-        }
+        btn.innerText = '⚠️ Không hỗ trợ';
+        btn.className = 'noti-denied';
+        btn.title = 'Trình duyệt này không hỗ trợ Web Notification';
         return;
       }
 
       if (Notification.permission === 'granted') {
-        btn.innerText = '🟢 Đã Bật Báo';
+        btn.innerText = '🟢 Có quyền báo';
         btn.className = 'noti-granted';
       } else if (Notification.permission === 'denied') {
         btn.innerText = '🔴 Bị Chặn';
@@ -1771,21 +1762,13 @@
       unlockAudioContext();
 
       if (!('Notification' in window)) {
-        if (localNotiMockState === 'granted') {
-          localNotiMockState = 'default';
-          localStorage.setItem('camp_noti_mock_state', 'default');
-          showToast('Đã tắt báo!');
-        } else {
-          localNotiMockState = 'granted';
-          localStorage.setItem('camp_noti_mock_state', 'granted');
-          showToast('Đã bật báo!');
-        }
+        showToast('Trình duyệt không hỗ trợ thông báo hệ thống. Hãy dùng Chrome hoặc ứng dụng Android.');
         updateNotiButtonStatus();
         return;
       }
 
       if (Notification.permission === 'granted') {
-        showToast('Báo thức đang HOẠT ĐỘNG!');
+        showToast('Đã có quyền thông báo; báo thức nền vẫn phụ thuộc Android và ứng dụng Lịch.');
         return;
       }
 
@@ -1820,6 +1803,23 @@
       }
     }
 
+    // Bù báo thức nếu Android tạm treo tab và người dùng mở lại trong 5 phút.
+    // Đây không phải bộ báo thức chạy nền và không đánh thức được máy khi trình duyệt bị đóng.
+    function isAlarmTimeDue(timeValue, now, eventKey) {
+      if (!/^([01]\\d|2[0-3]):[0-5]\\d$/.test(String(timeValue || ''))) return false;
+      const [hh, mm] = timeValue.split(':').map(Number);
+      const target = new Date(now);
+      target.setHours(hh, mm, 0, 0);
+      const delta = now.getTime() - target.getTime();
+      if (delta < 0 || delta > 5 * 60 * 1000) return false;
+      const dateKey = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') +
+        String(now.getDate()).padStart(2, '0');
+      const storageKey = 'camp_alarm_fired_' + eventKey + '_' + timeValue + '_' + dateKey;
+      if (localStorage.getItem(storageKey) === '1') return false;
+      localStorage.setItem(storageKey, '1');
+      return true;
+    }
+
     function checkScheduler() {
       const now = new Date();
       const currentH = String(now.getHours()).padStart(2,'0');
@@ -1844,23 +1844,23 @@
       }
 
       if (todayShift === 'ca1') {
-        if (shiftTimes.c1_in === currentTime) {
+        if (isAlarmTimeDue(shiftTimes.c1_in, now, 'ca1_in')) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 1 (${currentTime})`);
           return;
         }
-        if (shiftTimes.c1_out === currentTime) {
+        if (isAlarmTimeDue(shiftTimes.c1_out, now, 'ca1_out')) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 1 (${currentTime})`);
           return;
         }
       } else if (todayShift === 'ca2') {
-        if (shiftTimes.c2_in === currentTime) {
+        if (isAlarmTimeDue(shiftTimes.c2_in, now, 'ca2_in')) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`⏰ ĐẾN GIỜ VÀO CA 2 (${currentTime})`);
           return;
         }
-        if (shiftTimes.c2_out === currentTime) {
+        if (isAlarmTimeDue(shiftTimes.c2_out, now, 'ca2_out')) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`🏁 HẾT GIỜ CA 2 (${currentTime})`);
           return;
@@ -1868,7 +1868,7 @@
       }
 
       journals.forEach(j => {
-        if (!j.done && j.reminderTime === currentTime) {
+        if (!j.done && isAlarmTimeDue(j.reminderTime, now, 'journal_' + (j.id || j.title))) {
           lastTriggeredMinute = minuteKey;
           startContinuousAlarm(`⏰ NHẬT KÝ: ${j.title.toUpperCase()}`);
         }
