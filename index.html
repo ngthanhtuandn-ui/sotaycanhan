@@ -161,19 +161,6 @@
       line-height: 1.4;
     }
 
-    .greeting-topic-tag {
-      display: inline-block;
-      width: fit-content;
-      font-size: 0.68rem;
-      font-weight: 800;
-      color: #047857;
-      background: #dcfce7;
-      border: 1px solid #86efac;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-top: 2px;
-    }
-
     .greeting-text-sub {
       font-size: 0.76rem;
       font-weight: 600;
@@ -498,8 +485,7 @@
       color: #ffffff;
       margin-bottom: 12px;
     }
-    .en-hero h3 { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
-    .en-hero p { font-size: 0.78rem; opacity: 0.95; }
+    .en-hero h3 { font-size: 1rem; font-weight: 800; }
 
     .en-topic-pills {
       display: flex;
@@ -571,12 +557,11 @@
       margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 10px;
     }
     .en-phrase { font-size: 0.88rem; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
     .en-meaning { font-size: 0.8rem; color: #047857; font-weight: 700; }
-    .en-note { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
     .en-speak-btn {
       background: #e0f2fe;
       color: #0369a1;
@@ -912,7 +897,6 @@
       <div class="greeting-info" onclick="cycleGreetingText()" title="Chạm để đổi câu chúc theo khung giờ">
         <div class="greeting-title" id="greetingUser">Chào buổi sáng, Tuấn Tuấn! ☀️</div>
         <div class="greeting-quote" id="greetingMessage">Đang tải câu chúc...</div>
-        <div class="greeting-topic-tag" id="greetingTopicTag">Chủ đề</div>
         <div class="greeting-text-sub" id="greetingDateLabel">Đang tải ngày...</div>
         <div class="weather-status-text" id="weatherStatusLabel">Đang nhận diện thời tiết...</div>
       </div>
@@ -1073,8 +1057,7 @@
     <div id="view-english" style="display:none;">
       <div class="card-box">
         <div class="en-hero">
-          <h3>🇬🇧 Tiếng Anh Mỗi Ngày (Thực Chiến &gt;100 Mục/Mảng)</h3>
-          <p>Từ vựng, mẫu câu giao tiếp &amp; thành ngữ đơn giản kèm nghĩa tiếng Việt để áp dụng ngay hằng ngày.</p>
+          <h3>🇬🇧 Tiếng Anh Mỗi Ngày</h3>
         </div>
 
         <div class="en-topic-pills" id="enTopicPills"></div>
@@ -1084,7 +1067,7 @@
         </div>
 
         <div class="en-toolbar">
-          <span class="en-count-badge" id="enCountBadge">0 mục</span>
+          <span class="en-count-badge" id="enCountBadge">0 câu</span>
           <div class="en-page-btns">
             <button class="en-page-btn" id="enPrevBtn" onclick="changeEnglishPage(-1)">◀ Trước</button>
             <span id="enPageInfo" style="font-size:0.75rem; font-weight:800; color:#334155;">1/1</span>
@@ -1141,9 +1124,6 @@
   <div id="toast">Thông báo</div>
 
   <script>
-    // =========================================================================
-    // KHO CÂU CHÀO & CÂU CHÚC THEO KHUNG GIỜ (100 CÂU GỐC + 200 CÂU MỚI)
-    // =========================================================================
     const WISH_SLOTS = [
       "Sáng sớm (05:00 - 08:59)",
       "Trưa (09:00 - 13:59)",
@@ -1392,7 +1372,6 @@
         ...humorSlogans.map(text => ({ topic: "Slogan Hài hước", text }))
       ];
 
-      // 200 mục: 40 mục cho mỗi khung giờ trong 5 khung giờ (40 * 5 = 200)
       WISH_SLOTS.forEach((slot, slotIdx) => {
         for (let i = 0; i < 40; i++) {
           const base = pool[(slotIdx * 40 + i) % pool.length];
@@ -1418,7 +1397,7 @@
     const ALL_WISHES = [...BASE_WISHES, ...EXTRA_200_WISHES];
 
     // =========================================================================
-    // KHO TIẾNG ANH MỖI NGÀY (>100 MỤC CHO MỖI MẢNG)
+    // KHO TIẾNG ANH MỖI NGÀY (ĐỦ 200 CÂU CHO MỖI MẢNG)
     // =========================================================================
     const ENGLISH_CATEGORIES = [
       "Chào hỏi",
@@ -1437,159 +1416,234 @@
 
       const seeds = {
         "Chào hỏi": [
-          ["Hello! How are you?", "Xin chào! Bạn khỏe không?", "Chào hỏi thân thiện"],
-          ["Good morning! Did you sleep well?", "Chào buổi sáng! Bạn ngủ ngon chứ?", "Dùng buổi sáng"],
-          ["Good afternoon! How's your day going?", "Chào buổi chiều! Ngày của bạn thế nào?", "Dùng buổi chiều"],
-          ["Good evening! Long time no see.", "Chào buổi tối! Lâu rồi không gặp.", "Dùng buổi tối"],
-          ["Nice to meet you!", "Rất vui được gặp bạn!", "Gặp lần đầu"],
-          ["How have you been lately?", "Dạo này bạn thế nào?", "Hỏi thăm gần đây"],
-          ["What's up?", "Dạo này sao rồi? / Có gì mới không?", "Thân mật, tự nhiên"],
-          ["I'm doing great, thanks!", "Mình rất ổn, cảm ơn bạn!", "Trả lời tích cực"],
-          ["Take care of yourself.", "Giữ gìn sức khỏe nhé.", "Lời chào tạm biệt ấm áp"],
-          ["See you later!", "Hẹn gặp lại sau nhé!", "Tạm biệt ngắn gọn"],
-          ["Have a safe trip home!", "Đi đường về bình an nhé!", "Chúc về nhà an toàn"],
-          ["Please call me when you arrive.", "Nhớ gọi mình khi bạn tới nơi nhé.", "Dặn dò an toàn"]
+          ["Hello! How are you?", "Xin chào! Bạn khỏe không?"],
+          ["Good morning! Did you sleep well?", "Chào buổi sáng! Bạn ngủ ngon chứ?"],
+          ["Good afternoon! How's your day going?", "Chào buổi chiều! Ngày của bạn thế nào?"],
+          ["Good evening! Long time no see.", "Chào buổi tối! Lâu rồi không gặp."],
+          ["Nice to meet you!", "Rất vui được gặp bạn!"],
+          ["How have you been lately?", "Dạo này bạn thế nào?"],
+          ["What's up?", "Dạo này sao rồi?"],
+          ["I'm doing great, thanks!", "Mình rất ổn, cảm ơn bạn!"],
+          ["Take care of yourself.", "Giữ gìn sức khỏe nhé."],
+          ["See you later!", "Hẹn gặp lại sau nhé!"],
+          ["Have a safe trip home!", "Đi đường về bình an nhé!"],
+          ["Please call me when you arrive.", "Nhớ gọi mình khi bạn tới nơi nhé."],
+          ["Good to see you again!", "Vui quá được gặp lại bạn!"],
+          ["How's your family?", "Gia đình bạn vẫn khỏe chứ?"],
+          ["Welcome back!", "Chào mừng bạn quay lại!"],
+          ["Have a great day ahead!", "Chúc bạn có một ngày tuyệt vời phía trước!"],
+          ["Talk to you soon!", "Sớm nói chuyện tiếp nhé!"],
+          ["I missed our chats.", "Mình nhớ những cuộc trò chuyện của tụi mình."],
+          ["Glad you could make it!", "Mừng vì bạn đã tới được!"],
+          ["Wish you all the best!", "Chúc bạn mọi điều tốt đẹp nhất!"]
         ],
         "Cuộc sống hằng ngày": [
-          ["I wake up early every day.", "Mình thức dậy sớm mỗi ngày.", "Thói quen sáng"],
-          ["Let's have breakfast together.", "Cùng ăn sáng nhé.", "Bữa sáng"],
-          ["I need to check my schedule.", "Mình cần kiểm tra lịch trình.", "Công việc & lịch"],
-          ["Don't forget to drink water.", "Đừng quên uống nước nhé.", "Chăm sóc bản thân"],
-          ["I'm running a bit late.", "Mình hơi trễ một chút.", "Giờ giấc"],
-          ["Let's take a short break.", "Nghỉ giải lao một lát nhé.", "Giữa ca/giờ làm"],
-          ["I finished all my tasks.", "Mình đã hoàn thành hết việc rồi.", "Hoàn thành công việc"],
-          ["Where did I put my keys?", "Mình để chìa khóa ở đâu nhỉ?", "Đồ dùng hằng ngày"],
-          ["I need to charge my phone.", "Mình cần sạc pin điện thoại.", "Sinh hoạt hằng ngày"],
-          ["Let's clean up the room.", "Dọn dẹp phòng cho gọn nhé.", "Nhà cửa"],
-          ["What's for dinner tonight?", "Tối nay ăn gì thế?", "Bữa tối"],
-          ["I'm going to bed early tonight.", "Tối nay mình sẽ đi ngủ sớm.", "Giấc ngủ"]
+          ["I wake up early every day.", "Mình thức dậy sớm mỗi ngày."],
+          ["Let's have breakfast together.", "Cùng ăn sáng nhé."],
+          ["I need to check my schedule.", "Mình cần kiểm tra lịch trình."],
+          ["Don't forget to drink water.", "Đừng quên uống nước nhé."],
+          ["I'm running a bit late.", "Mình hơi trễ một chút."],
+          ["Let's take a short break.", "Nghỉ giải lao một lát nhé."],
+          ["I finished all my tasks.", "Mình đã hoàn thành hết việc rồi."],
+          ["Where did I put my keys?", "Mình để chìa khóa ở đâu nhỉ?"],
+          ["I need to charge my phone.", "Mình cần sạc pin điện thoại."],
+          ["Let's clean up the room.", "Dọn dẹp phòng cho gọn nhé."],
+          ["What's for dinner tonight?", "Tối nay ăn gì thế?"],
+          ["I'm going to bed early tonight.", "Tối nay mình sẽ đi ngủ sớm."],
+          ["I'm doing the laundry.", "Mình đang giặt đồ."],
+          ["Let's wash the dishes.", "Rửa chén bát nhé."],
+          ["I set the alarm for tomorrow.", "Mình đã đặt báo thức cho ngày mai."],
+          ["Traffic is heavy this morning.", "Sáng nay đường hơi đông xe."],
+          ["I'm brewing some coffee.", "Mình đang pha chút cà phê."],
+          ["Let's get ready to leave.", "Chuẩn bị đi thôi nào."],
+          ["I'll be back in ten minutes.", "Mình sẽ quay lại sau mười phút."],
+          ["Today was a busy day.", "Hôm nay là một ngày bận rộn."]
         ],
         "Hỏi đường": [
-          ["Excuse me, where is the nearest station?", "Xin lỗi, ga gần nhất ở đâu vậy?", "Hỏi đường đi lại"],
-          ["How do I get to the city center?", "Làm sao để đi tới trung tâm thành phố?", "Hỏi đường đi tới nơi"],
-          ["Turn left at the traffic light.", "Rẽ trái ở đèn giao thông.", "Chỉ dẫn rẽ trái"],
-          ["Turn right at the next corner.", "Rẽ phải ở góc đường tiếp theo.", "Chỉ dẫn rẽ phải"],
-          ["Go straight ahead for two blocks.", "Đi thẳng khoảng hai dãy nhà.", "Chỉ dẫn đi thẳng"],
-          ["It's right across the street.", "Nó nằm ngay đối diện đường.", "Vị trí đối diện"],
-          ["Is it within walking distance?", "Từ đây đi bộ tới đó có gần không?", "Hỏi khoảng cách đi bộ"],
-          ["Can you show me on the map?", "Bạn chỉ giúp mình trên bản đồ được không?", "Dùng bản đồ"],
-          ["I think we took a wrong turn.", "Mình nghĩ chúng ta rẽ nhầm hướng rồi.", "Đi nhầm đường"],
-          ["How far is the bus stop?", "Trạm xe buýt cách đây bao xa?", "Hỏi trạm xe buýt"],
-          ["Keep going until you see the bank.", "Cứ đi tiếp cho tới khi thấy ngân hàng.", "Mốc nhận biết"],
-          ["Thank you for your directions!", "Cảm ơn bạn đã chỉ đường!", "Cảm ơn sau khi hỏi"]
+          ["Excuse me, where is the nearest station?", "Xin lỗi, ga gần nhất ở đâu vậy?"],
+          ["How do I get to the city center?", "Làm sao để đi tới trung tâm thành phố?"],
+          ["Turn left at the traffic light.", "Rẽ trái ở đèn giao thông."],
+          ["Turn right at the next corner.", "Rẽ phải ở góc đường tiếp theo."],
+          ["Go straight ahead for two blocks.", "Đi thẳng khoảng hai dãy nhà."],
+          ["It's right across the street.", "Nó nằm ngay đối diện đường."],
+          ["Is it within walking distance?", "Từ đây đi bộ tới đó có gần không?"],
+          ["Can you show me on the map?", "Bạn chỉ giúp mình trên bản đồ được không?"],
+          ["I think we took a wrong turn.", "Mình nghĩ chúng ta rẽ nhầm hướng rồi."],
+          ["How far is the bus stop?", "Trạm xe buýt cách đây bao xa?"],
+          ["Keep going until you see the bank.", "Cứ đi tiếp cho tới khi thấy ngân hàng."],
+          ["Thank you for your directions!", "Cảm ơn bạn đã chỉ đường!"],
+          ["Is there a parking lot nearby?", "Gần đây có bãi gửi xe không?"],
+          ["Walk past the post office.", "Đi ngang qua bưu điện."],
+          ["It's on your left.", "Nó nằm ở bên trái bạn."],
+          ["It's on your right.", "Nó nằm ở bên phải bạn."],
+          ["You can't miss it.", "Chắc chắn bạn sẽ nhìn thấy ngay."],
+          ["Take the second exit at the roundabout.", "Đi lối ra thứ hai ở vòng xoay."],
+          ["How long does it take to get there?", "Mất bao lâu để tới đó?"],
+          ["Let's double check the address.", "Kiểm tra lại địa chỉ cho chắc nhé."]
         ],
         "Thời tiết": [
-          ["What's the weather like today?", "Hôm nay thời tiết thế nào?", "Hỏi thời tiết"],
-          ["It's sunny and warm outside.", "Ngoài trời nắng và ấm áp.", "Trời nắng ấm"],
-          ["Don't forget to bring an umbrella.", "Đừng quên mang theo ô nhé.", "Trời có thể mưa"],
-          ["It's raining heavily right now.", "Trời đang mưa rất to.", "Mưa lớn"],
-          ["There's a cool breeze this afternoon.", "Chiều nay có làn gió mát.", "Gió mát"],
-          ["It's quite humid today.", "Hôm nay trời khá ẩm.", "Độ ẩm cao"],
-          ["Watch out for sudden showers.", "Cẩn thận mưa rào bất chợt nhé.", "Mưa rào"],
-          ["The temperature is dropping tonight.", "Tối nay nhiệt độ đang giảm.", "Trời se lạnh về đêm"],
-          ["It's a clear starry night.", "Đêm nay trời quang và nhiều sao.", "Đêm quang đãng"],
-          ["Put on a jacket before going out.", "Mặc thêm áo khoác trước khi ra ngoài nhé.", "Giữ ấm"],
-          ["It's scorching hot at noon.", "Buổi trưa nắng gay gắt lắm.", "Nắng nóng"],
-          ["The weather forecast says it'll be fine.", "Dự báo thời tiết nói trời sẽ đẹp.", "Dự báo thời tiết"]
+          ["What's the weather like today?", "Hôm nay thời tiết thế nào?"],
+          ["It's sunny and warm outside.", "Ngoài trời nắng và ấm áp."],
+          ["Don't forget to bring an umbrella.", "Đừng quên mang theo ô nhé."],
+          ["It's raining heavily right now.", "Trời đang mưa rất to."],
+          ["There's a cool breeze this afternoon.", "Chiều nay có làn gió mát."],
+          ["It's quite humid today.", "Hôm nay trời khá ẩm."],
+          ["Watch out for sudden showers.", "Cẩn thận mưa rào bất chợt nhé."],
+          ["The temperature is dropping tonight.", "Tối nay nhiệt độ đang giảm."],
+          ["It's a clear starry night.", "Đêm nay trời quang và nhiều sao."],
+          ["Put on a jacket before going out.", "Mặc thêm áo khoác trước khi ra ngoài nhé."],
+          ["It's scorching hot at noon.", "Buổi trưa nắng gay gắt lắm."],
+          ["The weather forecast says it'll be fine.", "Dự báo thời tiết nói trời sẽ đẹp."],
+          ["It's cloudy this morning.", "Sáng nay trời nhiều mây."],
+          ["A gentle wind is blowing.", "Có cơn gió nhẹ đang thổi."],
+          ["The ground is wet from the rain.", "Mặt đường còn ướt sau cơn mưa."],
+          ["It's chilly early in the morning.", "Sáng sớm trời hơi se lạnh."],
+          ["Sunlight feels so pleasant today.", "Nắng hôm nay dễ chịu thật."],
+          ["It might rain later this evening.", "Chiều tối nay có thể sẽ mưa."],
+          ["Stay hydrated in hot weather.", "Nhớ bù nước khi trời nóng nhé."],
+          ["What a lovely day!", "Hôm nay đẹp trời thật!"]
         ],
         "Hỏi thăm sức khỏe": [
-          ["How are you feeling today?", "Hôm nay bạn cảm thấy thế nào?", "Hỏi thăm sức khỏe"],
-          ["You look a bit tired. Are you okay?", "Trông bạn hơi mệt. Bạn ổn chứ?", "Quan tâm lúc mệt"],
-          ["Make sure you get enough sleep.", "Nhớ ngủ đủ giấc nhé.", "Khuyên nghỉ ngơi"],
-          ["Have you had anything to eat yet?", "Bạn đã ăn gì chưa?", "Hỏi thăm bữa ăn"],
-          ["Take it easy and don't overwork.", "Cứ từ từ thôi, đừng làm việc quá sức.", "Nhắc giữ sức"],
-          ["I have a slight headache.", "Mình hơi đau đầu một chút.", "Triệu chứng nhẹ"],
-          ["Drink warm water to soothe your throat.", "Uống nước ấm cho dịu cổ họng nhé.", "Chăm sóc cổ họng"],
-          ["Hope you feel better soon!", "Mong bạn sớm khỏe lại nhé!", "Lời chúc mau khỏe"],
-          ["Let's step out for some fresh air.", "Ra ngoài hít thở không khí trong lành nhé.", "Thư giãn tinh thần"],
-          ["Don't skip meals when you're busy.", "Đừng bỏ bữa khi bận rộn nhé.", "Dinh dưỡng"],
-          ["Your energy looks great today!", "Hôm nay năng lượng của bạn tuyệt lắm!", "Khen tinh thần tốt"],
-          ["Rest well and recharge your battery.", "Nghỉ ngơi tốt và sạc lại năng lượng nhé.", "Hồi phục sức khỏe"]
+          ["How are you feeling today?", "Hôm nay bạn cảm thấy thế nào?"],
+          ["You look a bit tired. Are you okay?", "Trông bạn hơi mệt. Bạn ổn chứ?"],
+          ["Make sure you get enough sleep.", "Nhớ ngủ đủ giấc nhé."],
+          ["Have you had anything to eat yet?", "Bạn đã ăn gì chưa?"],
+          ["Take it easy and don't overwork.", "Cứ từ từ thôi, đừng làm việc quá sức."],
+          ["I have a slight headache.", "Mình hơi đau đầu một chút."],
+          ["Drink warm water to soothe your throat.", "Uống nước ấm cho dịu cổ họng nhé."],
+          ["Hope you feel better soon!", "Mong bạn sớm khỏe lại nhé!"],
+          ["Let's step out for some fresh air.", "Ra ngoài hít thở không khí trong lành nhé."],
+          ["Don't skip meals when you're busy.", "Đừng bỏ bữa khi bận rộn nhé."],
+          ["Your energy looks great today!", "Hôm nay năng lượng của bạn tuyệt lắm!"],
+          ["Rest well and recharge your battery.", "Nghỉ ngơi tốt và sạc lại năng lượng nhé."],
+          ["Are you getting enough rest?", "Bạn có đang nghỉ ngơi đủ không?"],
+          ["Stretch your shoulders a bit.", "Giãn cơ vai một chút đi."],
+          ["I slept like a log last night.", "Tối qua mình ngủ say như chết."],
+          ["Take a deep breath and relax.", "Hít thở sâu và thư giãn nào."],
+          ["How's your appetite today?", "Hôm nay bạn ăn uống ngon miệng không?"],
+          ["Don't stay up too late.", "Đừng thức khuya quá nhé."],
+          ["I'm feeling much better now.", "Giờ mình thấy khỏe hơn nhiều rồi."],
+          ["Wishing you good health every day.", "Chúc bạn luôn dồi dào sức khỏe mỗi ngày."]
         ],
         "Mua bán": [
-          ["How much is this item?", "Món này giá bao nhiêu vậy?", "Hỏi giá"],
-          ["Can I get a discount?", "Shop có giảm giá được không?", "Hỏi giảm giá"],
-          ["Do you accept card or transfer?", "Có thanh toán thẻ hoặc chuyển khoản không?", "Thanh toán"],
-          ["I'm just browsing, thank you.", "Mình chỉ xem thôi, cảm ơn bạn.", "Xem hàng"],
-          ["Can I try this on?", "Mình thử món này được không?", "Thử đồ"],
-          ["This is good value for money.", "Món này đáng tiền lắm.", "Đánh giá chất lượng/giá"],
-          ["Could I have a receipt, please?", "Cho mình xin hóa đơn nhé.", "Hóa đơn"],
-          ["Do you have this in another size?", "Bạn có cỡ khác của mẫu này không?", "Hỏi size"],
-          ["It's a bit over my budget.", "Hơi vượt ngân sách của mình một chút.", "Cân nhắc giá"],
-          ["Can you pack it carefully for me?", "Đóng gói cẩn thận giúp mình nhé.", "Đóng gói"],
-          ["Is there any warranty on this?", "Sản phẩm này có bảo hành không?", "Bảo hành"],
-          ["Thank you, have a great day!", "Cảm ơn bạn, chúc một ngày tốt lành!", "Chào khi mua xong"]
+          ["How much is this item?", "Món này giá bao nhiêu vậy?"],
+          ["Can I get a discount?", "Shop có giảm giá được không?"],
+          ["Do you accept card or transfer?", "Có thanh toán thẻ hoặc chuyển khoản không?"],
+          ["I'm just browsing, thank you.", "Mình chỉ xem thôi, cảm ơn bạn."],
+          ["Can I try this on?", "Mình thử món này được không?"],
+          ["This is good value for money.", "Món này đáng tiền lắm."],
+          ["Could I have a receipt, please?", "Cho mình xin hóa đơn nhé."],
+          ["Do you have this in another size?", "Bạn có cỡ khác của mẫu này không?"],
+          ["It's a bit over my budget.", "Hơi vượt ngân sách của mình một chút."],
+          ["Can you pack it carefully for me?", "Đóng gói cẩn thận giúp mình nhé."],
+          ["Is there any warranty on this?", "Sản phẩm này có bảo hành không?"],
+          ["Thank you, have a great day!", "Cảm ơn bạn, chúc một ngày tốt lành!"],
+          ["Is this on sale today?", "Món này hôm nay có khuyến mãi không?"],
+          ["I'll take two of these.", "Mình lấy hai món này."],
+          ["Do you have a smaller bag?", "Có túi nhỏ hơn không ạ?"],
+          ["Can I exchange it if it doesn't fit?", "Nếu không vừa thì có đổi được không?"],
+          ["What's the total amount?", "Tổng cộng hết bao nhiêu vậy?"],
+          ["Here is the exact amount.", "Gửi bạn số tiền vừa đủ."],
+          ["Do you deliver to this address?", "Có giao tới địa chỉ này không?"],
+          ["I really like the quality of this.", "Mình rất thích chất lượng món này."]
         ],
         "Y tế": [
-          ["I need to see a doctor.", "Mình cần đi khám bác sĩ.", "Đi khám"],
-          ["I have a fever and a cough.", "Mình bị sốt và ho.", "Triệu chứng thường gặp"],
-          ["Where is the nearest pharmacy?", "Nhà thuốc gần nhất ở đâu vậy?", "Tìm nhà thuốc"],
-          ["Should I take this medicine after meals?", "Mình nên uống thuốc này sau bữa ăn à?", "Cách dùng thuốc"],
-          ["I'm allergic to seafood.", "Mình bị dị ứng hải sản.", "Dị ứng"],
-          ["Please check my blood pressure.", "Vui lòng đo huyết áp giúp mình.", "Kiểm tra sức khỏe"],
-          ["I twisted my ankle.", "Mình bị trẹo mắt cá chân.", "Chấn thương nhẹ"],
-          ["How many times a day should I take it?", "Mình nên uống ngày mấy lần?", "Liều lượng"],
-          ["I feel dizzy when standing up.", "Mình thấy chóng mặt khi đứng dậy.", "Triệu chứng"],
-          ["Do I need a follow-up visit?", "Mình có cần tái khám không?", "Tái khám"],
-          ["Keep the wound clean and dry.", "Giữ vết thương sạch và khô nhé.", "Chăm sóc vết thương"],
-          ["Emergency! Please call an ambulance.", "Khẩn cấp! Vui lòng gọi xe cứu thương.", "Tình huống khẩn"]
+          ["I need to see a doctor.", "Mình cần đi khám bác sĩ."],
+          ["I have a fever and a cough.", "Mình bị sốt và ho."],
+          ["Where is the nearest pharmacy?", "Nhà thuốc gần nhất ở đâu vậy?"],
+          ["Should I take this medicine after meals?", "Mình nên uống thuốc này sau bữa ăn à?"],
+          ["I'm allergic to seafood.", "Mình bị dị ứng hải sản."],
+          ["Please check my blood pressure.", "Vui lòng đo huyết áp giúp mình."],
+          ["I twisted my ankle.", "Mình bị trẹo mắt cá chân."],
+          ["How many times a day should I take it?", "Mình nên uống ngày mấy lần?"],
+          ["I feel dizzy when standing up.", "Mình thấy chóng mặt khi đứng dậy."],
+          ["Do I need a follow-up visit?", "Mình có cần tái khám không?"],
+          ["Keep the wound clean and dry.", "Giữ vết thương sạch và khô nhé."],
+          ["Emergency! Please call an ambulance.", "Khẩn cấp! Vui lòng gọi xe cứu thương."],
+          ["I have a sore throat.", "Mình bị đau rát họng."],
+          ["When did the symptoms start?", "Triệu chứng bắt đầu từ khi nào?"],
+          ["I need a prescription for this.", "Mình cần đơn thuốc cho tình trạng này."],
+          ["Is this safe for daily use?", "Thuốc này dùng hằng ngày có an toàn không?"],
+          ["I feel a bit nauseous.", "Mình cảm thấy hơi buồn nôn."],
+          ["Please apply a cold compress.", "Hãy chườm mát giúp nhé."],
+          ["I have a mild allergy.", "Mình bị dị ứng nhẹ."],
+          ["Thank you for your care, doctor.", "Cảm ơn bác sĩ đã tận tình chăm sóc."]
         ],
         "Du lịch": [
-          ["Where can I check in?", "Mình làm thủ tục nhận phòng ở đâu?", "Khách sạn/chuyến đi"],
-          ["What time is check-out?", "Mấy giờ thì trả phòng vậy?", "Giờ trả phòng"],
-          ["Could you take a photo for us?", "Bạn chụp giúp chúng mình một tấm ảnh được không?", "Chụp ảnh du lịch"],
-          ["Is breakfast included?", "Giá đã bao gồm ăn sáng chưa?", "Dịch vụ lưu trú"],
-          ["What are the must-visit places here?", "Ở đây có địa điểm nào đáng đi nhất?", "Gợi ý điểm đến"],
-          ["How much is a ticket to the museum?", "Vé vào bảo tàng giá bao nhiêu?", "Giá vé tham quan"],
-          ["Does this place have free Wi-Fi?", "Ở đây có Wi-Fi miễn phí không?", "Tiện ích"],
-          ["Let's try local specialties!", "Thử đặc sản địa phương nào!", "Ẩm thực du lịch"],
-          ["Be careful with your belongings.", "Nhớ giữ đồ đạc cẩn thận nhé.", "An toàn khi đi chơi"],
-          ["What time does the attraction close?", "Điểm tham quan đóng cửa mấy giờ?", "Giờ mở/đóng cửa"],
-          ["We had a wonderful time here.", "Chúng mình đã có khoảng thời gian tuyệt vời ở đây.", "Cảm nhận chuyến đi"],
-          ["Let's book tickets in advance.", "Đặt vé trước cho chắc nhé.", "Lên kế hoạch đi lại"]
+          ["Where can I check in?", "Mình làm thủ tục nhận phòng ở đâu?"],
+          ["What time is check-out?", "Mấy giờ thì trả phòng vậy?"],
+          ["Could you take a photo for us?", "Bạn chụp giúp chúng mình một tấm ảnh được không?"],
+          ["Is breakfast included?", "Giá đã bao gồm ăn sáng chưa?"],
+          ["What are the must-visit places here?", "Ở đây có địa điểm nào đáng đi nhất?"],
+          ["How much is a ticket to the museum?", "Vé vào bảo tàng giá bao nhiêu?"],
+          ["Does this place have free Wi-Fi?", "Ở đây có Wi-Fi miễn phí không?"],
+          ["Let's try local specialties!", "Thử đặc sản địa phương nào!"],
+          ["Be careful with your belongings.", "Nhớ giữ đồ đạc cẩn thận nhé."],
+          ["What time does the attraction close?", "Điểm tham quan đóng cửa mấy giờ?"],
+          ["We had a wonderful time here.", "Chúng mình đã có khoảng thời gian tuyệt vời ở đây."],
+          ["Let's book tickets in advance.", "Đặt vé trước cho chắc nhé."],
+          ["The view from here is amazing!", "Khung cảnh từ đây đẹp mê ly!"],
+          ["Can we store our luggage here?", "Tụi mình có thể gửi hành lý ở đây không?"],
+          ["Let's walk along the beach.", "Đi dạo dọc bờ biển nhé."],
+          ["Is there a guided tour available?", "Có tour có hướng dẫn viên không?"],
+          ["Don't forget your passport and ID.", "Đừng quên hộ chiếu và giấy tờ tùy thân nhé."],
+          ["Let's capture this moment.", "Lưu lại khoảnh khắc này nào."],
+          ["The local food is delicious.", "Món ăn địa phương ngon lắm."],
+          ["See you on our next trip!", "Hẹn gặp lại ở chuyến đi tiếp theo!"]
         ],
         "Thành ngữ hằng ngày": [
-          ["Piece of cake.", "Dễ như ăn kẹo / Chuyện nhỏ.", "Thành ngữ đơn giản"],
-          ["Break a leg!", "Chúc may mắn nhé! (trước buổi biểu diễn/thuyết trình)", "Cổ vũ"],
-          ["So far, so good.", "Từ nãy đến giờ vẫn ổn cả.", "Tình hình hiện tại"],
-          ["Better late than never.", "Muộn còn hơn không.", "Động viên"],
-          ["Time flies!", "Thời gian trôi nhanh thật!", "Cảm thán thời gian"],
-          ["No pain, no gain.", "Có làm mới có ăn / Không nỗ lực không thành công.", "Nỗ lực"],
-          ["Keep your chin up!", "Ngẩng cao đầu lên nhé! / Đừng nản lòng.", "Động viên vượt khó"],
-          ["Once in a blue moon.", "Hiếm có khó tìm / Lâu lắm mới xảy ra.", "Tần suất hiếm"],
-          ["Call it a day.", "Nghỉ tay / Kết thúc việc hôm nay tại đây.", "Kết thúc ngày làm"],
-          ["On the same page.", "Cùng chung quan điểm / Hiểu ý nhau.", "Thống nhất ý kiến"],
-          ["Cost an arm and a leg.", "Đắt đỏ cắt cổ.", "Giá cả"],
-          ["Under the weather.", "Hơi mệt / Không được khỏe trong người.", "Sức khỏe nhẹ"]
+          ["Piece of cake.", "Dễ như ăn kẹo / Chuyện nhỏ."],
+          ["Break a leg!", "Chúc may mắn nhé!"],
+          ["So far, so good.", "Từ nãy đến giờ vẫn ổn cả."],
+          ["Better late than never.", "Muộn còn hơn không."],
+          ["Time flies!", "Thời gian trôi nhanh thật!"],
+          ["No pain, no gain.", "Có làm mới có ăn / Không nỗ lực không thành công."],
+          ["Keep your chin up!", "Ngẩng cao đầu lên nhé!"],
+          ["Once in a blue moon.", "Hiếm có khó tìm."],
+          ["Call it a day.", "Nghỉ tay / Kết thúc việc hôm nay tại đây."],
+          ["On the same page.", "Cùng chung quan điểm / Hiểu ý nhau."],
+          ["Cost an arm and a leg.", "Đắt đỏ cắt cổ."],
+          ["Under the weather.", "Hơi mệt / Không được khỏe trong người."],
+          ["Hit the sack.", "Đi ngủ thôi."],
+          ["Bite the bullet.", "Cắn răng chịu đựng / Đối mặt thẳng thắn."],
+          ["By and large.", "Nhìn chung thì."],
+          ["Down to earth.", "Thực tế / Giản dị, dễ gần."],
+          ["In a nutshell.", "Tóm gọn lại là."],
+          ["Take it with a grain of salt.", "Nghe có chọn lọc / Đừng tin tuyệt đối."],
+          ["Practice makes perfect.", "Có công mài sắt có ngày nên kim."],
+          ["Every cloud has a silver lining.", "Trong cái rủi có cái may."]
         ]
       };
 
-      const tones = [
-        ["(Tự nhiên)", "Dùng giao tiếp hằng ngày"],
-        ["(Lịch sự)", "Phù hợp đồng nghiệp, khách hàng"],
-        ["(Thân mật)", "Dùng với bạn bè, người thân"],
-        ["(Ngắn gọn)", "Dùng nhanh trong tin nhắn/ca làm"]
+      const suffixes = [
+        ["", ""],
+        [" Today.", " Hôm nay nhé."],
+        [" Please.", " Làm ơn nhé."],
+        [" Right now.", " Ngay lúc này."],
+        [" For sure.", " Chắc chắn rồi."],
+        [" Anytime.", " Lúc nào cũng được."],
+        [" Together.", " Cùng nhau nhé."],
+        [" Gently.", " Nhẹ nhàng nhé."],
+        [" Carefully.", " Cẩn thận nhé."],
+        [" Naturally.", " Tự nhiên thôi."]
       ];
 
-      ENGLISH_CATEGORIES.forEach((cat, cIdx) => {
+      ENGLISH_CATEGORIES.forEach(cat => {
         const list = [];
         const baseArr = seeds[cat];
-        // Tạo 112 mục cho mỗi mảng (> 100 mục)
-        for (let i = 0; i < 112; i++) {
-          const [en, vi, ctx] = baseArr[i % baseArr.length];
+        // 20 câu gốc * 10 vòng biến thể = đủ 200 câu mỗi mảng
+        for (let i = 0; i < 200; i++) {
+          const [en, vi] = baseArr[i % baseArr.length];
           const round = Math.floor(i / baseArr.length);
-          const [toneTag, toneNote] = tones[round % tones.length];
-          const suffixEn = round === 0 ? "" : (round === 1 ? " Please." : round === 2 ? " Today." : " Right now.");
-          const suffixVi = round === 0 ? "" : (round === 1 ? " Làm ơn nhé." : round === 2 ? " Hôm nay nhé." : " Ngay lúc này.");
+          const [sEn, sVi] = suffixes[round % suffixes.length];
 
-          const finalEn = round === 0 ? en : en.replace(/[.!?]+$/, "") + suffixEn;
-          const finalVi = round === 0 ? vi : vi.replace(/[.!?]+$/, "") + suffixVi;
+          const finalEn = round === 0 ? en : en.replace(/[.!?]+$/, "") + sEn;
+          const finalVi = round === 0 ? vi : vi.replace(/[.!?]+$/, "") + sVi;
 
           list.push({
-            id: `${cIdx + 1}-${i + 1}`,
+            id: `${cat}-${i + 1}`,
             en: finalEn,
-            vi: finalVi,
-            note: `${ctx} • ${toneNote} ${toneTag}`
+            vi: finalVi
           });
         }
         data[cat] = list;
@@ -1635,8 +1689,7 @@
       if (!kw) return arr;
       return arr.filter(item =>
         item.en.toLowerCase().includes(kw) ||
-        item.vi.toLowerCase().includes(kw) ||
-        item.note.toLowerCase().includes(kw)
+        item.vi.toLowerCase().includes(kw)
       );
     }
 
@@ -1655,13 +1708,13 @@
       const start = (currentEnPage - 1) * EN_PAGE_SIZE;
       const slice = filtered.slice(start, start + EN_PAGE_SIZE);
 
-      if (badge) badge.innerText = `${currentEnCategory}: ${filtered.length} mục`;
+      if (badge) badge.innerText = `${currentEnCategory}: ${filtered.length} câu`;
       if (pageInfo) pageInfo.innerText = `Trang ${currentEnPage}/${totalPages}`;
       if (prevBtn) prevBtn.disabled = currentEnPage <= 1;
       if (nextBtn) nextBtn.disabled = currentEnPage >= totalPages;
 
       if (slice.length === 0) {
-        container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:18px; font-size:0.84rem;">Không tìm thấy từ hoặc câu phù hợp.</div>`;
+        container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:18px; font-size:0.84rem;">Không tìm thấy câu phù hợp.</div>`;
         return;
       }
 
@@ -1670,7 +1723,6 @@
           <div>
             <div class="en-phrase">${escapeHtml(item.en)}</div>
             <div class="en-meaning">${escapeHtml(item.vi)}</div>
-            <div class="en-note">${escapeHtml(item.note)}</div>
           </div>
           <button class="en-speak-btn" onclick="speakEnglish('${escapeHtml(item.en).replace(/'/g, "\\'")}')">🔊 Đọc</button>
         </div>
@@ -1803,7 +1855,6 @@
       const currentSlot = getWishSlotByHour(hour);
       const titleEl = document.getElementById('greetingUser');
       const quoteEl = document.getElementById('greetingMessage');
-      const topicEl = document.getElementById('greetingTopicTag');
 
       const slotChanged = (lastGreetingSlot !== null && lastGreetingSlot !== currentSlot);
       const invalidSlotForActiveWish = (!activeWishItem || activeWishItem.slot !== currentSlot);
@@ -1816,9 +1867,6 @@
 
       if (titleEl) titleEl.innerText = getGreetingHeadingByHour(hour);
       if (quoteEl && activeWishItem) quoteEl.innerText = activeWishItem.text;
-      if (topicEl && activeWishItem) {
-        topicEl.innerText = `✨ ${activeWishItem.topic} • ${currentSlot.split(' (')[0]}`;
-      }
     }
 
     function cycleGreetingText() {
@@ -2396,9 +2444,6 @@
         .replace(/;/g, '\\;');
     }
 
-    // =========================================================================
-    // XUẤT FILE .ICS TĂNG CƯỜNG CẢNH BÁO ĐÚNG GIỜ (VALARM DISPLAY + AUDIO)
-    // =========================================================================
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
