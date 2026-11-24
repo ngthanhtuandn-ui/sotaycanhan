@@ -1130,6 +1130,9 @@
     let lastTriggeredMinute = "";
     let alarmAudioBlobUrl = null;
     let activeWishItem = null;
+    let lastGreetingSlot = null;
+    let lastDateKey = "";
+    let weatherManuallySet = false;
 
     function getWishSlotByHour(hour) {
       if (hour >= 5 && hour <= 8) return WISH_SLOTS[0];
@@ -1139,11 +1142,32 @@
       return WISH_SLOTS[4];
     }
 
-    function pickWishForCurrentSlot(excludeId = null) {
-      const slot = getWishSlotByHour(new Date().getHours());
-      const pool = ALL_WISHES.filter(w => w.slot === slot && w.id !== excludeId);
-      const list = pool.length ? pool : ALL_WISHES.filter(w => w.slot === slot);
-      return list[Math.floor(Math.random() * list.length)];
+    function getGreetingHeadingByHour(hour) {
+      if (hour >= 5 && hour <= 8) return "Chào buổi sáng, Tuấn Tuấn! ☀️";
+      if (hour >= 9 && hour <= 13) return "Chúc buổi trưa năng lượng, Tuấn Tuấn! 🌤️";
+      if (hour >= 14 && hour <= 17) return "Buổi chiều hiệu quả nhé, Tuấn Tuấn! ☕";
+      if (hour >= 18 && hour <= 21) return "Buổi tối ấm áp, Tuấn Tuấn nhé! 🌆";
+      return "Khuya rồi, nghỉ ngơi nhé Tuấn Tuấn! 🌙";
+    }
+
+    function pickWishForCurrentSlot(excludeId = null, now = new Date()) {
+      const slot = getWishSlotByHour(now.getHours());
+      const recentIds = JSON.parse(sessionStorage.getItem('recent_wish_ids_v1') || '[]');
+      const blockedIds = new Set([...recentIds, ...(excludeId ? [excludeId] : [])]);
+
+      let pool = ALL_WISHES.filter(w => w.slot === slot && !blockedIds.has(w.id));
+      if (pool.length === 0) {
+        pool = ALL_WISHES.filter(w => w.slot === slot && w.id !== excludeId);
+      }
+      if (pool.length === 0) {
+        pool = ALL_WISHES.filter(w => w.slot === slot);
+      }
+
+      const chosen = pool[Math.floor(Math.random() * pool.length)];
+      const slotIds = ALL_WISHES.filter(w => w.slot === slot).map(w => w.id);
+      const updatedRecent = [...recentIds.filter(id => id !== chosen.id), chosen.id].slice(-Math.min(6, slotIds.length - 1));
+      sessionStorage.setItem('recent_wish_ids_v1', JSON.stringify(updatedRecent));
+      return chosen;
     }
 
     function generateGentleAlarmWav() {
@@ -1191,28 +1215,32 @@
       return URL.createObjectURL(blob);
     }
 
-    function displayCurrentGreeting() {
-      const h = new Date().getHours();
+    function displayCurrentGreeting(forceNewWish = false, now = new Date()) {
+      const hour = now.getHours();
+      const currentSlot = getWishSlotByHour(hour);
       const titleEl = document.getElementById('greetingUser');
       const quoteEl = document.getElementById('greetingMessage');
 
-      if (!activeWishItem) {
-        activeWishItem = pickWishForCurrentSlot();
+      const slotChanged = (lastGreetingSlot !== null && lastGreetingSlot !== currentSlot);
+      const invalidSlotForActiveWish = (!activeWishItem || activeWishItem.slot !== currentSlot);
+
+      if (forceNewWish || slotChanged || invalidSlotForActiveWish) {
+        activeWishItem = pickWishForCurrentSlot(activeWishItem?.id, now);
       }
 
-      let headingPrefix = "Chào buổi sáng, Tuấn Tuấn! ☀️";
-      if (h >= 9 && h < 14) headingPrefix = "Chúc buổi trưa năng lượng, Tuấn Tuấn! 🌤️";
-      else if (h >= 14 && h < 18) headingPrefix = "Buổi chiều hiệu quả nhé, Tuấn Tuấn! ☕";
-      else if (h >= 18 && h < 22) headingPrefix = "Buổi tối ấm áp, Tuấn Tuấn nhé! 🌆";
-      else headingPrefix = "Khuya rồi, nghỉ ngơi nhé Tuấn Tuấn! 🌙";
+      lastGreetingSlot = currentSlot;
 
-      if (titleEl) titleEl.innerText = headingPrefix;
-      if (quoteEl) quoteEl.innerText = activeWishItem.text;
+      if (titleEl) titleEl.innerText = getGreetingHeadingByHour(hour);
+      if (quoteEl && activeWishItem) quoteEl.innerText = activeWishItem.text;
+
+      if (slotChanged && !forceNewWish) {
+        showToast(`Đã cập nhật lời chúc cho khung giờ: ${currentSlot.split(' (')[0]}`);
+      }
     }
 
     function cycleGreetingText() {
-      activeWishItem = pickWishForCurrentSlot(activeWishItem?.id);
-      displayCurrentGreeting();
+      activeWishItem = pickWishForCurrentSlot(activeWishItem?.id, new Date());
+      displayCurrentGreeting(false, new Date());
       showToast('Đã đổi câu chúc ✨');
     }
 
@@ -1252,16 +1280,27 @@
       }
     }
 
-    async function initWeatherDetection() {
-      const hour = new Date().getHours();
+    function syncAutoWeatherByTime(now = new Date(), force = false) {
+      if (weatherManuallySet && !force) return;
+      const hour = now.getHours();
       const isNightTime = (hour >= 18 || hour < 5);
-      if (isNightTime) currentWeatherIndex = 3;
-      else if (hour >= 9 && hour <= 15) currentWeatherIndex = 0;
-      else currentWeatherIndex = 1;
-      renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+      let nextIdx = 1;
+      if (isNightTime) nextIdx = 3;
+      else if (hour >= 9 && hour <= 15) nextIdx = 0;
+      else nextIdx = 1;
+
+      if (force || nextIdx !== currentWeatherIndex) {
+        currentWeatherIndex = nextIdx;
+        renderWeatherIcon(weatherStates[currentWeatherIndex].type);
+      }
+    }
+
+    async function initWeatherDetection() {
+      syncAutoWeatherByTime(new Date(), true);
     }
 
     function cycleWeatherDemo() {
+      weatherManuallySet = true;
       currentWeatherIndex = (currentWeatherIndex + 1) % weatherStates.length;
       renderWeatherIcon(weatherStates[currentWeatherIndex].type, weatherStates[currentWeatherIndex].label);
       showToast(`Chế độ: ${weatherStates[currentWeatherIndex].label}`);
@@ -1530,20 +1569,26 @@
       host.innerHTML = `<div style="font-weight:800;margin-bottom:8px;font-size:0.88rem;">${schoolDaysFull[day]} hôm nay:</div>` + rows.join('');
     }
 
-    function updateGreetingHeader() {
+    function updateGreetingHeader(forceNewWish = false) {
       const now = new Date();
       const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
       const dayName = days[now.getDay()];
       const d = String(now.getDate()).padStart(2, '0');
       const m = String(now.getMonth() + 1).padStart(2, '0');
       const y = now.getFullYear();
+      const dateKey = `${y}-${m}-${d}`;
+
+      const dateChanged = (lastDateKey !== "" && lastDateKey !== dateKey);
+      lastDateKey = dateKey;
 
       const labelEl = document.getElementById('greetingDateLabel');
       if (labelEl) labelEl.innerText = `Hôm nay ${dayName}, ngày ${d}/${m}/${y}`;
-      displayCurrentGreeting();
+
+      displayCurrentGreeting(forceNewWish || dateChanged, now);
+      syncAutoWeatherByTime(now, dateChanged);
 
       const journalDateInput = document.getElementById('journalDate');
-      if (journalDateInput && !journalDateInput.value) journalDateInput.value = `${y}-${m}-${d}`;
+      if (journalDateInput && !journalDateInput.value) journalDateInput.value = dateKey;
     }
 
     function loadShiftTimeConfigUI() {
@@ -1768,14 +1813,14 @@
     function exportToICSCalendarList(weekIndices) {
       let events = [];
       const now = new Date();
-      const dtStamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      const pad2 = n => String(n).padStart(2, '0');
+      const dtStamp = `${now.getUTCFullYear()}${pad2(now.getUTCMonth() + 1)}${pad2(now.getUTCDate())}T${pad2(now.getUTCHours())}${pad2(now.getUTCMinutes())}${pad2(now.getUTCSeconds())}Z`;
       const tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Ho_Chi_Minh';
 
       function toLocalICSString(year, month, day, timeStr, addMinutes = 0) {
         const [h, m] = timeStr.split(':').map(Number);
         const dObj = new Date(year, month - 1, day, h, m + addMinutes, 0);
-        const pad = n => String(n).padStart(2, '0');
-        return `${dObj.getFullYear()}${pad(dObj.getMonth() + 1)}${pad(dObj.getDate())}T${pad(dObj.getHours())}${pad(dObj.getMinutes())}00`;
+        return `${dObj.getFullYear()}${pad2(dObj.getMonth() + 1)}${pad2(dObj.getDate())}T${pad2(dObj.getHours())}${pad2(dObj.getMinutes())}00`;
       }
 
       function buildExactTimeAlarms(labelText) {
@@ -1815,7 +1860,7 @@
           const m = dayDate.getMonth() + 1;
           const d = dayDate.getDate();
 
-          const dateStr = `${y}${String(m).padStart(2, '0')}${String(d).padStart(2, '0')}`;
+          const dateStr = `${y}${pad2(m)}${pad2(d)}`;
 
           if (shift === 'off') {
             const nextDay = new Date(dayDate);
@@ -1823,7 +1868,7 @@
             const ny = nextDay.getFullYear();
             const nm = nextDay.getMonth() + 1;
             const nd = nextDay.getDate();
-            const nextDateStr = `${ny}${String(nm).padStart(2, '0')}${String(nd).padStart(2, '0')}`;
+            const nextDateStr = `${ny}${pad2(nm)}${pad2(nd)}`;
 
             count++;
             events.push([
@@ -2125,11 +2170,13 @@
       startContinuousAlarm('🔔 THỬ CHUÔNG BÁO CA');
     }
 
+    let toastTimer = null;
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
       t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2400);
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2400);
     }
 
     function escapeHtml(t) {
@@ -2226,6 +2273,12 @@
       const currentTime = `${currentH}:${currentM}`;
       const minuteKey = `${now.toDateString()}_${currentTime}`;
 
+      const currentSlot = getWishSlotByHour(now.getHours());
+      const currentDateKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      if (currentSlot !== lastGreetingSlot || currentDateKey !== lastDateKey) {
+        updateGreetingHeader(false);
+      }
+
       if (lastTriggeredMinute === minuteKey) return;
 
       const currentDayOfWeek = now.getDay();
@@ -2281,13 +2334,14 @@
         unlockAudioContext();
         checkScheduler();
         updateNotiButtonStatus();
-        updateGreetingHeader();
+        updateGreetingHeader(false);
       }
     });
     window.addEventListener('focus', () => {
       unlockAudioContext();
       checkScheduler();
       updateNotiButtonStatus();
+      updateGreetingHeader(false);
     });
 
     function exportData() {
@@ -2332,7 +2386,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      updateGreetingHeader();
+      updateGreetingHeader(true);
       initWeatherDetection();
       initMonthWeeksDropdown();
       renderWeekGrid();
